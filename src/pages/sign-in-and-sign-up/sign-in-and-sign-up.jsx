@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import SignIn from '../../components/sign-in/sign-in.component'
+import SignUp from '../../components/sign-up/sign-up.component'
+
+import { SignInAndSignUpContainer } from './sign-in-and-sign-up.styles'
 
 const SignInAndSignUpPage = () => {
+    const [showSignUp, setShowSignUp] = useState(false)
+
     return (
-        <div>
-            <h1>Sign in and Sign up</h1>
-        </div>
+        <SignInAndSignUpContainer>
+            <h1>IMOOPTIK</h1>
+            {showSignUp ? (
+                <SignUp setShowSignUp={setShowSignUp} />
+            ) : (
+                    <SignIn setShowSignUp={setShowSignUp} />
+                )}
+        </SignInAndSignUpContainer>
     )
 }
 
