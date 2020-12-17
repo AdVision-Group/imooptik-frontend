@@ -55,9 +55,14 @@ export const NavLinksContainer = styled.ul`
             color: #fff;
             font-weight: 700;
             font-size: 1.8rem;
+            transition: .2s color ease-out;
 
             @media all and (max-width: 500px) {
                 font-size: 1.6rem;
+            }
+
+            &:hover {
+                color: #eee;
             }
 
             &.active {

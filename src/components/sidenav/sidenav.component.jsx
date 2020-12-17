@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { AsideContainer, LogoContainer, NavLinksContainer, ToggleButton } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <AsideContainer isOpen={isOpen}>
