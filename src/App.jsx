@@ -7,34 +7,34 @@ import DashboardPage from './pages/dashboard/dashboard'
 
 const App = () => {
   console.log("RENDER APP")
-  const currentUser = null
-  // const currentUser = {
-  //   id: "5fd4cae9f9432022689dd227",
-  //   admin: 1, //permission level (1: admin na kamennej prevadzke,2: admin eshopu,3:superadmin)
-  //   name: "Andrej Turcer",
-  //   email: "andrej.turcer@mail.com",
-  //   phone: "0902522355",
-  //   address: "Ulica 1",
-  //   psc: "81029",
-  //   city: "Bratislava",
-  //   country: "Slovensko",
-  //   password: "$$hashedpassword$$",
-  //   //vlastnosti okuliarov
-  //   glasses: {
-  //     size: [47, 21, 140],
-  //     // prve hodnoty lave oko, druhe hodnoty prave oko
-  //     lenses: {
-  //       diopters: [1, 1.5],
-  //       distance: [3, 2],
-  //       cylinder: [1, 2],
-  //       cylinderAxes: [4, 8]
-  //     }
-  //   },
+  // const currentUser = null
+  const currentUser = {
+    id: "5fd4cae9f9432022689dd227",
+    admin: 1, //permission level (1: admin na kamennej prevadzke,2: admin eshopu,3:superadmin)
+    name: "Andrej Turcer",
+    email: "andrej.turcer@mail.com",
+    phone: "0902522355",
+    address: "Ulica 1",
+    psc: "81029",
+    city: "Bratislava",
+    country: "Slovensko",
+    password: "$$hashedpassword$$",
+    //vlastnosti okuliarov
+    glasses: {
+      size: [47, 21, 140],
+      // prve hodnoty lave oko, druhe hodnoty prave oko
+      lenses: {
+        diopters: [1, 1.5],
+        distance: [3, 2],
+        cylinder: [1, 2],
+        cylinderAxes: [4, 8]
+      }
+    },
 
-  //idcka objednavok urobenych danym userom
-  //   orders: ['order id c1, order id c2']
+    // idcka objednavok urobenych danym userom
+    orders: ['order id c1, order id c2']
 
-  // }
+  }
 
   return (
     <React.Fragment>
@@ -43,7 +43,7 @@ const App = () => {
         <Switch>
           <Route path='/login' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
           <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='login' />} />
-          {currentUser ? <Redirect to='/dashboard' /> : <Redirect to='/login' />}
+          {currentUser ? <Redirect to='/dashboard/e-shop' /> : <Redirect to='/login' />}
         </Switch>
       </HashRouter>
     </React.Fragment>
