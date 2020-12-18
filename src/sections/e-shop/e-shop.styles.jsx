@@ -1,50 +1,5 @@
-import styled, { css } from "styled-components"
-
-export const HeaderContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-`
-
-export const Left = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-export const Right = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-export const Notification = styled.div`
-    background-color: #DD4C4C;
-    margin-left: 1.5rem;
-    color: #fff;
-    padding: .5rem 1rem;
-    border-radius: 1.5rem;
-    font-size: 1.4rem;
-`
-
-const buttonStyles = css`
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-    padding: .5rem 2.5rem;
-    font-size: inherit;
-    font-family: inherit;
-    border-radius: .5rem;
-    border: none;
-    outline: none;
-`
-
-export const SearchButton = styled.button`
-    ${buttonStyles}
-    margin: 0 1.5rem 0 2rem;
-`
-
-export const AddButton = styled.button`
-    ${buttonStyles}
-`
+import styled from "styled-components"
+import CustomButton from '../../components/custom-button/custom-button.component'
 
 export const NavbarContainer = styled.div`
     margin-bottom: 3rem;
@@ -59,8 +14,7 @@ export const NavbarContainer = styled.div`
     }
 `
 
-export const NavButton = styled.div`
-    ${buttonStyles}
+export const NavButton = styled(CustomButton)`
     background-color: ${({ active }) => active ? '#000' : '#fff'};
     color: ${({ active }) => active ? '#fff' : '#000'};
     font-weight: ${({ active }) => active ? 400 : 700};
@@ -116,14 +70,12 @@ export const Options = styled.div`
     justify-self: end;
 `
 
-export const UpdateButton = styled.button`
-    ${buttonStyles}
+export const UpdateButton = styled(CustomButton)`
     font-size: 1.4rem;
     margin-right: 1rem;
 `
 
-export const DeleteButton = styled.button`
-    ${buttonStyles}
+export const DeleteButton = styled(CustomButton)`
     font-size: 1.4rem;
     background-color: #DD4C4C;
 `

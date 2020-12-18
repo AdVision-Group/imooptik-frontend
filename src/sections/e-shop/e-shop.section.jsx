@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
 
-import CustomInput from '../../components/custom-input/custom-input.component'
+import SectionHeader from '../../components/section-header/section-header.component'
 
 import {
-    HeaderContainer,
-    Left,
-    Right,
-    SearchButton,
-    Notification,
-    AddButton,
     NavbarContainer,
     NavButton,
     ProductContainer,
@@ -27,26 +21,11 @@ const EshopSection = () => {
 
     return (
         <section>
-
-            <HeaderContainer>
-                <Left>
-                    <h1>E-shop</h1>
-                    <Notification>999</Notification>
-                </Left>
-                <Right>
-                    <div>
-                        <CustomInput
-                            type='search'
-                            name='searchbox'
-                            value={searchQuery}
-                            handleChange={e => setSearchQuery(e.target.value)}
-                            label='Vyhľadať'
-                        />
-                    </div>
-                    <SearchButton>Vyhľadať</SearchButton>
-                    <AddButton>Pridať</AddButton>
-                </Right>
-            </HeaderContainer>
+            <SectionHeader
+                searchQuery={searchQuery}
+                handleChange={e => setSearchQuery(e.target.value)}
+                title="E-shop"
+            />
 
             <NavbarContainer>
                 <ul>
