@@ -16,23 +16,23 @@ const Dashboard = () => {
     const routes = [
         {
             name: 'E-shop',
-            path: '/e-shop'
+            path: '/obchod'
         },
         {
             name: 'Sklad',
-            path: '/warehouse'
+            path: '/sklad'
         },
         {
             name: 'Zákazníci',
-            path: '/customers'
+            path: '/zakaznici'
         },
         {
             name: 'Objednávky',
-            path: '/orders'
+            path: '/objednavky'
         },
         {
             name: 'Analytika',
-            path: '/analytics'
+            path: '/analytika'
         },
     ]
 
@@ -42,12 +42,12 @@ const Dashboard = () => {
             <SideNav routes={routes} match={match} />
             <main>
                 <Switch>
-                    <Route path={`${match.path}/e-shop`} component={EshopSection} />
-                    <Route path={`${match.path}/warehouse`} component={WarehouseSection} />
-                    <Route path={`${match.path}/customers`} component={CustomersSection} />
-                    <Route path={`${match.path}/orders`} component={OrdersSection} />
-                    <Route path={`${match.path}/analytics`} component={AnalyticsSection} />
-                    <Route path={`${match.path}/*`} render={() => <Redirect to={`${match.path}/e-shop`} />} />
+                    <Route path={`${match.path}/obchod`} component={EshopSection} />
+                    <Route path={`${match.path}/sklad`} component={WarehouseSection} />
+                    <Route path={`${match.path}/zakaznici`} component={CustomersSection} />
+                    <Route path={`${match.path}/objednavky`} component={OrdersSection} />
+                    <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
+                    <Redirect to={`${match.path}/obchod`} />
                 </Switch>
             </main>
         </DashboardContainer>

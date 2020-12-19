@@ -5,6 +5,7 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         margin: 0;
         box-sizing: border-box;
+        font-family: 'Titillium Web', sans-serif;
     }
 
     html {
@@ -13,7 +14,6 @@ export const GlobalStyles = createGlobalStyle`
 
     body {
         font-size: 1.6rem;
-        font-family: Montserrat;
     }
 
     section {

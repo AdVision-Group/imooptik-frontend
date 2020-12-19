@@ -41,9 +41,9 @@ const App = () => {
       <GlobalStyles />
       <HashRouter basename='/'>
         <Switch>
-          <Route path='/login' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
-          <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='login' />} />
-          {currentUser ? <Redirect to='/dashboard/e-shop' /> : <Redirect to='/login' />}
+          <Route path='/prihlasenie' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
+          <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='prihlasenie' />} />
+          {currentUser ? <Redirect to='/dashboard/obchod' /> : <Redirect to='/prihlasenie' />}
         </Switch>
       </HashRouter>
     </React.Fragment>

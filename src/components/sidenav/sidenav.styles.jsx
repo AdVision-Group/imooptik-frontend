@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const AsideContainer = styled.aside`
-    background-color: #2E2E2E;
+    background-color: #000000;
     padding: 3rem 0 3rem 3rem;
     height: 100%;
     display: flex;
@@ -73,7 +73,7 @@ export const NavLinksContainer = styled.ul`
                     width: .5rem;
                     top: 0;
                     bottom: 0;
-                    background-color: #DD4C4C;
+                    background-color: rgb(235, 172, 1);
                 }
             }
         }
