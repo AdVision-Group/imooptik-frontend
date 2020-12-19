@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
 import SectionHeader from '../../components/section-header/section-header.component'
+import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 
 import {
-    NavbarContainer,
-    NavButton,
     ProductContainer,
     ProductImage,
     ProductContent,
@@ -18,6 +17,30 @@ import {
 
 const EshopSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
+    const items = [
+        {
+            id: 1,
+            name: "Všetko"
+        },
+        {
+            id: 2,
+            name: "Prevádzka 1"
+        },
+        {
+            id: 3,
+            name: "Prevádzka 2"
+        },
+        {
+            id: 4,
+            name: "Prevádzka 3"
+        },
+        {
+            id: 5,
+            name: "Prevádzka 4"
+        },
+    ]
+
+    const [activeIndex, setActiveIndex] = useState(2)
 
     return (
         <section>
@@ -27,25 +50,11 @@ const EshopSection = () => {
                 title="E-shop"
             />
 
-            <NavbarContainer>
-                <ul>
-                    <li>
-                        <NavButton >Všetko</NavButton>
-                    </li>
-                    <li>
-                        <NavButton>Prevadzka 1</NavButton>
-                    </li>
-                    <li>
-                        <NavButton active>Prevadzka 2</NavButton>
-                    </li>
-                    <li>
-                        <NavButton>Prevadzka 3</NavButton>
-                    </li>
-                    <li>
-                        <NavButton>Prevadzka 4</NavButton>
-                    </li>
-                </ul>
-            </NavbarContainer>
+            <SectionNavbar
+                items={items}
+                activeIndex={activeIndex}
+                setActiveIndex={setActiveIndex}
+            />
 
             {/* Products container */}
             <div>
@@ -121,7 +130,7 @@ const EshopSection = () => {
                 </ProductContainer>
 
             </div>
-        </section>
+        </section >
     )
 }
 
