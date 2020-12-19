@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import SectionHeader from '../../components/section-header/section-header.component'
+import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
 import {
     CustomerContainer,
@@ -23,7 +24,7 @@ const CustomersSection = () => {
                 title="Zákazníci"
             />
 
-            <div>
+            <ScrollContainer>
                 <CustomerContainer>
                     <Content>
                         <h2>Meno Priezvisko</h2>
@@ -91,7 +92,7 @@ const CustomersSection = () => {
                         </DeleteButton>
                     </Options>
                 </CustomerContainer>
-            </div>
+            </ScrollContainer>
 
         </section>
     )

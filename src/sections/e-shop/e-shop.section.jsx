@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
+import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
 import {
     ProductContainer,
@@ -12,7 +13,7 @@ import {
     Price,
     Options,
     UpdateButton,
-    DeleteButton
+    DeleteButton,
 } from './e-shop.styles'
 
 const EshopSection = () => {
@@ -57,7 +58,7 @@ const EshopSection = () => {
             />
 
             {/* Products container */}
-            <div>
+            <ScrollContainer>
 
                 {/* Single product */}
                 <ProductContainer>
@@ -82,7 +83,28 @@ const EshopSection = () => {
                         </DeleteButton>
                     </Options>
                 </ProductContainer>
+                <ProductContainer>
 
+                    <ProductImage>
+                        IMG
+                    </ProductImage>
+
+                    <ProductContent>
+                        <h2>Product name</h2>
+                        <ProductId>[product id]</ProductId>
+                        <StockInfo>Na sklade [x] kusov</StockInfo>
+                        <Price>99.99€</Price>
+                    </ProductContent>
+
+                    <Options>
+                        <UpdateButton>
+                            Upraviť
+                        </UpdateButton>
+                        <DeleteButton>
+                            Vymazať
+                        </DeleteButton>
+                    </Options>
+                </ProductContainer>
                 <ProductContainer>
 
                     <ProductImage>
@@ -129,7 +151,30 @@ const EshopSection = () => {
                     </Options>
                 </ProductContainer>
 
-            </div>
+                <ProductContainer>
+
+                    <ProductImage>
+                        IMG
+                    </ProductImage>
+
+                    <ProductContent>
+                        <h2>Product name</h2>
+                        <ProductId>[product id]</ProductId>
+                        <StockInfo>Na sklade [x] kusov</StockInfo>
+                        <Price>99.99€</Price>
+                    </ProductContent>
+
+                    <Options>
+                        <UpdateButton>
+                            Upraviť
+                        </UpdateButton>
+                        <DeleteButton>
+                            Vymazať
+                        </DeleteButton>
+                    </Options>
+                </ProductContainer>
+
+            </ScrollContainer>
         </section >
     )
 }

@@ -1,12 +1,14 @@
 import styled, { css } from 'styled-components'
 
 export const AsideContainer = styled.aside`
+    position: relative;
     background-color: #000000;
     padding: 3rem 0 3rem 3rem;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    z-index: 999;
 
     @media all and (max-width: 800px) {
         position: absolute;

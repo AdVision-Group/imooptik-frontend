@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
+import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
 import {
     OrderContainer,
@@ -55,7 +56,7 @@ const OrdersSection = () => {
                 setActiveIndex={setActiveIndex}
             />
 
-            <div>
+            <ScrollContainer>
 
                 <OrderContainer>
 
@@ -135,7 +136,7 @@ const OrdersSection = () => {
                     </Options>
 
                 </OrderContainer>
-            </div>
+            </ScrollContainer>
         </section>
     )
 }

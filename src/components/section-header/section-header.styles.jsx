@@ -1,9 +1,13 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
+import { paddingStyles } from '../../global.styles'
 
 export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 3rem;
+    min-width: 70rem;
+    ${paddingStyles};    
 `
 
 export const Left = styled.div`
@@ -25,23 +29,12 @@ export const Notification = styled.div`
     font-size: 1.4rem;
 `
 
-const buttonStyles = css`
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-    padding: .5rem 2.5rem;
-    font-size: inherit;
-    font-family: inherit;
-    border-radius: .5rem;
-    border: none;
-    outline: none;
+
+export const SearchButton = styled(CustomButton)`
+    margin-left: 2rem;
 `
 
-export const SearchButton = styled.button`
-    ${buttonStyles}
-    margin: 0 1.5rem 0 2rem;
-`
+export const AddButton = styled(CustomButton)`
+    margin-left: 1rem;
 
-export const AddButton = styled.button`
-    ${buttonStyles}
 `
