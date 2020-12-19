@@ -21,14 +21,6 @@ export const GlobalStyles = createGlobalStyle`
         display: flex;
         flex-direction: column;
         height: 100vh;
-        /* padding: 3rem; */
-
-        @media all and (max-width: 800px) {
-            padding: 0 2rem;
-            @media all and (max-width: 500px) {
-                padding: 0 1.5rem;
-            }
-        }
     }
 `
 export const paddingStyles = css`
