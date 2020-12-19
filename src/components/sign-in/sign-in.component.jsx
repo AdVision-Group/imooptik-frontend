@@ -8,14 +8,14 @@ import { FormContainer, SubmitButton, SignUpButton } from './sign-in.styles'
 const SignIn = ({ setShowSignUp }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [isWaitingForResponse, setIsWaitingForResponse] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [errMessage, setErrMessage] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        setIsSubmitting(true)
+        setIsWaitingForResponse(true)
 
         if (!email) {
             console.log("Ziadny e-mail")
@@ -43,17 +43,16 @@ const SignIn = ({ setShowSignUp }) => {
 
             const response = await fetch("http://195.110.58.166:8080/api/auth/login", requestOptions)
             const data = await response.json()
-            console.log(data)
 
-            if (response.status === 400) {
-                setIsSubmitting(false)
-                setErrMessage(data.message)
-            }
+            setErrMessage(data.message)
+            setIsWaitingForResponse(false)
+
 
         } catch (err) {
             console.log(err)
+            setErrMessage("Nieco sa pokazilo")
+            setIsWaitingForResponse(false)
         }
-        // setIsLoading(false)
     }
 
 
@@ -61,7 +60,7 @@ const SignIn = ({ setShowSignUp }) => {
         <React.Fragment>
             {
                 isLoading ? (
-                    <PopUp loading={isSubmitting} title={errMessage} close={() => setIsLoading(false)} />
+                    <PopUp loading={isWaitingForResponse} title={errMessage} close={() => setIsLoading(false)} />
                 ) : (
                         <React.Fragment>
                             <FormContainer onSubmit={handleSubmit}>
