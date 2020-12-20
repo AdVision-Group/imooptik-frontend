@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/imooptik-frontend/static/js/main.134a5c81.chunk.js",
-    "main.js.map": "/imooptik-frontend/static/js/main.134a5c81.chunk.js.map",
-    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.81eccac9.js",
-    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.81eccac9.js.map",
-    "static/js/2.ccc5914d.chunk.js": "/imooptik-frontend/static/js/2.ccc5914d.chunk.js",
-    "static/js/2.ccc5914d.chunk.js.map": "/imooptik-frontend/static/js/2.ccc5914d.chunk.js.map",
-    "static/js/3.9e1333cf.chunk.js": "/imooptik-frontend/static/js/3.9e1333cf.chunk.js",
-    "static/js/3.9e1333cf.chunk.js.map": "/imooptik-frontend/static/js/3.9e1333cf.chunk.js.map",
+    "main.js": "/imooptik-frontend/static/js/main.54c77410.chunk.js",
+    "main.js.map": "/imooptik-frontend/static/js/main.54c77410.chunk.js.map",
+    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.580675ca.js",
+    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.580675ca.js.map",
+    "static/js/2.62f5807a.chunk.js": "/imooptik-frontend/static/js/2.62f5807a.chunk.js",
+    "static/js/2.62f5807a.chunk.js.map": "/imooptik-frontend/static/js/2.62f5807a.chunk.js.map",
+    "static/js/3.5e2a7efd.chunk.js": "/imooptik-frontend/static/js/3.5e2a7efd.chunk.js",
+    "static/js/3.5e2a7efd.chunk.js.map": "/imooptik-frontend/static/js/3.5e2a7efd.chunk.js.map",
     "index.html": "/imooptik-frontend/index.html",
-    "static/js/2.ccc5914d.chunk.js.LICENSE.txt": "/imooptik-frontend/static/js/2.ccc5914d.chunk.js.LICENSE.txt"
+    "static/js/2.62f5807a.chunk.js.LICENSE.txt": "/imooptik-frontend/static/js/2.62f5807a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.81eccac9.js",
-    "static/js/2.ccc5914d.chunk.js",
-    "static/js/main.134a5c81.chunk.js"
+    "static/js/runtime-main.580675ca.js",
+    "static/js/2.62f5807a.chunk.js",
+    "static/js/main.54c77410.chunk.js"
   ]
 }
