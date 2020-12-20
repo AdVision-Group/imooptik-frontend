@@ -7,6 +7,7 @@ export const PopupContainer = styled.div`
     position: fixed;
     left: 0;
     right: 0;
+    z-index: 999999;
 
     display: flex;
     align-items: center;

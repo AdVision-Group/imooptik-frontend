@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
 
 export const FormContainer = styled.form`
     width: 100%;
@@ -21,14 +22,8 @@ export const FormContainer = styled.form`
     }
 `
 
-export const SubmitButton = styled.button`
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
+export const SubmitButton = styled(CustomButton)`
     width: 100%;
-    padding: .5rem;
-    border-radius: .5rem;
-    font-family: inherit;
 `
 
 export const SignUpButton = styled.button`
