@@ -24,6 +24,18 @@ const WarehouseSection = () => {
                     id='[productId]'
                     price='99.99'
                 />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
 
             </ScrollContainer>
         </section>
