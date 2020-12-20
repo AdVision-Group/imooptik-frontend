@@ -3,18 +3,7 @@ import React, { useState } from 'react'
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-
-import {
-    ProductContainer,
-    ProductImage,
-    ProductContent,
-    ProductId,
-    StockInfo,
-    Price,
-    Options,
-    UpdateButton,
-    DeleteButton,
-} from './e-shop.styles'
+import ProductOverview from '../../components/order-overview/order-overview.component'
 
 const EshopSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
@@ -59,121 +48,36 @@ const EshopSection = () => {
 
             {/* Products container */}
             <ScrollContainer>
-
-                {/* Single product */}
-                <ProductContainer>
-
-                    <ProductImage>
-                        IMG
-                    </ProductImage>
-
-                    <ProductContent>
-                        <h2>Product name</h2>
-                        <ProductId>[product id]</ProductId>
-                        <StockInfo>Na sklade [x] kusov</StockInfo>
-                        <Price>99.99€</Price>
-                    </ProductContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </ProductContainer>
-                <ProductContainer>
-
-                    <ProductImage>
-                        IMG
-                    </ProductImage>
-
-                    <ProductContent>
-                        <h2>Product name</h2>
-                        <ProductId>[product id]</ProductId>
-                        <StockInfo>Na sklade [x] kusov</StockInfo>
-                        <Price>99.99€</Price>
-                    </ProductContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </ProductContainer>
-                <ProductContainer>
-
-                    <ProductImage>
-                        IMG
-                    </ProductImage>
-
-                    <ProductContent>
-                        <h2>Product name</h2>
-                        <ProductId>[product id]</ProductId>
-                        <StockInfo>Na sklade [x] kusov</StockInfo>
-                        <Price>99.99€</Price>
-                    </ProductContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </ProductContainer>
-
-                <ProductContainer>
-
-                    <ProductImage>
-                        IMG
-                    </ProductImage>
-
-                    <ProductContent>
-                        <h2>Product name</h2>
-                        <ProductId>[product id]</ProductId>
-                        <StockInfo>Na sklade [x] kusov</StockInfo>
-                        <Price>99.99€</Price>
-                    </ProductContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </ProductContainer>
-
-                <ProductContainer>
-
-                    <ProductImage>
-                        IMG
-                    </ProductImage>
-
-                    <ProductContent>
-                        <h2>Product name</h2>
-                        <ProductId>[product id]</ProductId>
-                        <StockInfo>Na sklade [x] kusov</StockInfo>
-                        <Price>99.99€</Price>
-                    </ProductContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </ProductContainer>
-
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
+                <ProductOverview
+                    name='Product name'
+                    stock='[x]'
+                    id='[productId]'
+                    price='99.99'
+                />
             </ScrollContainer>
         </section >
     )

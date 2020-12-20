@@ -9,7 +9,8 @@ import CustomersSection from '../../sections/customers/customers.section'
 import OrdersSection from '../../sections/orders/orders.section'
 import AnalyticsSection from '../../sections/analytics/analytics.section'
 
-import CustomerProfileSection from '../../sections/customer-profile/customer-profile.component'
+import CustomerProfileSection from '../../sections/customer-profile/customer-profile.section'
+import ProductSection from '../../sections/product/product.section'
 
 import { DashboardContainer } from './dashboard.styles'
 
@@ -45,7 +46,8 @@ const Dashboard = () => {
             <main>
                 <Switch>
                     <Route path={`${match.path}/obchod`} component={EshopSection} />
-                    <Route path={`${match.path}/sklad`} component={WarehouseSection} />
+                    <Route exact path={`${match.path}/sklad`} component={WarehouseSection} />
+                    <Route path={`${match.path}/sklad/:productId`} component={ProductSection} />
                     <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                     <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
                     <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
