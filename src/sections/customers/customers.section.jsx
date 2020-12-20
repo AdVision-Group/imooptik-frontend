@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -15,6 +16,7 @@ import {
 
 const CustomersSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
+    const { push } = useHistory()
 
     return (
         <section>
@@ -33,58 +35,7 @@ const CustomersSection = () => {
                     </Content>
 
                     <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </CustomerContainer>
-
-                <CustomerContainer>
-                    <Content>
-                        <h2>Meno Priezvisko</h2>
-                        <ProductId>[product id]</ProductId>
-                        <Description>Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi...</Description>
-                    </Content>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </CustomerContainer>
-
-                <CustomerContainer>
-                    <Content>
-                        <h2>Meno Priezvisko</h2>
-                        <ProductId>[product id]</ProductId>
-                        <Description>Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi...</Description>
-                    </Content>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-                </CustomerContainer>
-
-                <CustomerContainer>
-                    <Content>
-                        <h2>Meno Priezvisko</h2>
-                        <ProductId>[product id]</ProductId>
-                        <Description>Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi...</Description>
-                    </Content>
-
-                    <Options>
-                        <UpdateButton>
+                        <UpdateButton onClick={() => push('zakaznici/profile-id')}>
                             Upraviť
                         </UpdateButton>
                         <DeleteButton>

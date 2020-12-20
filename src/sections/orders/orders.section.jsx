@@ -3,17 +3,7 @@ import React, { useState } from 'react'
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-
-import {
-    OrderContainer,
-    OrderContent,
-    Options,
-    OrderId,
-    Date,
-    DeleteButton,
-    Price,
-    UpdateButton
-} from './orders.styles'
+import OrderOverview from '../../components/order-overview/order-overview.component'
 
 const OrdersSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
@@ -57,85 +47,30 @@ const OrdersSection = () => {
             />
 
             <ScrollContainer>
-
-                <OrderContainer>
-
-                    <OrderContent>
-                        <h2>Product name</h2>
-                        <OrderId>[product id]</OrderId>
-                        <Date>28. November 2020</Date>
-                        <Price>99.99€</Price>
-                    </OrderContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-
-                </OrderContainer>
-
-                <OrderContainer>
-
-                    <OrderContent>
-                        <h2>Product name</h2>
-                        <OrderId>[product id]</OrderId>
-                        <Date>28. November 2020</Date>
-                        <Price>99.99€</Price>
-                    </OrderContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-
-                </OrderContainer>
-
-                <OrderContainer>
-
-                    <OrderContent>
-                        <h2>Product name</h2>
-                        <OrderId>[product id]</OrderId>
-                        <Date>28. November 2020</Date>
-                        <Price>99.99€</Price>
-                    </OrderContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-
-                </OrderContainer>
-                <OrderContainer>
-
-                    <OrderContent>
-                        <h2>Product name</h2>
-                        <OrderId>[product id]</OrderId>
-                        <Date>28. November 2020</Date>
-                        <Price>99.99€</Price>
-                    </OrderContent>
-
-                    <Options>
-                        <UpdateButton>
-                            Upraviť
-                        </UpdateButton>
-                        <DeleteButton>
-                            Vymazať
-                        </DeleteButton>
-                    </Options>
-
-                </OrderContainer>
+                <OrderOverview
+                    name='Product name'
+                    id='[Product ID]'
+                    date='28. November 2020'
+                    totalPrice='99.99'
+                />
+                <OrderOverview
+                    name='Product name'
+                    id='[Product ID]'
+                    date='28. November 2020'
+                    totalPrice='99.99'
+                />
+                <OrderOverview
+                    name='Product name'
+                    id='[Product ID]'
+                    date='28. November 2020'
+                    totalPrice='99.99'
+                />
+                <OrderOverview
+                    name='Product name'
+                    id='[Product ID]'
+                    date='28. November 2020'
+                    totalPrice='99.99'
+                />
             </ScrollContainer>
         </section>
     )

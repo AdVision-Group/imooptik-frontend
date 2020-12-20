@@ -32,10 +32,11 @@ const SignUp = ({ setShowSignUp }) => {
 
                 <CustomInput
                     label="E-mail"
-                    type='text'
+                    type='emial'
                     name='email'
                     value={email}
                     handleChange={(e) => setEmail(e.target.value)}
+                    required
                 />
                 <CustomInput
                     label="Heslo"
@@ -43,6 +44,7 @@ const SignUp = ({ setShowSignUp }) => {
                     name='pwd'
                     value={password}
                     handleChange={(e) => setPassword(e.target.value)}
+                    required
                 />
                 <CustomInput
                     label="Potvrď heslo"
@@ -50,6 +52,7 @@ const SignUp = ({ setShowSignUp }) => {
                     name='cnfrmPwd'
                     value={confirmPassword}
                     handleChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                 />
 
                 <SubmitButton>Registrovať sa</SubmitButton>

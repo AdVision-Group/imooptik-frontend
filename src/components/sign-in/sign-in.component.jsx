@@ -32,10 +32,11 @@ const SignIn = ({ setShowSignUp }) => {
 
                 <CustomInput
                     label="E-mail"
-                    type='text'
+                    type='email'
                     name='email'
                     value={email}
                     handleChange={(e) => setEmail(e.target.value)}
+                    required
                 />
                 <CustomInput
                     label="Heslo"
@@ -43,6 +44,8 @@ const SignIn = ({ setShowSignUp }) => {
                     name='pwd'
                     value={password}
                     handleChange={(e) => setPassword(e.target.value)}
+                    required
+
                 />
 
                 <SubmitButton>Prihlásiť sa</SubmitButton>
