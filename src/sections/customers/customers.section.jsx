@@ -23,6 +23,7 @@ const CustomersSection = () => {
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
+                handleAddButton={() => push('zakaznici/profile-id')}
                 title="Zákazníci"
             />
 
