@@ -11,7 +11,7 @@ import {
     AddButton,
 } from './section-header.styles'
 
-const SectionHeader = ({ searchQuery, handleChange, title }) => {
+const SectionHeader = ({ searchQuery, handleChange, title, handleAddButton = () => { } }) => {
     return (
         <HeaderContainer>
             <Left>
@@ -29,7 +29,7 @@ const SectionHeader = ({ searchQuery, handleChange, title }) => {
                     />
                 </div>
                 <SearchButton>Vyhľadať</SearchButton>
-                <AddButton>Pridať</AddButton>
+                <AddButton onClick={handleAddButton}>Pridať</AddButton>
             </Right>
         </HeaderContainer>
     )

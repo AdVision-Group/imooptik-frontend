@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import ProductOverview from '../../components/order-overview/order-overview.component'
+import ProductOverview from '../../components/product-overview/product-overview.component'
 
 
 const WarehouseSection = () => {

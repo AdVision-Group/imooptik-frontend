@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import ProductOverview from '../../components/order-overview/order-overview.component'
+import ProductOverview from '../../components/product-overview/product-overview.component'
 
 const EshopSection = () => {
     const [searchQuery, setSearchQuery] = useState('')

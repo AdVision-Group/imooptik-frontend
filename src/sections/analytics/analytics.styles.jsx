@@ -13,6 +13,7 @@ export const GridContainer = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: 'f f l' 's t l';
+    grid-gap: 2rem;
 
     div {
         height: 20rem;

@@ -13,10 +13,7 @@ import {
 } from './product-overview.styles'
 
 const ProductOverview = (props) => {
-    console.log(props)
-    console.log("aaaa")
     const { name, stock, id, price } = props
-
 
     return (
         <ProductContainer>

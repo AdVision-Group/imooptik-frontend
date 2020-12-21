@@ -8,9 +8,11 @@ import WarehouseSection from '../../sections/warehouse/warehouse.section'
 import CustomersSection from '../../sections/customers/customers.section'
 import OrdersSection from '../../sections/orders/orders.section'
 import AnalyticsSection from '../../sections/analytics/analytics.section'
-
 import CustomerProfileSection from '../../sections/customer-profile/customer-profile.section'
 import ProductSection from '../../sections/product/product.section'
+import BlogSection from "../../sections/blog-posts/blog-posts.section"
+import BookingSection from '../../sections/booking/booking.section'
+import PostSection from '../../sections/post/post.section'
 
 import { DashboardContainer } from './dashboard.styles'
 
@@ -34,6 +36,14 @@ const Dashboard = () => {
             path: '/objednavky'
         },
         {
+            name: 'Rezervácie',
+            path: '/rezervacie'
+        },
+        {
+            name: 'Blog',
+            path: '/blog'
+        },
+        {
             name: 'Analytika',
             path: '/analytika'
         },
@@ -50,8 +60,16 @@ const Dashboard = () => {
                     <Route path={`${match.path}/sklad/:productId`} component={ProductSection} />
                     <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                     <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
+
                     <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
                     <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+
+                    <Route exact path={`${match.path}/rezervacie`} component={BookingSection} />
+
+                    <Route exact path={`${match.path}/blog`} component={BlogSection} />
+                    <Route path={`${match.path}/blog/:id`} component={PostSection} />
+
+
                     <Redirect to={`${match.path}/obchod`} />
                 </Switch>
             </main>
