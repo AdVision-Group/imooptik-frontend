@@ -4,23 +4,27 @@ import { AuthContext } from '../../context/auth/auth.context'
 import CustomInput from '../custom-input/custom-input.component'
 import PopUp from '../popup/pop-up.component'
 
-import { FormContainer, SubmitButton, SignUpButton, ForgotPasswordButton } from './sign-in.styles'
+import {
+    FormContainer,
+    SignInButton,
+    SignUpButton,
+    SubmitButton
+} from './forgot-password.styles'
 
-const SignIn = ({ showSignUpForm, showForgotPwsForm }) => {
+const ForgotPassword = ({ showSignInForm, showSignUpForm }) => {
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     const {
         isWaitingForResponse,
         errMessage,
         isLoading,
-        logIn,
-        setIsLoading
+        setIsLoading,
+        handleResetPassword
     } = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        logIn(email, password)
+        handleResetPassword(email)
     }
 
 
@@ -38,23 +42,14 @@ const SignIn = ({ showSignUpForm, showForgotPwsForm }) => {
                     handleChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <CustomInput
-                    label="Heslo"
-                    type='password'
-                    name='pwd'
-                    value={password}
-                    handleChange={(e) => setPassword(e.target.value)}
-                    required
 
-                />
-
-                <SubmitButton>Prihlásiť sa</SubmitButton>
+                <SubmitButton>Odoslať</SubmitButton>
             </FormContainer>
-            <SignUpButton onClick={() => showSignUpForm()}>Vytvoriť účet</SignUpButton>
-            <ForgotPasswordButton onClick={() => showForgotPwsForm()}>Zabudol som heslo</ForgotPasswordButton>
+            <SignInButton onClick={() => showSignInForm()}>Spät na prihlásenie</SignInButton>
+            <SignUpButton onClick={() => showSignUpForm()}>Vytvoriť nový účet</SignUpButton>
 
         </React.Fragment>
     )
 }
 
-export default SignIn
+export default ForgotPassword

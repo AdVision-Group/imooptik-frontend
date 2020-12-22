@@ -26,7 +26,7 @@ export const SubmitButton = styled(CustomButton)`
     width: 100%;
 `
 
-export const SignUpButton = styled.button`
+export const SignInButton = styled.button`
     cursor: pointer;
     background-color: transparent;
     color: #DD4C4C;
@@ -40,7 +40,7 @@ export const SignUpButton = styled.button`
     }
 `
 
-export const ForgotPasswordButton = styled.button`
+export const SignUpButton = styled.button`
     cursor: pointer;
     background-color: transparent;
     color: #DD4C4C;

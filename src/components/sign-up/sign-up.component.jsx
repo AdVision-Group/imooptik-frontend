@@ -6,7 +6,7 @@ import Popup from '../popup/pop-up.component'
 
 import { FormContainer, SubmitButton, SignUpButton } from './sign-up.styles'
 
-const SignUp = ({ setShowSignUp }) => {
+const SignUp = ({ showSignInForm }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -57,7 +57,7 @@ const SignUp = ({ setShowSignUp }) => {
 
                 <SubmitButton>Registrovať sa</SubmitButton>
             </FormContainer>
-            <SignUpButton onClick={() => setShowSignUp(false)}>Mám účet, chcem sa prihlásiť</SignUpButton>
+            <SignUpButton onClick={() => showSignInForm()}>Mám účet, chcem sa prihlásiť</SignUpButton>
         </React.Fragment>
     )
 }

@@ -14,7 +14,7 @@ export const getUser = (credentials) => {
         redirect: 'follow'
     };
 
-    return fetch("http://195.110.58.166:8080/api/auth/login", requestOptions)
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/auth/login`, requestOptions)
 }
 
 export const createNewUser = (credentials) => {
@@ -32,5 +32,37 @@ export const createNewUser = (credentials) => {
         redirect: 'follow'
     };
 
-    return fetch("http://195.110.58.166:8080/api/auth/register", requestOptions)
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/auth/register`, requestOptions)
+}
+
+export const resetPassword = (email) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({ "email": email });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/auth/forgot`, requestOptions)
+}
+
+export const setNewPassword = (resetSecret, password) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({ "resetSecret": resetSecret, "password": password });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/auth/reset`, requestOptions)
 }
