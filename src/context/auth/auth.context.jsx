@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
             setIsWaitingForResponse(false)
             if (user) {
                 setCurrentUser(user.user)
-                setToken(user.token)
+                setToken(user.authToken)
             }
         } catch (err) {
             console.log(err)
@@ -96,6 +96,7 @@ const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
+                token,
                 currentUser,
                 isLoading,
                 errMessage,
