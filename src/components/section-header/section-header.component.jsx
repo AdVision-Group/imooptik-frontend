@@ -11,12 +11,12 @@ import {
     AddButton,
 } from './section-header.styles'
 
-const SectionHeader = ({ searchQuery, handleChange, title, handleAddButton = () => { } }) => {
+const SectionHeader = ({ searchQuery, handleChange, title, count = 999, handleAddButton = () => { } }) => {
     return (
         <HeaderContainer>
             <Left>
                 <h1>{title}</h1>
-                <Notification>999</Notification>
+                <Notification>{count}</Notification>
             </Left>
             <Right>
                 <div>

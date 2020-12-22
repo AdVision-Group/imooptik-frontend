@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { BlogContext } from '../../context/blog/blog.context'
 import { useHistory } from 'react-router-dom'
 
 import SectionHeader from '../../components/section-header/section-header.component'
@@ -15,6 +16,7 @@ import {
 } from './blog-posts.styles'
 
 const BlogPosts = () => {
+    const { getPosts, posts, postsCount } = useContext(BlogContext)
     const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
@@ -30,12 +32,19 @@ const BlogPosts = () => {
 
     const [activeIndex, setActiveIndex] = useState(2)
 
+    useEffect(() => {
+        if (posts === null) {
+            getPosts()
+        }
+    }, [posts])
+
     return (
         <section>
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('blog/blog-id')}
+                count={postsCount}
                 title="Blog"
             />
 

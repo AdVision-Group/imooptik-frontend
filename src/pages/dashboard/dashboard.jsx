@@ -14,6 +14,8 @@ import BlogSection from "../../sections/blog-posts/blog-posts.section"
 import BookingSection from '../../sections/booking/booking.section'
 import PostSection from '../../sections/post/post.section'
 
+import BlogProvider from '../../context/blog/blog.context'
+
 import { DashboardContainer } from './dashboard.styles'
 
 const Dashboard = () => {
@@ -66,12 +68,14 @@ const Dashboard = () => {
 
                     <Route exact path={`${match.path}/rezervacie`} component={BookingSection} />
 
-                    <Route exact path={`${match.path}/blog`} component={BlogSection} />
-                    <Route path={`${match.path}/blog/:id`} component={PostSection} />
+                    <BlogProvider>
+                        <Route exact path={`${match.path}/blog`} component={BlogSection} />
+                        <Route path={`${match.path}/blog/:id`} component={PostSection} />
+                    </BlogProvider>
 
 
-                    <Redirect to={`${match.path}/obchod`} />
                 </Switch>
+                <Redirect to={`${match.path}/obchod`} />
             </main>
         </DashboardContainer>
     )

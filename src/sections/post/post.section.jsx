@@ -9,13 +9,19 @@ import {
     GridContainer,
     PostImage,
     DeleteButton,
-    AddButton
+    AddButton,
+    Title,
+    ContentTextare,
+    CheckboxContainer
 } from './post.styles'
 
 const PostSection = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
+    const [draft, toggleDraft] = useState(false)
+
+    console.log(draft)
 
     return (
         <section>
@@ -24,6 +30,10 @@ const PostSection = () => {
                     <h1>Post</h1>
                 </div>
                 <div>
+                    <CheckboxContainer>Draft
+                        <input type="checkbox" checked={draft} onChange={() => toggleDraft(!draft)} />
+                        <span className="checkmark"></span>
+                    </CheckboxContainer>
                     <DeleteButton>Vymazať</DeleteButton>
                     <AddButton>Pridať príspevok</AddButton>
                 </div>
@@ -46,20 +56,17 @@ const PostSection = () => {
                             name='description'
                             rows='5'
                             value={description}
-                            handleChange={(e) => setContent(e.target.value)}
+                            handleChange={(e) => setDescription(e.target.value)}
                         />
                         <h2>Titulná fotka</h2>
                         <PostImage>IMG</PostImage>
                     </div>
                     <div>
-                        <h2>Obsah</h2>
+                        <Title>Obsah</Title>
 
-                        <CustomTextarea
-                            label="Popis"
-                            name='content'
-                            rows='25'
+                        <ContentTextare
                             value={content}
-                            handleChange={(e) => setDescription(e.target.value)}
+                            onChange={setContent}
                         />
                     </div>
 
