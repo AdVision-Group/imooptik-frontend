@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [errMessage, setErrMessage] = useState('')
 
+
     const logIn = async (email, password) => {
         setIsLoading(true)
         setIsWaitingForResponse(true)
@@ -44,6 +45,7 @@ const AuthProvider = ({ children }) => {
 
             setErrMessage(user.message)
             setIsWaitingForResponse(false)
+            console.log(user)
             if (user) {
                 setCurrentUser(user.user)
                 setToken(user.authToken)

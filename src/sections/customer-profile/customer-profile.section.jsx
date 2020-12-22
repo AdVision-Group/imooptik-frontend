@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { UserContext } from '../../context/user/user.context'
+import { useParams, useHistory } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import OrderOverview from '../../components/order-overview/order-overview.component'
+import Popup from '../../components/popup/pop-up.component'
 
 import {
     Header,
@@ -19,6 +22,17 @@ import {
 } from './customer-profile.styles'
 
 const CustomerProfile = () => {
+    const {
+        user,
+        getUser,
+        closeModal,
+        isLoading,
+        showModal,
+        message
+    } = useContext(UserContext)
+    const { id } = useParams()
+    const { push } = useHistory()
+
     const [fName, setFName] = useState('')
     const [lName, setLName] = useState('')
 
@@ -42,10 +56,78 @@ const CustomerProfile = () => {
     const [ocLeftEye, setOcLeftEye] = useState('')
     const [ocRightEye, setOcRightEye] = useState('')
 
+    console.log(id)
+    console.log(user)
+
+    useEffect(() => {
+        if (id === 'novy-zakaznik') return
+        getUser(id)
+    }, [id])
+
+    useEffect(() => {
+        if (user) {
+            if (user.name) {
+                setFName(user.name.split(" ")[0] || '')
+                setLName(user.name.split(" ")[1] || '')
+            }
+            setEmail(user.email || '')
+            setPhoneNumber(user.phone || '')
+            setStreet(user.address || '')
+            setPsc(user.psc || '')
+            setCity(user.city || '')
+            setState(user.country || '')
+
+            if (user.lenses.diopters.length > 0) {
+                setDLeftEye(user.lenses.diopters[0] || '')
+                setDRightEye(user.lenses.diopters[1] || '')
+            }
+            if (user.lenses.distance.length > 0) {
+                setRLeftEye(user.lenses.distance[0] || '')
+                setRRightEye(user.lenses.distance[1] || '')
+
+            }
+            if (user.lenses.cylinder.length > 0) {
+                setCLeftEye(user.lenses.cylinder[0] || '')
+                setCRightEye(user.lenses.cylinder[1] || '')
+            }
+            if (user.lenses.cylinderAxes.length > 0) {
+                setOcLeftEye(user.lenses.cylinderAxes[0] || '')
+                setOcRightEye(user.lenses.cylinderAxes[1] || '')
+            }
+        }
+        return () => {
+            setFName('')
+            setLName('')
+
+            setEmail('')
+            setPhoneNumber('')
+
+            setStreet('')
+            setPsc('')
+            setCity('')
+            setState('')
+
+            setDLeftEye('')
+            setDRightEye('')
+
+            setRLeftEye('')
+            setRRightEye('')
+
+            setCLeftEye('')
+            setCRightEye('')
+
+            setOcLeftEye('')
+            setOcRightEye('')
+        }
+    }, [user])
+
     return (
         <section>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+
+
             <Header>
-                <Name>John Doe</Name>
+                <Name>Profil</Name>
                 <div>
                     <DeleteProfileButton>Vymazať</DeleteProfileButton>
                 </div>

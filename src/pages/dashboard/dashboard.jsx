@@ -15,6 +15,7 @@ import BookingSection from '../../sections/booking/booking.section'
 import PostSection from '../../sections/post/post.section'
 
 import BlogProvider from '../../context/blog/blog.context'
+import UserProvider from '../../context/user/user.context'
 
 import { DashboardContainer } from './dashboard.styles'
 
@@ -63,8 +64,10 @@ const Dashboard = () => {
                     <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                     <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
 
-                    <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
-                    <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+                    <UserProvider>
+                        <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
+                        <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+                    </UserProvider>
 
                     <Route exact path={`${match.path}/rezervacie`} component={BookingSection} />
 
