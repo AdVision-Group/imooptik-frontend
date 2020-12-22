@@ -64,17 +64,25 @@ const Dashboard = () => {
                     <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                     <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
 
+                    <Route path={`${match.path}/rezervacie`} component={BookingSection} />
+                    <Route exact path={`${match.path}/blog`} render={() => (
+                        <BlogProvider>
+                            <BlogSection />
+                        </BlogProvider>
+                    )} />
+                    <Route path={`${match.path}/blog/:id`} render={() => (
+                        <BlogProvider>
+                            <PostSection />
+                        </BlogProvider>
+                    )} />
+
                     <UserProvider>
                         <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
                         <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
                     </UserProvider>
 
-                    <Route exact path={`${match.path}/rezervacie`} component={BookingSection} />
 
-                    <BlogProvider>
-                        <Route exact path={`${match.path}/blog`} component={BlogSection} />
-                        <Route path={`${match.path}/blog/:id`} component={PostSection} />
-                    </BlogProvider>
+
 
 
                 </Switch>

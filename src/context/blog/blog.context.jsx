@@ -7,7 +7,8 @@ import {
     fetchImages,
     fetchSinglePost,
     updatePost,
-    deletePost
+    deletePost,
+    deleteImage
 } from './blog.queries'
 
 
@@ -26,7 +27,8 @@ export const BlogContext = createContext({
     handleImage: () => { },
     getPost: () => { },
     handlePostUpdate: () => { },
-    handlePostDelete: () => { }
+    handlePostDelete: () => { },
+    handleDeleteImage: () => { }
 })
 
 const BlogProvider = ({ children }) => {
@@ -143,9 +145,6 @@ const BlogProvider = ({ children }) => {
             setMessage("Nieco sa pokazilo")
             setShowLoading(false)
         }
-
-
-
     }
 
     const getImages = async () => {
@@ -172,6 +171,24 @@ const BlogProvider = ({ children }) => {
         }
     }
 
+    const handleDeleteImage = async (id) => {
+        setIsLoading(true)
+        setShowLoading(true)
+
+        try {
+            const respone = await deleteImage(token, id)
+            const data = await respone.json()
+
+            setMessage(data.message)
+            setShowLoading(false)
+            getImages()
+        } catch (err) {
+            console.log(err)
+            setMessage("Nieco sa pokazilo")
+            setShowLoading(false)
+        }
+    }
+
 
     return (
         <BlogContext.Provider
@@ -190,7 +207,8 @@ const BlogProvider = ({ children }) => {
                 handleImage,
                 getPost,
                 handlePostUpdate,
-                handlePostDelete
+                handlePostDelete,
+                handleDeleteImage
             }}
         >
             {children}

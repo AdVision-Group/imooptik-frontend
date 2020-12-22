@@ -33,12 +33,10 @@ const BlogPosts = () => {
     const [activeIndex, setActiveIndex] = useState(2)
 
     useEffect(() => {
-        if (posts === null) {
+        if (!posts) {
             getPosts()
         }
     }, [posts])
-
-    console.log(posts)
 
     return (
         <section>

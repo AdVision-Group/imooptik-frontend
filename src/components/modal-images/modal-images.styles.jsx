@@ -91,11 +91,16 @@ export const FlexContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
+    position: relative;
     cursor: pointer;
     min-width: 20rem;
 
+    &:hover button {
+        display: block
+    }
+
     &:not(:last-child) {
-        margin-right: 1rem;
+        margin-right: 1.5rem;
     }
 
     img {
@@ -103,5 +108,24 @@ export const ImageContainer = styled.div`
         height:100%;
         object-fit: contain;
         object-position: center;
+    }
+`
+
+export const DeleteButton = styled.button`
+    cursor: pointer;
+    display:none;
+    border-radius:50%;
+    position: absolute;
+    border: none;
+    background-color: rgb(235, 172, 1);
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    right: .5rem;
+    top: .5rem;
+
+    outline: none;
+
+    &:focus {
+        outline: none;
     }
 `

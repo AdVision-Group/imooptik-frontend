@@ -7,12 +7,12 @@ import {
     Modal,
     CloseButton,
     FlexContainer,
-    ImageContainer
+    ImageContainer,
+    DeleteButton
 } from './modal-images.styles'
 
 const ModalImages = ({ close, setImage }) => {
-    const { getImages, images, handleImage } = useContext(BlogContext)
-    const [files, setFiles] = useState(undefined)
+    const { getImages, images, handleImage, handleDeleteImage } = useContext(BlogContext)
 
     const selectImage = (id) => {
         setImage(id)
@@ -32,8 +32,9 @@ const ModalImages = ({ close, setImage }) => {
                 <h2>Nahrane obrazky</h2>
                 <FlexContainer>
                     {images && images.map(img => (
-                        <ImageContainer key={img._id} onClick={() => selectImage(img._id)}>
-                            <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
+                        <ImageContainer key={img._id}>
+                            <DeleteButton onClick={() => handleDeleteImage(img._id)}>&#10005;</DeleteButton>
+                            <img onClick={() => selectImage(img._id)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
                         </ImageContainer>
                     ))}
                 </FlexContainer>
