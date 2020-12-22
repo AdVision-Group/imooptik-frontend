@@ -1,41 +1,35 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useContext } from 'react'
+import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { getUser, createNewUser, resetPassword, setNewPassword } from './auth.queries'
 
 export const AuthContext = createContext({
     currentUser: null,
     token: null,
-    isLoading: false,
-    isWaitingForResponse: false,
-    errMessage: '',
     logIn: () => { },
     Register: () => { },
-    setIsLoading: () => { },
     handleResetPassword: () => { },
     handleCreatingNewPassword: () => { }
 })
 
 const AuthProvider = ({ children }) => {
+    const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
     const [currentUser, setCurrentUser] = useState(null)
     const [token, setToken] = useState(null)
-    const [isWaitingForResponse, setIsWaitingForResponse] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [errMessage, setErrMessage] = useState('')
-
 
     const logIn = async (email, password) => {
+        setShowModal(true)
         setIsLoading(true)
-        setIsWaitingForResponse(true)
 
         if (!email) {
             console.log("Ziadny e-mail")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
         if (!password) {
             console.log("Ziadne heslo")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
 
@@ -43,42 +37,42 @@ const AuthProvider = ({ children }) => {
             const response = await getUser({ email, password })
             const user = await response.json()
 
-            setErrMessage(user.message)
-            setIsWaitingForResponse(false)
-            console.log(user)
-            if (user) {
+            getMessage(user.message)
+            setIsLoading(false)
+            if (user.user) {
                 setCurrentUser(user.user)
                 setToken(user.authToken)
+                closeModal()
             }
         } catch (err) {
             console.log(err)
-            setErrMessage("Nieco sa pokazilo")
-            setIsWaitingForResponse(false)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
     }
 
     const Register = async (email, password, confirmPassword) => {
+        setShowModal(true)
         setIsLoading(true)
-        setIsWaitingForResponse(true)
 
         if (!email) {
             console.log("Ziadny e-mail")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
         if (!password) {
             console.log("Ziadne heslo")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
 
 
         if (password !== confirmPassword) {
             console.log("hesla sa nezhoduju")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
 
@@ -87,24 +81,24 @@ const AuthProvider = ({ children }) => {
             const response = await createNewUser({ email, password })
             const data = await response.json()
 
-            setErrMessage(data.message)
-            setIsWaitingForResponse(false)
+            getMessage(data.message)
+            setIsLoading(false)
 
         } catch (err) {
             console.log(err)
-            setErrMessage("Nieco sa pokazilo")
-            setIsWaitingForResponse(false)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
     }
 
     const handleResetPassword = async (email) => {
+        setShowModal(true)
         setIsLoading(true)
-        setIsWaitingForResponse(true)
 
         if (!email) {
             console.log("Ziadny e-mail")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
 
@@ -112,29 +106,29 @@ const AuthProvider = ({ children }) => {
             const response = await resetPassword(email)
             const user = await response.json()
 
-            setErrMessage(user.message)
-            setIsWaitingForResponse(false)
+            getMessage(user.message)
+            setIsLoading(false)
         } catch (err) {
             console.log(err)
-            setErrMessage("Nieco sa pokazilo")
-            setIsWaitingForResponse(false)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
     }
 
     const handleCreatingNewPassword = async (resetSecret, password) => {
+        setShowModal(true)
         setIsLoading(true)
-        setIsWaitingForResponse(true)
 
         if (!resetSecret) {
             console.log("Ziadny reset token")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
         if (!password) {
             console.log("Ziadne heslo")
+            setShowModal(false)
             setIsLoading(false)
-            setIsWaitingForResponse(false)
             return
         }
 
@@ -142,12 +136,12 @@ const AuthProvider = ({ children }) => {
             const response = await setNewPassword(resetSecret, password)
             const user = await response.json()
 
-            setErrMessage(user.message)
-            setIsWaitingForResponse(false)
+            getMessage(user.message)
+            setIsLoading(false)
         } catch (err) {
             console.log(err)
-            setErrMessage("Nieco sa pokazilo")
-            setIsWaitingForResponse(false)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
 
 
@@ -158,12 +152,8 @@ const AuthProvider = ({ children }) => {
             value={{
                 token,
                 currentUser,
-                isLoading,
-                errMessage,
-                isWaitingForResponse,
                 logIn,
                 Register,
-                setIsLoading,
                 handleResetPassword,
                 handleCreatingNewPassword
             }}

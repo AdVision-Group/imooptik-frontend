@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './context/auth/auth.context'
+import LoadingModalProvider from './context/loading-modal/loading-modal.contenxt'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <LoadingModalProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </LoadingModalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -59,7 +59,7 @@ const BlogPosts = () => {
                     posts && posts.map(post => (
                         <PostContainer key={post._id}>
                             <PostImage>
-                                <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />
+                                {post.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />}
                             </PostImage>
                             <PostContent>
                                 <h2>{post.name}</h2>

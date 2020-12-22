@@ -16,7 +16,7 @@ const SectionHeader = ({ searchQuery, handleChange, title, count = 999, handleAd
         <HeaderContainer>
             <Left>
                 <h1>{title}</h1>
-                <Notification>{count}</Notification>
+                {/* <Notification>{count}</Notification> */}
             </Left>
             <Right>
                 <div>

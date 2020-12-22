@@ -69,7 +69,9 @@ const PostSection = () => {
             setDescription(post.description)
             setContent(post.html)
             toggleDraft(post.draft)
-            setImage(post.image._id)
+            if (post.image) {
+                setImage(post.image._id)
+            }
         }
     }, [post])
 

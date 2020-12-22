@@ -16,8 +16,10 @@ import PostSection from '../../sections/post/post.section'
 
 import BlogProvider from '../../context/blog/blog.context'
 import UserProvider from '../../context/user/user.context'
+import WareHouseProvider from '../../context/warehouse/warehouse.context'
 
 import { DashboardContainer } from './dashboard.styles'
+import WarehouseProvider from '../../context/warehouse/warehouse.context'
 
 const Dashboard = () => {
     const match = useRouteMatch()
@@ -59,12 +61,24 @@ const Dashboard = () => {
             <main>
                 <Switch>
                     <Route path={`${match.path}/obchod`} component={EshopSection} />
-                    <Route exact path={`${match.path}/sklad`} component={WarehouseSection} />
-                    <Route path={`${match.path}/sklad/:productId`} component={ProductSection} />
+
+                    <Route exact path={`${match.path}/sklad`} render={() => (
+                        <WareHouseProvider>
+                            <WarehouseSection />
+                        </WareHouseProvider>
+                    )} />
+                    <Route path={`${match.path}/sklad/:productId`} render={() => (
+                        <WarehouseProvider>
+                            <ProductSection />
+                        </WarehouseProvider>
+                    )} />
+
+
                     <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                     <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
 
                     <Route path={`${match.path}/rezervacie`} component={BookingSection} />
+
                     <Route exact path={`${match.path}/blog`} render={() => (
                         <BlogProvider>
                             <BlogSection />
