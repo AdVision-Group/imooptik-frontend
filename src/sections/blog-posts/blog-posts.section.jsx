@@ -16,7 +16,7 @@ import {
 } from './blog-posts.styles'
 
 const BlogPosts = () => {
-    const { getPosts, posts, postsCount } = useContext(BlogContext)
+    const { getPosts, posts, postsCount, handlePostDelete } = useContext(BlogContext)
     const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
@@ -38,12 +38,14 @@ const BlogPosts = () => {
         }
     }, [posts])
 
+    console.log(posts)
+
     return (
         <section>
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
-                handleAddButton={() => push('blog/blog-id')}
+                handleAddButton={() => push('blog/novy-prispevok')}
                 count={postsCount}
                 title="Blog"
             />
@@ -55,20 +57,23 @@ const BlogPosts = () => {
             />
 
             <ScrollContainer>
-
-                <PostContainer>
-                    <PostImage>
-                        IMG
-                    </PostImage>
-                    <PostContent>
-                        <h2>Nadpis</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis ratione ad obcaecati dicta commodi. Officiis placeat libero reprehenderit tempora et at perferendis ab, rem esse neque quidem ducimus itaque velit nobis error voluptatum. Molestiae, ea deleniti. Aliquid, consectetur sapiente in amet, ipsum distinctio ipsam nihil itaque accusamus officia omnis provident.</p>
-                    </PostContent>
-                    <Options>
-                        <UpdateButton onClick={() => push('blog/blog-id')}>Upraviť</UpdateButton>
-                        <DeleteButton>Vymazať</DeleteButton>
-                    </Options>
-                </PostContainer>
+                {
+                    posts && posts.map(post => (
+                        <PostContainer key={post._id}>
+                            <PostImage>
+                                <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />
+                            </PostImage>
+                            <PostContent>
+                                <h2>{post.name}</h2>
+                                <p>{post.description}</p>
+                            </PostContent>
+                            <Options>
+                                <UpdateButton onClick={() => push(`blog/${post._id}`)}>Upraviť</UpdateButton>
+                                <DeleteButton onClick={() => handlePostDelete(post._id)}>Vymazať</DeleteButton>
+                            </Options>
+                        </PostContainer>
+                    ))
+                }
 
             </ScrollContainer>
         </section>

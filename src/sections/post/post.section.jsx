@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { BlogContext } from '../../context/blog/blog.context'
+import { useParams, useHistory } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import CustomTextarea from '../../components/custom-textarea/custom-textarea.component'
 import Popup from '../../components/popup/pop-up.component'
+import ModalImage from '../../components/modal-images/modal-images.component'
 
 import {
     Header,
@@ -15,28 +17,65 @@ import {
     Title,
     ContentTextare,
     CheckboxContainer,
-    UploadButton
 } from './post.styles'
 
 const PostSection = () => {
-    const { createPost, isLoading, message, showLoading, setIsLoading } = useContext(BlogContext)
+    const { id } = useParams()
+    const { push } = useHistory()
+    const {
+        createPost,
+        isLoading,
+        message,
+        showLoading,
+        setIsLoading,
+        getPost,
+        post,
+        handlePostUpdate
+    } = useContext(BlogContext)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
     const [draft, toggleDraft] = useState(false)
-    const [files, setFiles] = useState(null)
+    const [image, setImage] = useState('')
+    const [showImageModal, setImageModal] = useState(false)
 
     const handleSubmit = e => {
         e.preventDefault()
 
-        if (files === null) return
-        createPost(files[0], title, description, draft, content)
+        if (image.length <= 0) return
+
+        if (id === 'novy-prispevok') {
+            createPost(image, title, description, draft, content)
+        } else {
+            handlePostUpdate(title, description, draft, content, image, id)
+        }
+
+        push('/dashboard/blog')
 
     }
+
+    useEffect(() => {
+        if (id !== 'novy-prispevok') {
+            getPost(id)
+        }
+    }, [id])
+
+    useEffect(() => {
+        console.log(post)
+        if (post) {
+            console.log(post)
+            setTitle(post.name)
+            setDescription(post.description)
+            setContent(post.html)
+            toggleDraft(post.draft)
+            setImage(post.image._id)
+        }
+    }, [post])
 
     return (
         <section>
             {isLoading && <Popup loading={showLoading} title={message} close={() => setIsLoading(false)} />}
+            {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
 
             <Header>
                 <div>
@@ -72,17 +111,8 @@ const PostSection = () => {
                             handleChange={(e) => setDescription(e.target.value)}
                         />
                         <h2>Titulná fotka</h2>
-                        <PostImage>
-                            <UploadButton htmlFor='image'>
-                                <input
-                                    id='image'
-                                    type='file'
-                                    name='image'
-                                    accept="image/png, image/jpeg"
-                                    onChange={e => setFiles(e.target.files)}
-                                />
-                                    Pridať obrázok
-                            </UploadButton>
+                        <PostImage onClick={() => setImageModal(true)} >
+                            Vybrať obrázok
                         </PostImage>
                     </div>
                     <div>

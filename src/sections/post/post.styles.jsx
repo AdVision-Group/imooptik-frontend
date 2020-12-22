@@ -108,28 +108,4 @@ export const CheckboxContainer = styled.label`
     input:checked ~ .checkmark:after {
         display: block;
     }
-
-`
-
-export const UploadButton = styled.label`
-    input[type="file"] {
-        position: absolute;
-        left: -999999999rem;
-    }
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-    max-width: 18rem;
-    font-size: 1.4rem;
-    font-family: inherit;
-    padding: .8rem 1rem;
-    text-align: center;
-    display: block;
-    border: 1px solid #000;
-    transition: background-color .1s ease-out,
-                color .2s ease-out;
-    &:hover {
-        background-color: transparent;
-        color: #000;
-    }
 `
