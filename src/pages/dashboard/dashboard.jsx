@@ -68,7 +68,7 @@ const Dashboard = () => {
                                 <WarehouseSection />
                             </WarehouseProvider>
                         )} />
-                        <Route path={`${match.path}/sklad/:productId`} render={() => (
+                        <Route path={`${match.path}/sklad/:id`} render={() => (
                             <WarehouseProvider>
                                 <ProductSection />
                             </WarehouseProvider>

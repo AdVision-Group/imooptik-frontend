@@ -52,6 +52,7 @@ const WarehouseSection = () => {
                             id={product._id}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
+                            handleUpdateButton={() => push(`sklad/${product._id}`)}
                             handleDeleteButton={() => handleProductDelete(product._id)}
                         />
                     ))

@@ -25,9 +25,12 @@ import {
 } from './product.styles'
 
 const ProductSection = () => {
-    const { createNewProduct } = useContext(WarehouseContext)
+    const { createNewProduct, products, updateProduct } = useContext(WarehouseContext)
     const { id } = useParams()
     const { push } = useHistory()
+
+    console.log(id)
+
 
     const [showImageModal, setImageModal] = useState(false)
 
@@ -45,10 +48,16 @@ const ProductSection = () => {
 
     const [checked, setChecked] = useState('2')
 
+    const [store1, setStore1] = useState('')
+    const [store2, setStore2] = useState('')
+    const [store3, setStore3] = useState('')
+    const [store4, setStore4] = useState('')
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
         const newProduct = {
+            id,
             name,
             eanCode,
             colorCode,
@@ -60,13 +69,46 @@ const ProductSection = () => {
             checked
         }
 
-        createNewProduct(newProduct)
-        push('sklad')
+        console.log(newProduct)
+        console.log(id)
+
+        if (id === 'novy-produkt') {
+            createNewProduct(newProduct)
+            push('/dashboard/sklad')
+
+        } else {
+            updateProduct(newProduct)
+            push('/dashboard/sklad')
+
+        }
+
     }
 
     useEffect(() => {
         if (id === 'novy-produkt') return
+        const product = products.find(prdct => prdct._id === id)
+        console.log(product)
 
+        setName(product.name || '')
+        setEanCode(product.eanCode || '')
+        setColorCode(product.colorCode || '')
+
+        toggleDraft(product.eshop || '')
+
+        setBrand(product.brand || '')
+        setPrice(product.price.toString() || '')
+
+        setDescription(product.description || '')
+        if (product.image) {
+            setImage(product.image._id)
+        }
+
+        setChecked(product.type.toString() || '')
+
+        setStore1(product.available[0] + " ")
+        setStore2(product.available[1] + " ")
+        setStore3(product.available[2] + " ")
+        setStore4(product.available[3] + " ")
 
     }, [id])
 
@@ -210,29 +252,29 @@ const ProductSection = () => {
                                     label="Predajna 1"
                                     type='text'
                                     name='eancode'
-                                    value={colorCode}
-                                    handleChange={(e) => setColorCode(e.target.value)}
+                                    value={store1}
+                                    handleChange={(e) => setStore1(e.target.value)}
                                 />
                                 <CustomInput
                                     label="Predajna 1"
                                     type='text'
                                     name='eancode'
-                                    value={colorCode}
-                                    handleChange={(e) => setColorCode(e.target.value)}
+                                    value={store2}
+                                    handleChange={(e) => setStore2(e.target.value)}
                                 />
                                 <CustomInput
                                     label="Predajna 1"
                                     type='text'
                                     name='eancode'
-                                    value={colorCode}
-                                    handleChange={(e) => setColorCode(e.target.value)}
+                                    value={store3}
+                                    handleChange={(e) => setStore3(e.target.value)}
                                 />
                                 <CustomInput
                                     label="Predajna 1"
                                     type='text'
                                     name='eancode'
-                                    value={colorCode}
-                                    handleChange={(e) => setColorCode(e.target.value)}
+                                    value={store4}
+                                    handleChange={(e) => setStore4(e.target.value)}
                                 />
                             </StockInputContainer>
 

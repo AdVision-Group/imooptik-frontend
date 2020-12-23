@@ -50,6 +50,46 @@ export const postProduct = (token, newProduct) => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
 }
 
+export const patchProduct = (token, product) => {
+    console.log("PRODUCT")
+    console.log(product)
+    console.log("PRODUCT")
+    const { id, eanCode, checked, name, price, brand, colorCode, description, draft, image } = product
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+        "eanCode": eanCode,
+        "type": Number(checked),
+        "name": name,
+        "price": Number(price),
+        "brand": brand,
+        "colorCode": colorCode,
+        "description": description,
+        "eshop": draft || false,
+        "specs": {
+            "frameColor": "cierna",
+            "frameStyle": "okruhly",
+            "frameMaterial": "kov",
+            "lensColor": "priehladne",
+            "size": [20, 120, 59]
+        },
+        "image": image
+    });
+
+
+    const requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${id}`, requestOptions)
+}
+
 export const deleteProduct = (token, id) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);

@@ -13,7 +13,7 @@ import {
 } from './product-overview.styles'
 
 const ProductOverview = (props) => {
-    const { name, stock, id, price, image, handleDeleteButton } = props
+    const { name, stock, id, price, image, handleDeleteButton, handleUpdateButton } = props
 
     return (
         <ProductContainer>
@@ -29,7 +29,7 @@ const ProductOverview = (props) => {
             </ProductContent>
 
             <Options>
-                <UpdateButton>
+                <UpdateButton onClick={handleUpdateButton}>
                     Upraviť
                 </UpdateButton>
                 <DeleteButton onClick={handleDeleteButton}>

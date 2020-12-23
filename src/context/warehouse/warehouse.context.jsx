@@ -1,14 +1,15 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { fetchProducts, postProduct, deleteProduct } from './warehouse.queries'
+import { fetchProducts, postProduct, deleteProduct, patchProduct } from './warehouse.queries'
 
 export const WarehouseContext = createContext({
     products: null,
     totalCount: 0,
     getProducts: () => { },
     createNewProduct: () => { },
-    handleProductDelete: () => { }
+    handleProductDelete: () => { },
+    updateProduct: () => { }
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -55,7 +56,29 @@ const WarehouseProvider = ({ children }) => {
             console.log(data)
 
             if (data.product) {
-                setProducts(data.product)
+                getProducts()
+                closeModal()
+            } else {
+                setIsLoading(false)
+                getMessage(data.message)
+            }
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const updateProduct = async (productToUpdate) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await patchProduct(token, productToUpdate)
+            const data = await response.json()
+            console.log(data)
+            if (data.product) {
                 getProducts()
                 closeModal()
             } else {
@@ -102,7 +125,8 @@ const WarehouseProvider = ({ children }) => {
                 totalCount,
                 getProducts,
                 createNewProduct,
-                handleProductDelete
+                handleProductDelete,
+                updateProduct
             }}
         >
             {children}
