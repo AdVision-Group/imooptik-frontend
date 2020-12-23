@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
+import { ImageContext } from '../../context/image/image.context'
 import { useHistory, useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -26,6 +27,7 @@ import {
 
 const ProductSection = () => {
     const { createNewProduct, products, updateProduct } = useContext(WarehouseContext)
+    const { setSelectedImage, selectedImage } = useContext(ImageContext)
     const { id } = useParams()
     const { push } = useHistory()
 
@@ -101,6 +103,7 @@ const ProductSection = () => {
         setDescription(product.description || '')
         if (product.image) {
             setImage(product.image._id)
+            setSelectedImage(product.image)
         }
 
         setChecked(product.type.toString() || '')
@@ -286,6 +289,8 @@ const ProductSection = () => {
 
                             <ProductImage onClick={() => setImageModal(true)} >
                                 Vybrať obrázok
+                                {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
+
                             </ProductImage>
                         </Container>
                     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { BlogContext } from '../../context/blog/blog.context'
+import { ImageContext } from '../../context/image/image.context'
 import { useParams, useHistory } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -18,7 +19,6 @@ import {
     AddButton,
     Title,
     ContentTextare,
-    CheckboxContainer,
 } from './post.styles'
 
 const PostSection = () => {
@@ -34,6 +34,7 @@ const PostSection = () => {
         post,
         handlePostUpdate
     } = useContext(BlogContext)
+    const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
@@ -72,6 +73,7 @@ const PostSection = () => {
             toggleDraft(post.draft)
             if (post.image) {
                 setImage(post.image._id)
+                setSelectedImage(post.image)
             }
         }
     }, [post])
@@ -118,6 +120,7 @@ const PostSection = () => {
                         <h2>Titulná fotka</h2>
                         <PostImage onClick={() => setImageModal(true)} >
                             Vybrať obrázok
+                            {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                         </PostImage>
                     </div>
                     <div>

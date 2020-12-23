@@ -24,8 +24,18 @@ export const PostImage = styled.div`
     align-items: center;
     justify-content:center;
     height: 30rem;
-    background-color: #eee;
+    /* background-color: #eee; */
     margin-top: 3rem;
+    position: relative;
+
+    img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+
+    }
 `
 
 export const DeleteButton = styled(CustomButtom)`

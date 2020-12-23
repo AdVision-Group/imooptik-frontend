@@ -5,11 +5,11 @@ import { deleteImage, fetchImages, uploadImage } from './image.queries'
 
 export const ImageContext = createContext({
     images: null,
-    selectedImage: '',
+    selectedImage: null,
     getImages: () => { },
     handleImage: () => { },
     handleDeleteImage: () => { },
-    selectImage: () => { }
+    setSelectedImage: () => { }
 })
 
 const ImageProvider = ({ children }) => {
@@ -22,7 +22,9 @@ const ImageProvider = ({ children }) => {
     const { token } = useContext(AuthContext)
 
     const [images, setImages] = useState(null)
-    const [selectedImage, selectImage] = useState('')
+    const [selectedImage, setSelectedImage] = useState(null)
+
+    console.log(selectedImage)
 
     const handleImage = async (img) => {
         setShowModal(true)
@@ -32,11 +34,12 @@ const ImageProvider = ({ children }) => {
             const response = await uploadImage(token, img)
             const data = await response.json()
             if (data.image) {
+                setSelectedImage(data.image)
                 getImages()
             }
 
-            setShowModal(true)
-            setIsLoading(true)
+            setShowModal(false)
+            setIsLoading(false)
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
@@ -94,7 +97,7 @@ const ImageProvider = ({ children }) => {
                 getImages,
                 handleImage,
                 handleDeleteImage,
-                selectImage
+                setSelectedImage
             }}
         >
             {children}

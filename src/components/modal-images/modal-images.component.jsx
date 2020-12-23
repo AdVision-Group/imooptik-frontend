@@ -18,10 +18,13 @@ const ModalImages = ({ close, setImage }) => {
         handleDeleteImage,
         handleImage,
         images,
+        setSelectedImage
     } = useContext(ImageContext)
 
-    const selectImage = (id) => {
-        setImage(id)
+    const selectImage = (img) => {
+        console.log(img)
+        setImage(img._id)
+        setSelectedImage(img)
         close()
     }
 
@@ -40,7 +43,7 @@ const ModalImages = ({ close, setImage }) => {
                     {images && images.map(img => (
                         <ImageContainer key={img._id}>
                             <DeleteButton onClick={() => handleDeleteImage(img._id)}>&#10005;</DeleteButton>
-                            <img onClick={() => selectImage(img._id)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
+                            <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
                         </ImageContainer>
                     ))}
                 </FlexContainer>
