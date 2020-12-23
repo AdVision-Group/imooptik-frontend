@@ -15,7 +15,7 @@ export const InputGroup = styled.div`
         background-color: #F5F5F5;
         color: #000;
         font-size: 1.5rem;
-        padding: .8rem .5rem .8rem 2rem;
+        padding: 1rem .5rem 1rem 2rem;
         display: block;
         width: 100%;
         border: none;
@@ -44,7 +44,7 @@ export const InputGroup = styled.div`
         position: absolute;
         pointer-events: none;
         left: 1.5rem;
-        top: .8rem;
+        top: 1rem;
         transition: 300ms ease all;
 
         &.shrink {

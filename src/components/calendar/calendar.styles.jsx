@@ -1,36 +1,35 @@
 import styled from 'styled-components'
 
-export const Header = styled.div`
-    display: flex;
-    width: 100%;
-    background-color:darkgray;
-
-    div {
-        width: 14.2%;
-        padding: 2rem;
-        text-align: center;
-        font-weight: 700;
-    }
+export const Container = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    border: 1px solid rgba(0,0,0,.1);
 `
 
-export const Row = styled.div`
-    width: 100%;
+export const HeaderBlock = styled.div`
+    height: 8rem;
+    background-color: #000;
+    color: #fff;
     display: flex;
+    align-items:center;
+    justify-content:center;
+    font-weight: 700;
+`
 
-    div {
-        padding: 1rem 1rem;
-        width: 14.2%;
-        display: flex;
-        height: 10rem;
-        justify-content: space-between;
-        align-items: flex-end;
-        border: 1px solid gray;
+export const Dayblock = styled.div`
+    cursor: pointer;
+    height: 7rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    border: 1px solid rgba(0,0,0,.1);
+    padding: .6rem 1rem;
 
-        p:first-child {
-            background-color: red;
-            color: #fff;
-            border-radius: 1.5rem;
-            padding: .2rem .8rem;
-        }
+    transition: all .15s;
+
+    &:hover {
+        background-color: rgba(0,0,0,.1);
     }
+
+    background-color: ${({ active }) => active ? " rgb(235, 172, 1);" : "unset"}
 `
