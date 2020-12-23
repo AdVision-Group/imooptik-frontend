@@ -18,7 +18,8 @@ import {
     ThreeColRow,
     ZeroMargin,
     SaveButton,
-    Title
+    Title,
+    Container
 } from './customer-profile.styles'
 
 const CustomerProfile = () => {
@@ -121,6 +122,33 @@ const CustomerProfile = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        if (id === 'novy-zakaznik') {
+            setFName('')
+            setLName('')
+
+            setEmail('')
+            setPhoneNumber('')
+
+            setStreet('')
+            setPsc('')
+            setCity('')
+            setState('')
+
+            setDLeftEye('')
+            setDRightEye('')
+
+            setRLeftEye('')
+            setRRightEye('')
+
+            setCLeftEye('')
+            setCRightEye('')
+
+            setOcLeftEye('')
+            setOcRightEye('')
+        }
+    }, [])
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -160,7 +188,7 @@ const CustomerProfile = () => {
                             </GridRow>
                         </div>
 
-                        <div>
+                        <Container>
                             <h2>Kontaktné údaje</h2>
                             <Row>
                                 <div>
@@ -182,9 +210,9 @@ const CustomerProfile = () => {
                                     />
                                 </div>
                             </Row>
-                        </div>
+                        </Container>
 
-                        <div>
+                        <Container>
                             <h2>Fakturačné údaje</h2>
                             <GridRow>
                                 <ZeroMargin>
@@ -226,9 +254,9 @@ const CustomerProfile = () => {
                                     />
                                 </div>
                             </GridRow>
-                        </div>
+                        </Container>
 
-                        <div>
+                        <Container>
                             <h2>Parametre</h2>
 
                             <ThreeColRow>
@@ -326,7 +354,7 @@ const CustomerProfile = () => {
                                     />
                                 </div>
                             </ThreeColRow>
-                        </div>
+                        </Container>
                         <SaveButton>
                             Uložiť zmeny
                         </SaveButton>

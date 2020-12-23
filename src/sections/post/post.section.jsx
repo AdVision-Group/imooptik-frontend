@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import CustomTextarea from '../../components/custom-textarea/custom-textarea.component'
+import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
 import Popup from '../../components/popup/pop-up.component'
 import ModalImage from '../../components/modal-images/modal-images.component'
 import { Quill } from 'react-quill'
@@ -85,10 +86,11 @@ const PostSection = () => {
                     <h1>Post</h1>
                 </div>
                 <div>
-                    <CheckboxContainer>Draft
-                        <input type="checkbox" checked={draft} onChange={() => toggleDraft(!draft)} />
-                        <span className="checkmark"></span>
-                    </CheckboxContainer>
+                    <CustomCheckbox
+                        label='Draft'
+                        checked={draft}
+                        onChange={() => toggleDraft(!draft)}
+                    />
                     <DeleteButton>Vymazať</DeleteButton>
                     <AddButton onClick={handleSubmit}>Pridať príspevok</AddButton>
                 </div>

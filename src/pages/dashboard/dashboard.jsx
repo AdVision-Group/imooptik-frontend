@@ -16,10 +16,10 @@ import PostSection from '../../sections/post/post.section'
 
 import BlogProvider from '../../context/blog/blog.context'
 import UserProvider from '../../context/user/user.context'
-import WareHouseProvider from '../../context/warehouse/warehouse.context'
+import WarehouseProvider from '../../context/warehouse/warehouse.context'
+import ImageProvider from '../../context/image/image.context'
 
 import { DashboardContainer } from './dashboard.styles'
-import WarehouseProvider from '../../context/warehouse/warehouse.context'
 
 const Dashboard = () => {
     const match = useRouteMatch()
@@ -58,50 +58,52 @@ const Dashboard = () => {
     return (
         <DashboardContainer>
             <SideNav routes={routes} match={match} />
-            <main>
-                <Switch>
-                    <Route path={`${match.path}/obchod`} component={EshopSection} />
+            <ImageProvider>
+                <main>
+                    <Switch>
+                        <Route path={`${match.path}/obchod`} component={EshopSection} />
 
-                    <Route exact path={`${match.path}/sklad`} render={() => (
-                        <WareHouseProvider>
-                            <WarehouseSection />
-                        </WareHouseProvider>
-                    )} />
-                    <Route path={`${match.path}/sklad/:productId`} render={() => (
-                        <WarehouseProvider>
-                            <ProductSection />
-                        </WarehouseProvider>
-                    )} />
-
-
-                    <Route path={`${match.path}/objednavky`} component={OrdersSection} />
-                    <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
-
-                    <Route path={`${match.path}/rezervacie`} component={BookingSection} />
-
-                    <Route exact path={`${match.path}/blog`} render={() => (
-                        <BlogProvider>
-                            <BlogSection />
-                        </BlogProvider>
-                    )} />
-                    <Route path={`${match.path}/blog/:id`} render={() => (
-                        <BlogProvider>
-                            <PostSection />
-                        </BlogProvider>
-                    )} />
-
-                    <UserProvider>
-                        <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
-                        <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
-                    </UserProvider>
+                        <Route exact path={`${match.path}/sklad`} render={() => (
+                            <WarehouseProvider>
+                                <WarehouseSection />
+                            </WarehouseProvider>
+                        )} />
+                        <Route path={`${match.path}/sklad/:productId`} render={() => (
+                            <WarehouseProvider>
+                                <ProductSection />
+                            </WarehouseProvider>
+                        )} />
 
 
+                        <Route path={`${match.path}/objednavky`} component={OrdersSection} />
+                        <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
+
+                        <Route path={`${match.path}/rezervacie`} component={BookingSection} />
+
+                        <Route exact path={`${match.path}/blog`} render={() => (
+                            <BlogProvider>
+                                <BlogSection />
+                            </BlogProvider>
+                        )} />
+                        <Route path={`${match.path}/blog/:id`} render={() => (
+                            <BlogProvider>
+                                <PostSection />
+                            </BlogProvider>
+                        )} />
+
+                        <UserProvider>
+                            <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
+                            <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+                        </UserProvider>
 
 
 
-                </Switch>
-                <Redirect to={`${match.path}/obchod`} />
-            </main>
+
+
+                    </Switch>
+                    <Redirect to={`${match.path}/obchod`} />
+                </main>
+            </ImageProvider>
         </DashboardContainer>
     )
 }

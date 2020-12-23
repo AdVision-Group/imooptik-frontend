@@ -11,6 +11,8 @@ export const HeaderContainer = styled.div`
 `
 
 export const Left = styled.div`
+    margin-top: 2rem;
+
     display: flex;
     align-items: center;
 `
@@ -31,10 +33,14 @@ export const Notification = styled.div`
 
 
 export const SearchButton = styled(CustomButton)`
+    margin-top: 2rem;
+
     margin-left: 2rem;
 `
 
 export const AddButton = styled(CustomButton)`
+    margin-top: 2rem;
+
     margin-left: 1rem;
 
 `

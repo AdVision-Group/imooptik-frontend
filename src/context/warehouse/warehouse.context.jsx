@@ -1,12 +1,14 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { fetchProducts } from './warehouse.queries'
+import { fetchProducts, postProduct, deleteProduct } from './warehouse.queries'
 
 export const WarehouseContext = createContext({
     products: null,
     totalCount: 0,
-    getProducts: () => { }
+    getProducts: () => { },
+    createNewProduct: () => { },
+    handleProductDelete: () => { }
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -28,7 +30,7 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.products) {
                 setTotalCount(data.count)
-                setProducts(data, products)
+                setProducts(data.products)
                 closeModal()
             }
 
@@ -42,12 +44,65 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
+    const createNewProduct = async (productToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postProduct(token, productToAdd)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.product) {
+                setProducts(data.product)
+                getProducts()
+                closeModal()
+            } else {
+                setIsLoading(false)
+                getMessage(data.message)
+            }
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const handleProductDelete = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await deleteProduct(token, id)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.product) {
+                getProducts()
+                closeModal()
+            } else {
+                setIsLoading(false)
+                getMessage(data.message)
+            }
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <WarehouseContext.Provider
             value={{
                 products,
                 totalCount,
-                getProducts
+                getProducts,
+                createNewProduct,
+                handleProductDelete
             }}
         >
             {children}

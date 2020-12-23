@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { BlogContext } from '../../context/blog/blog.context'
 import { useHistory } from 'react-router-dom'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from "../../components/scroll-container/scroll-container.component"
+import Popup from '../../components/popup/pop-up.component'
 
 import {
     PostContainer,
@@ -16,6 +18,12 @@ import {
 } from './blog-posts.styles'
 
 const BlogPosts = () => {
+    const {
+        closeModal,
+        isLoading,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
     const { getPosts, posts, postsCount, handlePostDelete } = useContext(BlogContext)
     const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
@@ -40,6 +48,8 @@ const BlogPosts = () => {
 
     return (
         <section>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}

@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { BlogContext } from '../../context/blog/blog.context'
+import { ImageContext } from '../../context/image/image.context'
 
 import {
     ModalContainer,
@@ -12,7 +13,12 @@ import {
 } from './modal-images.styles'
 
 const ModalImages = ({ close, setImage }) => {
-    const { getImages, images, handleImage, handleDeleteImage } = useContext(BlogContext)
+    const {
+        getImages,
+        handleDeleteImage,
+        handleImage,
+        images,
+    } = useContext(ImageContext)
 
     const selectImage = (id) => {
         setImage(id)

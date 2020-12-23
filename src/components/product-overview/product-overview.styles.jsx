@@ -16,9 +16,16 @@ export const ProductContainer = styled.div`
 
 export const ProductImage = styled.div`
     /* width: 100%; */
-    height: 100%;
+    /* height: 100%; */
     background-color: #eee;
     margin-right: 2rem;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: start;
+    }  
 `
 
 export const ProductContent = styled.div`

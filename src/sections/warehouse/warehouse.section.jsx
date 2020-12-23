@@ -21,7 +21,8 @@ const WarehouseSection = () => {
 
     const {
         products,
-        getProducts
+        getProducts,
+        handleProductDelete
     } = useContext(WarehouseContext)
 
     useEffect(() => {
@@ -42,24 +43,19 @@ const WarehouseSection = () => {
             />
 
             <ScrollContainer>
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
+                {
+                    products && products.map(product => (
+                        <ProductOverview
+                            key={product._id}
+                            name={product.name}
+                            stock={product.available[0]}
+                            id={product._id}
+                            price={(product.price / 100).toFixed(2)}
+                            image={product.image}
+                            handleDeleteButton={() => handleProductDelete(product._id)}
+                        />
+                    ))
+                }
 
             </ScrollContainer>
         </section>

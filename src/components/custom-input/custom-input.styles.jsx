@@ -15,13 +15,13 @@ export const InputGroup = styled.div`
         background-color: #F5F5F5;
         color: #000;
         font-size: 1.5rem;
-        padding: .5rem .5rem .5rem 2rem;
+        padding: .8rem .5rem .8rem 2rem;
         display: block;
         width: 100%;
         border: none;
         border-radius: .5rem;
         /* border-bottom: 1px solid #000; */
-        margin: 25px 0;
+        margin: 2rem 0 0;
         font-family: inherit;
 
         &:focus {
@@ -44,7 +44,7 @@ export const InputGroup = styled.div`
         position: absolute;
         pointer-events: none;
         left: 1.5rem;
-        top: .6rem;
+        top: .8rem;
         transition: 300ms ease all;
 
         &.shrink {

@@ -23,6 +23,8 @@ export const FormContainer = styled.form`
 `
 
 export const SubmitButton = styled(CustomButton)`
+    margin-top: 2rem;
+
     width: 100%;
 `
 

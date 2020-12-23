@@ -13,12 +13,12 @@ import {
 } from './product-overview.styles'
 
 const ProductOverview = (props) => {
-    const { name, stock, id, price } = props
+    const { name, stock, id, price, image, handleDeleteButton } = props
 
     return (
         <ProductContainer>
             <ProductImage>
-                IMG
+                {image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${image.imagePath}`} alt={image.alt} />}
             </ProductImage>
 
             <ProductContent>
@@ -32,7 +32,7 @@ const ProductOverview = (props) => {
                 <UpdateButton>
                     Upraviť
                 </UpdateButton>
-                <DeleteButton>
+                <DeleteButton onClick={handleDeleteButton}>
                     Vymazať
                 </DeleteButton>
             </Options>

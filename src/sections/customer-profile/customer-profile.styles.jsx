@@ -78,3 +78,7 @@ export const SaveButton = styled(CustomButton)`
 export const Title = styled.h2`
     margin-bottom: 2rem;
 `
+
+export const Container = styled.div`
+    margin-top: 2rem;
+`
