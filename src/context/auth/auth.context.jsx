@@ -1,11 +1,12 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
-import { getUser, createNewUser, resetPassword, setNewPassword } from './auth.queries'
+import { getUser, createNewUser, resetPassword, setNewPassword, fetchUser } from './auth.queries'
 
 export const AuthContext = createContext({
     currentUser: null,
     token: null,
     logIn: () => { },
+    logOut: () => { },
     Register: () => { },
     handleResetPassword: () => { },
     handleCreatingNewPassword: () => { }
@@ -42,6 +43,7 @@ const AuthProvider = ({ children }) => {
             if (user.user) {
                 setCurrentUser(user.user)
                 setToken(user.authToken)
+                localStorage.setItem(process.env.REACT_APP_ADMIN_TOKEN, user.authToken)
                 closeModal()
             }
         } catch (err) {
@@ -49,6 +51,12 @@ const AuthProvider = ({ children }) => {
             getMessage("Nieco sa pokazilo")
             setIsLoading(false)
         }
+    }
+
+    const logOut = () => {
+        localStorage.removeItem(process.env.REACT_APP_ADMIN_TOKEN)
+        setCurrentUser(null)
+        setToken(null)
     }
 
     const Register = async (email, password, confirmPassword) => {
@@ -143,9 +151,28 @@ const AuthProvider = ({ children }) => {
             getMessage("Nieco sa pokazilo")
             setIsLoading(false)
         }
-
-
     }
+
+    useEffect(() => {
+        if (localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN)) {
+            setToken(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN))
+
+        }
+    }, [])
+
+    useEffect(() => {
+        if (token) {
+            const getUserProfile = async () => {
+                console.log(token)
+                const response = await fetchUser(token)
+                const data = await response.json()
+                if (data.user) {
+                    setCurrentUser(data.user)
+                }
+            }
+            getUserProfile()
+        }
+    }, [token])
 
     return (
         <AuthContext.Provider
@@ -153,6 +180,7 @@ const AuthProvider = ({ children }) => {
                 token,
                 currentUser,
                 logIn,
+                logOut,
                 Register,
                 handleResetPassword,
                 handleCreatingNewPassword

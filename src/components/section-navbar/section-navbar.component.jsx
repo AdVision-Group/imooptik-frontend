@@ -17,6 +17,7 @@ const SectionNavbar = ({ items, activeIndex, setActiveIndex }) => {
                         </li>
                     ))
                 }
+
             </ul>
         </NavbarContainer >
     )

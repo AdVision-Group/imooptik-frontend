@@ -28,6 +28,7 @@ export const LogoContainer = styled.div`
     font-size: 3rem;
     font-weight: 700;
     color: #fff;
+    margin-bottom: 3rem;
 `
 
 export const NavLinksContainer = styled.ul`
@@ -80,7 +81,43 @@ export const NavLinksContainer = styled.ul`
             }
         }
     }
+`
 
+export const LogoutButton = styled.button`
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
+
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.8rem;
+    transition: .2s color ease-out;
+
+    @media all and (max-width: 500px) {
+        font-size: 1.6rem;
+    }
+
+    &:hover {
+        color: #eee;
+    }
+
+    &.active {
+        &::after {
+            content: ' ';
+            position: absolute;
+            right: 0;
+            width: .5rem;
+            top: 0;
+            bottom: 0;
+            background-color: rgb(235, 172, 1);
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
 `
 
 export const ToggleButton = styled.button`
