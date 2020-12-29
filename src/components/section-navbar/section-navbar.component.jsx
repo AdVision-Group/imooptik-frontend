@@ -6,6 +6,7 @@ import {
 } from './section-navbar.styles'
 
 const SectionNavbar = ({ items, activeIndex, setActiveIndex }) => {
+
     return (
         <NavbarContainer>
             <ul>

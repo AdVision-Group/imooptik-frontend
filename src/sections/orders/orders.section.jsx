@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AuthContext } from '../../context/auth/auth.context'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
@@ -6,6 +7,7 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import OrderOverview from '../../components/order-overview/order-overview.component'
 
 const OrdersSection = () => {
+    const { currentUser } = useContext(AuthContext)
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
         {
@@ -32,6 +34,8 @@ const OrdersSection = () => {
 
     const [activeIndex, setActiveIndex] = useState(2)
 
+    console.log(currentUser)
+
     return (
         <section>
             <SectionHeader
@@ -47,30 +51,22 @@ const OrdersSection = () => {
             />
 
             <ScrollContainer>
-                <OrderOverview
-                    name='Product name'
-                    id='[Product ID]'
-                    date='28. November 2020'
-                    totalPrice='99.99'
-                />
-                <OrderOverview
-                    name='Product name'
-                    id='[Product ID]'
-                    date='28. November 2020'
-                    totalPrice='99.99'
-                />
-                <OrderOverview
-                    name='Product name'
-                    id='[Product ID]'
-                    date='28. November 2020'
-                    totalPrice='99.99'
-                />
-                <OrderOverview
-                    name='Product name'
-                    id='[Product ID]'
-                    date='28. November 2020'
-                    totalPrice='99.99'
-                />
+                {currentUser.orders.length ?
+                    currentUser.orders.map((order, idx) => (
+                        <OrderOverview
+                            key={idx}
+                            name='Product name'
+                            id='[Product ID]'
+                            date='28. November 2020'
+                            totalPrice='99.99'
+                        />
+                    )) : (
+                        <div>
+                            Žiadne objednávky
+                        </div>
+                    )
+                }
+
             </ScrollContainer>
         </section>
     )

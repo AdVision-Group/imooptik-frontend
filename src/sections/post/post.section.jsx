@@ -38,9 +38,10 @@ const PostSection = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
-    const [draft, toggleDraft] = useState(false)
     const [image, setImage] = useState('')
+    const [draft, toggleDraft] = useState(false)
     const [showImageModal, setImageModal] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -60,6 +61,7 @@ const PostSection = () => {
     useEffect(() => {
         if (id !== 'novy-prispevok') {
             getPost(id)
+            setIsUpdating(true)
         }
     }, [id])
 
@@ -94,7 +96,7 @@ const PostSection = () => {
                         onChange={() => toggleDraft(!draft)}
                     />
                     <DeleteButton>Vymazať</DeleteButton>
-                    <AddButton onClick={handleSubmit}>Pridať príspevok</AddButton>
+                    <AddButton onClick={handleSubmit}>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>
                 </div>
             </Header>
 

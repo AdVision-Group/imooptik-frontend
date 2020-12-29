@@ -45,7 +45,10 @@ const Calendar = () => {
                 ))
 
             }
-
+            <Dayblock />
+            <Dayblock />
+            <Dayblock />
+            <Dayblock />
             {
                 dayBlocks.map((block, idx) => (
                     <Dayblock key={idx} active={idx === activeIndex} onClick={() => setActiveIndex(idx)}>

@@ -40,10 +40,10 @@ export const GridRowRevert = styled.div`
 `
 
 export const Container = styled.div`
-    padding: 3rem 4rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
     margin-bottom: 2rem;
+    /* padding: 3rem 4rem; */
+    /* box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
 
 `
 
@@ -66,7 +66,6 @@ export const ProductImage = styled.div`
     display:flex;
     align-items: center;
     justify-content:center;
-    height: 30rem;
     background-color: #eee;
     margin-top: 3rem;
 
@@ -75,7 +74,9 @@ export const ProductImage = styled.div`
     img {
         position: absolute;
         width: 100%;
-        height: 100%;
+        max-height: 40rem;
+
+        /* height: 100%; */
         left: 0;
         top: 0;
 

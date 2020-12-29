@@ -29,20 +29,20 @@ const BlogPosts = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
         {
-            id: 1,
+            id: 0,
             name: "Dátum pridania"
         },
         {
-            id: 2,
+            id: 1,
             name: "Abecedne"
         },
     ]
 
-    const [activeIndex, setActiveIndex] = useState(2)
+    const [activeIndex, setActiveIndex] = useState(0)
 
     useEffect(() => {
         if (!posts) {
-            getPosts()
+            getPosts(items[activeIndex])
         }
     }, [posts])
 
