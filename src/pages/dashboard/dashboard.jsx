@@ -16,7 +16,7 @@ import PostSection from '../../sections/post/post.section'
 
 import BlogProvider from '../../context/blog/blog.context'
 import UserProvider from '../../context/user/user.context'
-import WarehouseProvider from '../../context/warehouse/warehouse.context'
+import WarehouseProvider, { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import ImageProvider from '../../context/image/image.context'
 
 import { DashboardContainer } from './dashboard.styles'
@@ -61,7 +61,11 @@ const Dashboard = () => {
             <ImageProvider>
                 <main>
                     <Switch>
-                        <Route path={`${match.path}/obchod`} component={EshopSection} />
+                        <Route path={`${match.path}/obchod`} render={() => (
+                            <WarehouseProvider>
+                                <EshopSection />
+                            </WarehouseProvider>
+                        )} />
 
                         <Route exact path={`${match.path}/sklad`} render={() => (
                             <WarehouseProvider>

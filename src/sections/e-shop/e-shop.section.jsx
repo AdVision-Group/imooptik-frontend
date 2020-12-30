@@ -1,14 +1,35 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../..//context/auth/auth.context'
+import { WarehouseContext } from '../../context/warehouse/warehouse.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { useHistory } from 'react-router-dom'
 
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import ProductOverview from '../../components/product-overview/product-overview.component'
+import Popup from '../../components/popup/pop-up.component'
 
 const EshopSection = () => {
     const { currentUser } = useContext(AuthContext)
+
+    const {
+        isLoading,
+        showModal,
+        message,
+        closeModal
+    } = useContext(LoadingModalContext)
+
+    const {
+        products,
+        getProducts,
+        handleProductDelete
+    } = useContext(WarehouseContext)
+
+    const { push } = useHistory()
+
+
 
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
@@ -47,14 +68,25 @@ const EshopSection = () => {
     const [activeIndex, setActiveIndex] = useState(2)
 
     useEffect(() => {
+        if (!products) {
+            getProducts()
+        }
+    }, [products])
+
+    useEffect(() => {
         setActiveIndex(filteredItems[0].id)
     }, [])
 
     return (
         <section>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+
+
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
+                handleAddButton={() => push('sklad/novy-produkt')}
+
                 title="E-shop"
             />
 
@@ -66,36 +98,20 @@ const EshopSection = () => {
 
             {/* Products container */}
             <ScrollContainer>
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
-                <ProductOverview
-                    name='Product name'
-                    stock='[x]'
-                    id='[productId]'
-                    price='99.99'
-                />
+                {
+                    products && products.map(product => (
+                        <ProductOverview
+                            key={product._id}
+                            name={product.name}
+                            stock={product.available[0]}
+                            id={product._id}
+                            price={(product.price / 100).toFixed(2)}
+                            image={product.image}
+                            handleUpdateButton={() => push(`sklad/${product._id}`)}
+                            handleDeleteButton={() => handleProductDelete(product._id)}
+                        />
+                    ))
+                }
             </ScrollContainer>
         </section >
     )

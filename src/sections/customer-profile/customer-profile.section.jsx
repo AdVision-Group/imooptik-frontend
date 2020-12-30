@@ -155,9 +155,12 @@ const CustomerProfile = () => {
 
 
             <Header>
-                <Name>Profil</Name>
+                <h1>Profil</h1>
                 <div>
                     <DeleteProfileButton>Vymazať</DeleteProfileButton>
+                    <SaveButton>
+                        Uložiť zmeny
+                    </SaveButton>
                 </div>
             </Header>
 
@@ -355,9 +358,7 @@ const CustomerProfile = () => {
                                 </div>
                             </ThreeColRow>
                         </Container>
-                        <SaveButton>
-                            Uložiť zmeny
-                        </SaveButton>
+
 
                     </Profile>
 
@@ -367,36 +368,6 @@ const CustomerProfile = () => {
                         </Title>
 
                         <div>
-                            <OrderOverview
-                                name='Product name'
-                                id='[Product ID]'
-                                date='28. November 2020'
-                                totalPrice='99.99'
-                            />
-                            <OrderOverview
-                                name='Product name'
-                                id='[Product ID]'
-                                date='28. November 2020'
-                                totalPrice='99.99'
-                            />
-                            <OrderOverview
-                                name='Product name'
-                                id='[Product ID]'
-                                date='28. November 2020'
-                                totalPrice='99.99'
-                            />
-                            <OrderOverview
-                                name='Product name'
-                                id='[Product ID]'
-                                date='28. November 2020'
-                                totalPrice='99.99'
-                            />
-                            <OrderOverview
-                                name='Product name'
-                                id='[Product ID]'
-                                date='28. November 2020'
-                                totalPrice='99.99'
-                            />
                             <OrderOverview
                                 name='Product name'
                                 id='[Product ID]'
