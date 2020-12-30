@@ -27,11 +27,9 @@ import {
     CategoryContainer,
     CategoryCheckbox,
     DraftCheckBox,
-    InputRow,
     ImageContainer,
     CategoryTitle,
 } from './product.styles'
-import styled from 'styled-components'
 
 const ProductSection = () => {
     const { currentUser } = useContext(AuthContext)
@@ -86,14 +84,8 @@ const ProductSection = () => {
     ]
     const [activeProductCategoryIndex, setActiveProductCategoryIndex] = useState(0)
 
-    const [store1, setStore1] = useState('')
-    const [store3, setStore3] = useState('')
-    const [store4, setStore4] = useState('')
-
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        console.log(product)
 
         if (id === 'novy-produkt') {
             createNewProduct(product)
@@ -131,10 +123,6 @@ const ProductSection = () => {
         const product = products.find(prdct => prdct._id === id)
         setShowDeleteButton(true)
         setIsUpdating(true)
-
-        console.log(" ------ PRDOCUTK ------")
-        console.log(product)
-        console.log(" ------ PRDOCUTK ------")
 
         setProduct({
             id: product._id || '',
@@ -176,8 +164,6 @@ const ProductSection = () => {
             })
         }
     }, [activeProductCategoryIndex])
-
-    console.log(product)
 
     return (
         <section>
@@ -266,9 +252,6 @@ const ProductSection = () => {
                             )
                         })
                     }
-                    {/* {(currentUser.admin === 1 || isAdmin) && (
-
-                    )} */}
 
                     <ImageContainer>
 
