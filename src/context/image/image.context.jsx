@@ -24,8 +24,6 @@ const ImageProvider = ({ children }) => {
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
 
-    console.log(selectedImage)
-
     const handleImage = async (img) => {
         setShowModal(true)
         setIsLoading(true)

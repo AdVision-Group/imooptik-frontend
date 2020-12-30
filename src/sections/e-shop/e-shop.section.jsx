@@ -12,7 +12,7 @@ import ProductOverview from '../../components/product-overview/product-overview.
 import Popup from '../../components/popup/pop-up.component'
 
 const EshopSection = () => {
-    const { currentUser } = useContext(AuthContext)
+    const { currentUser, token } = useContext(AuthContext)
 
     const {
         isLoading,
@@ -71,7 +71,7 @@ const EshopSection = () => {
         if (!products) {
             getProducts()
         }
-    }, [products])
+    }, [products, token])
 
     useEffect(() => {
         setActiveIndex(filteredItems[0].id)

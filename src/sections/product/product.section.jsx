@@ -216,42 +216,36 @@ const ProductSection = () => {
 
 
                 <div>
-
                     <Title>Skladové zásoby</Title>
 
-                    {
-                        product && product.available.map((value, idx) => {
-                            const newArr = product.available
+                    {product && product.available.map((value, idx) => {
+                        const newArr = product.available
+                        const handleArrChange = (e) => {
+                            newArr[idx] = e.target.value
+                            setProduct({
+                                ...product,
+                                available: newArr
+                            })
+                        }
 
-                            const handleArrChange = (e) => {
-                                newArr[idx] = e.target.value
-
-                                setProduct({
-                                    ...product,
-                                    available: newArr
-                                })
-                            }
-
-                            return (
-                                (currentUser.admin === idx || isAdmin) && (
-
-                                    <ProductInputRow
-                                        key={idx}
-                                        label={`Počet kusov na predajni ${idx}`}
-                                        example="napr: 0"
-                                    >
-                                        <CustomInput
-                                            label={`Predajna ${idx}`}
-                                            type='text'
-                                            // name={store.name}
-                                            value={value.toString()}
-                                            handleChange={e => handleArrChange(e)}
-                                        />
-                                    </ProductInputRow>
-                                )
+                        return (
+                            (currentUser.admin === idx || isAdmin) && (
+                                <ProductInputRow
+                                    key={idx}
+                                    label={`Počet kusov na predajni ${idx}`}
+                                    example="napr: 0"
+                                >
+                                    <CustomInput
+                                        label={`Predajna ${idx}`}
+                                        type='text'
+                                        // name={store.name}
+                                        value={value.toString()}
+                                        handleChange={e => handleArrChange(e)}
+                                    />
+                                </ProductInputRow>
                             )
-                        })
-                    }
+                        )
+                    })}
 
                     <ImageContainer>
 
@@ -263,9 +257,6 @@ const ProductSection = () => {
 
                         </ProductImage>
                     </ImageContainer>
-                </div>
-                <div>
-
                 </div>
             </ScrollContainer>
         </section >
