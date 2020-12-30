@@ -6,8 +6,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from "../../components/custom-input/custom-input.component"
 import CustomTextarea from '../../components/custom-textarea/custom-textarea.component'
-import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
-import CustomRadiobutton from '../../components/custom-radiobutton/custom-radiobutton.component'
 
 import ModalImage from '../../components/modal-images/modal-images.component'
 
@@ -15,14 +13,15 @@ import {
     Header,
     AddButton,
     DeleteButton,
-    GridContainer,
-    GridRow,
-    GridRowRevert,
-    Container,
     Title,
-    StockInputContainer,
     ProductImage,
-    ColoCodeInputContainer
+    CategoryContainer,
+    CategoryCheckbox,
+    DraftCheckBox,
+    InputRow,
+    TextareaRow,
+    ImageContainer,
+    CategoryTitle
 } from './product.styles'
 
 const ProductSection = () => {
@@ -31,10 +30,10 @@ const ProductSection = () => {
     const { id } = useParams()
     const { push } = useHistory()
 
-    console.log(id)
-
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const [showImageModal, setImageModal] = useState(false)
+    const [showDeleteButton, setShowDeleteButton] = useState(false)
 
     const [name, setName] = useState('')
     const [eanCode, setEanCode] = useState('')
@@ -48,7 +47,30 @@ const ProductSection = () => {
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
 
-    const [checked, setChecked] = useState('2')
+    // Category variables
+    const productCategories = [
+        {
+            name: "Dioptrické",
+            value: 1
+        },
+        {
+            name: "Slnečné",
+            value: 2
+        },
+        {
+            name: "Športové",
+            value: 3
+        },
+        {
+            name: "Šošovky",
+            value: 4
+        },
+        {
+            name: "Doplnky",
+            value: 5
+        },
+    ]
+    const [activeProductCategoryIndex, setActiveProductCategoryIndex] = useState(0)
 
     const [store1, setStore1] = useState('')
     const [store2, setStore2] = useState('')
@@ -68,7 +90,7 @@ const ProductSection = () => {
             price,
             description,
             image,
-            checked
+            // checked
         }
 
         console.log(newProduct)
@@ -87,9 +109,13 @@ const ProductSection = () => {
     }
 
     useEffect(() => {
-        if (id === 'novy-produkt') return
+        if (id === 'novy-produkt') {
+            setSelectedImage(null)
+            return
+        }
         const product = products.find(prdct => prdct._id === id)
-        console.log(product)
+        setShowDeleteButton(true)
+        setIsUpdating(true)
 
         setName(product.name || '')
         setEanCode(product.eanCode || '')
@@ -106,8 +132,6 @@ const ProductSection = () => {
             setSelectedImage(product.image)
         }
 
-        setChecked(product.type.toString() || '')
-
         setStore1(product.available[0] + " ")
         setStore2(product.available[1] + " ")
         setStore3(product.available[2] + " ")
@@ -119,73 +143,104 @@ const ProductSection = () => {
         <section>
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
 
-
             <Header>
                 <div>
-                    <h1>Pridať nový produkt</h1>
+                    <h1>{isUpdating ? "Upraviť produkt" : "Pridať nový produkt"}</h1>
                 </div>
                 <div>
-                    <CustomCheckbox
-                        label='Public'
-                        checked={draft}
-                        onChange={() => toggleDraft(!draft)}
+                    <DraftCheckBox
+                        label='Verejný'
+                        isActive={draft}
+                        handleClick={() => toggleDraft(!draft)}
                     />
-                    <DeleteButton>Vymazať</DeleteButton>
-                    <AddButton onClick={handleSubmit}>Pridať product</AddButton>
+                    {showDeleteButton && <DeleteButton>Vymazať</DeleteButton>}
+                    <AddButton onClick={handleSubmit}>{isUpdating ? "Upraviť produkt" : "Pridať product"}</AddButton>
                 </div>
             </Header>
 
             <ScrollContainer>
-                <GridContainer>
-                    <Container>
-                        <h3>Základné informacie</h3>
-                        <GridRowRevert>
-                            <div>
-                                <CustomInput
-                                    label="Ean kód"
-                                    type='text'
-                                    name='eancode'
-                                    value={eanCode}
-                                    handleChange={(e) => setEanCode(e.target.value)}
-                                    required
+                <div>
+                    <CategoryTitle>Kategória</CategoryTitle>
+                    <CategoryContainer>
+                        {
+                            productCategories.map((category, idx) => (
+                                <CategoryCheckbox
+                                    key={idx}
+                                    label={category.name}
+                                    isActive={idx === activeProductCategoryIndex}
+                                    handleClick={() => setActiveProductCategoryIndex(idx)}
                                 />
-                            </div>
-                            <div>
-                                <CustomInput
-                                    label="Názov"
-                                    type='text'
-                                    name='name'
-                                    value={name}
-                                    handleChange={(e) => setName(e.target.value)}
-                                    required
+                            ))
+                        }
+                    </CategoryContainer>
+                </div>
 
-                                />
-                            </div>
-                        </GridRowRevert>
-                        <GridRow>
-                            <div>
-                                <CustomInput
-                                    label="Značka"
-                                    type='text'
-                                    name='brand'
-                                    value={brand}
-                                    handleChange={(e) => setBrand(e.target.value)}
-                                    required
+                <div>
+                    <h3>Základné informacie</h3>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Ean kód"
+                                type='text'
+                                name='eancode'
+                                value={eanCode}
+                                handleChange={(e) => setEanCode(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <p>Unikátny kód produktu <span>napr: 123abx</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Názov"
+                                type='text'
+                                name='name'
+                                value={name}
+                                handleChange={(e) => setName(e.target.value)}
+                                required
 
-                                />
-                            </div>
-                            <div>
-                                <CustomInput
-                                    label="Cena"
-                                    type='text'
-                                    name='price'
-                                    value={price}
-                                    handleChange={(e) => setPrice(e.target.value)}
-                                    required
+                            />
+                        </div>
+                        <div>
+                            <p>Názov produktu <span>napr: Super brejle</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Značka"
+                                type='text'
+                                name='brand'
+                                value={brand}
+                                handleChange={(e) => setBrand(e.target.value)}
+                                required
 
-                                />
-                            </div>
-                        </GridRow>
+                            />
+                        </div>
+                        <div>
+                            <p>Značka <span>napr: Abrejlas</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Cena"
+                                type='text'
+                                name='price'
+                                value={price}
+                                handleChange={(e) => setPrice(e.target.value)}
+                                required
+
+                            />
+                        </div>
+                        <div>
+                            <p>Cena v centoch <span>napr: 1055 = 10,55€</span></p>
+                        </div>
+                    </InputRow>
+                    <TextareaRow>
                         <div>
                             <CustomTextarea
                                 label="Popis"
@@ -197,106 +252,106 @@ const ProductSection = () => {
 
                             />
                         </div>
+                        {/* <div>
+                            <p><span>Lorem ipsum...</span></p>
+                        </div> */}
+                    </TextareaRow>
 
-                        <Title>Kategória</Title>
+
+
+                    <h3>Špecifikacie</h3>
+                    <InputRow>
                         <div>
-                            <CustomRadiobutton
-                                label="Dioptrické"
-                                checked={checked === '1'}
-                                onChange={(e) => setChecked(e.target.value)}
-                                value='1'
-
-                            />
-                            <CustomRadiobutton
-                                label="Slnečné"
-                                checked={checked === "2"}
-                                onChange={(e) => setChecked(e.target.value)}
-                                value="2"
-
-                            />
-                            <CustomRadiobutton
-                                label="Športové"
-                                checked={checked === '3'}
-                                onChange={() => setChecked('3')}
-                                value="3"
-
-                            />
-                            <CustomRadiobutton
-                                label="Šošovky"
-                                checked={checked === '4'}
-                                onChange={() => setChecked('4')}
-                                value='4'
-
-                            />
-                            <CustomRadiobutton
-                                label="Doplnky"
-                                checked={checked === '5'}
-                                onChange={() => setChecked('5')}
-                                value="5"
+                            <CustomInput
+                                label="Color code"
+                                type='text'
+                                name='eancode'
+                                value={colorCode}
+                                handleChange={(e) => setColorCode(e.target.value)}
+                                required
                             />
                         </div>
-                    </Container>
-                    <div>
-                        <Container>
-                            <h3>Špecifikacie</h3>
-                            <ColoCodeInputContainer>
-                                <CustomInput
-                                    label="Color code"
-                                    type='text'
-                                    name='eancode'
-                                    value={colorCode}
-                                    handleChange={(e) => setColorCode(e.target.value)}
-                                    required
-                                />
-                            </ColoCodeInputContainer>
-                            <Title>Skladové zásoby</Title>
-                            <StockInputContainer>
-                                <CustomInput
-                                    label="Predajna 1"
-                                    type='text'
-                                    name='eancode'
-                                    value={store1}
-                                    handleChange={(e) => setStore1(e.target.value)}
-                                />
-                                <CustomInput
-                                    label="Predajna 1"
-                                    type='text'
-                                    name='eancode'
-                                    value={store2}
-                                    handleChange={(e) => setStore2(e.target.value)}
-                                />
-                                <CustomInput
-                                    label="Predajna 1"
-                                    type='text'
-                                    name='eancode'
-                                    value={store3}
-                                    handleChange={(e) => setStore3(e.target.value)}
-                                />
-                                <CustomInput
-                                    label="Predajna 1"
-                                    type='text'
-                                    name='eancode'
-                                    value={store4}
-                                    handleChange={(e) => setStore4(e.target.value)}
-                                />
-                            </StockInputContainer>
+                        <div>
+                            <p>Farebný kód produktu <span>napr: 02AR</span></p>
+                        </div>
+                    </InputRow>
+
+                    <Title>Skladové zásoby</Title>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Predajna 1"
+                                type='text'
+                                name='eancode'
+                                value={store1}
+                                handleChange={(e) => setStore1(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <p>Počet kusov na predajni <span>napr: 0</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Predajna 2"
+                                type='text'
+                                name='eancode'
+                                value={store2}
+                                handleChange={(e) => setStore2(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <p>Počet kusov na predajni <span>napr: 0</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Predajna 3"
+                                type='text'
+                                name='eancode'
+                                value={store3}
+                                handleChange={(e) => setStore3(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <p>Počet kusov na predajni <span>napr: 0</span></p>
+                        </div>
+                    </InputRow>
+                    <InputRow>
+                        <div>
+                            <CustomInput
+                                label="Predajna 4"
+                                type='text'
+                                name='eancode'
+                                value={store4}
+                                handleChange={(e) => setStore4(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <p>Počet kusov na predajni <span>napr: 0</span></p>
+                        </div>
+                    </InputRow>
 
 
-                        </Container>
-                        <Container>
 
-                            <Title>Obrázok</Title>
+                    <ImageContainer>
 
-                            <ProductImage onClick={() => setImageModal(true)} >
-                                Vybrať obrázok
+                        <Title>Obrázok</Title>
+
+                        <ProductImage onClick={() => setImageModal(true)} >
+                            Vybrať obrázok
                                 {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
 
-                            </ProductImage>
-                        </Container>
-                    </div>
-                </GridContainer>
+                        </ProductImage>
+                    </ImageContainer>
+                </div>
+                <div>
+
+                </div>
             </ScrollContainer>
-        </section>
+        </section >
     )
 }
 

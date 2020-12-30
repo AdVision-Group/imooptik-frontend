@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { paddingStyles } from '../../global.styles'
 import CustomButton from '../../components/custom-button/custom-button.component'
+import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
 
 export const Header = styled.div`
     display: flex;
@@ -13,72 +14,96 @@ export const Header = styled.div`
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1.4rem;
-    margin: 0 2rem;
+    margin: 0 2rem 0 0;
     background-color: #DD4C4C;
 `
 export const AddButton = styled(CustomButton)`
     font-size: 1.4rem;
 `
 
-export const GridContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    align-items: start;
-`
-
-export const GridRow = styled.div`
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-gap: 2rem;
-`
-
-export const GridRowRevert = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-gap: 2rem;
-`
-
-export const Container = styled.div`
-    border-radius: .5rem;
-    margin-bottom: 2rem;
-    /* padding: 3rem 4rem; */
-    /* box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
-
-`
-
 export const Title = styled.h3`
-    /* margin-top: 2rem; */
-    margin-bottom: 2rem;
-`
-
-export const ColoCodeInputContainer = styled.div`
-    margin-bottom: 2rem;
-    max-width: 15rem;
-`
-
-export const StockInputContainer = styled.div`
     margin-top: 2rem;
-    max-width: 15rem;
+    /* margin-bottom: 2rem; */
+`
+
+export const CategoryTitle = styled.h3`
+    margin-bottom: 2rem;
+`
+
+export const ImageContainer = styled.div`
+    margin-top: 2rem;
+    
 `
 
 export const ProductImage = styled.div`
+    cursor: pointer;
     display:flex;
     align-items: center;
     justify-content:center;
     background-color: #eee;
     margin-top: 3rem;
-
-        position: relative;
+    padding: 6rem;
+    position: relative;
+    max-width: 45rem;
 
     img {
         position: absolute;
         width: 100%;
-        max-height: 40rem;
+        /* max-height: 40rem; */
+        object-fit:cover;
+        object-position:center;
 
         /* height: 100%; */
         left: 0;
         top: 0;
 
+    }
+`
+
+export const CategoryContainer = styled.div`
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+
+`
+
+export const CategoryCheckbox = styled(CustomCheckbox)`
+    margin: 0 1rem 2rem;
+`
+
+export const DraftCheckBox = styled(CustomCheckbox)`
+    margin-right: 2rem;
+`
+
+export const InputRow = styled.div`
+    display:flex;
+    align-items: center;
+
+    p {
+        margin-top: 1.8rem;
+        margin-left: 2rem;
+            opacity: .75;
+
+        span {
+            font-weight: 700;
+        }
+    }
+`
+
+export const TextareaRow = styled.div`
+    /* display:flex; */
+    /* align-items: center; */
+    max-width: 45rem;
+
+    p {
+        margin-top: 2.5rem;
+        margin-left: 2rem;
+        opacity: .75;
+
+        span {
+            font-weight: 700;
+        }
     }
 `
