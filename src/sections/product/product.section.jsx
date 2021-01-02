@@ -11,11 +11,14 @@ import ProductInputRow from '../../components/product-input-row/product-input-ro
 import ModalImage from '../../components/modal-images/modal-images.component'
 
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
+import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 
 
 import {
     resetProductObj,
-    initProductObj
+    initProductObj,
+    initLensesObj,
+    resetLensesObj
 } from './product.utils'
 
 import {
@@ -33,17 +36,35 @@ import {
 
 const ProductSection = () => {
     const { currentUser } = useContext(AuthContext)
-    const { createNewProduct, products, updateProduct, handleProductDelete } = useContext(WarehouseContext)
+    const {
+        createNewProduct,
+        products,
+        lenses,
+        updateProduct,
+        handleProductDelete,
+        createNewLenses,
+        updateLenses
+    } = useContext(WarehouseContext)
     const { setSelectedImage, selectedImage } = useContext(ImageContext)
     const { id } = useParams()
     const { push } = useHistory()
 
     const [product, setProduct] = useState(initProductObj)
+    const [lense, setLense] = useState(initLensesObj)
+
+    console.log(lenses)
 
     const handleChange = (e) => {
         const { name, value } = e.target
         setProduct({
             ...product,
+            [name]: value
+        })
+    }
+    const handleLensesChange = (e) => {
+        const { name, value } = e.target
+        setLense({
+            ...lense,
             [name]: value
         })
     }
@@ -87,20 +108,27 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        console.log(image)
-
-        setProduct({
-            ...product,
-            imagePath: image
-        })
-
         if (id === 'novy-produkt') {
-            createNewProduct(product)
+            if (activeProductCategoryIndex === 4) {
+                createNewLenses({
+                    ...lense,
+                    eshop: draft
+                })
+            } else {
+                createNewProduct(product)
+            }
             resetProduct()
             push('/dashboard/sklad')
 
         } else {
-            updateProduct(product)
+            if (activeProductCategoryIndex === 4) {
+                updateLenses({
+                    ...lense,
+                    eshop: draft
+                })
+            } else {
+                updateProduct(product)
+            }
             resetProduct()
             push('/dashboard/sklad')
 
@@ -109,6 +137,7 @@ const ProductSection = () => {
 
     const resetProduct = () => {
         setProduct(resetProductObj())
+        setLense(resetLensesObj())
     }
 
     const deleteProduct = () => {
@@ -131,35 +160,55 @@ const ProductSection = () => {
         setShowDeleteButton(true)
         setIsUpdating(true)
 
-        setProduct({
-            id: product._id || '',
-            name: product.name || '',
-            description: product.description || '',
-            price: product.price.toString() || "0",
-            type: product.type || 1,
-            brandName: product.brand || "",
-            soldAmount: product.soldAmount,
-            available: product.available.map(value => value.toString()),
-            rimShape: product.specs.frameStyle || '',
-            rimColor: product.specs.frameColor || '',
-            rimMaterial: product.specs.frameMaterial || '',
-            sex: product.sex || "men",
-            size: product.specs.size,
-            lensColor: product.specs.lensColor || "",
-            eanCode: product.eanCode || "",
-            colorCode: product.colorCode || "",
-            colorName: product.specs.frameColor || '',
-            imagePath: product.image ? product.image.imagePath : "",
-            topProduct: product.topProduct || false
-        })
+        if (product) {
+            if (product.type !== 4) {
+                setProduct({
+                    id: product._id || '',
+                    name: product.name || '',
+                    description: product.description || '',
+                    price: product.price.toString() || "0",
+                    type: product.type || 1,
+                    brandName: product.brand || "",
+                    soldAmount: product.soldAmount,
+                    available: product.available.map(value => value.toString()),
+                    rimShape: product.specs.frameStyle || '',
+                    rimColor: product.specs.frameColor || '',
+                    rimMaterial: product.specs.frameMaterial || '',
+                    sex: product.sex || "men",
+                    size: product.specs.size,
+                    lensColor: product.specs.lensColor || "",
+                    eanCode: product.eanCode || "",
+                    colorCode: product.colorCode || "",
+                    colorName: product.specs.frameColor || '',
+                    imagePath: product.image ? product.image.imagePath : "",
+                    topProduct: product.topProduct || false
+                })
+            } else {
 
-        setActiveProductCategoryIndex(product.type)
-        toggleDraft(product.eshop || false)
+            }
+            setActiveProductCategoryIndex(product.type)
+            toggleDraft(product.eshop || false)
 
-        if (product.image) {
-            setImage(product.image._id)
-            setSelectedImage(product.image)
+            if (product.image) {
+                setImage(product.image._id)
+                setSelectedImage(product.image)
+            }
         }
+
+        const lense = lenses.find(lnss => lnss._id === id)
+        if (lense) {
+            setLense(lense)
+            setActiveProductCategoryIndex(4)
+            toggleDraft(lense.eshop || false)
+
+
+            if (lense.image) {
+                // setImage(lense.image._id)
+                setSelectedImage(lense.image)
+            }
+
+        }
+
 
     }, [id])
 
@@ -174,6 +223,12 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (image) {
+            if (activeProductCategoryIndex === 4) {
+                setLense({
+                    ...lense,
+                    image: image
+                })
+            }
             setProduct({
                 ...product,
                 imagePath: image
@@ -223,44 +278,57 @@ const ProductSection = () => {
                     </CategoryContainer>
                 </div>
 
-                <ProductGlassesForm
-                    product={product}
-                    setProduct={setProduct}
-                    handleChange={handleChange}
-                />
+                {
+                    activeProductCategoryIndex === 4 ? (
+                        <ProductLensesForm
+                            lense={lense}
+                            setLense={setLense}
+                            handleChange={handleLensesChange}
+                        />) : (
+                            <ProductGlassesForm
+                                product={product}
+                                setProduct={setProduct}
+                                handleChange={handleChange}
+                            />
+                        )
+
+                }
+
 
 
                 <div>
-                    <Title>Skladové zásoby</Title>
+                    {activeProductCategoryIndex !== 4 && <div>
+                        <Title>Skladové zásoby</Title>
 
-                    {product && product.available.map((value, idx) => {
-                        const newArr = product.available
-                        const handleArrChange = (e) => {
-                            newArr[idx] = e.target.value
-                            setProduct({
-                                ...product,
-                                available: newArr
-                            })
-                        }
+                        {product && product.available.map((value, idx) => {
+                            const newArr = product.available
+                            const handleArrChange = (e) => {
+                                newArr[idx] = e.target.value
+                                setProduct({
+                                    ...product,
+                                    available: newArr
+                                })
+                            }
 
-                        return (
-                            (currentUser.admin === idx || isAdmin) && (
-                                <ProductInputRow
-                                    key={idx}
-                                    label={`Počet kusov na predajni ${idx}`}
-                                    example="napr: 0"
-                                >
-                                    <CustomInput
-                                        label={`Predajna ${idx}`}
-                                        type='text'
-                                        // name={store.name}
-                                        value={value.toString()}
-                                        handleChange={e => handleArrChange(e)}
-                                    />
-                                </ProductInputRow>
+                            return (
+                                (currentUser.admin === idx || isAdmin) && (
+                                    <ProductInputRow
+                                        key={idx}
+                                        label={`Počet kusov na predajni ${idx}`}
+                                        example="napr: 0"
+                                    >
+                                        <CustomInput
+                                            label={`Predajna ${idx}`}
+                                            type='text'
+                                            // name={store.name}
+                                            value={value.toString()}
+                                            handleChange={e => handleArrChange(e)}
+                                        />
+                                    </ProductInputRow>
+                                )
                             )
-                        )
-                    })}
+                        })}
+                    </div>}
 
                     <ImageContainer>
 

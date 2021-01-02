@@ -39,6 +39,27 @@ export const initProductObj = {
     imagePath: "",
 }
 
+export const initLensesObj = {
+    // id [5fd4cae9f9432022689dd223]
+    id: "",
+    // Lense name
+    name: "",
+    // Paradne sosovky
+    description: "",
+    //vsetky skla su dostupne len pre isty interval dioptrií a cylindrov, ak si zvolím ze mam dioptrie
+    //mimo tohto intervalu tak si tieto skla k mojim okuliarom vybrat nemozem
+    dioptersRange: ["0", "0"],
+    cylinderRange: ["0", "0"],
+    //cena v centoch
+    price: "0",
+    brand: ""
+}
+
+
 export const resetProductObj = () => {
     return initProductObj
+}
+
+export const resetLensesObj = () => {
+    return initLensesObj
 }

@@ -1,15 +1,20 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { fetchProducts, postProduct, deleteProduct, patchProduct } from './warehouse.queries'
+import { fetchProducts, postProduct, deleteProduct, patchProduct, postLenses, fetchLenses, patchLenses, delLense } from './warehouse.queries'
 
 export const WarehouseContext = createContext({
     products: null,
+    lenses: null,
     totalCount: 0,
     getProducts: () => { },
     createNewProduct: () => { },
     handleProductDelete: () => { },
-    updateProduct: () => { }
+    updateProduct: () => { },
+    createNewLenses: () => { },
+    getLenses: () => { },
+    updateLenses: () => { },
+    deleteLense: () => { }
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -17,6 +22,7 @@ const WarehouseProvider = ({ children }) => {
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
 
     const [products, setProducts] = useState(null)
+    const [lenses, setLenses] = useState(null)
     const [totalCount, setTotalCount] = useState(0)
 
     const getProducts = async () => {
@@ -27,8 +33,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetchProducts(token)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.products) {
                 setTotalCount(data.count)
                 setProducts(data.products)
@@ -38,6 +42,91 @@ const WarehouseProvider = ({ children }) => {
             setIsLoading(false)
             getMessage(data.message)
 
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const getLenses = async () => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await fetchLenses(token)
+            const data = await response.json()
+
+            if (data.lenses) {
+                setTotalCount(data.count)
+                setLenses(data.lenses)
+                closeModal()
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+    const deleteLense = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await delLense(token, id)
+            const data = await response.json()
+
+            if (data.lenses) {
+                getLenses()
+                closeModal()
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createNewLenses = async (productToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postLenses(token, productToAdd)
+            const data = await response.json()
+
+            console.log(data)
+
+            setIsLoading(false)
+            getMessage(data.message)
+            getLenses()
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+    const updateLenses = async (productToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await patchLenses(token, productToAdd)
+            const data = await response.json()
+
+            console.log(data)
+
+            setIsLoading(false)
+            getMessage(data.message)
+            getLenses()
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
@@ -122,11 +211,16 @@ const WarehouseProvider = ({ children }) => {
         <WarehouseContext.Provider
             value={{
                 products,
+                lenses,
                 totalCount,
                 getProducts,
                 createNewProduct,
                 handleProductDelete,
-                updateProduct
+                updateProduct,
+                createNewLenses,
+                getLenses,
+                updateLenses,
+                deleteLense
             }}
         >
             {children}

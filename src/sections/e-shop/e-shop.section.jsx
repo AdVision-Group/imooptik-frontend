@@ -23,8 +23,11 @@ const EshopSection = () => {
 
     const {
         products,
+        lenses,
         getProducts,
-        handleProductDelete
+        getLenses,
+        handleProductDelete,
+        deleteLense
     } = useContext(WarehouseContext)
 
     const { push } = useHistory()
@@ -68,10 +71,12 @@ const EshopSection = () => {
     const [activeIndex, setActiveIndex] = useState(2)
 
     useEffect(() => {
+        console.log("fetch products")
         if (!products) {
             getProducts()
+            getLenses()
         }
-    }, [products, token])
+    }, [products, lenses, token])
 
     useEffect(() => {
         setActiveIndex(filteredItems[0].id)
@@ -109,6 +114,19 @@ const EshopSection = () => {
                             image={product.image}
                             handleUpdateButton={() => push(`sklad/${product._id}`)}
                             handleDeleteButton={() => handleProductDelete(product._id)}
+                        />
+                    ))
+                }
+                {
+                    lenses && lenses.map(product => (
+                        <ProductOverview
+                            key={product._id}
+                            name={product.name}
+                            id={product._id}
+                            price={(product.price / 100).toFixed(2)}
+                            image={product.image}
+                            handleUpdateButton={() => push(`sklad/${product._id}`)}
+                            handleDeleteButton={() => deleteLense(product._id)}
                         />
                     ))
                 }

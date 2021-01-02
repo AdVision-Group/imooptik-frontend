@@ -24,7 +24,7 @@ const ProductOverview = (props) => {
             <ProductContent>
                 <h2>{name}</h2>
                 <ProductId>{id}</ProductId>
-                <StockInfo>Na sklade {stock} kusov</StockInfo>
+                <StockInfo>{stock != null ? `Na sklade ${stock} kusov` : "Šošovka"}</StockInfo>
                 <Price>{price}€</Price>
             </ProductContent>
 
