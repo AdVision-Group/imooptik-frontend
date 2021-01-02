@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import CustomButton from '../custom-button/custom-button.component'
 
 export const FormContainer = styled.form`
+    display: block;
+    height: initial;
     width: 100%;
     max-width: 35rem;
     padding: 3rem 4rem;

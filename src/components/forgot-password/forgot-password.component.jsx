@@ -32,7 +32,7 @@ const ForgotPassword = ({ showSignInForm, showSignUpForm }) => {
         <React.Fragment>
             {isLoading && <PopUp loading={isWaitingForResponse} title={errMessage} close={() => setIsLoading(false)} />}
             <FormContainer onSubmit={handleSubmit}>
-                <h2>Prihlásiť sa</h2>
+                <h2>Zadaj e-mail</h2>
 
                 <CustomInput
                     label="E-mail"

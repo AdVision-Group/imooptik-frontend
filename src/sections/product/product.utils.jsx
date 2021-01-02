@@ -8,18 +8,13 @@ export const initProductObj = {
     // price in cents: 1050 => 10.50
     price: '0',
     // product type: glesses, lenses, ...
-    type: "",
+    type: 1,
     // brand name: Adidas
     brandName: "",
     //kolko sa ich zatial predalo
-    soldAmount: 5,
+    soldAmount: 0,
     //kolko je kusov na ktorej prevádzke [arr] 
-    available: [
-        {
-            name: "",
-            value: "0"
-        },
-    ],
+    available: ["0", "0", "0", "0", "0"],
     // Oválne
     rimShape: "",
     // Čierna
@@ -29,7 +24,7 @@ export const initProductObj = {
     // Unisex
     sex: "men",
     // available sizes: [arr] [47, 21, 140]
-    size: [],
+    size: ["0", "0", "0"],
     // Priehľadné
     lensColor: "",
     //ean kod = unikatny kod ktory ma kazdy produkt
@@ -45,24 +40,5 @@ export const initProductObj = {
 }
 
 export const resetProductObj = () => {
-    return {
-        id: "",
-        name: "",
-        description: "",
-        price: '0',
-        type: "",
-        brandName: "",
-        soldAmount: 5,
-        available: ["0", "0", "0", "0"],
-        rimShape: "",
-        rimColor: "",
-        rimMaterial: "",
-        sex: "men",
-        size: [],
-        lensColor: "",
-        eanCode: "",
-        colorCode: "",
-        colorName: "",
-        imagePath: "",
-    }
+    return initProductObj
 }

@@ -34,3 +34,7 @@ export const CustomSelect = styled.select`
     font-family: inherit;
     display: block;
 `
+
+export const Title = styled.h3`
+    margin-top: 2rem;
+`

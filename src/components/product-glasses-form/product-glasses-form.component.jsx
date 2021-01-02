@@ -7,7 +7,8 @@ import ProductInputRow from '../product-input-row/product-input-row.component'
 import {
     FormCheckbox,
     TextareaRow,
-    CustomSelect
+    CustomSelect,
+    Title
 } from './product-glasses-form.styles.jsx'
 
 const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
@@ -161,6 +162,48 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     required
                 />
             </ProductInputRow>
+            <ProductInputRow
+                label="Farba skla"
+                example="napr: prehliadna"
+            >
+                <CustomInput
+                    label="Farba"
+                    type='text'
+                    name='lensColor'
+                    value={product.lensColor}
+                    handleChange={(e) => handleChange(e)}
+                    required
+                />
+            </ProductInputRow>
+
+            <Title>Velikosť</Title>
+
+            {product.size.map((value, idx) => {
+                const newArr = product.size
+                const handleArrChange = (e) => {
+                    newArr[idx] = e.target.value
+                    setProduct({
+                        ...product,
+                        size: newArr
+                    })
+                }
+
+                return (
+                    <ProductInputRow
+                        key={idx}
+                        label={`Velkosť`}
+                        example="napr: 0"
+                    >
+                        <CustomInput
+                            label={`${idx}`}
+                            type='text'
+                            // name={store.name}
+                            value={value.toString()}
+                            handleChange={e => handleArrChange(e)}
+                        />
+                    </ProductInputRow>
+                )
+            })}
         </div>
     )
 }

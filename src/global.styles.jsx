@@ -17,11 +17,12 @@ export const GlobalStyles = createGlobalStyle`
         overflow: hidden;
     }
 
-    section {
+    section, form {
         display: flex;
         flex-direction: column;
         height: 100vh;
     }
+
 `
 export const paddingStyles = css`
     padding: 0 3rem;

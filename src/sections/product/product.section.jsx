@@ -87,6 +87,13 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        console.log(image)
+
+        setProduct({
+            ...product,
+            imagePath: image
+        })
+
         if (id === 'novy-produkt') {
             createNewProduct(product)
             resetProduct()
@@ -110,7 +117,7 @@ const ProductSection = () => {
     }
 
     useEffect(() => {
-        if (currentUser.admin === 4) {
+        if (currentUser.admin > 1) {
             setIsAdmin(true)
         } else {
             setIsAdmin(false)
@@ -142,7 +149,7 @@ const ProductSection = () => {
             eanCode: product.eanCode || "",
             colorCode: product.colorCode || "",
             colorName: product.specs.frameColor || '',
-            imagePath: product.image.imagePath,
+            imagePath: product.image ? product.image.imagePath : "",
             topProduct: product.topProduct || false
         })
 
@@ -165,10 +172,18 @@ const ProductSection = () => {
         }
     }, [activeProductCategoryIndex])
 
-    return (
-        <section>
-            {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
+    useEffect(() => {
+        if (image) {
+            setProduct({
+                ...product,
+                imagePath: image
+            })
+        }
+    }, [image])
 
+    return (
+        <form onSubmit={e => handleSubmit(e)}>
+            {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
             <Header>
                 <div>
                     <h1>{isUpdating ? "Upraviť produkt" : "Pridať nový produkt"}</h1>
@@ -180,7 +195,7 @@ const ProductSection = () => {
                         handleClick={() => toggleDraft(!draft)}
                     />
                     {showDeleteButton && <DeleteButton onClick={deleteProduct}>Vymazať</DeleteButton>}
-                    <AddButton onClick={handleSubmit}>{isUpdating ? "Upraviť produkt" : "Pridať product"}</AddButton>
+                    <AddButton type='submit'>{isUpdating ? "Upraviť produkt" : "Pridať product"}</AddButton>
                 </div>
             </Header>
 
@@ -259,7 +274,8 @@ const ProductSection = () => {
                     </ImageContainer>
                 </div>
             </ScrollContainer>
-        </section >
+
+        </form >
     )
 }
 
