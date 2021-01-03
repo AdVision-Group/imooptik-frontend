@@ -45,7 +45,8 @@ export const LogoContainer = styled.div`
 
 export const NavLinksContainer = styled.ul`
     list-style: none;
-    min-width: 27.5rem;
+    width: 100%;
+    overflow-x: hidden;
 
     @media all and (max-height: 725px) {
         overflow-y: scroll;
@@ -76,6 +77,7 @@ export const NavLinksContainer = styled.ul`
         align-items: center;
         margin-bottom: 3rem;
 
+
         div {
             width: 5rem;
             height: 5rem;
@@ -88,48 +90,34 @@ export const NavLinksContainer = styled.ul`
 
             }
         }
-
-        a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.8rem;
-            transition: .2s color ease-out;
-
-            @media all and (max-width: 500px) {
-                font-size: 1.6rem;
-            }
-
-            &:hover {
-                color: #eee;
-            }
-
-            &.active {
-                &::after {
-                    content: ' ';
-                    position: absolute;
-                    right: 0;
-                    width: 1rem;
-                    top: 0;
-                    bottom: 0;
-                    background-color: rgb(235, 172, 1);
-                }
-            }
-        }
     }
 `
 
-export const LogoutButton = styled.button`
-    cursor: pointer;
-    outline: none;
-    border: none;
-    background-color: transparent;
+export const ActiveBorder = styled.span`
+    opacity: ${({ isActive }) => isActive ? 1 : 0};
+    position: absolute;
+    width: 4px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(235, 172, 1);
+    transition: opacity .3s ease-out;
+`
 
-    text-decoration: none;
+export const NavLinksButton = styled.button`
+    min-width: 20rem;
+    cursor: pointer;
+    outline:none;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
     color: #fff;
+    font-family: inherit;
     font-weight: 700;
     font-size: 1.8rem;
     transition: .2s color ease-out;
+
 
     @media all and (max-width: 500px) {
         font-size: 1.6rem;
@@ -139,22 +127,12 @@ export const LogoutButton = styled.button`
         color: #eee;
     }
 
-    &.active {
-        &::after {
-            content: ' ';
-            position: absolute;
-            right: 0;
-            width: .5rem;
-            top: 0;
-            bottom: 0;
-            background-color: rgb(235, 172, 1);
-        }
-    }
 
     &:focus {
         outline: none;
     }
 `
+
 
 export const ToggleButton = styled.button`
     cursor: pointer;

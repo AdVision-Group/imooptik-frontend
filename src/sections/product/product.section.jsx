@@ -75,6 +75,9 @@ const ProductSection = () => {
 
     const [draft, toggleDraft] = useState(false)
 
+    console.log(draft)
+    console.log(product)
+
 
     const [image, setImage] = useState('')
 
@@ -113,7 +116,10 @@ const ProductSection = () => {
                     eshop: draft
                 })
             } else {
-                createNewProduct(product)
+                createNewProduct({
+                    ...product,
+                    eshop: draft
+                })
             }
             resetProduct()
             push('/dashboard/sklad')
@@ -125,7 +131,10 @@ const ProductSection = () => {
                     eshop: draft
                 })
             } else {
-                updateProduct(product)
+                updateProduct({
+                    ...product,
+                    eshop: draft
+                })
             }
             resetProduct()
 
