@@ -101,6 +101,7 @@ export const patchLenses = (token, newProduct) => {
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
+        "id": _id,
         "brand": brand,
         "cylinderRange": cylinderRange.map(val => Number(val)),
         "name": name,

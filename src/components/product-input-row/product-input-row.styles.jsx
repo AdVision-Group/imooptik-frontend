@@ -13,4 +13,13 @@ export const InputRow = styled.div`
             font-weight: 700;
         }
     }
+
+    @media all and (max-width: 800px) {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+
+        p {
+            margin-left: unset;
+        }
+    }
 `

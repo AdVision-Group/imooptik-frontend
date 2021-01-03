@@ -12,6 +12,16 @@ export const ProductContainer = styled.div`
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
+
+    @media all and (max-width: 800px) {
+        grid-template-columns : 20rem 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        @media all and (max-width: 500px) {
+            grid-template-columns : 1fr;
+        }
+    }
+
 `
 
 export const ProductImage = styled.div`
@@ -19,6 +29,7 @@ export const ProductImage = styled.div`
     /* height: 100%; */
     background-color: #eee;
     margin-right: 2rem;
+ 
 
     img {
         width: 100%;
@@ -26,6 +37,18 @@ export const ProductImage = styled.div`
         object-fit: contain;
         object-position: start;
     }  
+
+    @media all and (max-width: 800px) {
+        align-self: start;
+        grid-row-start: 1;
+        grid-row-end: 3;   
+
+        @media all and (max-width: 500px) {
+            justify-self: center;
+            margin-bottom: 2rem;
+        }
+
+    }
 `
 
 export const ProductContent = styled.div`

@@ -32,7 +32,7 @@ const BookingSection = () => {
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
-                title="Kalendar objednávok na kontrolu"
+                title="Kalendar objednávok"
             />
 
             <ScrollContainer>

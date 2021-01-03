@@ -6,8 +6,11 @@ export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 3rem;
-    min-width: 70rem;
     ${paddingStyles};    
+
+    @media all and (max-width: 600px) {
+        flex-wrap: wrap;
+    }
 `
 
 export const Left = styled.div`
@@ -15,6 +18,7 @@ export const Left = styled.div`
 
     display: flex;
     align-items: center;
+
 `
 
 export const Right = styled.div`

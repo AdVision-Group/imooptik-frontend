@@ -4,7 +4,6 @@ import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom'
 import SideNav from '../../components/sidenav/sidenav.component'
 
 import EshopSection from '../../sections/e-shop/e-shop.section'
-import WarehouseSection from '../../sections/warehouse/warehouse.section'
 import CustomersSection from '../../sections/customers/customers.section'
 import OrdersSection from '../../sections/orders/orders.section'
 import AnalyticsSection from '../../sections/analytics/analytics.section'
@@ -16,7 +15,7 @@ import PostSection from '../../sections/post/post.section'
 
 import BlogProvider from '../../context/blog/blog.context'
 import UserProvider from '../../context/user/user.context'
-import WarehouseProvider, { WarehouseContext } from '../../context/warehouse/warehouse.context'
+import WarehouseProvider from '../../context/warehouse/warehouse.context'
 import ImageProvider from '../../context/image/image.context'
 
 import { DashboardContainer } from './dashboard.styles'
@@ -27,10 +26,6 @@ const Dashboard = () => {
         {
             name: 'E-shop',
             path: '/obchod'
-        },
-        {
-            name: 'Sklad',
-            path: '/sklad'
         },
         {
             name: 'Zákazníci',
@@ -67,11 +62,6 @@ const Dashboard = () => {
                             </WarehouseProvider>
                         )} />
 
-                        <Route exact path={`${match.path}/sklad`} render={() => (
-                            <WarehouseProvider>
-                                <WarehouseSection />
-                            </WarehouseProvider>
-                        )} />
                         <Route path={`${match.path}/sklad/:id`} render={() => (
                             <WarehouseProvider>
                                 <ProductSection />
@@ -99,10 +89,6 @@ const Dashboard = () => {
                             <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
                             <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
                         </UserProvider>
-
-
-
-
 
                     </Switch>
                     <Redirect to={`${match.path}/obchod`} />

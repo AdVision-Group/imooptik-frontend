@@ -11,4 +11,9 @@ export const CheckboxContainer = styled.div`
     padding: .8rem 3rem;
     border-radius: .2rem;
     transition: all .2s ease-out;
+
+    @media all and (max-width: 500px) {
+        padding: 0.5rem 1.5rem;
+        font-size: 1.4rem;
+    }
 `

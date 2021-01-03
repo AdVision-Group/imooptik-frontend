@@ -52,8 +52,6 @@ const ProductSection = () => {
     const [product, setProduct] = useState(initProductObj)
     const [lense, setLense] = useState(initLensesObj)
 
-    console.log(lenses)
-
     const handleChange = (e) => {
         const { name, value } = e.target
         setProduct({
@@ -130,7 +128,6 @@ const ProductSection = () => {
                 updateProduct(product)
             }
             resetProduct()
-            push('/dashboard/sklad')
 
         }
     }
@@ -142,7 +139,7 @@ const ProductSection = () => {
 
     const deleteProduct = () => {
         handleProductDelete(product.id)
-        push('/dashboard/sklad')
+        push('/dashboard/obchod')
     }
 
     useEffect(() => {
@@ -259,21 +256,25 @@ const ProductSection = () => {
                     <CategoryTitle>Kategória</CategoryTitle>
                     <CategoryContainer>
                         {
-                            productCategories.map((category, idx) => (
-                                <CategoryCheckbox
-                                    key={idx}
-                                    label={category.name}
-                                    name='type'
-                                    isActive={category.value === activeProductCategoryIndex}
-                                    handleClick={() => {
-                                        setProduct({
-                                            ...product,
-                                            type: category.value
-                                        })
-                                        setActiveProductCategoryIndex(category.value)
-                                    }}
-                                />
-                            ))
+                            productCategories.map((category, idx) => {
+                                if (isUpdating && category.value === 4) return
+                                if (isUpdating && activeProductCategoryIndex === 4) return
+                                return (
+                                    <CategoryCheckbox
+                                        key={idx}
+                                        label={category.name}
+                                        name='type'
+                                        isActive={category.value === activeProductCategoryIndex}
+                                        handleClick={() => {
+                                            setProduct({
+                                                ...product,
+                                                type: category.value
+                                            })
+                                            setActiveProductCategoryIndex(category.value)
+                                        }}
+                                    />
+                                )
+                            })
                         }
                     </CategoryContainer>
                 </div>

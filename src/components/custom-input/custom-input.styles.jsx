@@ -51,4 +51,11 @@ export const InputGroup = styled.div`
             ${shrinkLabel}
         }
     }
+
+    @media all and (max-width: 500px) {
+        .form-input {
+            font-size: 1.4rem;
+        }
+        /* padding: 1rem .5rem 1rem 2rem; */
+    }
 `

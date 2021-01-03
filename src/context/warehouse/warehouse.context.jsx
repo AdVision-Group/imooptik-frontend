@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
 import { fetchProducts, postProduct, deleteProduct, patchProduct, postLenses, fetchLenses, patchLenses, delLense } from './warehouse.queries'
@@ -20,6 +21,7 @@ export const WarehouseContext = createContext({
 const WarehouseProvider = ({ children }) => {
     const { token } = useContext(AuthContext)
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
+    const { push } = useHistory()
 
     const [products, setProducts] = useState(null)
     const [lenses, setLenses] = useState(null)
@@ -34,7 +36,7 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
 
             if (data.products) {
-                setTotalCount(data.count)
+                setTotalCount(totalCount + data.count)
                 setProducts(data.products)
                 closeModal()
             }
@@ -58,7 +60,7 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
 
             if (data.lenses) {
-                setTotalCount(data.count)
+                setTotalCount(totalCount + data.count)
                 setLenses(data.lenses)
                 closeModal()
             }
@@ -105,9 +107,12 @@ const WarehouseProvider = ({ children }) => {
 
             console.log(data)
 
-            setIsLoading(false)
-            getMessage(data.message)
-            getLenses()
+            if (data) {
+                setIsLoading(false)
+                getMessage(data.message)
+                push('/dashboard/obchod')
+                getLenses()
+            }
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
@@ -124,9 +129,13 @@ const WarehouseProvider = ({ children }) => {
 
             console.log(data)
 
-            setIsLoading(false)
-            getMessage(data.message)
-            getLenses()
+            if (data) {
+                setIsLoading(false)
+                getMessage(data.message)
+                push('/dashboard/obchod')
+                getLenses()
+            }
+
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")

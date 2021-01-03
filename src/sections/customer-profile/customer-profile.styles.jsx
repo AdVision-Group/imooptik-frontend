@@ -33,6 +33,10 @@ export const GridContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: start;
+
+    @media all and (max-width: 800px) {
+        grid-template-columns: 1fr;
+    }
 `
 
 export const ZeroMargin = styled.div`
@@ -61,6 +65,27 @@ export const ThreeColRow = styled.div`
 
     div:not(:last-child) {
         padding-right: 2rem;
+    }
+
+    @media all and (max-width: 800px) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "a a"
+            "b c";
+
+        div:nth-child(1){
+            grid-area: a;
+            margin-bottom: 0;
+        }
+        div:nth-child(2){
+            grid-area: b;
+            margin-bottom: 2rem;
+
+        }
+        div:nth-child(3){
+            grid-area: c;
+            margin-bottom: 2rem;
+        }
     }
 `
 

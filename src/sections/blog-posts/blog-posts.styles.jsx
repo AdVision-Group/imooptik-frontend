@@ -12,6 +12,16 @@ export const PostContainer = styled.div`
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
+
+        @media all and (max-width: 800px) {
+        grid-template-columns : 20rem 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        @media all and (max-width: 500px) {
+            grid-template-columns : 1fr;
+            grid-template-rows: unset;
+        }
+    }
 `
 
 export const PostImage = styled.div`
@@ -25,6 +35,18 @@ export const PostImage = styled.div`
         object-position: top;
         object-fit: contain;
     }
+
+        @media all and (max-width: 800px) {
+        align-self: start;
+        grid-row-start: 1;
+        grid-row-end: 3;   
+
+        @media all and (max-width: 500px) {
+            justify-self: center;
+            margin-bottom: 2rem;
+        }
+
+    }
 `
 
 export const PostContent = styled.div`
@@ -36,6 +58,10 @@ export const PostContent = styled.div`
         font-size: 1.4rem;
         color: gray;
     }
+
+        @media all and (max-width: 500px) {
+            margin-bottom: 2rem;
+        }
 `
 
 export const Options = styled.div`

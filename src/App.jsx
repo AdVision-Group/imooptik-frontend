@@ -10,8 +10,6 @@ import ResetPasswordPage from './pages/reset-password/reset-password'
 const App = () => {
   console.log("RENDER APP")
   const { currentUser } = useContext(AuthContext)
-
-  console.log(currentUser)
   return (
     <React.Fragment>
       <GlobalStyles />

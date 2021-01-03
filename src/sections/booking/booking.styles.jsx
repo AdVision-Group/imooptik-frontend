@@ -10,7 +10,7 @@ export const ContainerOverview = styled.div`
     box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
 
     &:not(:last-child) {
-        margin-right: 2rem;
+        /* margin-right: 2rem; */
     }
 
     h3  { 
@@ -25,8 +25,9 @@ export const ContainerOverview = styled.div`
 
 export const GridRow = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat( auto-fit, minmax(25rem, 1fr) );
     margin-bottom: 3rem;
+    grid-gap: 2rem;
 `
 
 export const UpdateButton = styled(CustomButton)`

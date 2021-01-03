@@ -9,8 +9,6 @@ import {
 } from './product-lenses-form.styles'
 
 const ProductLensesForm = ({ lense, setLense, handleChange }) => {
-    console.log(lense)
-
     return (
         <div>
             <h3>Základné informacie</h3>

@@ -12,6 +12,11 @@ export const OrderContainer = styled.div`
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
+
+    @media all and (max-width: 800px) {
+        grid-template-columns: 1fr;
+
+    }
 `
 
 export const OrderContent = styled.div`

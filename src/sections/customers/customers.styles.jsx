@@ -12,6 +12,10 @@ export const CustomerContainer = styled.div`
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
+
+    @media all and (max-width: 500px) {
+        grid-template-columns: 1fr;   
+    }
 `
 export const Content = styled.div`
     h2 {
@@ -29,6 +33,10 @@ export const Description = styled.p`
     max-width: 45rem;
     font-size: 1.4rem;
     color: gray;
+
+    @media all and (max-width: 500px) {
+        margin-bottom: 2rem;
+    }
 `
 
 export const Options = styled.div`

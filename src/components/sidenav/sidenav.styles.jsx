@@ -9,12 +9,19 @@ export const AsideContainer = styled.aside`
     flex-direction: column;
     justify-content: space-between;
     z-index: 999;
+    overflow-x: hidden;
 
-    @media all and (max-width: 800px) {
+    @media all and (max-width: 1150px) {
         position: absolute;
-        width: 30rem;
-        transition: left .5s ease-out;
-        left: ${({ isOpen }) => isOpen ? 0 : '-30rem'};
+
+        width: ${({ isOpen }) => isOpen ? "30rem" : '10rem'};
+        transition: width .5s ease-out;
+
+        @media all and (max-width: 800px){
+            position: absolute;
+            transition: left .5s ease-out;
+            left: ${({ isOpen }) => isOpen ? 0 : '-30rem'};
+        }
 
         @media all and (max-width: 500px) {
             width: 25rem;
@@ -29,10 +36,16 @@ export const LogoContainer = styled.div`
     font-weight: 700;
     color: #fff;
     margin-bottom: 3rem;
+    @media all and (max-width: 1150px) {
+        transition: opacity .5s ease-out;
+        opacity: ${({ isOpen }) => isOpen ? 1 : 0};
+
+    }
 `
 
 export const NavLinksContainer = styled.ul`
     list-style: none;
+    min-width: 27.5rem;
 
     @media all and (max-height: 725px) {
         overflow-y: scroll;
@@ -96,7 +109,7 @@ export const NavLinksContainer = styled.ul`
                     content: ' ';
                     position: absolute;
                     right: 0;
-                    width: .5rem;
+                    width: 1rem;
                     top: 0;
                     bottom: 0;
                     background-color: rgb(235, 172, 1);
@@ -154,9 +167,10 @@ export const ToggleButton = styled.button`
         outline: none;
     }
 
-    @media all and (max-width: 800px) {
+    @media all and (max-width: 1150px) {
         top: 3rem;
-        left: 32rem;
+        left: ${({ isOpen }) => isOpen ? '32rem' : '12rem'};
+        transition: all .5s ease-out;
         align-self: flex-start;
         display: block;
         background-color: transparent;
@@ -165,8 +179,11 @@ export const ToggleButton = styled.button`
         height: 2.5rem;
         position: absolute;
 
-        @media all and (max-width: 500px) {
-            left: 26.5rem;
+        @media all and (max-width: 800px) {
+            left: ${({ isOpen }) => isOpen ? '32rem' : '2rem'};
+            @media all and (max-width: 500px) {
+                left: ${({ isOpen }) => isOpen ? '26rem' : '1rem'};
+            }
         }
 
         div {
@@ -204,7 +221,6 @@ export const ToggleButton = styled.button`
                 }
             `)}
         }
-
  
     }
 `

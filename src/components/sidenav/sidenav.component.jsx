@@ -11,27 +11,30 @@ const Sidenav = ({ routes, match }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <AsideContainer isOpen={isOpen}>
+        <React.Fragment>
+
             <ToggleButton onClick={() => setIsOpen(!isOpen)} isOpen={isOpen}>
                 <div />
                 <div />
                 <div />
             </ToggleButton>
-            <LogoContainer>
-                IMOOPTIK
+            <AsideContainer isOpen={isOpen}>
+                <LogoContainer isOpen={isOpen}>
+                    IMOOPTIK
             </LogoContainer>
-            <NavLinksContainer>
-                {routes.map((route, idx) => (
-                    <li key={idx}>
-                        <div /> <NavLink to={match.url + route.path}>{route.name}</NavLink>
+                <NavLinksContainer>
+                    {routes.map((route, idx) => (
+                        <li key={idx}>
+                            <div /> <NavLink to={match.url + route.path}>{route.name}</NavLink>
+                        </li>
+                    ))}
+                    <li>
+                        <div /> <LogoutButton onClick={logOut} >Odhlásiť sa</LogoutButton>
                     </li>
-                ))}
-                <li>
-                    <div /> <LogoutButton onClick={logOut} >Odhlásiť sa</LogoutButton>
-                </li>
-            </NavLinksContainer>
-            <div />
-        </AsideContainer>
+                </NavLinksContainer>
+                <div />
+            </AsideContainer>
+        </React.Fragment>
     )
 }
 

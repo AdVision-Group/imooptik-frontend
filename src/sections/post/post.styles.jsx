@@ -11,6 +11,10 @@ export const Header = styled.div`
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;
+
+    @media all and (max-width: 500px) {
+        flex-direction: column;
+    }
 `
 
 export const GridContainer = styled.div`
@@ -19,6 +23,10 @@ export const GridContainer = styled.div`
     grid-gap: 2rem;
     height: inherit;
     height: 100%;
+
+        @media all and (max-width: 800px) {
+            grid-template-columns: 1fr ;
+        }
 
 `
 
@@ -47,6 +55,10 @@ export const DeleteButton = styled(CustomButtom)`
     font-size: 1.4rem;
     margin: 0 2rem;
     background-color: #DD4C4C;
+
+    @media all and (max-width: 500px) {
+        margin: 0 .8rem;
+    }
 `
 export const AddButton = styled(CustomButtom)`
     font-size: 1.4rem;

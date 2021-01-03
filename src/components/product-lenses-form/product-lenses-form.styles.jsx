@@ -15,4 +15,18 @@ export const TextareaRow = styled.div`
             font-weight: 700;
         }
     }
+
+        @media all and (max-width: 800px) {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+
+        p {
+            margin-left: unset;
+        }
+
+        div {
+            width: 100%;
+        }
+    }
 `
