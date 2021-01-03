@@ -153,12 +153,11 @@ const WarehouseProvider = ({ children }) => {
 
             console.log(data)
 
-            if (data.product) {
-                getProducts()
-                closeModal()
-            } else {
+            if (data) {
                 setIsLoading(false)
                 getMessage(data.message)
+                push('/dashboard/obchod')
+                getProducts()
             }
 
         } catch (err) {
@@ -176,12 +175,12 @@ const WarehouseProvider = ({ children }) => {
             const response = await patchProduct(token, productToUpdate)
             const data = await response.json()
             console.log(data)
-            if (data.product) {
-                getProducts()
-                closeModal()
-            } else {
+
+            if (data) {
                 setIsLoading(false)
                 getMessage(data.message)
+                push('/dashboard/obchod')
+                getProducts()
             }
 
         } catch (err) {
