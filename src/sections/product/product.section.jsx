@@ -2,12 +2,14 @@ import React, { useState, useContext, useEffect } from 'react'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import { ImageContext } from '../../context/image/image.context'
 import { AuthContext } from '../../context/auth/auth.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useHistory, useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from "../../components/custom-input/custom-input.component"
 import ProductInputRow from '../../components/product-input-row/product-input-row.component'
 
+import Popup from '../../components/popup/pop-up.component'
 import ModalImage from '../../components/modal-images/modal-images.component'
 
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
@@ -45,6 +47,14 @@ const ProductSection = () => {
         createNewLenses,
         updateLenses
     } = useContext(WarehouseContext)
+
+    const {
+        closeModal,
+        isLoading,
+        showModal,
+        message
+    } = useContext(LoadingModalContext)
+
     const { setSelectedImage, selectedImage } = useContext(ImageContext)
     const { id } = useParams()
     const { push } = useHistory()
@@ -74,10 +84,6 @@ const ProductSection = () => {
     const [showDeleteButton, setShowDeleteButton] = useState(false)
 
     const [draft, toggleDraft] = useState(false)
-
-    console.log(draft)
-    console.log(product)
-
 
     const [image, setImage] = useState('')
 
@@ -122,7 +128,7 @@ const ProductSection = () => {
                 })
             }
             resetProduct()
-            push('/dashboard/sklad')
+            // push('/dashboard/sklad')
 
         } else {
             if (activeProductCategoryIndex === 4) {
@@ -136,7 +142,7 @@ const ProductSection = () => {
                     eshop: draft
                 })
             }
-            resetProduct()
+            // resetProduct()
 
         }
     }
@@ -244,6 +250,7 @@ const ProductSection = () => {
 
     return (
         <form onSubmit={e => handleSubmit(e)}>
+            { showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
             <Header>
                 <div>
@@ -344,10 +351,9 @@ const ProductSection = () => {
 
                         <Title>Obrázok</Title>
 
-                        <ProductImage onClick={() => setImageModal(true)} >
-                            Vybrať obrázok
-                                {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
-
+                        <ProductImage onClick={() => setImageModal(true)} hasImage={selectedImage}>
+                            {!selectedImage && "Vybrať obrázok"}
+                            {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                         </ProductImage>
                     </ImageContainer>
                 </div>

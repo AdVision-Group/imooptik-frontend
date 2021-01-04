@@ -120,8 +120,8 @@ const PostSection = () => {
                             handleChange={(e) => setDescription(e.target.value)}
                         />
                         <h2>Titulná fotka</h2>
-                        <PostImage onClick={() => setImageModal(true)} >
-                            Vybrať obrázok
+                        <PostImage onClick={() => setImageModal(true)} hasImage={selectedImage}>
+                            {!selectedImage && "Vybrať obrázok"}
                             {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                         </PostImage>
                     </div>

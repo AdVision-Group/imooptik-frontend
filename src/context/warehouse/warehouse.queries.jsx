@@ -40,9 +40,6 @@ export const fetchProducts = (token) => {
 }
 
 export const postLenses = (token, newProduct) => {
-    console.log("PRODUCT BEFORE POST")
-    console.log(newProduct)
-    console.log("PRODUCT BEFORE POST")
 
     const {
         brand,
@@ -80,9 +77,6 @@ export const postLenses = (token, newProduct) => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
 }
 export const patchLenses = (token, newProduct) => {
-    console.log("PRODUCT BEFORE POST")
-    console.log(newProduct)
-    console.log("PRODUCT BEFORE POST")
 
     const {
         _id,
@@ -124,9 +118,6 @@ export const patchLenses = (token, newProduct) => {
 
 
 export const postProduct = (token, newProduct) => {
-    console.log("PRODUCT BEFORE POST")
-    console.log(newProduct)
-    console.log("PRODUCT BEFORE POST")
     const {
         eanCode,
         type,
@@ -141,7 +132,7 @@ export const postProduct = (token, newProduct) => {
         rimColor,
         rimMaterial,
         rimShape,
-        sex,
+        // sex,
         size,
         topProduct,
         lensColor
@@ -191,9 +182,6 @@ export const postProduct = (token, newProduct) => {
 }
 
 export const patchProduct = (token, product) => {
-    console.log("UPDATE PRODUCT")
-    console.log(product)
-    console.log("UPDATE PRODUCT")
     const {
         id,
         eanCode,
@@ -204,20 +192,16 @@ export const patchProduct = (token, product) => {
         colorCode,
         description,
         eshop,
-        image,
         imagePath,
         available,
         rimColor,
         rimMaterial,
         rimShape,
-        sex,
+        // sex,
         size,
         topProduct,
         lensColor
     } = product
-
-    console.log(image)
-    console.log(imagePath)
 
     let newArr = []
 

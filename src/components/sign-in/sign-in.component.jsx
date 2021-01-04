@@ -25,6 +25,9 @@ const SignIn = ({ showSignUpForm, showForgotPwsForm }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         logIn(email, password)
+
+        setEmail('')
+        setPassword('')
     }
 
 

@@ -39,7 +39,7 @@ const EshopSection = () => {
         {
             id: 1,
             name: "Všetko",
-            permission: 4,
+            permission: 0,
         },
         {
             id: 2,
@@ -66,9 +66,11 @@ const EshopSection = () => {
 
 
 
-    const filteredItems = items.filter(item => item.permission === currentUser.admin || currentUser.admin === 4)
+    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.premises === 4)
 
     const [activeIndex, setActiveIndex] = useState(2)
+
+    console.log(currentUser)
 
     useEffect(() => {
         console.log("fetch products")

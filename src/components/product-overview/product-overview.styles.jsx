@@ -4,7 +4,7 @@ import CustomButton from '../custom-button/custom-button.component'
 export const ProductContainer = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: 25rem 1fr 25rem;
+    grid-template-columns: 20rem 1fr 25rem;
 
     box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
     padding: 2rem;
@@ -27,7 +27,7 @@ export const ProductContainer = styled.div`
 export const ProductImage = styled.div`
     /* width: 100%; */
     /* height: 100%; */
-    background-color: #eee;
+    /* background-color: #eee; */
     margin-right: 2rem;
  
 

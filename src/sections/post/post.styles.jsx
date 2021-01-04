@@ -31,11 +31,15 @@ export const GridContainer = styled.div`
 `
 
 export const PostImage = styled.div`
+    cursor: pointer;
     display:flex;
     align-items: center;
     justify-content:center;
     width: 100%;
+    background-color: ${({ hasImage }) => hasImage ? "transparent" : "#eee"};
     margin-top: 3rem;
+    padding: 6rem;
+
     position: relative;
 
     img {

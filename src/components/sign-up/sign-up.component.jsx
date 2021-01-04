@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
 import CustomInput from '../custom-input/custom-input.component'
 import Popup from '../popup/pop-up.component'
@@ -12,21 +13,28 @@ const SignUp = ({ showSignInForm }) => {
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const {
-        Register,
-        errMessage,
-        isLoading,
-        isWaitingForResponse,
-        setIsLoading
+        register,
     } = useContext(AuthContext)
+
+    const {
+        isLoading,
+        closeModal,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        Register(email, password, confirmPassword)
+        register(email, password, confirmPassword)
+
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
     }
 
     return (
         <React.Fragment>
-            { isLoading && <Popup loading={isWaitingForResponse} title={errMessage} close={() => setIsLoading(false)} />}
+            { showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <FormContainer onSubmit={handleSubmit}>
                 <h2>Registrovať sa</h2>
 

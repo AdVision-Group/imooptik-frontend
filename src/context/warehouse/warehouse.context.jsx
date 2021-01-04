@@ -176,12 +176,17 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
             console.log(data)
 
-            if (data) {
-                setIsLoading(false)
+            if (data.error) {
                 getMessage(data.message)
-                push('/dashboard/obchod')
-                getProducts()
+                setIsLoading(false)
+
+                return
             }
+
+            getMessage(data.message)
+            setIsLoading(false)
+            push('/dashboard/obchod')
+            // getProducts()
 
         } catch (err) {
             console.log(err)

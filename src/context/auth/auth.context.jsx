@@ -7,7 +7,7 @@ export const AuthContext = createContext({
     token: null,
     logIn: () => { },
     logOut: () => { },
-    Register: () => { },
+    register: () => { },
     handleResetPassword: () => { },
     handleCreatingNewPassword: () => { }
 })
@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
             setIsLoading(false)
             return
         }
+
         if (!password) {
             console.log("Ziadne heslo")
             setShowModal(false)
@@ -59,7 +60,7 @@ const AuthProvider = ({ children }) => {
         setToken(null)
     }
 
-    const Register = async (email, password, confirmPassword) => {
+    const register = async (email, password, confirmPassword) => {
         setShowModal(true)
         setIsLoading(true)
 
@@ -69,6 +70,7 @@ const AuthProvider = ({ children }) => {
             setIsLoading(false)
             return
         }
+
         if (!password) {
             console.log("Ziadne heslo")
             setShowModal(false)
@@ -84,13 +86,12 @@ const AuthProvider = ({ children }) => {
             return
         }
 
-
         try {
             const response = await createNewUser({ email, password })
             const data = await response.json()
 
-            getMessage(data.message)
             setIsLoading(false)
+            getMessage(data.message)
 
         } catch (err) {
             console.log(err)
@@ -156,14 +157,12 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN)) {
             setToken(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN))
-
         }
     }, [])
 
     useEffect(() => {
         if (token) {
             const getUserProfile = async () => {
-                console.log(token)
                 const response = await fetchUser(token)
                 const data = await response.json()
                 if (data.user) {
@@ -181,7 +180,7 @@ const AuthProvider = ({ children }) => {
                 currentUser,
                 logIn,
                 logOut,
-                Register,
+                register,
                 handleResetPassword,
                 handleCreatingNewPassword
             }}

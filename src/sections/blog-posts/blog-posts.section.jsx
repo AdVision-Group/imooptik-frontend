@@ -66,7 +66,7 @@ const BlogPosts = () => {
 
             <ScrollContainer>
                 {
-                    posts && posts.map(post => (
+                    posts && posts.length ? posts.map(post => (
                         <PostContainer key={post._id}>
                             <PostImage>
                                 {post.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />}
@@ -80,7 +80,11 @@ const BlogPosts = () => {
                                 <DeleteButton onClick={() => handlePostDelete(post._id)}>Vymazať</DeleteButton>
                             </Options>
                         </PostContainer>
-                    ))
+                    )) : (
+                            <div>
+                                Žiadne príspevky
+                            </div>
+                        )
                 }
 
             </ScrollContainer>

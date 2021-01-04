@@ -48,7 +48,7 @@ export const ProductImage = styled.div`
     display:flex;
     align-items: center;
     justify-content:center;
-    background-color: #eee;
+    background-color: ${({ hasImage }) => hasImage ? "transparent" : "#eee"};
     margin-top: 3rem;
     padding: 6rem;
     position: relative;
