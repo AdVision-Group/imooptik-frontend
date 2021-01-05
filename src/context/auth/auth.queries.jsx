@@ -18,12 +18,12 @@ export const getUser = (credentials) => {
 }
 
 export const createNewUser = (credentials) => {
-    const { email, password } = credentials
+    const { name, email, password } = credentials
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({ "email": email, "password": password });
+    const raw = JSON.stringify({ "email": email, "password": password, "name": name });
 
     const requestOptions = {
         method: 'POST',

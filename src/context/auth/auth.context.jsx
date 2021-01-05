@@ -60,9 +60,16 @@ const AuthProvider = ({ children }) => {
         setToken(null)
     }
 
-    const register = async (email, password, confirmPassword) => {
+    const register = async (name, email, password, confirmPassword) => {
         setShowModal(true)
         setIsLoading(true)
+
+        if (!name) {
+            console.log("Ziadne meno")
+            setShowModal(false)
+            setIsLoading(false)
+            return
+        }
 
         if (!email) {
             console.log("Ziadny e-mail")
@@ -87,7 +94,7 @@ const AuthProvider = ({ children }) => {
         }
 
         try {
-            const response = await createNewUser({ email, password })
+            const response = await createNewUser({ name, email, password })
             const data = await response.json()
 
             setIsLoading(false)

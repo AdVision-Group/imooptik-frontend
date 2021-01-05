@@ -42,8 +42,8 @@ const WarehouseProvider = ({ children }) => {
                 return
             }
 
-            setIsLoading(false)
             getMessage(data.message)
+            setIsLoading(false)
 
         } catch (err) {
             console.log(err)
@@ -60,6 +60,7 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetchLenses(token)
             const data = await response.json()
 
+            console.log(data)
             if (data.lenses) {
                 setTotalCount(totalCount + data.count)
                 setLenses(data.lenses)

@@ -43,8 +43,6 @@ const PostSection = () => {
     const [showImageModal, setImageModal] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
 
-    console.log(selectedImage)
-
     const handleSubmit = e => {
         e.preventDefault()
 

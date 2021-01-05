@@ -66,7 +66,7 @@ const EshopSection = () => {
 
 
 
-    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.premises === 0)
+    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.admin >= 2)
 
     const [activeIndex, setActiveIndex] = useState(2)
 
@@ -75,12 +75,13 @@ const EshopSection = () => {
         if (!products) {
             getProducts()
             getLenses()
-            closeModal()
         }
     }, [products, lenses, token])
 
     useEffect(() => {
-        setActiveIndex(filteredItems[0].id)
+        if (filteredItems.length) {
+            setActiveIndex(filteredItems[0].id)
+        }
     }, [])
 
     return (

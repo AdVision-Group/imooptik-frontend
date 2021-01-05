@@ -53,17 +53,30 @@ const BlogProvider = ({ children }) => {
         setShowModal(true)
         setIsLoading(true)
 
-        const response = await fetchSinglePost(id)
-        const data = await response.json()
+        try {
 
-        console.log(data)
+            const response = await fetchSinglePost(id)
+            const data = await response.json()
 
-        if (data.blog) {
-            setPost(data.blog)
-            closeModal()
+            console.log(data)
+
+            if (data.blog) {
+                setPost(data.blog)
+                setIsLoading(false)
+                getMessage(data.message)
+                return
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+            // setPosts(data.blogs)
+            // setPostsCount(data.count)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
-        // setPosts(data.blogs)
-        // setPostsCount(data.count)
+
 
         setShowModal(false)
         setIsLoading(false)

@@ -8,6 +8,7 @@ import Popup from '../popup/pop-up.component'
 import { FormContainer, SubmitButton, SignUpButton } from './sign-up.styles'
 
 const SignUp = ({ showSignInForm }) => {
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -25,8 +26,9 @@ const SignUp = ({ showSignInForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        register(email, password, confirmPassword)
+        register(name, email, password, confirmPassword)
 
+        setName('')
         setEmail('')
         setPassword('')
         setConfirmPassword('')
@@ -39,8 +41,16 @@ const SignUp = ({ showSignInForm }) => {
                 <h2>Registrovať sa</h2>
 
                 <CustomInput
+                    label="Meno a Priezvisko"
+                    type='text'
+                    name='name'
+                    value={name}
+                    handleChange={(e) => setName(e.target.value)}
+                    required
+                />
+                <CustomInput
                     label="E-mail"
-                    type='emial'
+                    type='email'
                     name='email'
                     value={email}
                     handleChange={(e) => setEmail(e.target.value)}

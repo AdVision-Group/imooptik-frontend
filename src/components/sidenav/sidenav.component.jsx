@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ import {
 } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
-    const { logOut } = useContext(AuthContext)
+    const { logOut, currentUser } = useContext(AuthContext)
     const { push } = useHistory()
 
     const [isOpen, setIsOpen] = useState(false)

@@ -25,27 +25,33 @@ const Dashboard = () => {
     const routes = [
         {
             name: 'E-shop',
-            path: '/obchod'
+            path: '/obchod',
+            permission: 1
         },
         {
             name: 'Zákazníci',
-            path: '/zakaznici'
+            path: '/zakaznici',
+            permission: 1
         },
         {
             name: 'Objednávky',
-            path: '/objednavky'
+            path: '/objednavky',
+            permission: 0
         },
         {
             name: 'Rezervácie',
-            path: '/rezervacie'
+            path: '/rezervacie',
+            permission: 0
         },
         {
             name: 'Blog',
-            path: '/blog'
+            path: '/blog',
+            permission: 0
         },
         {
             name: 'Analytika',
-            path: '/analytika'
+            path: '/analytika',
+            permission: 1
         },
     ]
 
@@ -91,6 +97,7 @@ const Dashboard = () => {
                         </UserProvider>
 
                     </Switch>
+                    {/* {currentUser.admin === 0 ? <Redirect to={`${match.path}/objednavky`} /> : <Redirect to={`${match.path}/obchod`} />} */}
                     <Redirect to={`${match.path}/obchod`} />
                 </main>
             </ImageProvider>
