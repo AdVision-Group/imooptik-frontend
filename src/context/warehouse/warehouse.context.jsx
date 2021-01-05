@@ -38,7 +38,8 @@ const WarehouseProvider = ({ children }) => {
             if (data.products) {
                 setTotalCount(totalCount + data.count)
                 setProducts(data.products)
-                closeModal()
+                setIsLoading(false)
+                return
             }
 
             setIsLoading(false)
@@ -62,7 +63,8 @@ const WarehouseProvider = ({ children }) => {
             if (data.lenses) {
                 setTotalCount(totalCount + data.count)
                 setLenses(data.lenses)
-                closeModal()
+                setIsLoading(false)
+                return
             }
 
             setIsLoading(false)
@@ -84,7 +86,7 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.lenses) {
                 getLenses()
-                closeModal()
+                // closeModal()
             }
 
             setIsLoading(false)
@@ -153,13 +155,16 @@ const WarehouseProvider = ({ children }) => {
 
             console.log(data)
 
-            if (data) {
-                setIsLoading(false)
+            if (data.error) {
                 getMessage(data.message)
-                push('/dashboard/obchod')
-                getProducts()
+                setIsLoading(false)
+                return
             }
 
+            setIsLoading(false)
+            getMessage(data.success)
+            push('/dashboard/obchod')
+            getProducts()
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
@@ -179,14 +184,13 @@ const WarehouseProvider = ({ children }) => {
             if (data.error) {
                 getMessage(data.message)
                 setIsLoading(false)
-
                 return
             }
 
             getMessage(data.message)
             setIsLoading(false)
             push('/dashboard/obchod')
-            // getProducts()
+            getProducts()
 
         } catch (err) {
             console.log(err)
@@ -205,13 +209,9 @@ const WarehouseProvider = ({ children }) => {
 
             console.log(data)
 
-            if (data.product) {
-                getProducts()
-                closeModal()
-            } else {
-                setIsLoading(false)
-                getMessage(data.message)
-            }
+            setIsLoading(false)
+            getMessage(data.message)
+            getProducts()
 
         } catch (err) {
             console.log(err)

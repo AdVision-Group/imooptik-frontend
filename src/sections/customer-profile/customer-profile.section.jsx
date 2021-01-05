@@ -11,7 +11,7 @@ import {
     Header,
     Profile,
     DeleteProfileButton,
-    Name,
+    // Name,
     GridContainer,
     GridRow,
     Row,
@@ -32,7 +32,7 @@ const CustomerProfile = () => {
         message
     } = useContext(UserContext)
     const { id } = useParams()
-    const { push } = useHistory()
+    // const { push } = useHistory()
 
     const [fName, setFName] = useState('')
     const [lName, setLName] = useState('')

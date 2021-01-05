@@ -69,7 +69,8 @@ const ImageProvider = ({ children }) => {
         }
     }
 
-    const handleDeleteImage = async (id) => {
+    const handleDeleteImage = async (id, e) => {
+        e.preventDefault()
         setShowModal(true)
         setIsLoading(true)
 

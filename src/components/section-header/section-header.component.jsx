@@ -7,7 +7,7 @@ import {
     Left,
     Right,
     SearchButton,
-    Notification,
+    // Notification,
     AddButton,
 } from './section-header.styles'
 

@@ -43,10 +43,13 @@ const PostSection = () => {
     const [showImageModal, setImageModal] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
 
+    console.log(selectedImage)
+
     const handleSubmit = e => {
         e.preventDefault()
 
         if (image.length <= 0) return
+        if (content.length <= 0) return
 
         if (id === 'novy-prispevok') {
             createPost(image, title, description, draft, content)
@@ -59,6 +62,8 @@ const PostSection = () => {
     }
 
     useEffect(() => {
+        setSelectedImage(null)
+
         if (id !== 'novy-prispevok') {
             getPost(id)
             setIsUpdating(true)
@@ -81,7 +86,7 @@ const PostSection = () => {
     }, [post])
 
     return (
-        <section>
+        <form onSubmit={handleSubmit}>
             {isLoading && <Popup loading={showLoading} title={message} close={() => setIsLoading(false)} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
 
@@ -96,7 +101,7 @@ const PostSection = () => {
                         onChange={() => toggleDraft(!draft)}
                     />
                     <DeleteButton>Vymazať</DeleteButton>
-                    <AddButton onClick={handleSubmit}>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>
+                    <AddButton type='submit'>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>
                 </div>
             </Header>
 
@@ -111,6 +116,7 @@ const PostSection = () => {
                             name='title'
                             value={title}
                             handleChange={(e) => setTitle(e.target.value)}
+                            required
                         />
                         <CustomTextarea
                             label="Popis"
@@ -118,6 +124,7 @@ const PostSection = () => {
                             rows='5'
                             value={description}
                             handleChange={(e) => setDescription(e.target.value)}
+                            required
                         />
                         <h2>Titulná fotka</h2>
                         <PostImage onClick={() => setImageModal(true)} hasImage={selectedImage}>
@@ -139,7 +146,7 @@ const PostSection = () => {
                 </GridContainer>
 
             </ScrollContainer>
-        </section>
+        </form>
     )
 }
 

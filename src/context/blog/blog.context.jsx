@@ -3,13 +3,10 @@ import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import {
     fetchPosts,
-    uploadImage,
     createNewPost,
-    fetchImages,
     fetchSinglePost,
     updatePost,
     deletePost,
-    deleteImage
 } from './blog.queries'
 
 
@@ -44,6 +41,7 @@ const BlogProvider = ({ children }) => {
 
         const response = await fetchPosts()
         const data = await response.json()
+
         setPosts(data.blogs)
         setPostsCount(data.count)
 
@@ -57,6 +55,9 @@ const BlogProvider = ({ children }) => {
 
         const response = await fetchSinglePost(id)
         const data = await response.json()
+
+        console.log(data)
+
         if (data.blog) {
             setPost(data.blog)
             closeModal()

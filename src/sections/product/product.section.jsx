@@ -273,8 +273,8 @@ const ProductSection = () => {
                     <CategoryContainer>
                         {
                             productCategories.map((category, idx) => {
-                                if (isUpdating && category.value === 4) return
-                                if (isUpdating && activeProductCategoryIndex === 4) return
+                                if (isUpdating && category.value === 4) return <></>
+                                if (isUpdating && activeProductCategoryIndex === 4) return <></>
                                 return (
                                     <CategoryCheckbox
                                         key={idx}

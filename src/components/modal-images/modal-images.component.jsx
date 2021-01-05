@@ -1,5 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
-import { BlogContext } from '../../context/blog/blog.context'
+import React, { useEffect, useContext } from 'react'
 import { ImageContext } from '../../context/image/image.context'
 
 import {
@@ -22,9 +21,13 @@ const ModalImages = ({ close, setImage }) => {
     } = useContext(ImageContext)
 
     const selectImage = (img) => {
-        console.log(img)
         setImage(img._id)
         setSelectedImage(img)
+        close()
+    }
+
+    const handleUploadImage = (e) => {
+        handleImage(e.target.files[0])
         close()
     }
 
@@ -42,7 +45,7 @@ const ModalImages = ({ close, setImage }) => {
                 <FlexContainer>
                     {images && images.map(img => (
                         <ImageContainer key={img._id}>
-                            <DeleteButton onClick={() => handleDeleteImage(img._id)}>&#10005;</DeleteButton>
+                            <DeleteButton onClick={(e) => handleDeleteImage(img._id, e)}>&#10005;</DeleteButton>
                             <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
                         </ImageContainer>
                     ))}
@@ -53,7 +56,7 @@ const ModalImages = ({ close, setImage }) => {
                         type='file'
                         name='image'
                         accept="image/png, image/jpeg"
-                        onChange={e => handleImage(e.target.files[0])}
+                        onChange={e => handleUploadImage(e)}
                     />
                     Pridať obrázok
                 </UploadButton>

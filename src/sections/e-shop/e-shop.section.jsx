@@ -37,27 +37,27 @@ const EshopSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
         {
-            id: 1,
+            id: 0,
             name: "Všetko",
             permission: 0,
         },
         {
-            id: 2,
+            id: 1,
             name: "Prevádzka 1",
             permission: 1,
         },
         {
-            id: 3,
+            id: 2,
             name: "Prevádzka 2",
             permission: 2,
         },
         {
-            id: 4,
+            id: 3,
             name: "Prevádzka 3",
             permission: 3,
         },
         {
-            id: 5,
+            id: 4,
             name: "Prevádzka 4",
             permission: 4,
         },
@@ -66,17 +66,16 @@ const EshopSection = () => {
 
 
 
-    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.premises === 4)
+    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.premises === 0)
 
     const [activeIndex, setActiveIndex] = useState(2)
-
-    console.log(currentUser)
 
     useEffect(() => {
         console.log("fetch products")
         if (!products) {
             getProducts()
             getLenses()
+            closeModal()
         }
     }, [products, lenses, token])
 
@@ -110,7 +109,7 @@ const EshopSection = () => {
                         <ProductOverview
                             key={product._id}
                             name={product.name}
-                            stock={product.available[0]}
+                            stock={product.available[activeIndex]}
                             id={product._id}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
