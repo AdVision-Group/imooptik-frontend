@@ -1,19 +1,22 @@
 {
   "files": {
-    "main.js": "/imooptik-frontend/static/js/main.ca271848.chunk.js",
-    "main.js.map": "/imooptik-frontend/static/js/main.ca271848.chunk.js.map",
-    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.29e999e8.js",
-    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.29e999e8.js.map",
-    "static/js/2.13bb4dd8.chunk.js": "/imooptik-frontend/static/js/2.13bb4dd8.chunk.js",
-    "static/js/2.13bb4dd8.chunk.js.map": "/imooptik-frontend/static/js/2.13bb4dd8.chunk.js.map",
-    "static/js/3.17ff140b.chunk.js": "/imooptik-frontend/static/js/3.17ff140b.chunk.js",
-    "static/js/3.17ff140b.chunk.js.map": "/imooptik-frontend/static/js/3.17ff140b.chunk.js.map",
+    "main.js": "/imooptik-frontend/static/js/main.d2a1830d.chunk.js",
+    "main.js.map": "/imooptik-frontend/static/js/main.d2a1830d.chunk.js.map",
+    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.1fbea59f.js",
+    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.1fbea59f.js.map",
+    "static/css/2.b25828e3.chunk.css": "/imooptik-frontend/static/css/2.b25828e3.chunk.css",
+    "static/js/2.0366979b.chunk.js": "/imooptik-frontend/static/js/2.0366979b.chunk.js",
+    "static/js/2.0366979b.chunk.js.map": "/imooptik-frontend/static/js/2.0366979b.chunk.js.map",
+    "static/js/3.d5200325.chunk.js": "/imooptik-frontend/static/js/3.d5200325.chunk.js",
+    "static/js/3.d5200325.chunk.js.map": "/imooptik-frontend/static/js/3.d5200325.chunk.js.map",
     "index.html": "/imooptik-frontend/index.html",
-    "static/js/2.13bb4dd8.chunk.js.LICENSE.txt": "/imooptik-frontend/static/js/2.13bb4dd8.chunk.js.LICENSE.txt"
+    "static/css/2.b25828e3.chunk.css.map": "/imooptik-frontend/static/css/2.b25828e3.chunk.css.map",
+    "static/js/2.0366979b.chunk.js.LICENSE.txt": "/imooptik-frontend/static/js/2.0366979b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.29e999e8.js",
-    "static/js/2.13bb4dd8.chunk.js",
-    "static/js/main.ca271848.chunk.js"
+    "static/js/runtime-main.1fbea59f.js",
+    "static/css/2.b25828e3.chunk.css",
+    "static/js/2.0366979b.chunk.js",
+    "static/js/main.d2a1830d.chunk.js"
   ]
 }
