@@ -39,6 +39,34 @@ export const fetchProducts = (token) => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
 }
 
+
+export const fetchFilteredProducts = (token, limit, order) => {
+    var myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({ "limit": limit, "sortBy": { "date": order } });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/filter`, requestOptions)
+
+    // const myHeaders = new Headers();
+    // myHeaders.append("auth-token", token);
+
+    // const requestOptions = {
+    //     method: 'GET',
+    //     headers: myHeaders,
+    //     redirect: 'follow'
+    // };
+    // return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
+}
+
 export const postLenses = (token, newProduct) => {
 
     const {

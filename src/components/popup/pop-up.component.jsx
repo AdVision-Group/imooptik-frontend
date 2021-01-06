@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from 'react-dom'
 
 import CustomButton from '../custom-button/custom-button.component'
 import Spinner from "../spinner/spinner.component";
@@ -12,7 +13,7 @@ import {
 export default function Popup(props) {
     const { loading, title, close } = props;
 
-    return (
+    return ReactDOM.createPortal((
         <PopupContainer>
             {loading ? <Panel><Spinner /></Panel> : (
                 <Panel>
@@ -21,5 +22,5 @@ export default function Popup(props) {
                 </Panel>
             )}
         </PopupContainer>
-    )
+    ), document.getElementById("portal"))
 }

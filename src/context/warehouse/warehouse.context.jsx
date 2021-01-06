@@ -2,7 +2,18 @@ import React, { createContext, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { fetchProducts, postProduct, deleteProduct, patchProduct, postLenses, fetchLenses, patchLenses, delLense } from './warehouse.queries'
+import {
+    fetchProducts,
+    postProduct,
+    deleteProduct,
+    patchProduct,
+    postLenses,
+    fetchLenses,
+    patchLenses,
+    delLense,
+    // fetchFilteredProducts
+} from './warehouse.queries'
+
 
 export const WarehouseContext = createContext({
     products: null,

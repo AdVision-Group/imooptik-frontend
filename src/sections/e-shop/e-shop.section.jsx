@@ -11,6 +11,8 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ProductOverview from '../../components/product-overview/product-overview.component'
 import Popup from '../../components/popup/pop-up.component'
 
+import Pagination from '../../components/pagination/pagination.component'
+
 const EshopSection = () => {
     const { currentUser, token } = useContext(AuthContext)
 
@@ -31,8 +33,6 @@ const EshopSection = () => {
     } = useContext(WarehouseContext)
 
     const { push } = useHistory()
-
-
 
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
@@ -61,13 +61,14 @@ const EshopSection = () => {
             name: "Prevádzka 4",
             permission: 4,
         },
+        {
+            id: 5,
+            name: "Prevádzka 5",
+            permission: 5,
+        },
     ]
 
-
-
-
     const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.admin >= 2)
-
     const [activeIndex, setActiveIndex] = useState(2)
 
     useEffect(() => {
@@ -88,10 +89,28 @@ const EshopSection = () => {
         }
     }, [])
 
+    let allProducts = []
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productsPerPage, setProductsPerPage] = useState(10)
+
+    if (products && lenses) {
+        allProducts = [
+            ...products,
+            ...lenses
+        ]
+    }
+
+    const indexOfLastProduct = currentPage * productsPerPage
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+    const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    console.log(allProducts)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-
 
             <SectionHeader
                 searchQuery={searchQuery}
@@ -110,11 +129,11 @@ const EshopSection = () => {
             {/* Products container */}
             <ScrollContainer>
                 {
-                    products && products.map(product => (
+                    currentProducts && currentProducts.map(product => (
                         <ProductOverview
                             key={product._id}
                             name={product.name}
-                            stock={product.available[activeIndex]}
+                            stock={product.available ? activeIndex === 0 ? product.available.reduce((acc, currValue) => acc + currValue) : product.available[activeIndex - 1] : ''}
                             id={product._id}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
@@ -123,7 +142,7 @@ const EshopSection = () => {
                         />
                     ))
                 }
-                {
+                {/* {
                     lenses && lenses.map(product => (
                         <ProductOverview
                             key={product._id}
@@ -135,7 +154,14 @@ const EshopSection = () => {
                             handleDeleteButton={() => deleteLense(product._id)}
                         />
                     ))
-                }
+                } */}
+
+                <Pagination
+                    productsPerPage={productsPerPage}
+                    totalProducts={allProducts.length}
+                    paginate={paginate}
+                    activePage={currentPage}
+                />
             </ScrollContainer>
         </section >
     )
