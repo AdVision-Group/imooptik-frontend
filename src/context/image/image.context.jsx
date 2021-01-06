@@ -28,9 +28,17 @@ const ImageProvider = ({ children }) => {
         setShowModal(true)
         setIsLoading(true)
 
+        console.log(img)
+
         try {
-            const response = await uploadImage(token, img)
+            const response = await uploadImage(token, {
+                filename: "image",
+                img
+
+            })
             const data = await response.json()
+            console.log(data)
+
             if (data.image) {
                 setSelectedImage(data.image)
                 getImages()

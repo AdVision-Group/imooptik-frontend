@@ -76,6 +76,10 @@ const EshopSection = () => {
             getProducts()
             getLenses()
         }
+
+        if (!message) {
+            closeModal()
+        }
     }, [products, lenses, token])
 
     useEffect(() => {

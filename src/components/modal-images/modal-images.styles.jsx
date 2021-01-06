@@ -1,12 +1,12 @@
 import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
 
 export const ModalContainer = styled.div`
-    width: 100%;
-    height: 100%;
-
     position: fixed;
     left: 0;
     right: 0;
+    top: 0;
+    bottom: 0;
     z-index: 99999;
 
     display: flex;
@@ -20,9 +20,9 @@ export const Modal = styled.div`
     width:100%;
     max-width: 50rem;
 
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
 
     padding: 2rem;
     border-radius: .5rem;
@@ -51,6 +51,7 @@ export const UploadButton = styled.label`
     transition: background-color .1s ease-out,
                 color .2s ease-out;
     outline: none;
+    margin: 0 auto 2rem;
 
     &:focus {
         outline:none;
@@ -128,4 +129,46 @@ export const DeleteButton = styled.button`
     &:focus {
         outline: none;
     }
+`
+
+export const ImagePreviewContainer = styled.div`
+    display: block;
+    width: 100%;
+
+    img {
+        display: block;
+        max-width: 100%;
+        /* width: inherit; */
+    }
+`
+
+export const TabOptions = styled.div`
+    max-width: 18rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+`
+
+export const TabButton = styled.button`
+    cursor: pointer;
+    outline:none;
+    border: none;
+    background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#000"};
+    color: #fff;
+    font-weight: ${({ isActive }) => isActive ? "700" : "400"};
+    font-family: inherit;
+    font-size: 1.2rem;
+    padding: .8rem 1.5rem;
+    border-radius: .2rem;
+    margin-bottom: 2rem;
+    transition: all .3s ease-out;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+export const CropButton = styled(CustomButton)`
+    display: block;
+    margin: 2rem auto 0;
 `
