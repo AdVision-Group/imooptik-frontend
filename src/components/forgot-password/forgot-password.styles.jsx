@@ -43,16 +43,3 @@ export const SignInButton = styled.button`
         outline: none;
     }
 `
-
-export const SignUpButton = styled.button`
-    cursor: pointer;
-    background-color: transparent;
-    color: #DD4C4C;
-    font-family: inherit;
-    border: none;
-    outline: none;
-
-    &:focus {
-        outline: none;
-    }
-`

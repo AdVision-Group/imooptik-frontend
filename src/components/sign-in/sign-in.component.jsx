@@ -5,9 +5,9 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 import CustomInput from '../custom-input/custom-input.component'
 import PopUp from '../popup/pop-up.component'
 
-import { FormContainer, SubmitButton, SignUpButton, ForgotPasswordButton } from './sign-in.styles'
+import { FormContainer, SubmitButton, ForgotPasswordButton } from './sign-in.styles'
 
-const SignIn = ({ showSignUpForm, showForgotPwsForm }) => {
+const SignIn = ({ showForgotPwsForm }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -57,7 +57,6 @@ const SignIn = ({ showSignUpForm, showForgotPwsForm }) => {
 
                 <SubmitButton>Prihlásiť sa</SubmitButton>
             </FormContainer>
-            <SignUpButton onClick={() => showSignUpForm()}>Vytvoriť účet</SignUpButton>
             <ForgotPasswordButton onClick={() => showForgotPwsForm()}>Zabudol som heslo</ForgotPasswordButton>
 
         </React.Fragment>

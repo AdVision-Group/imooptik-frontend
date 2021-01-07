@@ -7,11 +7,10 @@ import PopUp from '../popup/pop-up.component'
 import {
     FormContainer,
     SignInButton,
-    SignUpButton,
     SubmitButton
 } from './forgot-password.styles'
 
-const ForgotPassword = ({ showSignInForm, showSignUpForm }) => {
+const ForgotPassword = ({ showSignInForm }) => {
     const [email, setEmail] = useState('')
 
     const {
@@ -46,8 +45,6 @@ const ForgotPassword = ({ showSignInForm, showSignUpForm }) => {
                 <SubmitButton>Odoslať</SubmitButton>
             </FormContainer>
             <SignInButton onClick={() => showSignInForm()}>Spät na prihlásenie</SignInButton>
-            <SignUpButton onClick={() => showSignUpForm()}>Vytvoriť nový účet</SignUpButton>
-
         </React.Fragment>
     )
 }
