@@ -1,11 +1,11 @@
-export const uploadImage = (token, img) => {
+export const uploadImage = (token, img, imgName, imgAlt) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
 
     const formdata = new FormData();
-    formdata.append("name", "Placeholder image");
-    formdata.append("alt", "placeholder");
     formdata.append("image", img);
+    formdata.append("name", imgName);
+    formdata.append("alt", imgAlt);
 
     const requestOptions = {
         method: 'POST',

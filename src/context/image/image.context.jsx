@@ -24,18 +24,16 @@ const ImageProvider = ({ children }) => {
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
 
-    const handleImage = async (img) => {
+    const handleImage = async (img, imgName, imgAlt) => {
         setShowModal(true)
         setIsLoading(true)
 
         console.log(img)
+        console.log(imgName)
+        console.log(imgAlt)
 
         try {
-            const response = await uploadImage(token, {
-                filename: "image",
-                img
-
-            })
+            const response = await uploadImage(token, img, imgName, imgAlt)
             const data = await response.json()
             console.log(data)
 

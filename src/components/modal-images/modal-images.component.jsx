@@ -4,6 +4,8 @@ import { ImageContext } from '../../context/image/image.context'
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css'
 
+import CustomInput from '../custom-input/custom-input.component'
+
 import {
     ModalContainer,
     UploadButton,
@@ -22,7 +24,7 @@ const ModalImages = ({ close, setImage }) => {
     const {
         getImages,
         handleDeleteImage,
-        // handleImage,
+        handleImage,
         images,
         setSelectedImage
     } = useContext(ImageContext)
@@ -43,6 +45,10 @@ const ModalImages = ({ close, setImage }) => {
     const [imgUrl, setImgUrl] = useState('')
     const [cropper, setCropper] = useState(null)
     const [cropData, setCropData] = useState('');
+
+    const [imageName, setImageName] = useState('')
+    const [imageAlt, setImageAlt] = useState('')
+
 
     const handleClick = (e, tab) => {
         e.preventDefault()
@@ -65,7 +71,7 @@ const ModalImages = ({ close, setImage }) => {
     const getCropData = (e) => {
         e.preventDefault()
         if (typeof cropper !== 'undefined') {
-            // handleImage(cropper.getCroppedCanvas().toDataURL())
+            handleImage(cropper.getCroppedCanvas().toDataURL(), imageName, imageAlt)
             setCropData(cropper.getCroppedCanvas().toDataURL());
             console.log(cropData)
         }
@@ -101,7 +107,7 @@ const ModalImages = ({ close, setImage }) => {
                                             initialAspectRatio={1}
                                             aspectRatio={1}
                                             scalable={true}
-                                            zoomable={true}
+                                            zoomable={false}
                                             guides={false}
                                             cropBoxResizable={true}
                                             onInitialized={instance => {
@@ -109,6 +115,23 @@ const ModalImages = ({ close, setImage }) => {
                                             }}
                                         />
                                     </ImagePreviewContainer>
+                                    <CustomInput
+                                        label="Názov"
+                                        type='text'
+                                        name='imageName'
+                                        value={imageName}
+                                        handleChange={(e) => setImageName(e.target.value)}
+                                        required
+                                    />
+                                    <CustomInput
+                                        label="Alt"
+                                        type='text'
+                                        name='imageAlt'
+                                        value={imageAlt}
+                                        handleChange={(e) => setImageAlt(e.target.value)}
+                                        required
+                                    />
+
                                     <CropButton onClick={getCropData}>Orezať a nahrať</CropButton>
                                 </React.Fragment>
                             )}

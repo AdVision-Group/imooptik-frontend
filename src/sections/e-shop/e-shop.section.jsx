@@ -106,8 +106,6 @@ const EshopSection = () => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-    console.log(allProducts)
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}

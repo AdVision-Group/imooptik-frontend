@@ -19,6 +19,9 @@ export const ModalContainer = styled.div`
 export const Modal = styled.div`
     width:100%;
     max-width: 50rem;
+    max-height: 60rem;
+
+    overflow-y: scroll;
 
     /* display: flex;
     flex-direction: column;
@@ -84,25 +87,27 @@ export const CloseButton = styled.button`
 export const FlexContainer = styled.div`
     /* max-width: 46rem; */
 
-    width: 100%;
-    overflow-x: scroll;
+    /* width: 100%; */
+    /* overflow-x: scroll; */
     display: flex;
-    justify-content: start;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 2rem auto;
 `
 
 export const ImageContainer = styled.div`
     position: relative;
     cursor: pointer;
-    min-width: 20rem;
+    width: 20rem;
+    margin: 1rem 0;
 
     &:hover button {
         display: block
     }
 
-    &:not(:last-child) {
+    /* &:not(:last-child) {
         margin-right: 1.5rem;
-    }
+    } */
 
     img {
         width:100%;
