@@ -61,8 +61,6 @@ const WarehouseProvider = ({ children }) => {
     const [totalCount, setTotalCount] = useState(0)
 
 
-    console.log(product)
-
     // ------------------------
     // PRODUCT ACTIONS
     // ------------------------

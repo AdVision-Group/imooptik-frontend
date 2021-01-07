@@ -27,6 +27,9 @@ export const fetchFilteredImages = (token, limit, skip) => {
 
 
     const raw = JSON.stringify({
+        sortBy: {
+            dateCreated: -1
+        },
         limit,
         skip
     });
