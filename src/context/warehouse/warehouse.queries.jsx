@@ -156,27 +156,53 @@ export const postProduct = (token, newProduct) => {
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({
-        available,
-        brand: brand || " ",
-        colorCode: colorCode || " ",
-        // colorName,
-        description: description || " ",
-        eanCode,
-        eshop,
-        name,
-        price,
-        specs: {
-            frameColor: frameColor || " ",
-            frameMaterial: frameMaterial || " ",
-            frameStyle: frameStyle || " ",
-            lensColor: lensColor || " ",
-            sex,
-        },
-        type,
-        image: imagePath
-    })
+    let raw = {}
 
+    if (type === 4 || type === 5) {
+        raw = JSON.stringify({
+            available,
+            brand: brand || " ",
+            colorCode: colorCode || " ",
+            // colorName,
+            description: description || " ",
+            eanCode,
+            eshop,
+            name,
+            price,
+            // specs: {
+            // frameColor: frameColor || " ",
+            // frameMaterial: frameMaterial || " ",
+            // frameStyle: frameStyle || " ",
+            // lensColor: lensColor || " ",
+            // sex,
+            // },
+            type,
+            image: imagePath
+        })
+    } else {
+        raw = JSON.stringify({
+            available,
+            brand: brand || " ",
+            colorCode: colorCode || " ",
+            // colorName,
+            description: description || " ",
+            eanCode,
+            eshop,
+            name,
+            price,
+            specs: {
+                frameColor: frameColor || " ",
+                frameMaterial: frameMaterial || " ",
+                frameStyle: frameStyle || " ",
+                lensColor: lensColor || " ",
+                sex,
+            },
+            type,
+            image: imagePath
+        })
+    }
+
+    console.log(raw)
 
     const requestOptions = {
         method: 'POST',
@@ -215,27 +241,54 @@ export const patchProduct = (token, product) => {
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({
-        available,
-        brand: brand || " ",
-        colorCode: colorCode || " ",
-        // colorName,
-        description: description || " ",
-        eanCode,
-        eshop,
-        name,
-        price,
-        specs: {
-            frameColor: frameColor || " ",
-            frameMaterial: frameMaterial || " ",
-            frameStyle: frameStyle || " ",
-            lensColor: lensColor || " ",
-            sex,
-        },
-        type,
-        image: imagePath
-    });
+    let raw = {}
 
+
+    if (type === 4 || type === 5) {
+        raw = JSON.stringify({
+            available,
+            brand: brand || " ",
+            colorCode: colorCode || " ",
+            // colorName,
+            description: description || " ",
+            eanCode,
+            eshop,
+            name,
+            price,
+            // specs: {
+            // frameColor: frameColor || " ",
+            // frameMaterial: frameMaterial || " ",
+            // frameStyle: frameStyle || " ",
+            // lensColor: lensColor || " ",
+            // sex,
+            // },
+            type,
+            image: imagePath
+        })
+    } else {
+        raw = JSON.stringify({
+            available,
+            brand: brand || " ",
+            colorCode: colorCode || " ",
+            // colorName,
+            description: description || " ",
+            eanCode,
+            eshop,
+            name,
+            price,
+            specs: {
+                frameColor: frameColor || " ",
+                frameMaterial: frameMaterial || " ",
+                frameStyle: frameStyle || " ",
+                lensColor: lensColor || " ",
+                sex,
+            },
+            type,
+            image: imagePath
+        })
+    }
+
+    console.log(raw)
 
     const requestOptions = {
         method: 'PATCH',

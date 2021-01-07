@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { deleteImage, fetchImages, uploadImage } from './image.queries'
+import { deleteImage, fetchImages, uploadImage, fetchFilteredImages } from './image.queries'
 
 export const ImageContext = createContext({
     images: null,
@@ -9,20 +9,25 @@ export const ImageContext = createContext({
     getImages: () => { },
     handleImage: () => { },
     handleDeleteImage: () => { },
-    setSelectedImage: () => { }
+    setSelectedImage: () => { },
+    getNextImages: () => { },
+    getPrevImage: () => { }
 })
 
 const ImageProvider = ({ children }) => {
     const {
         getMessage,
         setIsLoading,
-        setShowModal
+        setShowModal,
+        closeModal
     } = useContext(LoadingModalContext)
 
     const { token } = useContext(AuthContext)
 
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
+    const [limit, setLimit] = useState(4)
+    const [skip, setSkip] = useState(0)
 
     const handleImage = async (img, imgName, imgAlt) => {
         // setShowModal(true)
@@ -47,22 +52,64 @@ const ImageProvider = ({ children }) => {
         }
     }
 
+    const getNextImages = async (addToSkip) => {
+        try {
+            if (images.length !== limit) return
+
+            const response = await fetchFilteredImages(token, limit, skip + addToSkip)
+            const data = await response.json()
+
+            if (data.images) {
+                setImages(data.images)
+
+                setSkip(skip + addToSkip)
+            }
+
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const getPrevImage = async (addToSkip) => {
+        if (skip === 0) return
+        try {
+            const response = await fetchFilteredImages(token, limit, skip - addToSkip)
+            const data = await response.json()
+
+            if (data.images) {
+                setImages(data.images)
+
+                setSkip(skip - addToSkip)
+
+            }
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     const getImages = async () => {
         setShowModal(true)
         setIsLoading(true)
 
         try {
-            const response = await fetchImages()
+            // const response = await fetchImages()
+            const response = await fetchFilteredImages(token, limit, skip)
+
             const data = await response.json()
 
-            console.log(data)
             if (data.images) {
                 setImages(data.images)
             }
 
             getMessage(data.message)
-            setShowModal(false)
             setIsLoading(false)
+            closeModal()
 
         } catch (err) {
             console.log(err)
@@ -98,7 +145,9 @@ const ImageProvider = ({ children }) => {
                 getImages,
                 handleImage,
                 handleDeleteImage,
-                setSelectedImage
+                setSelectedImage,
+                getNextImages,
+                getPrevImage
             }}
         >
             {children}

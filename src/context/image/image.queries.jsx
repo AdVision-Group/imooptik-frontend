@@ -20,6 +20,27 @@ export const fetchImages = () => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/images`)
 }
 
+export const fetchFilteredImages = (token, limit, skip) => {
+    const myHeaders = new Headers();
+    // myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+
+    const raw = JSON.stringify({
+        limit,
+        skip
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/images/filter`, requestOptions)
+}
+
 export const deleteImage = (token, id) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);

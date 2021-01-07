@@ -177,3 +177,25 @@ export const CropButton = styled(CustomButton)`
     display: block;
     margin: 2rem auto 0;
 `
+
+export const ButtonOptions = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
+export const FetchButtons = styled.button`
+    cursor: pointer;
+    outline: none;
+    border: none;
+    padding: .4rem 1rem;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #000;
+    font-size: 1.2rem;
+    font-family: inherit;
+    margin: 0 .5rem;
+
+    &:focus {
+        outline: none;
+    }
+`

@@ -61,6 +61,8 @@ const WarehouseProvider = ({ children }) => {
     const [totalCount, setTotalCount] = useState(0)
 
 
+    console.log(product)
+
     // ------------------------
     // PRODUCT ACTIONS
     // ------------------------
@@ -186,6 +188,10 @@ const WarehouseProvider = ({ children }) => {
                 setProduct({
                     ...product,
                     ...data.product,
+                    specs: {
+                        ...product.specs,
+                        ...data.product.specs
+                    },
                     imagePath: data.product.image._id
                 })
                 setActiveCategoryIndex(data.product.type)
@@ -224,6 +230,8 @@ const WarehouseProvider = ({ children }) => {
             resetProduct()
             push('/dashboard/obchod')
             getProducts()
+            closeModal()
+
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")

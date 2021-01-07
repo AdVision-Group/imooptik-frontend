@@ -18,7 +18,9 @@ import {
     ImagePreviewContainer,
     TabButton,
     TabOptions,
-    CropButton
+    CropButton,
+    ButtonOptions,
+    FetchButtons
 } from './modal-images.styles'
 
 const ModalImages = ({ close, setImage }) => {
@@ -27,7 +29,9 @@ const ModalImages = ({ close, setImage }) => {
         handleDeleteImage,
         handleImage,
         images,
-        setSelectedImage
+        setSelectedImage,
+        getNextImages,
+        getPrevImage
     } = useContext(ImageContext)
 
     const {
@@ -169,7 +173,16 @@ const ModalImages = ({ close, setImage }) => {
                                             <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
                                         </ImageContainer>
                                     ))}
+
                                 </FlexContainer>
+                                <ButtonOptions>
+                                    <FetchButtons onClick={() => getPrevImage(2)}>
+                                        {"<"}
+                                    </FetchButtons>
+                                    <FetchButtons onClick={() => getNextImages(2)}>
+                                        {">"}
+                                    </FetchButtons>
+                                </ButtonOptions>
                             </div>
                         )
                 }
