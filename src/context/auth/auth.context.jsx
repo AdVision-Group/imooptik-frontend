@@ -4,6 +4,7 @@ import { getUser, createNewUser, resetPassword, setNewPassword, fetchUser } from
 
 export const AuthContext = createContext({
     currentUser: null,
+    isAdmin: false,
     token: null,
     logIn: () => { },
     logOut: () => { },
@@ -16,6 +17,15 @@ const AuthProvider = ({ children }) => {
     const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
     const [currentUser, setCurrentUser] = useState(null)
     const [token, setToken] = useState(null)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    const checkIfAdmin = (user) => {
+        if (user.admin > 1) {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }
 
     const logIn = async (email, password) => {
         setShowModal(true)
@@ -45,6 +55,8 @@ const AuthProvider = ({ children }) => {
                 setCurrentUser(user.user)
                 setToken(user.authToken)
                 localStorage.setItem(process.env.REACT_APP_ADMIN_TOKEN, user.authToken)
+                checkIfAdmin(user.user)
+
                 closeModal()
             }
         } catch (err) {
@@ -174,6 +186,7 @@ const AuthProvider = ({ children }) => {
                 const data = await response.json()
                 if (data.user) {
                     setCurrentUser(data.user)
+                    checkIfAdmin(data.user)
                 }
             }
             getUserProfile()
@@ -185,6 +198,7 @@ const AuthProvider = ({ children }) => {
             value={{
                 token,
                 currentUser,
+                isAdmin,
                 logIn,
                 logOut,
                 register,

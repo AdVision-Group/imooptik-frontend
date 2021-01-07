@@ -1,3 +1,19 @@
+export const fetchProducts = (token) => {
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
+}
+
+export const fetchSingleProduct = (id) => {
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/products/${id}`)
+}
+
 export const fetchLenses = (token) => {
     var myHeaders = new Headers();
     myHeaders.append("auth-token", token);
@@ -27,45 +43,6 @@ export const delLense = (token, id) => {
 
 }
 
-export const fetchProducts = (token) => {
-    const myHeaders = new Headers();
-    myHeaders.append("auth-token", token);
-
-    const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
-}
-
-
-export const fetchFilteredProducts = (token, limit, order) => {
-    var myHeaders = new Headers();
-    myHeaders.append("auth-token", token);
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({ "limit": limit, "sortBy": { "date": order } });
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
-
-    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/filter`, requestOptions)
-
-    // const myHeaders = new Headers();
-    // myHeaders.append("auth-token", token);
-
-    // const requestOptions = {
-    //     method: 'GET',
-    //     headers: myHeaders,
-    //     redirect: 'follow'
-    // };
-    // return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
-}
 
 export const postLenses = (token, newProduct) => {
 
@@ -147,56 +124,58 @@ export const patchLenses = (token, newProduct) => {
 
 export const postProduct = (token, newProduct) => {
     const {
+        available,
+        brand,
+        colorCode,
+        // colorName,
+        description,
         eanCode,
-        type,
+        eshop,
         name,
         price,
-        brandName,
-        colorCode,
-        description,
-        eshop,
-        imagePath,
-        available,
-        rimColor,
-        rimMaterial,
-        rimShape,
-        // sex,
-        size,
-        // topProduct,
-        lensColor
+        specs: {
+            frameColor,
+            frameMaterial,
+            frameStyle,
+            lensColor,
+            sex,
+        },
+        type,
+        imagePath
     } = newProduct
 
-    let newArr = []
+    // let newArr = []
 
-    if (Array.isArray(available)) {
-        newArr = available.map(num => Number(num))
-    }
+    // if (Array.isArray(available)) {
+    //     newArr = available.map(num => Number(num))
+    // }
+
+    console.log(newProduct)
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
-        "eanCode": eanCode,
-        "type": type,
-        "name": name,
-        "price": Number(price),
-        "brand": brandName || " ",
-        "colorCode": colorCode || " ",
-        "description": description || " ",
-        "eshop": eshop,
-        "specs": {
-            "frameColor": rimColor || " ",
-            "frameStyle": rimShape || " ",
-            "frameMaterial": rimMaterial || " ",
-            "lensColor": lensColor || " ",
-            "size": size.map(val => Number(val))
+        available,
+        brand: brand || " ",
+        colorCode: colorCode || " ",
+        // colorName,
+        description: description || " ",
+        eanCode,
+        eshop,
+        name,
+        price,
+        specs: {
+            frameColor: frameColor || " ",
+            frameMaterial: frameMaterial || " ",
+            frameStyle: frameStyle || " ",
+            lensColor: lensColor || " ",
+            sex,
         },
-        "image": imagePath,
-        "available": newArr.length > 1 ? newArr : Number(available),
-        // "sex": sex,
-        // "topProduct": topProduct
-    });
+        type,
+        image: imagePath
+    })
 
 
     const requestOptions = {
@@ -211,58 +190,50 @@ export const postProduct = (token, newProduct) => {
 
 export const patchProduct = (token, product) => {
     const {
-        id,
+        available,
+        brand,
+        colorCode,
+        // colorName,
+        description,
         eanCode,
-        type,
+        eshop,
         name,
         price,
-        brandName,
-        colorCode,
-        description,
-        eshop,
+        specs: {
+            frameColor,
+            frameMaterial,
+            frameStyle,
+            lensColor,
+            sex,
+        },
+        type,
         imagePath,
-        available,
-        rimColor,
-        rimMaterial,
-        rimShape,
-        // sex,
-        size,
-        // topProduct,
-        lensColor
+        _id
     } = product
-
-    let newArr = []
-
-    console.log(available)
-
-    // if (Array.isArray(available)) {
-    //     newArr = available.map(num => Number(num))
-    // }
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
-        "eanCode": eanCode,
-        "type": type,
-        "name": name,
-        "price": Number(price),
-        "brand": brandName || " ",
-        "colorCode": colorCode || " ",
-        "description": description || " ",
-        "eshop": eshop,
-        "specs": {
-            "frameColor": rimColor || " ",
-            "frameStyle": rimShape || " ",
-            "frameMaterial": rimMaterial || " ",
-            "lensColor": lensColor || " ",
-            "size": size.map(val => Number(val))
+        available,
+        brand: brand || " ",
+        colorCode: colorCode || " ",
+        // colorName,
+        description: description || " ",
+        eanCode,
+        eshop,
+        name,
+        price,
+        specs: {
+            frameColor: frameColor || " ",
+            frameMaterial: frameMaterial || " ",
+            frameStyle: frameStyle || " ",
+            lensColor: lensColor || " ",
+            sex,
         },
-        "image": imagePath,
-        "available": available.length > 1 ? available : Number(available),
-        // "sex": sex,
-        // "topProduct": topProduct
+        type,
+        image: imagePath
     });
 
 
@@ -273,7 +244,7 @@ export const patchProduct = (token, product) => {
         redirect: 'follow'
     };
 
-    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${id}`, requestOptions)
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${_id}`, requestOptions)
 }
 
 export const deleteProduct = (token, id) => {

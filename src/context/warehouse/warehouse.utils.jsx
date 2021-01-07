@@ -1,6 +1,5 @@
 export const initProductObj = {
     // Product id
-    id: "",
     // Product name: Ultra glasses
     name: "",
     // Product description: Awesome product
@@ -10,23 +9,11 @@ export const initProductObj = {
     // product type: glesses, lenses, ...
     type: 1,
     // brand name: Adidas
-    brandName: "",
+    brand: "",
     //kolko sa ich zatial predalo
     soldAmount: 0,
     //kolko je kusov na ktorej prevádzke [arr] 
     available: [0, 0, 0, 0, 0],
-    // Oválne
-    rimShape: "",
-    // Čierna
-    rimColor: "",
-    // Titán
-    rimMaterial: "",
-    // Unisex
-    sex: "M",
-    // available sizes: [arr] [47, 21, 140]
-    size: ["0", "0", "0"],
-    // Priehľadné
-    lensColor: "",
     //ean kod = unikatny kod ktory ma kazdy produkt
     eanCode: "",
     //farebny kod, ktory spolu s ean kodom tvori "identitu" produktu. Moze existovat viacero
@@ -37,6 +24,17 @@ export const initProductObj = {
     colorName: "",
     //path k obrazku na serveri (toto bude mozno array este sa uvidi)
     imagePath: "",
+    image: null,
+    eshop: false,
+
+    specs: {
+        frameColor: "",
+        frameMaterial: "",
+        frameStyle: "",
+        lensColor: "",
+        sex: "M",
+        size: [0, 0, 0],
+    }
 }
 
 export const initLensesObj = {
@@ -54,6 +52,31 @@ export const initLensesObj = {
     price: "0",
     brand: ""
 }
+
+// Category variables
+export const productCategories = [
+    {
+        name: "Dioptrické",
+        value: 1
+    },
+    {
+        name: "Slnečné",
+        value: 2
+    },
+    {
+        name: "Športové",
+        value: 3
+    },
+    {
+        name: "Šošovky",
+        value: 4
+    },
+    {
+        name: "Doplnky",
+        value: 5
+    },
+]
+
 
 
 export const resetProductObj = () => {

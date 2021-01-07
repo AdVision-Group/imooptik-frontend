@@ -11,13 +11,14 @@ import {
     Title
 } from './product-glasses-form.styles.jsx'
 
-const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
+const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange }) => {
+
     return (
         <div>
             <h3>Základné informacie</h3>
             <ProductInputRow
                 label="Unikátny kód produktu"
-                example="napr: 123abx"
+                example="napr: TH1590807"
             >
                 <CustomInput
                     label="Ean kód*"
@@ -30,7 +31,7 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
             </ProductInputRow>
             <ProductInputRow
                 label="Názov produktu"
-                example="napr: Super brejle"
+                example="napr: Tommy Hilfiger"
             >
                 <CustomInput
                     label="Názov*"
@@ -44,13 +45,13 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
             </ProductInputRow>
             <ProductInputRow
                 label="Značka"
-                example="napr: Abrejlas"
+                example="napr: Tommy Hilfiger"
             >
                 <CustomInput
                     label="Značka"
                     type='text'
-                    name='brandName'
-                    value={product.brandName}
+                    name='brand'
+                    value={product.brand}
                     handleChange={(e) => handleChange(e)}
                 />
             </ProductInputRow>
@@ -62,7 +63,7 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     label="Cena*"
                     type='number'
                     name='price'
-                    value={product.price}
+                    value={product.price.toString()}
                     handleChange={(e) => handleChange(e)}
                     required
 
@@ -85,107 +86,104 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
 
 
 
-            <h3>Špecifikacie</h3>
-            <ProductInputRow
-                label="Farebný kód produktu"
-                example="napr: 02AR"
-            >
-                <CustomInput
-                    label="Color code"
-                    type='text'
-                    name='colorCode'
-                    value={product.colorCode}
-                    handleChange={(e) => handleChange(e)}
-                />
-            </ProductInputRow>
-            <ProductInputRow
-                label="Pohlavie pre ktoré je produkt určený"
-                example=""
-            >
-                <CustomSelect name='sex' value={product.sex} onChange={e => handleChange(e)}>
-                    <option value='M'>Muži</option>
-                    <option value='W'>Ženy</option>
-                    <option value='U'>Nezáleží</option>
-                </CustomSelect>
-            </ProductInputRow>
+            {
+                !(product.type === 5 || product.type === 4) && (
+                    <React.Fragment>
+                        <h3>Špecifikacie</h3>
+                        <ProductInputRow
+                            label="Farebný kód produktu"
+                            example="napr: #000000"
+                        >
+                            <CustomInput
+                                label="Color code"
+                                type='text'
+                                name='colorCode'
+                                value={product.colorCode}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </ProductInputRow>
+                        <ProductInputRow
+                            label="Pohlavie pre ktoré je produkt určený"
+                            example=""
+                        >
+                            <CustomSelect name='sex' value={product.specs.sex} onChange={e => handleSpecsChange(e)}>
+                                <option value='M'>Muži</option>
+                                <option value='W'>Ženy</option>
+                                <option value='U'>Nezáleží</option>
+                            </CustomSelect>
+                        </ProductInputRow>
 
-            <ProductInputRow
-                label="Farba"
-                example="napr: čierna"
-            >
-                <CustomInput
-                    label="Farba rámu"
-                    type='text'
-                    name='rimColor'
-                    value={product.rimColor}
-                    handleChange={(e) => handleChange(e)}
-                />
-            </ProductInputRow>
-            <ProductInputRow
-                label="Materiál"
-                example="napr: titán"
-            >
-                <CustomInput
-                    label="Materiál rámu"
-                    type='text'
-                    name='rimMaterial'
-                    value={product.rimMaterial}
-                    handleChange={(e) => handleChange(e)}
-                />
-            </ProductInputRow>
-            <ProductInputRow
-                label="Tvar"
-                example="napr: okruhlý"
-            >
-                <CustomInput
-                    label="Tvar rámu"
-                    type='text'
-                    name='rimShape'
-                    value={product.rimShape}
-                    handleChange={(e) => handleChange(e)}
-                />
-            </ProductInputRow>
-            <ProductInputRow
-                label="Farba skla"
-                example="napr: prehliadna"
-            >
-                <CustomInput
-                    label="Farba"
-                    type='text'
-                    name='lensColor'
-                    value={product.lensColor}
-                    handleChange={(e) => handleChange(e)}
-                />
-            </ProductInputRow>
+                        <ProductInputRow
+                            label="Farba"
+                            example="napr: Čierna"
+                        >
+                            <CustomInput
+                                label="Farba rámu"
+                                type='text'
+                                name='frameColor'
+                                value={product.specs.frameColor}
+                                handleChange={(e) => handleSpecsChange(e)}
+                            />
+                        </ProductInputRow>
+                        <ProductInputRow
+                            label="Materiál"
+                            example="napr: Titán"
+                        >
+                            <CustomInput
+                                label="Materiál rámu"
+                                type='text'
+                                name='frameMaterial'
+                                value={product.specs.frameMaterial}
+                                handleChange={(e) => handleSpecsChange(e)}
+                            />
+                        </ProductInputRow>
+                        <ProductInputRow
+                            label="Tvar"
+                            example="napr: Okruhlý"
+                        >
+                            <CustomInput
+                                label="Tvar rámu"
+                                type='text'
+                                name='frameStyle'
+                                value={product.specs.frameStyle}
+                                handleChange={(e) => handleSpecsChange(e)}
+                            />
+                        </ProductInputRow>
+                        <ProductInputRow
+                            label="Farba skla"
+                            example="napr: Priehľadná"
+                        >
+                            <CustomInput
+                                label="Farba"
+                                type='text'
+                                name='lensColor'
+                                value={product.specs.lensColor}
+                                handleChange={(e) => handleSpecsChange(e)}
+                            />
+                        </ProductInputRow>
 
-            <Title>Velikosť</Title>
+                        <Title>Velikosť</Title>
 
-            {product.size.map((value, idx) => {
-                const newArr = product.size
-                const handleArrChange = (e) => {
-                    newArr[idx] = e.target.value
-                    setProduct({
-                        ...product,
-                        size: newArr
-                    })
-                }
-
-                return (
-                    <ProductInputRow
-                        key={idx}
-                        label={`Velkosť`}
-                        example="napr: 0"
-                    >
-                        <CustomInput
-                            label={`${idx}`}
-                            type='number'
-                            // name={store.name}
-                            value={value.toString()}
-                            handleChange={e => handleArrChange(e)}
-                        />
-                    </ProductInputRow>
+                        {product.specs.size.map((value, idx) => {
+                            return (
+                                <ProductInputRow
+                                    key={idx}
+                                    label={`Velkosť`}
+                                    example="napr: 0"
+                                >
+                                    <CustomInput
+                                        label={`${idx}`}
+                                        type='number'
+                                        // name={store.name}
+                                        value={value.toString()}
+                                        handleChange={e => handleSizeChange(e, idx)}
+                                    />
+                                </ProductInputRow>
+                            )
+                        })}
+                    </React.Fragment>
                 )
-            })}
+            }
         </div>
     )
 }
