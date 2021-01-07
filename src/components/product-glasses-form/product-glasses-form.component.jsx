@@ -16,20 +16,11 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
         <div>
             <h3>Základné informacie</h3>
             <ProductInputRow
-                label={" "}
-            >
-                <FormCheckbox
-                    label="Top produkt"
-                    isActive={product.topProduct}
-                    handleClick={() => setProduct({ ...product, topProduct: !product.topProduct })}
-                />
-            </ProductInputRow>
-            <ProductInputRow
                 label="Unikátny kód produktu"
                 example="napr: 123abx"
             >
                 <CustomInput
-                    label="Ean kód"
+                    label="Ean kód*"
                     type='text'
                     name='eanCode'
                     value={product.eanCode}
@@ -42,7 +33,7 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                 example="napr: Super brejle"
             >
                 <CustomInput
-                    label="Názov"
+                    label="Názov*"
                     type='text'
                     name='name'
                     value={product.name}
@@ -61,8 +52,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='brandName'
                     value={product.brandName}
                     handleChange={(e) => handleChange(e)}
-                    required
-
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -70,8 +59,8 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                 example="napr: 1055 = 10,55€"
             >
                 <CustomInput
-                    label="Cena"
-                    type='text'
+                    label="Cena*"
+                    type='number'
                     name='price'
                     value={product.price}
                     handleChange={(e) => handleChange(e)}
@@ -87,8 +76,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                         rows='5'
                         value={product.description}
                         handleChange={(e) => handleChange(e)}
-                        required
-
                     />
                 </div>
                 <div>
@@ -109,7 +96,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='colorCode'
                     value={product.colorCode}
                     handleChange={(e) => handleChange(e)}
-                    required
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -117,9 +103,9 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                 example=""
             >
                 <CustomSelect name='sex' value={product.sex} onChange={e => handleChange(e)}>
-                    <option value='men'>Muži</option>
-                    <option value='women'>Ženy</option>
-                    <option value='unisex'>Nezáleží</option>
+                    <option value='M'>Muži</option>
+                    <option value='W'>Ženy</option>
+                    <option value='U'>Nezáleží</option>
                 </CustomSelect>
             </ProductInputRow>
 
@@ -133,7 +119,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='rimColor'
                     value={product.rimColor}
                     handleChange={(e) => handleChange(e)}
-                    required
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -146,7 +131,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='rimMaterial'
                     value={product.rimMaterial}
                     handleChange={(e) => handleChange(e)}
-                    required
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -159,7 +143,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='rimShape'
                     value={product.rimShape}
                     handleChange={(e) => handleChange(e)}
-                    required
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -172,7 +155,6 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     name='lensColor'
                     value={product.lensColor}
                     handleChange={(e) => handleChange(e)}
-                    required
                 />
             </ProductInputRow>
 
@@ -196,7 +178,7 @@ const ProductGlassesForm = ({ product, handleChange, setProduct }) => {
                     >
                         <CustomInput
                             label={`${idx}`}
-                            type='text'
+                            type='number'
                             // name={store.name}
                             value={value.toString()}
                             handleChange={e => handleArrChange(e)}

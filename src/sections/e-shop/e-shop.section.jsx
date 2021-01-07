@@ -61,11 +61,11 @@ const EshopSection = () => {
             name: "Prevádzka 4",
             permission: 4,
         },
-        {
-            id: 5,
-            name: "Prevádzka 5",
-            permission: 5,
-        },
+        // {
+        //     id: 5,
+        //     name: "Prevádzka 5",
+        //     permission: 5,
+        // },
     ]
 
     const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.admin >= 2)
@@ -136,7 +136,7 @@ const EshopSection = () => {
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
                             handleUpdateButton={() => push(`sklad/${product._id}`)}
-                            handleDeleteButton={() => handleProductDelete(product._id)}
+                            handleDeleteButton={product.dioptersRange ? () => deleteLense(product._id) : () => handleProductDelete(product._id)}
                         />
                     ))
                 }

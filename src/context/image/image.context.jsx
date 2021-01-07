@@ -25,25 +25,21 @@ const ImageProvider = ({ children }) => {
     const [selectedImage, setSelectedImage] = useState(null)
 
     const handleImage = async (img, imgName, imgAlt) => {
-        setShowModal(true)
-        setIsLoading(true)
-
-        console.log(img)
-        console.log(imgName)
-        console.log(imgAlt)
+        // setShowModal(true)
+        // setIsLoading(true)
 
         try {
             const response = await uploadImage(token, img, imgName, imgAlt)
-            const data = await response.json()
-            console.log(data)
+            return response.json()
+            // console.log(data)
 
-            if (data.image) {
-                setSelectedImage(data.image)
-                getImages()
-            }
+            // if (data.image) {
+            //     setSelectedImage(data.image)
+            //     getImages()
+            // }
 
-            setShowModal(false)
-            setIsLoading(false)
+            // setShowModal(false)
+            // setIsLoading(false)
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")

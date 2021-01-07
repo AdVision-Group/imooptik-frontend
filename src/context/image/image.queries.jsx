@@ -1,16 +1,15 @@
 export const uploadImage = (token, img, imgName, imgAlt) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
 
-    const formdata = new FormData();
-    formdata.append("image", img);
-    formdata.append("name", imgName);
-    formdata.append("alt", imgAlt);
+
+    const raw = JSON.stringify({ "name": imgName || " ", "alt": imgAlt || " ", 'image': img });
 
     const requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: formdata,
+        body: raw,
         redirect: 'follow'
     };
 

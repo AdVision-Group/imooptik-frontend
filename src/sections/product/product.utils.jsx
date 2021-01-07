@@ -14,7 +14,7 @@ export const initProductObj = {
     //kolko sa ich zatial predalo
     soldAmount: 0,
     //kolko je kusov na ktorej prevádzke [arr] 
-    available: ["0", "0", "0", "0", "0"],
+    available: [0, 0, 0, 0, 0],
     // Oválne
     rimShape: "",
     // Čierna
@@ -22,7 +22,7 @@ export const initProductObj = {
     // Titán
     rimMaterial: "",
     // Unisex
-    sex: "men",
+    sex: "M",
     // available sizes: [arr] [47, 21, 140]
     size: ["0", "0", "0"],
     // Priehľadné

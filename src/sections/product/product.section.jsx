@@ -77,6 +77,16 @@ const ProductSection = () => {
         })
     }
 
+    const handleAvailableChange = (e, idx) => {
+        let arr = product.available
+        arr[idx] = Number(e.target.value)
+        setProduct({
+            ...product,
+            available: arr
+        })
+    }
+
+
     const [isAdmin, setIsAdmin] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
 
@@ -115,6 +125,11 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        if (!image) {
+            alert("Ziaden obrazok!")
+            return
+        }
+
         if (id === 'novy-produkt') {
             if (activeProductCategoryIndex === 4) {
                 createNewLenses({
@@ -148,8 +163,15 @@ const ProductSection = () => {
     }
 
     const resetProduct = () => {
-        setProduct(resetProductObj())
+        console.log("BEFORE Reset")
+        console.log(product)
+        setProduct({
+            ...initProductObj,
+            available: [0, 0, 0, 0, 0]
+        })
         setLense(resetLensesObj())
+        console.log("AFTER Reset")
+        console.log(product)
     }
 
     const deleteProduct = () => {
@@ -158,13 +180,14 @@ const ProductSection = () => {
     }
 
     useEffect(() => {
+        resetProduct()
+
         if (currentUser.admin > 1) {
             setIsAdmin(true)
         } else {
             setIsAdmin(false)
         }
         if (id === 'novy-produkt') {
-            resetProduct()
             setSelectedImage(null)
             return
         }
@@ -182,7 +205,7 @@ const ProductSection = () => {
                     type: product.type || 1,
                     brandName: product.brand || "",
                     soldAmount: product.soldAmount,
-                    available: product.available.map(value => value.toString()),
+                    available: product.available,
                     rimShape: product.specs.frameStyle || '',
                     rimColor: product.specs.frameColor || '',
                     rimMaterial: product.specs.frameMaterial || '',
@@ -247,6 +270,13 @@ const ProductSection = () => {
             })
         }
     }, [image])
+
+    useEffect(() => {
+        return () => {
+            console.log('Unmount RESET')
+            setProduct(initProductObj)
+        }
+    }, [])
 
     return (
         <form onSubmit={e => handleSubmit(e)}>
@@ -316,16 +346,8 @@ const ProductSection = () => {
                 <div>
                     {activeProductCategoryIndex !== 4 && <div>
                         <Title>Skladové zásoby</Title>
-
                         {product && product.available.map((value, idx) => {
-                            const newArr = product.available
-                            const handleArrChange = (e) => {
-                                newArr[idx] = e.target.value
-                                setProduct({
-                                    ...product,
-                                    available: newArr
-                                })
-                            }
+                            if (product.available.length - 1 === idx) return
 
                             return (
                                 (currentUser.admin === idx || isAdmin) && (
@@ -336,10 +358,10 @@ const ProductSection = () => {
                                     >
                                         <CustomInput
                                             label={`Predajna ${idx}`}
-                                            type='text'
+                                            type='number'
                                             // name={store.name}
                                             value={value.toString()}
-                                            handleChange={e => handleArrChange(e)}
+                                            handleChange={e => handleAvailableChange(e, idx)}
                                         />
                                     </ProductInputRow>
                                 )

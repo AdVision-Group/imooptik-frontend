@@ -162,7 +162,7 @@ export const postProduct = (token, newProduct) => {
         rimShape,
         // sex,
         size,
-        topProduct,
+        // topProduct,
         lensColor
     } = newProduct
 
@@ -181,21 +181,21 @@ export const postProduct = (token, newProduct) => {
         "type": type,
         "name": name,
         "price": Number(price),
-        "brand": brandName,
-        "colorCode": colorCode,
-        "description": description,
+        "brand": brandName || " ",
+        "colorCode": colorCode || " ",
+        "description": description || " ",
         "eshop": eshop,
         "specs": {
-            "frameColor": rimColor,
-            "frameStyle": rimShape,
-            "frameMaterial": rimMaterial,
-            "lensColor": lensColor,
+            "frameColor": rimColor || " ",
+            "frameStyle": rimShape || " ",
+            "frameMaterial": rimMaterial || " ",
+            "lensColor": lensColor || " ",
             "size": size.map(val => Number(val))
         },
         "image": imagePath,
         "available": newArr.length > 1 ? newArr : Number(available),
         // "sex": sex,
-        "topProduct": topProduct
+        // "topProduct": topProduct
     });
 
 
@@ -227,15 +227,17 @@ export const patchProduct = (token, product) => {
         rimShape,
         // sex,
         size,
-        topProduct,
+        // topProduct,
         lensColor
     } = product
 
     let newArr = []
 
-    if (Array.isArray(available)) {
-        newArr = available.map(num => Number(num))
-    }
+    console.log(available)
+
+    // if (Array.isArray(available)) {
+    //     newArr = available.map(num => Number(num))
+    // }
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
@@ -246,21 +248,21 @@ export const patchProduct = (token, product) => {
         "type": type,
         "name": name,
         "price": Number(price),
-        "brand": brandName,
-        "colorCode": colorCode,
-        "description": description,
+        "brand": brandName || " ",
+        "colorCode": colorCode || " ",
+        "description": description || " ",
         "eshop": eshop,
         "specs": {
-            "frameColor": rimColor,
-            "frameStyle": rimShape,
-            "frameMaterial": rimMaterial,
-            "lensColor": lensColor,
+            "frameColor": rimColor || " ",
+            "frameStyle": rimShape || " ",
+            "frameMaterial": rimMaterial || " ",
+            "lensColor": lensColor || " ",
             "size": size.map(val => Number(val))
         },
         "image": imagePath,
-        "available": newArr.length > 1 ? newArr : Number(available),
+        "available": available.length > 1 ? available : Number(available),
         // "sex": sex,
-        "topProduct": topProduct
+        // "topProduct": topProduct
     });
 
 

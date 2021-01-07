@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { ImageContext } from '../../context/image/image.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css'
 
@@ -29,6 +30,12 @@ const ModalImages = ({ close, setImage }) => {
         setSelectedImage
     } = useContext(ImageContext)
 
+    const {
+        getMessage,
+        setIsLoading,
+        setShowModal
+    } = useContext(LoadingModalContext)
+
     const selectImage = (img) => {
         setImage(img._id)
         setSelectedImage(img)
@@ -44,7 +51,7 @@ const ModalImages = ({ close, setImage }) => {
     const [imageToUpload, setImageToUpload] = useState(null)
     const [imgUrl, setImgUrl] = useState('')
     const [cropper, setCropper] = useState(null)
-    const [cropData, setCropData] = useState('');
+    // const [cropData, setCropData] = useState('');
 
     const [imageName, setImageName] = useState('')
     const [imageAlt, setImageAlt] = useState('')
@@ -68,12 +75,28 @@ const ModalImages = ({ close, setImage }) => {
         }
     }, [imageToUpload])
 
-    const getCropData = (e) => {
+    const getCropData = async (e) => {
         e.preventDefault()
-        if (typeof cropper !== 'undefined') {
-            handleImage(cropper.getCroppedCanvas().toDataURL(), imageName, imageAlt)
-            setCropData(cropper.getCroppedCanvas().toDataURL());
-            console.log(cropData)
+        setShowModal(true)
+        setIsLoading(true)
+
+        try {
+            if (typeof cropper !== 'undefined') {
+                const data = await handleImage(cropper.getCroppedCanvas().toDataURL(), imageName, imageAlt)
+
+                if (data.image) {
+                    setImage(data.image._id)
+                    setSelectedImage(data.image)
+                    getImages()
+                    close()
+                }
+            }
+            setShowModal(false)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
         }
     };
 
