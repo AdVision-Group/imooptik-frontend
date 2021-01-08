@@ -176,6 +176,11 @@ export const TabButton = styled.button`
 export const CropButton = styled(CustomButton)`
     display: block;
     margin: 2rem auto 0;
+
+    &:disabled {
+        cursor: not-allowed;
+        background-color: gray;
+    }
 `
 
 export const ButtonOptions = styled.div`

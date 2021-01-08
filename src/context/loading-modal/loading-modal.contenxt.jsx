@@ -15,6 +15,7 @@ const LoadingModalProvider = ({ children }) => {
     const [showModal, setShowModal] = useState(false)
     const [message, setMessage] = useState('')
 
+
     const closeModal = () => {
         setIsLoading(false)
         setShowModal(false)
@@ -34,7 +35,7 @@ const LoadingModalProvider = ({ children }) => {
                 closeModal,
                 getMessage,
                 setIsLoading,
-                setShowModal
+                setShowModal,
             }}
         >
             {children}

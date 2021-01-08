@@ -4,6 +4,7 @@ import { AuthContext } from '../auth/auth.context'
 import { deleteImage, fetchImages, uploadImage, fetchFilteredImages } from './image.queries'
 
 export const ImageContext = createContext({
+    isDisabled: false,
     images: null,
     selectedImage: null,
     getImages: () => { },
@@ -24,31 +25,38 @@ const ImageProvider = ({ children }) => {
 
     const { token } = useContext(AuthContext)
 
+    const [isDisabled, setIsDisabled] = useState(false)
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [limit, setLimit] = useState(4)
     const [skip, setSkip] = useState(0)
 
-    const handleImage = async (img, imgName, imgAlt) => {
-        // setShowModal(true)
-        // setIsLoading(true)
+    const handleImage = async (img, imgName, imgAlt, setImage, close) => {
+        setShowModal(true)
+        setIsLoading(true)
+        setIsDisabled(true)
 
         try {
             const response = await uploadImage(token, img, imgName, imgAlt)
-            return response.json()
-            // console.log(data)
+            const data = await response.json()
+            console.log(data)
 
-            // if (data.image) {
-            //     setSelectedImage(data.image)
-            //     getImages()
-            // }
+            if (data.image) {
+                setSelectedImage(data.image)
+                setImage(data.image)
+                getImages()
+                close()
+            }
 
-            // setShowModal(false)
-            // setIsLoading(false)
+            setShowModal(false)
+            setIsLoading(false)
+            setIsDisabled(false)
+
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
             setIsLoading(false)
+            setIsDisabled(false)
         }
     }
 
@@ -140,6 +148,7 @@ const ImageProvider = ({ children }) => {
     return (
         <ImageContext.Provider
             value={{
+                isDisabled,
                 images,
                 selectedImage,
                 getImages,
