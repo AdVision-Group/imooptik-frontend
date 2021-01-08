@@ -130,7 +130,7 @@ const ProductSection = () => {
                 <div>
                     <DraftCheckBox
                         label='Verejný'
-                        isActive={product.eshop}
+                        isActive={formToShow === 'glasses' ? product.eshop : lenses.eshop}
                         handleClick={() => toggleDraft()}
                     />
                     {isUpdating && <DeleteButton onClick={formToShow === 'glasses' ? () => handleProductDelete(product._id) : () => deleteLenses(lenses._id)}>Vymazať</DeleteButton>}

@@ -371,9 +371,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetchLenses(token)
             const data = await response.json()
 
-            console.log("GET LENSES")
-            console.log(data)
-            console.log("GET LENSES")
             if (data.lenses) {
                 setTotalCount(totalCount + data.count)
                 setLensesArr(data.lenses)
