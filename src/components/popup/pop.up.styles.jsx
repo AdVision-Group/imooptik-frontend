@@ -7,6 +7,7 @@ export const PopupContainer = styled.div`
     top: 0;
     bottom: 0;
     z-index: 999999;
+    min-height: 100vh;
 
     display: flex;
     align-items: center;
