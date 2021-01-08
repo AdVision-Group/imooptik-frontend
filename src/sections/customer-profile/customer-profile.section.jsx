@@ -1,10 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../../context/auth/auth.context'
 import { UserContext } from '../../context/user/user.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useParams } from 'react-router-dom'
 
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
+import InputRow from '../../components/product-input-row/product-input-row.component'
+
 import CustomInput from '../../components/custom-input/custom-input.component'
 import OrderOverview from '../../components/order-overview/order-overview.component'
 import Popup from '../../components/popup/pop-up.component'
@@ -26,6 +29,7 @@ import {
 
 const CustomerProfile = () => {
     const { id } = useParams()
+    const { isAdmin } = useContext(AuthContext)
     const {
         closeModal,
         isLoading,
@@ -89,6 +93,35 @@ const CustomerProfile = () => {
                 <ScrollContainer>
                     <GridContainer>
                         <Profile>
+                            {isAdmin && <div>
+                                <h2>Admin panel</h2>
+                                <InputRow
+                                    label="Predajňa na ktorej uživatel pracuje"
+                                    example='napr: 1-4'
+                                >
+                                    <CustomInput
+                                        label="Premises*"
+                                        type='text'
+                                        name='premises'
+                                        value={user.premises.toString()}
+                                        handleChange={(e) => handleChange(e)}
+                                        required
+                                    />
+                                </InputRow>
+                                <InputRow
+                                    label="Výška administrativných práv"
+                                    example="napr: 1-4"
+                                >
+                                    <CustomInput
+                                        label="Admin*"
+                                        type='text'
+                                        name='admin'
+                                        value={user.admin.toString()}
+                                        handleChange={(e) => handleChange(e)}
+                                        required
+                                    />
+                                </InputRow>
+                            </div>}
                             <div>
                                 <h2>Informácie</h2>
                                 <GridRow>

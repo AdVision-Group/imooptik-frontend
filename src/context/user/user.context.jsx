@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
@@ -32,6 +33,7 @@ export const UserContext = createContext({
 })
 
 const UserProvider = ({ children }) => {
+    const { push } = useHistory()
     const { token } = useContext(AuthContext)
     const {
         closeModal,
@@ -233,8 +235,17 @@ const UserProvider = ({ children }) => {
 
             console.log(data)
 
+            if (data.error) {
+                setIsLoading(false)
+                getMessage(data.message)
+            }
+
+
             setIsLoading(false)
-            getMessage(data.message)
+            closeModal()
+            push('/dashboard/zakaznici')
+            getUsers()
+            // http://localhost:1000/#/dashboard/zakaznici
 
 
         } catch (err) {

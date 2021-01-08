@@ -1,6 +1,7 @@
 export const initUserObj = {
     address: "",
     admin: 0,
+    premises: 0,
     boughtProducts: {},
     city: "",
     country: "",
