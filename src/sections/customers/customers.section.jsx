@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { UserContext } from '../../context/user/user.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
 import SectionHeader from '../../components/section-header/section-header.component'
+import SectionNavbar from "../../components/section-navbar/section-navbar.component"
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 
@@ -21,13 +23,19 @@ const CustomersSection = () => {
     const { push } = useHistory()
 
     const {
+        isLoading,
+        showModal,
+        message,
+        closeModal
+    } = useContext(LoadingModalContext)
+
+    const {
+        activeIndex,
+        handleChangeFilterItem,
+        filterItems,
         users,
         totalCount,
-        isLoading,
-        message,
-        showModal,
         getUsers,
-        closeModal
     } = useContext(UserContext)
 
     useEffect(() => {
@@ -36,9 +44,11 @@ const CustomersSection = () => {
         }
     }, [users])
 
+    if (!users || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
+    const fillteredUsers = users.filter(user => filterItems[activeIndex].filter === user.admin)
+
     return (
         <section>
-            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
 
             <SectionHeader
                 searchQuery={searchQuery}
@@ -48,9 +58,15 @@ const CustomersSection = () => {
                 title="Zákazníci"
             />
 
+            <SectionNavbar
+                items={filterItems}
+                activeIndex={activeIndex}
+                setActiveIndex={handleChangeFilterItem}
+            />
+
             <ScrollContainer>
                 {
-                    users && users.map(user => (
+                    fillteredUsers && fillteredUsers.map(user => (
                         <CustomerContainer key={user._id}>
                             <Content>
                                 <h2>{user.name || user.email}</h2>

@@ -33,7 +33,7 @@ const Dashboard = () => {
             permission: 1
         },
         {
-            name: 'Zákazníci',
+            name: 'Uživatelia',
             path: '/zakaznici',
             permission: 1
         },

@@ -70,9 +70,6 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-
-
-
         if (formToShow === 'glasses') {
             if (!product.imagePath) {
                 alert("Žiaden obrazok!")
