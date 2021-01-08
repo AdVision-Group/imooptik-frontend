@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
+import { ReactComponent as Illustration } from '../../images/undraw_security_o890.svg'
 
 import {
     NoPermissionContainer,
@@ -12,9 +13,9 @@ const NoPermisionSection = () => {
     return (
         <NoPermissionContainer>
             <div>
-                <img src={"https://i.ytimg.com/vi/mJZZNHekEQw/hqdefault.jpg"} />
+                <Illustration className='illu' />
 
-                <h1>You shall not pass!</h1>
+                <h1>Prístup bol zamietnutý</h1>
                 <p>Váš účet nema práva pre administráciu portalu.</p>
                 <LogoutButton onClick={logOut}>
                     Odhlásiť sa

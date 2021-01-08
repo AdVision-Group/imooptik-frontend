@@ -18,12 +18,14 @@ export const NoPermissionContainer = styled.section`
         background-color: white;
     }
 
-    img {
+    .illu {
         max-width: 40rem;
+        height: auto;
+        margin-bottom: 2rem;
     }
 
     p {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 `
 
