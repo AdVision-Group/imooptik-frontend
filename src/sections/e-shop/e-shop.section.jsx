@@ -13,6 +13,9 @@ import Popup from '../../components/popup/pop-up.component'
 
 import Pagination from '../../components/pagination/pagination.component'
 
+// import Fuse from 'fuse.js'
+
+
 const EshopSection = () => {
     const { currentUser, token } = useContext(AuthContext)
 
@@ -106,6 +109,17 @@ const EshopSection = () => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
+    // const fuse = new Fuse(allProducts, {
+    //     keys: [
+    //         'name',
+    //         'brand',
+    //         'description'
+    //     ]
+    // })
+
+    // fuse.search(searchQuery)
+    // console.log(fuse.search(searchQuery))
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -132,7 +146,7 @@ const EshopSection = () => {
                             key={product._id}
                             name={product.name}
                             stock={product.available ? activeIndex === 0 ? product.available.reduce((acc, currValue) => acc + currValue) : product.available[activeIndex - 1] : null}
-                            id={product._id}
+                            id={product.eanCode}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
                             handleUpdateButton={() => push(`sklad/${product._id}`)}

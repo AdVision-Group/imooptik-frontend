@@ -74,8 +74,6 @@ const WarehouseProvider = ({ children }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        console.log(name)
-        console.log(value)
         setProduct({
             ...product,
             [name]: value

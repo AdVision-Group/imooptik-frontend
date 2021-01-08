@@ -11,6 +11,8 @@ import {
     Title
 } from './product-glasses-form.styles.jsx'
 
+import { brands } from '../../context/warehouse/warehouse.utils'
+
 const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange }) => {
 
     return (
@@ -53,7 +55,14 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
                     name='brand'
                     value={product.brand}
                     handleChange={(e) => handleChange(e)}
+                    list={"brands"}
+                    autoComplete='off'
                 />
+                <datalist id="brands">
+                    {brands.map(brand => (
+                        <option key={brand} value={brand} />
+                    ))}
+                </datalist>
             </ProductInputRow>
             <ProductInputRow
                 label="Cena v centoch"
