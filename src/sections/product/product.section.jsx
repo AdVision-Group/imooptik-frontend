@@ -5,14 +5,12 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 import { useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import CustomInput from "../../components/custom-input/custom-input.component"
-import ProductInputRow from '../../components/product-input-row/product-input-row.component'
 
 import Popup from '../../components/popup/pop-up.component'
 import ModalImage from '../../components/modal-images/modal-images.component'
 
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
-// import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
+import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 
 import {
     Header,
@@ -20,11 +18,10 @@ import {
     DeleteButton,
     Title,
     ProductImage,
-    CategoryContainer,
-    CategoryCheckbox,
     DraftCheckBox,
     ImageContainer,
-    CategoryTitle,
+    ToggleFormButton,
+    ToggleOptionsContainer
 } from './product.styles'
 
 const ProductSection = () => {
@@ -33,6 +30,8 @@ const ProductSection = () => {
     const { id } = useParams()
     const warData = useContext(WarehouseContext)
     const {
+        formToShow,
+        toggleProductForms,
         isUpdating,
         activeCategoryIndex,
         categories,
@@ -46,8 +45,14 @@ const ProductSection = () => {
         updateProduct,
         handleProductDelete,
         resetProduct,
-        // createNewLenses,
-        // updateLenses,
+        lenses,
+        handleLensesChange,
+        handleLensesDioptersRangeChange,
+        handleLensesCylinderRangeChange,
+        getSigleLenses,
+        createNewLenses,
+        updateLenses,
+        deleteLenses,
         getSingleProduct,
         handleChange,
         handleSpecsChange
@@ -65,24 +70,45 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!product.imagePath) {
-            alert("Ziaden obrazok!")
-            return
-        }
 
-        if (id === 'novy-produkt') {
-            createNewProduct(product)
-            resetProduct()
 
+
+        if (formToShow === 'glasses') {
+            if (!product.imagePath) {
+                alert("Žiaden obrazok!")
+                return
+            }
+
+            if (id === 'novy-produkt') {
+                createNewProduct(product)
+                resetProduct()
+            } else {
+                updateProduct(product)
+                resetProduct()
+            }
         } else {
-            updateProduct(product)
-            resetProduct()
+            if (!lenses.imagePath) {
+                alert("Žiaden obrazok!")
+                return
+            }
+
+            if (id === 'novy-produkt') {
+                createNewLenses(lenses)
+            } else {
+                updateLenses(lenses)
+            }
+
         }
+
     }
 
     useEffect(() => {
         if (id !== "novy-produkt") {
-            getSingleProduct(id)
+            if (formToShow === "glasses") {
+                getSingleProduct(id)
+            } else {
+                getSigleLenses(id)
+            }
         }
     }, [id])
 
@@ -107,67 +133,50 @@ const ProductSection = () => {
                         isActive={product.eshop}
                         handleClick={() => toggleDraft()}
                     />
-                    {isUpdating && <DeleteButton onClick={() => handleProductDelete(product._id)}>Vymazať</DeleteButton>}
+                    {isUpdating && <DeleteButton onClick={formToShow === 'glasses' ? () => handleProductDelete(product._id) : () => deleteLenses(lenses._id)}>Vymazať</DeleteButton>}
                     <AddButton type='submit'>{isUpdating ? "Upraviť produkt" : "Pridať product"}</AddButton>
                 </div>
             </Header>
 
             <ScrollContainer>
-                <div>
-                    <CategoryTitle>Kategória</CategoryTitle>
-                    <CategoryContainer>
-                        {
-                            categories.map((category, idx) => {
-                                return (
-                                    <CategoryCheckbox
-                                        key={idx}
-                                        label={category.name}
-                                        value={category.value}
-                                        name='type'
-                                        isActive={category.value === activeCategoryIndex}
-                                        handleClick={() => handleCategoryChange(category.value)}
-                                    />
-                                )
-                            })
-                        }
-                    </CategoryContainer>
-                </div>
+                {!isUpdating &&
+                    <React.Fragment>
+                        <Title>Aký produkt chcete pridať?</Title>
+                        <ToggleOptionsContainer>
+                            <ToggleFormButton isActive={formToShow === 'glasses'} onClick={(e) => toggleProductForms(e, 'glasses')}>Okuliare a i.</ToggleFormButton>
+                            <ToggleFormButton isActive={formToShow === 'lenses'} onClick={(e) => toggleProductForms(e, 'lenses')}>Sklá</ToggleFormButton>
+                        </ToggleOptionsContainer>
+                    </React.Fragment>
+                }
 
-                <ProductGlassesForm
-                    product={product}
-                    handleSizeChange={handleSizeChange}
-                    handleChange={handleChange}
-                    handleSpecsChange={handleSpecsChange}
-                />
 
-                {/* <ProductLensesForm
-                    lense={lense}
-                    setLense={setLense}
-                    handleChange={handleLensesChange}
-                /> */}
+
+                {formToShow === 'glasses' ? (
+                    <ProductGlassesForm
+                        activeCategoryIndex={activeCategoryIndex}
+                        categories={categories}
+                        product={product}
+                        handleChange={handleChange}
+                        handleSizeChange={handleSizeChange}
+                        handleSpecsChange={handleSpecsChange}
+                        handleCategoryChange={handleCategoryChange}
+                        handleAvailableChange={handleAvailableChange}
+                    />
+                ) : (
+                        <ProductLensesForm
+                            lense={lenses}
+                            handleChange={handleLensesChange}
+                            handleLensesDioptersRangeChange={handleLensesDioptersRangeChange}
+                            handleLensesCylinderRangeChange={handleLensesCylinderRangeChange}
+                        />
+                    )
+                }
+
+
 
                 <div>
                     <div>
-                        <Title>Skladové zásoby</Title>
-                        {product && product.available.map((value, idx) => {
-                            if (product.available.length - 1 === idx) return
 
-                            return (
-                                <ProductInputRow
-                                    key={idx}
-                                    label={`Počet kusov na predajni ${idx}`}
-                                    example="napr: 0"
-                                >
-                                    <CustomInput
-                                        label={`Predajna ${idx}`}
-                                        type='number'
-                                        // name={store.name}
-                                        value={value.toString()}
-                                        handleChange={e => handleAvailableChange(e, idx)}
-                                    />
-                                </ProductInputRow>
-                            )
-                        })}
                     </div>
 
                     <ImageContainer>

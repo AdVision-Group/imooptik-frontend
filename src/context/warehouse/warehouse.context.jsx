@@ -12,14 +12,22 @@ import {
     fetchLenses,
     patchLenses,
     delLense,
-    fetchSingleProduct
+    fetchSingleProduct,
+    fetchSingleLenses
     // fetchFilteredProducts
 } from './warehouse.queries'
 
-import { initProductObj, productCategories } from './warehouse.utils'
+import {
+    initProductObj,
+    initLensesObj,
+    productCategories
+} from './warehouse.utils'
 
 
 export const WarehouseContext = createContext({
+    formToShow: '',
+    toggleProductForms: () => { },
+    showUpdateForm: () => { },
     isUpdating: false,
     activeCategoryIndex: 0,
     categories: [],
@@ -34,6 +42,10 @@ export const WarehouseContext = createContext({
     handleSpecsChange: () => { },
     resetProduct: () => { },
     lenses: null,
+    lensesArr: null,
+    handleLensesChange: () => { },
+    handleLensesDioptersRangeChange: () => { },
+    handleLensesCylinderRangeChange: () => { },
     totalCount: 0,
     getProducts: () => { },
     getSingleProduct: () => { },
@@ -42,32 +54,52 @@ export const WarehouseContext = createContext({
     updateProduct: () => { },
     createNewLenses: () => { },
     getLenses: () => { },
+    getSigleLenses: () => { },
     updateLenses: () => { },
-    deleteLense: () => { }
+    deleteLenses: () => { }
 })
+
 
 const WarehouseProvider = ({ children }) => {
     const { token } = useContext(AuthContext)
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
+    const { setSelectedImage } = useContext(ImageContext)
     const { push } = useHistory()
 
-    const { setSelectedImage } = useContext(ImageContext)
+    // ------------------------
+
+    const [totalCount, setTotalCount] = useState(0)
     const [isUpdating, setIsUpdating] = useState(false)
-    const [categories] = useState(productCategories)
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
+    const [formToShow, setFormToShow] = useState("glasses")
+
+    // ------------------------
+
+    const [categories] = useState(productCategories)
     const [product, setProduct] = useState(initProductObj)
     const [products, setProducts] = useState(null)
-    const [lenses, setLenses] = useState(null)
-    const [totalCount, setTotalCount] = useState(0)
 
+    // ------------------------
+
+    const [lenses, setLenses] = useState(initLensesObj)
+    const [lensesArr, setLensesArr] = useState(null)
 
     // ------------------------
     // PRODUCT ACTIONS
     // ------------------------
 
+    const toggleProductForms = (e, formName) => {
+        e.preventDefault()
+        setFormToShow(formName)
+    }
+
     const toggleDraft = () => {
         setProduct({
             ...product,
+            eshop: !product.eshop
+        })
+        setLenses({
+            ...lenses,
             eshop: !product.eshop
         })
     }
@@ -124,15 +156,52 @@ const WarehouseProvider = ({ children }) => {
             ...product,
             imagePath: imgId
         })
+        setLenses({
+            ...lenses,
+            imagePath: imgId
+        })
     }
 
     const resetProduct = () => {
         setProduct(initProductObj)
+        setLenses(initLensesObj)
         setSelectedImage(null)
         setIsUpdating(false)
         setActiveCategoryIndex(0)
+        setFormToShow('glasses')
     }
 
+    const handleLensesChange = (e) => {
+        const { name, value } = e.target
+        setLenses({
+            ...lenses,
+            [name]: value
+        })
+    }
+
+    const handleLensesCylinderRangeChange = (e, idx) => {
+        let arr = lenses.cylinderRange
+        arr[idx] = Number(e.target.value)
+        setLenses({
+            ...lenses,
+            cylinderRange: arr
+        })
+    }
+
+    const handleLensesDioptersRangeChange = (e, idx) => {
+        let arr = lenses.dioptersRange
+        arr[idx] = Number(e.target.value)
+        setLenses({
+            ...lenses,
+            dioptersRange: arr
+        })
+    }
+
+    const showUpdateForm = (formName, id) => {
+        setFormToShow(formName)
+        setIsUpdating(true)
+
+    }
 
     // ------------------------
     // START GLASSES ACTIONS
@@ -302,16 +371,56 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetchLenses(token)
             const data = await response.json()
 
+            console.log("GET LENSES")
             console.log(data)
+            console.log("GET LENSES")
             if (data.lenses) {
                 setTotalCount(totalCount + data.count)
-                setLenses(data.lenses)
+                setLensesArr(data.lenses)
                 setIsLoading(false)
                 return
             }
 
             setIsLoading(false)
             getMessage(data.message)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    // Get single lenses
+    const getSigleLenses = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await fetchSingleLenses(id)
+            const data = await response.json()
+
+            console.log(data)
+
+
+            if (data.error) {
+                getMessage(data.message)
+                setIsLoading(false)
+                return
+            }
+
+            if (data.lenses) {
+                setLenses({
+                    ...lenses,
+                    ...data.lenses,
+                    imagePath: data.lenses.image._id
+                })
+                setSelectedImage(data.lenses.image)
+                setIsUpdating(true)
+            }
+
+            closeModal()
+
 
         } catch (err) {
             console.log(err)
@@ -329,13 +438,12 @@ const WarehouseProvider = ({ children }) => {
             const response = await postLenses(token, productToAdd)
             const data = await response.json()
 
-            console.log(data)
-
             if (data) {
                 setIsLoading(false)
                 getMessage(data.message)
                 push('/dashboard/obchod')
                 getLenses()
+                closeModal()
             }
         } catch (err) {
             console.log(err)
@@ -370,7 +478,7 @@ const WarehouseProvider = ({ children }) => {
     }
 
     // Delete Lense
-    const deleteLense = async (id) => {
+    const deleteLenses = async (id) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -378,13 +486,17 @@ const WarehouseProvider = ({ children }) => {
             const response = await delLense(token, id)
             const data = await response.json()
 
-            if (data.lenses) {
-                getLenses()
-                // closeModal()
+            if (data.error) {
+                setIsLoading(false)
+                getMessage(data.message)
             }
 
+
+            getLenses()
             setIsLoading(false)
             getMessage(data.message)
+            push('/dashboard/obchod')
+            closeModal()
 
         } catch (err) {
             console.log(err)
@@ -397,11 +509,12 @@ const WarehouseProvider = ({ children }) => {
     // END LENSES ACTIONS
     // ------------------------
 
-
-
     return (
         <WarehouseContext.Provider
             value={{
+                formToShow,
+                toggleProductForms,
+                showUpdateForm,
                 isUpdating,
                 activeCategoryIndex,
                 categories,
@@ -416,6 +529,10 @@ const WarehouseProvider = ({ children }) => {
                 handleSpecsChange,
                 resetProduct,
                 lenses,
+                lensesArr,
+                handleLensesChange,
+                handleLensesDioptersRangeChange,
+                handleLensesCylinderRangeChange,
                 totalCount,
                 getProducts,
                 getSingleProduct,
@@ -424,8 +541,9 @@ const WarehouseProvider = ({ children }) => {
                 updateProduct,
                 createNewLenses,
                 getLenses,
+                getSigleLenses,
                 updateLenses,
-                deleteLense
+                deleteLenses
             }}
         >
             {children}

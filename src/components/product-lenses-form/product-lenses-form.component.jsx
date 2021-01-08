@@ -8,16 +8,16 @@ import {
     TextareaRow
 } from './product-lenses-form.styles'
 
-const ProductLensesForm = ({ lense, setLense, handleChange }) => {
+const ProductLensesForm = ({ lense, handleChange, handleLensesCylinderRangeChange, handleLensesDioptersRangeChange }) => {
     return (
         <div>
             <h3>Základné informacie</h3>
             <ProductInputRow
                 label="Názov šošoviek"
-                example="napr: Super čočka"
+                example="napr: Smile"
             >
                 <CustomInput
-                    label="Názov"
+                    label="Názov*"
                     type='text'
                     name='name'
                     value={lense.name}
@@ -28,7 +28,7 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
             </ProductInputRow>
             <ProductInputRow
                 label="Značka"
-                example="napr: Čočodas"
+                example="napr: Zeiss"
             >
                 <CustomInput
                     label="Značka"
@@ -36,8 +36,6 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
                     name='brand'
                     value={lense.brand}
                     handleChange={(e) => handleChange(e)}
-                    required
-
                 />
             </ProductInputRow>
             <ProductInputRow
@@ -45,7 +43,7 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
                 example="napr: 1055 = 10,55€"
             >
                 <CustomInput
-                    label="Cena"
+                    label="Cena*"
                     type='text'
                     name='price'
                     value={lense.price.toString()}
@@ -57,13 +55,12 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
             <TextareaRow>
                 <div>
                     <CustomTextarea
-                        label="Popis"
+                        label="Popis*"
                         name='description'
                         rows='5'
                         value={lense.description}
                         handleChange={(e) => handleChange(e)}
                         required
-
                     />
                 </div>
                 <div>
@@ -74,15 +71,6 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
             <h3>Špecifikacie</h3>
 
             {lense && lense.dioptersRange.map((value, idx) => {
-                const newArr = lense.dioptersRange
-                const handleArrChange = (e) => {
-                    newArr[idx] = e.target.value
-                    setLense({
-                        ...lense,
-                        dioptersRange: newArr
-                    })
-                }
-
                 return (
                     <ProductInputRow
                         key={idx}
@@ -91,25 +79,16 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
                     >
                         <CustomInput
                             label={idx === 0 ? "minimum" : "maximum"}
-                            type='text'
+                            type='number'
                             // name={store.name}
                             value={value.toString()}
-                            handleChange={e => handleArrChange(e)}
+                            handleChange={e => handleLensesDioptersRangeChange(e, idx)}
                         />
                     </ProductInputRow>
                 )
             })}
 
             {lense && lense.cylinderRange.map((value, idx) => {
-                const newArr = lense.cylinderRange
-                const handleArrChange = (e) => {
-                    newArr[idx] = e.target.value
-                    setLense({
-                        ...lense,
-                        cylinderRange: newArr
-                    })
-                }
-
                 return (
                     <ProductInputRow
                         key={idx}
@@ -118,10 +97,10 @@ const ProductLensesForm = ({ lense, setLense, handleChange }) => {
                     >
                         <CustomInput
                             label={idx === 0 ? "minimum" : "maximum"}
-                            type='text'
+                            type='number'
                             // name={store.name}
                             value={value.toString()}
-                            handleChange={e => handleArrChange(e)}
+                            handleChange={e => handleLensesCylinderRangeChange(e, idx)}
                         />
                     </ProductInputRow>
                 )

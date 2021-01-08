@@ -50,7 +50,8 @@ export const initLensesObj = {
     cylinderRange: ["0", "0"],
     //cena v centoch
     price: "0",
-    brand: ""
+    brand: "",
+    imagePath: ''
 }
 
 // Category variables

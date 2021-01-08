@@ -34,9 +34,6 @@ export const Title = styled.h3`
     /* margin-bottom: 2rem; */
 `
 
-export const CategoryTitle = styled.h3`
-    margin-bottom: 2rem;
-`
 
 export const ImageContainer = styled.div`
     margin-top: 2rem;
@@ -68,20 +65,18 @@ export const ProductImage = styled.div`
     }
 `
 
-export const CategoryContainer = styled.div`
-    width:100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-
-`
-
-export const CategoryCheckbox = styled(CustomCheckbox)`
-    margin: 0 1rem 2rem;
-`
-
-
 export const DraftCheckBox = styled(CustomCheckbox)`
     margin-right: 2rem;
+`
+
+export const ToggleOptionsContainer = styled.div`
+    display: flex;
+    width: 25rem;
+    justify-content: space-between;
+    margin: 2rem auto;
+`
+
+export const ToggleFormButton = styled(CustomButton)`
+    background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#000"};
+    font-weight: 700;
 `

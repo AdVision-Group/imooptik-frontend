@@ -27,12 +27,14 @@ const EshopSection = () => {
     } = useContext(LoadingModalContext)
 
     const {
+        showUpdateForm,
         products,
+        lensesArr,
         lenses,
         getProducts,
         getLenses,
         handleProductDelete,
-        deleteLense
+        deleteLenses,
     } = useContext(WarehouseContext)
 
     const { push } = useHistory()
@@ -84,7 +86,7 @@ const EshopSection = () => {
         if (!message) {
             closeModal()
         }
-    }, [products, lenses, token])
+    }, [products, lensesArr, token])
 
     useEffect(() => {
         if (filteredItems.length) {
@@ -99,10 +101,10 @@ const EshopSection = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [productsPerPage, setProductsPerPage] = useState(10)
 
-    if (products && lenses) {
+    if (products && lensesArr) {
         allProducts = [
             ...products,
-            ...lenses
+            ...lensesArr
         ]
     }
 
@@ -154,8 +156,11 @@ const EshopSection = () => {
                             id={product.eanCode}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
-                            handleUpdateButton={() => push(`sklad/${product._id}`)}
-                            handleDeleteButton={product.dioptersRange ? () => deleteLense(product._id) : () => handleProductDelete(product._id)}
+                            handleUpdateButton={() => {
+                                showUpdateForm(product.available ? "glasses" : "lenses")
+                                push(`sklad/${product._id}`)
+                            }}
+                            handleDeleteButton={product.dioptersRange ? () => deleteLenses(product._id) : () => handleProductDelete(product._id)}
                         />
                     ))
                 }

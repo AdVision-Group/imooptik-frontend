@@ -1,10 +1,23 @@
 import styled from 'styled-components'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
-export const FormCheckbox = styled(CustomCheckbox)`
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+export const CategoryTitle = styled.h3`
+    margin-bottom: 2rem;
 `
+
+export const CategoryContainer = styled.div`
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+
+`
+
+export const CategoryCheckbox = styled(CustomCheckbox)`
+    margin: 0 1rem 2rem;
+`
+
 
 export const TextareaRow = styled.div`
     display: grid;
@@ -52,3 +65,4 @@ export const CustomSelect = styled.select`
 export const Title = styled.h3`
     margin-top: 2rem;
 `
+

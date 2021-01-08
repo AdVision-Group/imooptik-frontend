@@ -26,8 +26,13 @@ export const fetchLenses = (token) => {
     };
 
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
-
 }
+
+export const fetchSingleLenses = (id) => {
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/lenses/${id}`)
+}
+
+
 export const delLense = (token, id) => {
     var myHeaders = new Headers();
     myHeaders.append("auth-token", token);
@@ -53,7 +58,7 @@ export const postLenses = (token, newProduct) => {
         dioptersRange,
         name,
         price,
-        image,
+        imagePath,
         eshop
     } = newProduct
 
@@ -62,12 +67,12 @@ export const postLenses = (token, newProduct) => {
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
-        "brand": brand,
+        "brand": brand || " ",
         "cylinderRange": cylinderRange.map(val => Number(val)),
         "name": name,
         "price": Number(price),
         "description": description,
-        "image": image,
+        "image": imagePath,
         "dioptersRange": dioptersRange.map(val => Number(val)),
         "eshop": eshop
     });
@@ -91,7 +96,7 @@ export const patchLenses = (token, newProduct) => {
         dioptersRange,
         name,
         price,
-        image,
+        imagePath,
         eshop
     } = newProduct
 
@@ -100,13 +105,12 @@ export const patchLenses = (token, newProduct) => {
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
-        "id": _id,
-        "brand": brand,
+        "brand": brand || ' ',
         "cylinderRange": cylinderRange.map(val => Number(val)),
         "name": name,
         "price": Number(price),
         "description": description,
-        "image": image,
+        "image": imagePath,
         "dioptersRange": dioptersRange.map(val => Number(val)),
         "eshop": eshop
     });
@@ -149,8 +153,6 @@ export const postProduct = (token, newProduct) => {
     // if (Array.isArray(available)) {
     //     newArr = available.map(num => Number(num))
     // }
-
-    console.log(newProduct)
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
