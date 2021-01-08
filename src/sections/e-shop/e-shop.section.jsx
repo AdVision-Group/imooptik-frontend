@@ -13,7 +13,7 @@ import Popup from '../../components/popup/pop-up.component'
 
 import Pagination from '../../components/pagination/pagination.component'
 
-// import Fuse from 'fuse.js'
+import Fuse from 'fuse.js'
 
 
 const EshopSection = () => {
@@ -92,6 +92,9 @@ const EshopSection = () => {
         }
     }, [])
 
+
+    // fuse.search(searchQuery)
+
     let allProducts = []
     const [currentPage, setCurrentPage] = useState(1)
     const [productsPerPage, setProductsPerPage] = useState(10)
@@ -103,22 +106,24 @@ const EshopSection = () => {
         ]
     }
 
+    const fuse = new Fuse(allProducts, {
+        keys: [
+            'name',
+            'brand',
+            'description'
+        ]
+    })
+
+    const result = fuse.search(searchQuery)
+    console.log(result)
+
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-    // const fuse = new Fuse(allProducts, {
-    //     keys: [
-    //         'name',
-    //         'brand',
-    //         'description'
-    //     ]
-    // })
 
-    // fuse.search(searchQuery)
-    // console.log(fuse.search(searchQuery))
 
     return (
         <section>
