@@ -61,7 +61,7 @@ const Dashboard = () => {
 
     const { currentUser } = useContext(AuthContext)
 
-    if (currentUser.admin === 3) return (
+    if (currentUser.admin === 0) return (
         <Suspense fallback={<Popup loading={true} />}>
             <NoPermisionSection />
         </Suspense>
