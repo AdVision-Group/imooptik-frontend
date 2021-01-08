@@ -1,5 +1,6 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useContext } from 'react'
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom'
+import { AuthContext } from '../../context/auth/auth.context'
 
 import SideNav from '../../components/sidenav/sidenav.component'
 import Popup from '../../components/popup/pop-up.component'
@@ -21,6 +22,7 @@ const ProductSection = lazy(() => import('../../sections/product/product.section
 const BlogSection = lazy(() => import("../../sections/blog-posts/blog-posts.section"))
 const BookingSection = lazy(() => import('../../sections/booking/booking.section'))
 const PostSection = lazy(() => import('../../sections/post/post.section'))
+const NoPermisionSection = lazy(() => import('../../sections/no-permission/no-permission.section'))
 
 const Dashboard = () => {
     const match = useRouteMatch()
@@ -57,6 +59,13 @@ const Dashboard = () => {
         },
     ]
 
+    const { currentUser } = useContext(AuthContext)
+
+    if (currentUser.admin === 0) return (
+        <Suspense fallback={<Popup loading={true} />}>
+            <NoPermisionSection />
+        </Suspense>
+    )
 
     return (
         <DashboardContainer>
