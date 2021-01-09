@@ -6,7 +6,9 @@ import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import {
     fetchUsers,
     fetchUser,
-    patchUser
+    patchUser,
+    postAdmin,
+    postUser
 } from './user.queries'
 
 import {
@@ -29,7 +31,11 @@ export const UserContext = createContext({
     handleCylinderChange: () => { },
     handleCylinderAxesChange: () => { },
     updateUser: () => { },
-    resetUser: () => { }
+    resetUser: () => { },
+    formToShow: 0,
+    switchFormButtons: [],
+    toggleUserForm: () => { },
+    createUser: () => { }
 })
 
 const UserProvider = ({ children }) => {
@@ -76,6 +82,24 @@ const UserProvider = ({ children }) => {
     ]
 
     // ------------------------
+
+    const [formToShow, setFormToShow] = useState(0)
+    const switchFormButtons = [
+        {
+            name: "Zákazník"
+        },
+        {
+            name: "Admin"
+        }
+    ]
+
+    const toggleUserForm = (e, idx) => {
+        e.preventDefault()
+        setFormToShow(idx)
+    }
+
+    // ------------------------
+
 
     const handleChangeFilterItem = (itemIndex) => {
         setActiveIndex(itemIndex)
@@ -150,6 +174,7 @@ const UserProvider = ({ children }) => {
             ...initUserObj
         })
         setIsUpdating(false)
+        setFormToShow(0)
     }
 
     // ------------------------
@@ -229,7 +254,6 @@ const UserProvider = ({ children }) => {
         console.log(user)
 
         try {
-            // postUser
             const response = await patchUser(token, user)
             const data = await response.json()
 
@@ -247,6 +271,53 @@ const UserProvider = ({ children }) => {
             getUsers()
             // http://localhost:1000/#/dashboard/zakaznici
 
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createUser = async (user) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            if (formToShow === 0) {
+                const response = await postUser(token, user)
+                const data = await response.json()
+
+                console.log(data)
+
+                if (data.error) {
+                    getMessage(data.message)
+                    setIsLoading(false)
+                    return
+                }
+
+                setIsLoading(false)
+                getUsers()
+                push('/dashboard/zakaznici')
+                closeModal()
+
+            } else {
+                const response = await postAdmin(token, user)
+                const data = await response.json()
+
+                console.log(data)
+
+                if (data.error) {
+                    getMessage(data.message)
+                    setIsLoading(false)
+                    return
+                }
+
+                setIsLoading(false)
+                getUsers()
+                push('/dashboard/zakaznici')
+                closeModal()
+            }
 
         } catch (err) {
             console.log(err)
@@ -273,7 +344,11 @@ const UserProvider = ({ children }) => {
                 handleCylinderChange,
                 handleCylinderAxesChange,
                 updateUser,
-                resetUser
+                resetUser,
+                formToShow,
+                switchFormButtons,
+                toggleUserForm,
+                createUser
             }}
         >
             {children}

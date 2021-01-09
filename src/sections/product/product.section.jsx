@@ -9,6 +9,7 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import Popup from '../../components/popup/pop-up.component'
 import ModalImage from '../../components/modal-images/modal-images.component'
 
+import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 
@@ -30,6 +31,7 @@ const ProductSection = () => {
     const { id } = useParams()
     const warData = useContext(WarehouseContext)
     const {
+        switchFormButtons,
         formToShow,
         toggleProductForms,
         isUpdating,
@@ -127,28 +129,25 @@ const ProductSection = () => {
                 <div>
                     <DraftCheckBox
                         label='Verejný'
-                        isActive={formToShow === 'glasses' ? product.eshop : lenses.eshop}
+                        isActive={formToShow === 0 ? product.eshop : lenses.eshop}
                         handleClick={() => toggleDraft()}
                     />
-                    {isUpdating && <DeleteButton onClick={formToShow === 'glasses' ? () => handleProductDelete(product._id) : () => deleteLenses(lenses._id)}>Vymazať</DeleteButton>}
+                    {isUpdating && <DeleteButton onClick={formToShow === 0 ? () => handleProductDelete(product._id) : () => deleteLenses(lenses._id)}>Vymazať</DeleteButton>}
                     <AddButton type='submit'>{isUpdating ? "Upraviť produkt" : "Pridať product"}</AddButton>
                 </div>
             </Header>
 
             <ScrollContainer>
                 {!isUpdating &&
-                    <React.Fragment>
-                        <Title>Aký produkt chcete pridať?</Title>
-                        <ToggleOptionsContainer>
-                            <ToggleFormButton isActive={formToShow === 'glasses'} onClick={(e) => toggleProductForms(e, 'glasses')}>Okuliare a i.</ToggleFormButton>
-                            <ToggleFormButton isActive={formToShow === 'lenses'} onClick={(e) => toggleProductForms(e, 'lenses')}>Sklá</ToggleFormButton>
-                        </ToggleOptionsContainer>
-                    </React.Fragment>
+                    <CustomFormSwitch
+                        items={switchFormButtons}
+                        title="Aký produkt chcete pridať?"
+                        activeIndex={formToShow}
+                        handleClick={toggleProductForms}
+                    />
                 }
 
-
-
-                {formToShow === 'glasses' ? (
+                {formToShow === 0 ? (
                     <ProductGlassesForm
                         activeCategoryIndex={activeCategoryIndex}
                         categories={categories}
@@ -169,13 +168,7 @@ const ProductSection = () => {
                     )
                 }
 
-
-
                 <div>
-                    <div>
-
-                    </div>
-
                     <ImageContainer>
 
                         <Title>Obrázok</Title>

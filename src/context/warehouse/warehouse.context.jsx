@@ -25,7 +25,7 @@ import {
 
 
 export const WarehouseContext = createContext({
-    formToShow: '',
+    formToShow: 0,
     toggleProductForms: () => { },
     showUpdateForm: () => { },
     isUpdating: false,
@@ -71,7 +71,18 @@ const WarehouseProvider = ({ children }) => {
     const [totalCount, setTotalCount] = useState(0)
     const [isUpdating, setIsUpdating] = useState(false)
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
-    const [formToShow, setFormToShow] = useState("glasses")
+
+    // ------------------------
+
+    const switchFormButtons = [
+        {
+            name: "Okuliare a i."
+        },
+        {
+            name: "Sklá"
+        }
+    ]
+    const [formToShow, setFormToShow] = useState(0)
 
     // ------------------------
 
@@ -88,9 +99,9 @@ const WarehouseProvider = ({ children }) => {
     // PRODUCT ACTIONS
     // ------------------------
 
-    const toggleProductForms = (e, formName) => {
+    const toggleProductForms = (e, idx) => {
         e.preventDefault()
-        setFormToShow(formName)
+        setFormToShow(idx)
     }
 
     const toggleDraft = () => {
@@ -509,6 +520,7 @@ const WarehouseProvider = ({ children }) => {
     return (
         <WarehouseContext.Provider
             value={{
+                switchFormButtons,
                 formToShow,
                 toggleProductForms,
                 showUpdateForm,

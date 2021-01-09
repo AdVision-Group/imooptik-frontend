@@ -22,5 +22,7 @@ export const initUserObj = {
     totalSpent: 0,
     watchList: [],
     fName: "",
-    lName: ""
+    lName: "",
+    password: '',
+    confirmPassword: ""
 }

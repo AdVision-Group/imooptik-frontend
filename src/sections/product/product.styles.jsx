@@ -69,14 +69,3 @@ export const DraftCheckBox = styled(CustomCheckbox)`
     margin-right: 2rem;
 `
 
-export const ToggleOptionsContainer = styled.div`
-    display: flex;
-    width: 25rem;
-    justify-content: space-between;
-    margin: 2rem auto;
-`
-
-export const ToggleFormButton = styled(CustomButton)`
-    background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#000"};
-    font-weight: 700;
-`
