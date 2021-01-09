@@ -153,7 +153,7 @@ const EshopSection = () => {
                             key={product._id}
                             name={product.name}
                             stock={product.available ? activeIndex === 0 ? product.available.reduce((acc, currValue) => acc + currValue) : product.available[activeIndex - 1] : null}
-                            id={product.eanCode}
+                            id={product.eanCode || product._id}
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
                             handleUpdateButton={() => {
