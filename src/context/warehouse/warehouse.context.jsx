@@ -179,7 +179,7 @@ const WarehouseProvider = ({ children }) => {
         setSelectedImage(null)
         setIsUpdating(false)
         setActiveCategoryIndex(0)
-        setFormToShow('glasses')
+        setFormToShow(0)
     }
 
     const handleLensesChange = (e) => {
@@ -208,7 +208,7 @@ const WarehouseProvider = ({ children }) => {
         })
     }
 
-    const showUpdateForm = (formName, id) => {
+    const showUpdateForm = (formName) => {
         setFormToShow(formName)
         setIsUpdating(true)
 

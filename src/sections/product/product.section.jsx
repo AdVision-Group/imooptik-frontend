@@ -72,7 +72,7 @@ const ProductSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (formToShow === 'glasses') {
+        if (formToShow === 0) {
             if (!product.imagePath) {
                 alert("Žiaden obrazok!")
                 return
@@ -103,7 +103,7 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (id !== "novy-produkt") {
-            if (formToShow === "glasses") {
+            if (formToShow === 0) {
                 getSingleProduct(id)
             } else {
                 getSigleLenses(id)
