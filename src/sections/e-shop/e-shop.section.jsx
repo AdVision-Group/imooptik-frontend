@@ -30,7 +30,6 @@ const EshopSection = () => {
         showUpdateForm,
         products,
         lensesArr,
-        lenses,
         getProducts,
         getLenses,
         handleProductDelete,
@@ -97,16 +96,14 @@ const EshopSection = () => {
 
     // fuse.search(searchQuery)
 
-    let allProducts = []
-    const [currentPage, setCurrentPage] = useState(1)
-    const [productsPerPage, setProductsPerPage] = useState(10)
-
-    if (products && lensesArr) {
-        allProducts = [
-            ...products,
-            ...lensesArr
-        ]
-    }
+    const [allProducts, setAllProducts] = useState([])
+    useEffect(() => {
+        if (products && lensesArr)
+            setAllProducts([
+                ...products,
+                ...lensesArr
+            ])
+    }, [lensesArr, products])
 
     const fuse = new Fuse(allProducts, {
         keys: [
@@ -116,16 +113,28 @@ const EshopSection = () => {
         ]
     })
 
-    const result = fuse.search(searchQuery)
-    console.log(result)
+    useEffect(() => {
+        const results = fuse.search(searchQuery)
+        if (results.length > 0) {
+            setAllProducts(results.map(result => result.item))
+        }
+        if (!searchQuery) {
+            if (products && lensesArr) {
+                setAllProducts([
+                    ...products,
+                    ...lensesArr
+                ])
+            }
 
+        }
+    }, [searchQuery])
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productsPerPage] = useState(10)
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
-
 
     return (
         <section>

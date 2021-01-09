@@ -8,6 +8,9 @@ import SectionNavbar from "../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 
+import Fuse from 'fuse.js'
+
+
 import {
     CustomerContainer,
     Content,
@@ -44,8 +47,38 @@ const CustomersSection = () => {
         }
     }, [users])
 
+
+
+    const [allUsers, setAllUsers] = useState([])
+    useEffect(() => {
+        if (users)
+            setAllUsers(users.filter(user => filterItems[activeIndex].filter === user.admin))
+    }, [users])
+
+    const fuse = new Fuse(allUsers, {
+        keys: [
+            'name',
+            'email',
+            'address',
+            'phone'
+        ]
+    })
+
+    useEffect(() => {
+        const results = fuse.search(searchQuery)
+        if (results.length > 0) {
+            setAllUsers(results.map(result => result.item))
+        }
+        if (!searchQuery) {
+            if (users) {
+                setAllUsers(users.filter(user => filterItems[activeIndex].filter === user.admin))
+            }
+
+        }
+
+    }, [searchQuery, activeIndex])
+
     if (!users || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
-    const fillteredUsers = users.filter(user => filterItems[activeIndex].filter === user.admin)
 
     return (
         <section>
@@ -66,7 +99,7 @@ const CustomersSection = () => {
 
             <ScrollContainer>
                 {
-                    fillteredUsers && fillteredUsers.map(user => (
+                    allUsers && allUsers.map(user => (
                         <CustomerContainer key={user._id}>
                             <Content>
                                 <h2>{user.name || user.email}</h2>

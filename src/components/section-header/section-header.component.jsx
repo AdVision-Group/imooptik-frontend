@@ -6,7 +6,7 @@ import {
     HeaderContainer,
     Left,
     Right,
-    SearchButton,
+    // SearchButton,
     // Notification,
     AddButton,
 } from './section-header.styles'
@@ -28,7 +28,7 @@ const SectionHeader = ({ searchQuery, handleChange, title, count = 999, handleAd
                         label='Vyhľadať'
                     />
                 </div>
-                <SearchButton>Vyhľadať</SearchButton>
+                {/* <SearchButton>Vyhľadať</SearchButton> */}
                 <AddButton onClick={handleAddButton}>Pridať</AddButton>
             </Right>
         </HeaderContainer>
