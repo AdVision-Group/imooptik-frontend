@@ -1,6 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { useHistory } from 'react-router-dom'
+
+import logo from '../../images/logo.png'
 
 import {
     AsideContainer,
@@ -12,7 +14,7 @@ import {
 } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
-    const { logOut, currentUser } = useContext(AuthContext)
+    const { logOut } = useContext(AuthContext)
     const { push } = useHistory()
 
     const [isOpen, setIsOpen] = useState(false)
@@ -37,8 +39,8 @@ const Sidenav = ({ routes, match }) => {
             </ToggleButton>
             <AsideContainer isOpen={isOpen}>
                 <LogoContainer isOpen={isOpen}>
-                    IMOOPTIK
-            </LogoContainer>
+                    <img src={logo} alt='imooptik logo' />
+                </LogoContainer>
                 <NavLinksContainer>
                     {routes.map((route, idx) => (
                         <li key={idx}>

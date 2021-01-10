@@ -36,6 +36,12 @@ export const LogoContainer = styled.div`
     font-weight: 700;
     color: #fff;
     margin-bottom: 3rem;
+    margin-right: 3rem;
+
+    img {
+        width: 100%;
+    }
+
     @media all and (max-width: 1150px) {
         transition: opacity .5s ease-out;
         opacity: ${({ isOpen }) => isOpen ? 1 : 0};
