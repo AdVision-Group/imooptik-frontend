@@ -31,9 +31,29 @@ const Calendar = () => {
         },
     ]
 
-    const dayBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-
     const [activeIndex, setActiveIndex] = useState(null)
+
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    // const month = 5
+    let firstDayOfCurrentMonth = new Date(year, month).getDay()
+    const daysInMonth = new Date(year, month + 1, 0).getDate()
+
+    if (firstDayOfCurrentMonth === 0) {
+        firstDayOfCurrentMonth = 7
+    }
+
+    let arr = []
+    let j = 1
+
+    for (let i = 0; i < 42; i++) {
+        if (i < firstDayOfCurrentMonth - 1) {
+            arr.push(0)
+        } else if (i < daysInMonth + firstDayOfCurrentMonth - 1) {
+            arr.push(j++)
+        }
+    }
 
     return (
         <Container>
@@ -43,16 +63,11 @@ const Calendar = () => {
                         {name}
                     </HeaderBlock>
                 ))
-
             }
-            <Dayblock />
-            <Dayblock />
-            <Dayblock />
-            <Dayblock />
             {
-                dayBlocks.map((block, idx) => (
-                    <Dayblock key={idx} active={idx === activeIndex} onClick={() => setActiveIndex(idx)}>
-                        <p>12</p>
+                arr.map((block, idx) => (
+                    <Dayblock key={idx} active={idx === activeIndex} onClick={block === 0 ? null : () => setActiveIndex(idx)}>
+                        {!(block === 0) && <p>{block}</p>}
                     </Dayblock>
                 ))
             }
