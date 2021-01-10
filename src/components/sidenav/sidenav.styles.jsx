@@ -84,14 +84,19 @@ export const NavLinksContainer = styled.ul`
         margin-bottom: 3rem;
 
 
+            &:hover {
+                div {
+                    color: rgb(235, 172, 1);
 
+                }
+    }
     }
 `
 
 export const IconContainer = styled.div`
     width: 5rem;
     height: 5rem;
-    background-color: #3E3E3E;
+    /* background-color: #3E3E3E; */
     margin-right: 3rem;
     border-radius: 50%;
     display: flex;
@@ -99,6 +104,8 @@ export const IconContainer = styled.div`
     align-items: center;
     font-size: 2.5rem;
     color: ${({ isActive }) => isActive ? 'rgb(235, 172, 1)' : "#fff"};
+    transition: color .3s ease-out;
+
 
     @media all and (max-width: 500px) {
         margin-right: 2rem;
