@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { BookingContext } from '../../context/booking/booking.context'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
+import Popup from '../../components/popup/pop-up.component'
 
 import Calendar from '../../components/calendar/calendar.component'
 
@@ -24,8 +27,47 @@ import {
 } from './booking.styles'
 
 const BookingSection = () => {
+    const {
+        closeModal,
+        isLoading,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
+
+    const {
+        calendars,
+        bookings,
+        bookingRows,
+        getCalendars,
+        getBookings,
+        getBookingRows
+    } = useContext(BookingContext)
+
     const [searchQuery, setSearchQuery] = useState('')
 
+    useEffect(() => {
+        if (!calendars) {
+            getCalendars()
+        }
+    }, [calendars])
+
+    useEffect(() => {
+        if (!bookings) {
+            getBookings()
+        }
+    }, [calendars])
+
+    useEffect(() => {
+        if (!bookingRows) {
+            getBookingRows()
+        }
+    }, [calendars])
+
+    console.log(calendars)
+    console.log(bookings)
+    console.log(bookingRows)
+
+    if (showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
 
     return (
         <section>

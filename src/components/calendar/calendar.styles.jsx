@@ -4,6 +4,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(7, auto);
     border: 1px solid rgba(0,0,0,.1);
+    min-width: 55rem;
 `
 
 export const HeaderBlock = styled.div`

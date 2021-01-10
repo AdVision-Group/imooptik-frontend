@@ -36,7 +36,7 @@ const Calendar = () => {
     const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth()
-    // const month = 5
+    // const month = 7
     let firstDayOfCurrentMonth = new Date(year, month).getDay()
     const daysInMonth = new Date(year, month + 1, 0).getDate()
 

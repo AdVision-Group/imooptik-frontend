@@ -43,7 +43,7 @@ const ImageProvider = ({ children }) => {
 
             if (data.image) {
                 setSelectedImage(data.image)
-                setImage(data.image)
+                setImage(data.image._id)
                 getImages()
                 close()
             }

@@ -5,13 +5,15 @@ import { AuthContext } from '../../context/auth/auth.context'
 import SideNav from '../../components/sidenav/sidenav.component'
 import Popup from '../../components/popup/pop-up.component'
 
-import BlogProvider from '../../context/blog/blog.context'
-import UserProvider from '../../context/user/user.context'
-import WarehouseProvider from '../../context/warehouse/warehouse.context'
-import ImageProvider from '../../context/image/image.context'
-
-
 import { DashboardContainer } from './dashboard.styles'
+
+const ImageProvider = lazy(() => import('../../context/image/image.context'))
+
+const BlogProvider = lazy(() => import('../../context/blog/blog.context'))
+const UserProvider = lazy(() => import('../../context/user/user.context'))
+const WarehouseProvider = lazy(() => import('../../context/warehouse/warehouse.context'))
+const BookingProvider = lazy(() => import('../../context/booking/booking.context'))
+
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
 const CustomersSection = lazy(() => import('../../sections/customers/customers.section'))
@@ -70,9 +72,9 @@ const Dashboard = () => {
     return (
         <DashboardContainer>
             <SideNav routes={routes} match={match} />
-            <ImageProvider>
-                <main>
-                    <Suspense fallback={<Popup loading={true} />}>
+            <main>
+                <Suspense fallback={<Popup loading={true} />}>
+                    <ImageProvider>
                         <Switch>
                             <Route path={`${match.path}/obchod`} render={() => (
                                 <WarehouseProvider>
@@ -90,7 +92,11 @@ const Dashboard = () => {
                             <Route path={`${match.path}/objednavky`} component={OrdersSection} />
                             <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
 
-                            <Route path={`${match.path}/rezervacie`} component={BookingSection} />
+                            <Route path={`${match.path}/rezervacie`} render={() => (
+                                <BookingProvider>
+                                    <BookingSection />
+                                </BookingProvider>
+                            )} />
 
                             <Route exact path={`${match.path}/blog`} render={() => (
                                 <BlogProvider>
@@ -111,9 +117,9 @@ const Dashboard = () => {
                         </Switch>
                         {/* {currentUser.admin === 0 ? <Redirect to={`${match.path}/objednavky`} /> : <Redirect to={`${match.path}/obchod`} />} */}
                         <Redirect to={`${match.path}/obchod`} />
-                    </Suspense>
-                </main>
-            </ImageProvider>
+                    </ImageProvider>
+                </Suspense>
+            </main>
         </DashboardContainer>
     )
 }

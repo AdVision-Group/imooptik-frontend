@@ -1,11 +1,11 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { ImageContext } from '../../context/image/image.context'
-import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+// import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 // import Cropper from 'react-cropper';
 // import 'cropperjs/dist/cropper.css'
 
-import CustomButton from '../../components/custom-button/custom-button.component'
+// import CustomButton from '../../components/custom-button/custom-button.component'
 
 import CustomInput from '../custom-input/custom-input.component'
 
@@ -37,12 +37,12 @@ const ModalImages = ({ close, setImage }) => {
         getPrevImage
     } = useContext(ImageContext)
 
-    const {
-        getMessage,
-        setIsLoading,
-        setShowModal,
-        closeModal
-    } = useContext(LoadingModalContext)
+    // const {
+    //     getMessage,
+    //     setIsLoading,
+    //     setShowModal,
+    //     closeModal
+    // } = useContext(LoadingModalContext)
 
     const selectImage = (img) => {
         setImage(img._id)
@@ -83,35 +83,35 @@ const ModalImages = ({ close, setImage }) => {
         }
     }, [imageToUpload])
 
-    const getCropData = async (e) => {
-        e.preventDefault()
-        setShowModal(true)
-        setIsLoading(true)
+    // const getCropData = async (e) => {
+    //     e.preventDefault()
+    //     setShowModal(true)
+    //     setIsLoading(true)
 
-        try {
-            // if (typeof cropper !== 'undefined') {
-            toDataUrl(imgUrl, async (imgData) => {
-                const data = await handleImage(imgData, imageName, imageAlt)
+    //     try {
+    //         // if (typeof cropper !== 'undefined') {
+    //         toDataUrl(imgUrl, async (imgData) => {
+    //             const data = await handleImage(imgData, imageName, imageAlt)
 
-                if (data.image) {
-                    setImage(data.image._id)
-                    setSelectedImage(data.image)
-                    getImages()
-                    close()
-                }
-            })
+    //             if (data.image) {
+    //                 setImage(data.image._id)
+    //                 setSelectedImage(data.image)
+    //                 getImages()
+    //                 close()
+    //             }
+    //         })
 
-            // }
-            setShowModal(false)
-            setIsLoading(false)
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
+    //         // }
+    //         setShowModal(false)
+    //         setIsLoading(false)
+    //     } catch (err) {
+    //         console.log(err)
+    //         getMessage("Nieco sa pokazilo")
+    //         setIsLoading(false)
+    //     }
 
-        closeModal()
-    };
+    //     closeModal()
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault()

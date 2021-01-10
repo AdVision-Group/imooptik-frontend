@@ -62,6 +62,7 @@ export const postLenses = (token, newProduct) => {
         eshop
     } = newProduct
 
+
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
@@ -147,6 +148,9 @@ export const postProduct = (token, newProduct) => {
         type,
         imagePath
     } = newProduct
+
+
+    console.log(imagePath)
 
     // let newArr = []
 
