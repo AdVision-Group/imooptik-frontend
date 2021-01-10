@@ -7,6 +7,15 @@ import Popup from '../../components/popup/pop-up.component'
 
 import { DashboardContainer } from './dashboard.styles'
 
+import {
+    AiOutlineHome,
+    AiOutlineUser,
+    AiOutlineInbox,
+    AiOutlineCalendar,
+    AiOutlineFileDone,
+    AiOutlineLineChart
+} from 'react-icons/ai'
+
 const ImageProvider = lazy(() => import('../../context/image/image.context'))
 
 const BlogProvider = lazy(() => import('../../context/blog/blog.context'))
@@ -32,32 +41,43 @@ const Dashboard = () => {
         {
             name: 'E-shop',
             path: '/obchod',
-            permission: 1
+            permission: 1,
+            icon: AiOutlineHome
         },
         {
             name: 'Uživatelia',
             path: '/zakaznici',
-            permission: 1
+            permission: 1,
+            icon: AiOutlineUser
+
         },
         {
             name: 'Objednávky',
             path: '/objednavky',
-            permission: 0
+            permission: 0,
+            icon: AiOutlineInbox
+
         },
         {
             name: 'Rezervácie',
             path: '/rezervacie',
-            permission: 0
+            permission: 0,
+            icon: AiOutlineCalendar
+
         },
         {
             name: 'Blog',
             path: '/blog',
-            permission: 0
+            permission: 0,
+            icon: AiOutlineFileDone
+
         },
         {
             name: 'Analytika',
             path: '/analytika',
-            permission: 1
+            permission: 1,
+            icon: AiOutlineLineChart
+
         },
     ]
 

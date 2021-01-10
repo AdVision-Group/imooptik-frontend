@@ -4,13 +4,16 @@ import { useHistory } from 'react-router-dom'
 
 import logo from '../../images/logo.png'
 
+import { AiOutlineLogout } from 'react-icons/ai'
+
 import {
     AsideContainer,
     LogoContainer,
     NavLinksContainer,
     ToggleButton,
     NavLinksButton,
-    ActiveBorder
+    ActiveBorder,
+    IconContainer
 } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
@@ -45,14 +48,18 @@ const Sidenav = ({ routes, match }) => {
                     {routes.map((route, idx) => (
                         <li key={idx}>
                             <NavLinksButton onClick={() => handleClick(match.url + route.path, idx)} >
-                                <div /> {route.name}
+                                <IconContainer isActive={activeLink === idx}>
+                                    <route.icon />
+                                </IconContainer> {route.name}
                             </NavLinksButton>
                             <ActiveBorder isActive={activeLink === idx} />
                         </li>
                     ))}
                     <li>
                         <NavLinksButton onClick={logOut}>
-                            <div /> Odhlásiť sa
+                            <IconContainer>
+                                <AiOutlineLogout />
+                            </IconContainer> Odhlásiť sa
                             <ActiveBorder />
                         </NavLinksButton>
                     </li>
