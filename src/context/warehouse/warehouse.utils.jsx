@@ -54,6 +54,14 @@ export const initLensesObj = {
     imagePath: ''
 }
 
+export const retailNames = [
+    "Obchodná 57, Bratislava",
+    "Miletičova 38, Bratislava",
+    "Senica, OC Branč",
+    "Vajnory, Bratislava",
+    "Trnava, City Aréna"
+]
+
 // Category variables
 export const productCategories = [
     {

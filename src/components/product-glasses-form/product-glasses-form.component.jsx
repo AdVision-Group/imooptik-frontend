@@ -13,7 +13,8 @@ import {
     CategoryTitle,
 } from './product-glasses-form.styles.jsx'
 
-import { brands } from '../../context/warehouse/warehouse.utils'
+import { brands, retailNames } from '../../context/warehouse/warehouse.utils'
+
 
 const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange, handleAvailableChange, categories, handleCategoryChange, activeCategoryIndex }) => {
 
@@ -225,11 +226,11 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
                     return (
                         <ProductInputRow
                             key={idx}
-                            label={`Počet kusov na predajni ${idx}`}
+                            label={`Počet kusov na predajni,`}
                             example="napr: 0"
                         >
                             <CustomInput
-                                label={`Predajna ${idx}`}
+                                label={retailNames[idx]}
                                 type='number'
                                 // name={store.name}
                                 value={value.toString()}
