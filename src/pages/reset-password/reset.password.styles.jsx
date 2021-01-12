@@ -10,6 +10,8 @@ export const Center = styled.div`
 `
 
 export const FormContainer = styled.form`
+    display: block;
+    height: initial;
     width: 100%;
     max-width: 35rem;
     padding: 3rem 4rem;

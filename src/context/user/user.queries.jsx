@@ -52,13 +52,15 @@ export const patchUser = (token, user) => {
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
 
     const raw = JSON.stringify({
-        address: address || " ",
+        address: address || undefined,
         admin: admin,
-        premises: premises,
-        city: city || " ",
-        country: country || " ",
+        premises: Number(premises) === 0 ? undefined : premises,
+        city: city || undefined,
+        country: country || undefined,
         email: email,
         lenses: {
             cylinder: cylinder,
@@ -67,8 +69,8 @@ export const patchUser = (token, user) => {
             distance: distance,
         },
         name: name,
-        phone: phone || " ",
-        psc: psc || " ",
+        phone: phone || undefined,
+        psc: psc || undefined,
     })
 
     const requestOptions = {
@@ -77,6 +79,8 @@ export const patchUser = (token, user) => {
         body: raw,
         redirect: 'follow'
     };
+
+    console.log(id)
 
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/${id}`, requestOptions)
 }
@@ -127,10 +131,10 @@ export const postAdmin = (token, user) => {
 
 
     const raw = JSON.stringify({
-        admin: admin,
+        admin: Number(admin),
         email: email,
         name: name,
-        premises,
+        premises: Number(premises),
         password
     })
 

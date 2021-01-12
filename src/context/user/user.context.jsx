@@ -262,6 +262,7 @@ const UserProvider = ({ children }) => {
             if (data.error) {
                 setIsLoading(false)
                 getMessage(data.message)
+                return
             }
 
 
