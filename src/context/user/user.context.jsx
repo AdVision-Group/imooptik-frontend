@@ -209,7 +209,7 @@ const UserProvider = ({ children }) => {
     }
 
 
-    // Get signgle user
+    // Get single user
     const getUser = async (id) => {
         setIsLoading(true)
         setShowModal(true)

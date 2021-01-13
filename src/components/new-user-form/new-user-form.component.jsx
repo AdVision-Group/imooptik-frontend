@@ -4,8 +4,18 @@ import CustomFormSwitch from '../custom-form-switch/custom-form-switch.component
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
 
+import {
+    retailNames
+} from '../../context/warehouse/warehouse.utils'
+
+import {
+    CustomSelect
+} from './new-user-form.styles'
+
 
 const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, handleChange }) => {
+    console.log(user)
+
     return (
         <div>
             {/* Akého uživatela chcete vytvoriť? */}
@@ -65,29 +75,34 @@ const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, hand
                                 <h2>Admin panel</h2>
                                 <InputRow
                                     label="Predajňa na ktorej uživatel pracuje"
-                                    example='napr: 1-4'
+                                    example=''
                                 >
-                                    <CustomInput
-                                        label="Premises*"
-                                        type='text'
-                                        name='premises'
-                                        value={user.premises.toString()}
-                                        handleChange={(e) => handleChange(e)}
-                                        required
-                                    />
+
+                                    <CustomSelect name='premises' value={user.premises} onChange={(e) => handleChange(e)}>
+                                        <option value={0}>Nezadané</option>
+
+                                        {
+                                            retailNames.map((name, idx) => {
+                                                if (idx === 4) return
+                                                return (
+                                                    <option key={idx} value={idx + 1}>{name}</option>
+
+                                                )
+                                            })
+                                        }
+                                    </CustomSelect>
+
                                 </InputRow>
                                 <InputRow
                                     label="Výška administrativných práv"
-                                    example="napr: 1-4"
+                                    example=""
                                 >
-                                    <CustomInput
-                                        label="Admin*"
-                                        type='text'
-                                        name='admin'
-                                        value={user.admin.toString()}
-                                        handleChange={(e) => handleChange(e)}
-                                        required
-                                    />
+                                    <CustomSelect name='admin' value={user.admin} onChange={(e) => handleChange(e)}>
+                                        <option value={0}>Zákaznik</option>
+                                        <option value={1}>Predavač</option>
+                                        <option value={2}>Vedúci</option>
+                                    </CustomSelect>
+
                                 </InputRow>
                             </div>
                             <div>

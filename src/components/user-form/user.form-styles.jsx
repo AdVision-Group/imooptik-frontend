@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
+
 
 export const Profile = styled.div`
     /* padding: 2rem;
@@ -79,4 +81,15 @@ export const Title = styled.h2`
 
 export const Container = styled.div`
     margin-top: 2rem;
+`
+
+export const OrderHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+`
+
+export const OrderButton = styled(CustomButton)`
+    margin-top: .2rem;
+    font-size: 1.2rem;
 `

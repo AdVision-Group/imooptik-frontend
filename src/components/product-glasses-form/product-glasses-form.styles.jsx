@@ -8,7 +8,7 @@ export const CategoryTitle = styled.h3`
 export const CategoryContainer = styled.div`
     width:100%;
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     margin-bottom: 1rem;
     flex-wrap: wrap;
 

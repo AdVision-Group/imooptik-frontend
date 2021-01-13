@@ -8,12 +8,11 @@ export const Title = styled.h3`
 
 export const ToggleOptionsContainer = styled.div`
     display: flex;
-    width: 25rem;
-    justify-content: space-between;
-    margin: 2rem auto;
+    margin: 2rem 0;
 `
 
 export const ToggleFormButton = styled(CustomButton)`
     background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#000"};
     font-weight: 700;
+    margin-right: 2rem;
 `

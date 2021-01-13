@@ -47,27 +47,27 @@ const EshopSection = () => {
         },
         {
             id: 1,
-            name: "Prevádzka 1",
+            name: "Obchodná 57, Bratislava",
             permission: 1,
         },
         {
             id: 2,
-            name: "Prevádzka 2",
+            name: "Miletičova 38, Bratislava",
             permission: 2,
         },
         {
             id: 3,
-            name: "Prevádzka 3",
+            name: "Senica, OC Branč",
             permission: 3,
         },
         {
             id: 4,
-            name: "Prevádzka 4",
+            name: "Vajnory, Bratislava",
             permission: 4,
         },
         // {
         //     id: 5,
-        //     name: "Prevádzka 5",
+        //     name: "Trnava, City Aréna",
         //     permission: 5,
         // },
     ]
@@ -135,6 +135,8 @@ const EshopSection = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    console.log(products)
 
     return (
         <section>

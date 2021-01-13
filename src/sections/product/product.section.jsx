@@ -21,8 +21,6 @@ import {
     ProductImage,
     DraftCheckBox,
     ImageContainer,
-    ToggleFormButton,
-    ToggleOptionsContainer
 } from './product.styles'
 
 const ProductSection = () => {

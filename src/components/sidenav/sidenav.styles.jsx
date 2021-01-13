@@ -78,6 +78,7 @@ export const NavLinksContainer = styled.ul`
     }
 
     li {
+        cursor: pointer;
         position: relative;
         display: flex;
         align-items: center;

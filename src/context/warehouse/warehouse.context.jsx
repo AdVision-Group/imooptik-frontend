@@ -231,6 +231,7 @@ const WarehouseProvider = ({ children }) => {
                 setTotalCount(totalCount + data.count)
                 setProducts(data.products)
                 setIsLoading(false)
+                closeModal()
                 return
             }
 
@@ -386,6 +387,7 @@ const WarehouseProvider = ({ children }) => {
                 setTotalCount(totalCount + data.count)
                 setLensesArr(data.lenses)
                 setIsLoading(false)
+                closeModal()
                 return
             }
 

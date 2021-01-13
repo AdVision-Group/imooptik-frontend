@@ -25,7 +25,7 @@ export const initProductObj = {
     //path k obrazku na serveri (toto bude mozno array este sa uvidi)
     imagePath: "",
     image: null,
-    eshop: false,
+    eshop: true,
 
     specs: {
         frameColor: "",

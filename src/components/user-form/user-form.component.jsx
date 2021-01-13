@@ -1,8 +1,10 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
-import OrderOverview from '../order-overview/order-overview.component'
+// import OrderOverview from '../order-overview/order-overview.component'
+
 
 import {
     Profile,
@@ -12,10 +14,19 @@ import {
     ThreeColRow,
     ZeroMargin,
     Title,
-    Container
+    Container,
+    OrderHeader,
+    OrderButton
 } from './user.form-styles'
 
 const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChange, handleDistanceChange, handleCylinderChange, handleCylinderAxesChange }) => {
+    const { push } = useHistory()
+
+    const handleAddOrderButtonClick = e => {
+        e.preventDefault()
+        push(`/dashboard/objednavky/${user._id}`)
+    }
+
     return (
         <GridContainer>
             <Profile>
@@ -244,29 +255,22 @@ const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChang
             </Profile>
 
             {isUpdating && <div>
-                <Title>
-                    Objednávky
-                            </Title>
+                <OrderHeader>
+                    <Title>
+                        Objednávky
+                    </Title>
+                    <OrderButton onClick={e => handleAddOrderButtonClick(e)}>Pridať objednávku</OrderButton>
+                </OrderHeader>
 
                 <div>
-                    <OrderOverview
+                    <p>Žiadné objednávky</p>
+                    {/* <OrderOverview
                         name='Product name'
                         id='[Product ID]'
                         date='28. November 2020'
                         totalPrice='99.99'
-                    />
-                    <OrderOverview
-                        name='Product name'
-                        id='[Product ID]'
-                        date='28. November 2020'
-                        totalPrice='99.99'
-                    />
-                    <OrderOverview
-                        name='Product name'
-                        id='[Product ID]'
-                        date='28. November 2020'
-                        totalPrice='99.99'
-                    />
+                    /> */}
+
                 </div>
             </div>}
         </GridContainer>

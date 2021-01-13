@@ -46,8 +46,8 @@ const Sidenav = ({ routes, match }) => {
                 </LogoContainer>
                 <NavLinksContainer>
                     {routes.map((route, idx) => (
-                        <li key={idx}>
-                            <NavLinksButton onClick={() => handleClick(match.url + route.path, idx)} >
+                        <li key={idx} onClick={() => handleClick(match.url + route.path, idx)} >
+                            <NavLinksButton>
                                 <IconContainer isActive={activeLink === idx}>
                                     <route.icon />
                                 </IconContainer> {route.name}
@@ -55,8 +55,8 @@ const Sidenav = ({ routes, match }) => {
                             <ActiveBorder isActive={activeLink === idx} />
                         </li>
                     ))}
-                    <li>
-                        <NavLinksButton onClick={logOut}>
+                    <li onClick={logOut}>
+                        <NavLinksButton>
                             <IconContainer>
                                 <AiOutlineLogout />
                             </IconContainer> Odhlásiť sa
