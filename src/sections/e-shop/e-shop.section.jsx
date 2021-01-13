@@ -39,6 +39,7 @@ const EshopSection = () => {
     const { push } = useHistory()
 
     const [searchQuery, setSearchQuery] = useState('')
+
     const items = [
         {
             id: 0,

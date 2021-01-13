@@ -6,12 +6,23 @@ import { useParams } from 'react-router-dom'
 
 import InputRow from '../../components/product-input-row/product-input-row.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
+import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import OrderProductOverview from '../../components/order-product-overview/order-product-overview.component'
 
 import Popup from "../../components/popup/pop-up.component"
 
+import EshopSubSecton from './sub-sections/eshop/eshop.sub-section'
+import LensesSubSection from './sub-sections/lenses/lenses.sub-section'
+import DioptersSubSection from './sub-sections/diopters/diopters.seb-section'
+import SummarySubSection from './sub-sections/summary/summary.sub-section'
+
+import Fuse from 'fuse.js'
+
+
 import {
+    Header,
+    SubmitOrderButton,
     Container,
     ProductContainer,
     AddProductButton,
@@ -20,8 +31,33 @@ import {
 } from './order.styles'
 
 const OrderSection = () => {
-    const [searchQuery, setSearchQuery] = useState('')
     const { userId } = useParams()
+    const [searchQuery, setSearchQuery] = useState('')
+    const [productsToOrder, setProductsToOrder] = useState([])
+    const [allProducts, setAllProducts] = useState([])
+    const [selectedProduct, setSelectedProduct] = useState(null)
+
+    const steps = [
+        'eshop',
+        'lenses',
+        'diopters',
+        'summary'
+    ]
+
+    const paymentOptions = [
+        {
+            name: "Hotovosť"
+        },
+        {
+            name: "Karta"
+        },
+        {
+            name: "Záloha"
+        }
+    ]
+    const [selectedPayment, setSelectedPayment] = useState(0)
+
+    const [activeStep, setActiveStep] = useState('eshop')
 
     const {
         closeModal,
@@ -43,6 +79,29 @@ const OrderSection = () => {
         lensesArr
     } = useContext(WarehouseContext)
 
+    const handleChangeStep = (idx) => {
+        setActiveStep(steps[idx])
+    }
+
+    const handleChangePayment = (e, idx) => {
+        e.preventDefault()
+        setSelectedPayment(idx)
+    }
+
+    const handleClick = (e, productToAdd) => {
+        e.preventDefault()
+        // setProductsToOrder([
+        //     ...productsToOrder,
+        //     productToAdd
+        // ])
+        setSelectedProduct(productToAdd)
+        setActiveStep(steps[1])
+    }
+
+    const handleRemoveProduct = (e, productToRemove, idx) => {
+        e.preventDefault()
+        setProductsToOrder(productsToOrder.filter((product, index) => index !== idx))
+    }
 
     useEffect(() => {
         getUser(userId)
@@ -54,26 +113,49 @@ const OrderSection = () => {
         }
     }, [])
 
-    console.log(user)
-    console.log(products)
-    console.log(lensesArr)
-    console.log(showModal)
+    useEffect(() => {
+        if (products && lensesArr) {
+            setAllProducts([
+                ...products,
+            ])
+        }
+    }, [products])
 
+    const fuse = new Fuse(allProducts, {
+        keys: [
+            'name',
+            'brand',
+            'description'
+        ]
+    })
+
+    useEffect(() => {
+        const results = fuse.search(searchQuery)
+        if (results.length > 0) {
+            setAllProducts(results.map(result => result.item))
+        }
+        if (!searchQuery) {
+            if (products) {
+                setAllProducts([
+                    ...products,
+                ])
+            }
+
+        }
+    }, [searchQuery])
 
     if (!user._id || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
 
-    let allProducts = []
-
-    if (products && lensesArr) {
-        allProducts = [
-            ...products,
-            ...lensesArr
-        ]
-    }
-
-
     return (
         <section>
+            <Header>
+                <div>
+                    <h1>Pridať objednávku</h1>
+                </div>
+                <div>
+                    <SubmitOrderButton>Pridať objednávku</SubmitOrderButton>
+                </div>
+            </Header>
             <ScrollContainer>
                 <Container>
                     <h2>Informácie o zákazníkovovi</h2>
@@ -105,38 +187,53 @@ const OrderSection = () => {
                     </InputRow>
                 </Container>
                 <Container>
-                    <h2>Objednávka</h2>
+                    <h2>Spôsob platby</h2>
+                    <CustomFormSwitch
+                        items={paymentOptions}
+                        title=""
+                        activeIndex={selectedPayment}
+                        handleClick={handleChangePayment}
+                    />
+                </Container>
+                <Container>
+                    <SearchContainer>
+                        <h2>Objednávka</h2>
+                    </SearchContainer>
                     <ProductContainer>
-                        Žiadné produkty
+                        {productsToOrder.length > 0 ? productsToOrder.map((product, idx) => (
+                            <OrderProductOverview key={idx} product={product} handleRemoveProduct={(e) => handleRemoveProduct(e, product, idx)} />
+                        )) : (
+                                <div>Žiadné produkty</div>
+                            )}
                     </ProductContainer>
                     <AddProductButton>Pridať produkt</AddProductButton>
                 </Container>
 
 
                 <Container>
-                    <h2>E-shop</h2>
+                    {activeStep === steps[0] ? (
+                        <EshopSubSecton
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                            allProducts={allProducts}
+                            handleClick={handleClick}
+                        />
+                    ) : activeStep === steps[1] ? (
+                        <LensesSubSection
+                            handleChangeStep={handleChangeStep}
+                        />
+                    ) : activeStep === steps[2] ? (
+                        <DioptersSubSection
+                            handleChangeStep={handleChangeStep}
 
-                    <SearchContainer>
-                        <div>
-                            <CustomInput
-                                label="Vyhľadať produkt"
-                                type='search'
-                                name='search'
-                                value={searchQuery}
-                                handleChange={(e) => setSearchQuery(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <SearchButton>Hľadať</SearchButton>
+                        />
+                    ) : (
+                                    <SummarySubSection
+                                        handleChangeStep={handleChangeStep}
 
-                    </SearchContainer>
-                    <ProductContainer>
-                        {
-                            allProducts.map((product, idx) => (
-                                <OrderProductOverview key={idx} product={product} />
-                            ))
-                        }
-                    </ProductContainer>
+                                    />
+                                )}
+
                 </Container>
 
             </ScrollContainer>

@@ -2,10 +2,12 @@ import React from 'react'
 
 import {
     ProductContainer,
-    ImageContainer
+    ImageContainer,
+    AddButton,
+    RemoveButton
 } from './order-product-overview.styles'
 
-const OrderProductOverview = ({ product }) => {
+const OrderProductOverview = ({ product, handleClick, handleRemoveProduct }) => {
     const { image, name, price } = product
     console.log(product)
 
@@ -19,7 +21,8 @@ const OrderProductOverview = ({ product }) => {
 
             <p>{(price / 100).toFixed(2)}€</p>
 
-            <button>Pridať</button>
+            {handleClick && <AddButton onClick={handleClick}>Vybrať</AddButton>}
+            {handleRemoveProduct && <RemoveButton onClick={handleRemoveProduct}>Odstrániť</RemoveButton>}
         </ProductContainer>
     )
 }
