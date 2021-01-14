@@ -57,3 +57,7 @@ export const SearchContainer = styled.div`
 export const SearchButton = styled(CustomButton)`
 
 `
+
+export const BackButton = styled.div`
+
+`

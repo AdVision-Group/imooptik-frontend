@@ -36,6 +36,32 @@ const OrderSection = () => {
     const [productsToOrder, setProductsToOrder] = useState([])
     const [allProducts, setAllProducts] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null)
+    const [selectedLenses, setSelectedLenses] = useState(null)
+    const [combinedProduct, setCombinedProduct] = useState({
+        lenses: {
+            diopters: [
+                2,
+                2
+            ],
+            distance: [
+                0,
+                0
+            ],
+            cylinder: [
+                0,
+                0
+            ],
+            cylinderAxes: [
+                0,
+                0
+            ]
+        },
+        // "_id": "5ff46112adf1801b447ff3cd",
+        product: "",
+        lens: "",
+        price: 2220,
+        // "__v": 0
+    })
 
     const steps = [
         'eshop',
@@ -95,7 +121,22 @@ const OrderSection = () => {
         //     productToAdd
         // ])
         setSelectedProduct(productToAdd)
+        setCombinedProduct({
+            ...combinedProduct,
+            product: productToAdd._id
+        })
         setActiveStep(steps[1])
+    }
+
+    const handleSelectLenses = (e, lensesToAdd) => {
+        console.log(lensesToAdd)
+        e.preventDefault()
+        setSelectedLenses(lensesToAdd)
+        setCombinedProduct({
+            ...combinedProduct,
+            lens: lensesToAdd._id
+        })
+        setActiveStep(steps[2])
     }
 
     const handleRemoveProduct = (e, productToRemove, idx) => {
@@ -114,7 +155,7 @@ const OrderSection = () => {
     }, [])
 
     useEffect(() => {
-        if (products && lensesArr) {
+        if (products) {
             setAllProducts([
                 ...products,
             ])
@@ -220,17 +261,22 @@ const OrderSection = () => {
                         />
                     ) : activeStep === steps[1] ? (
                         <LensesSubSection
+                            lenses={lensesArr}
                             handleChangeStep={handleChangeStep}
+                            handleSelectLenses={handleSelectLenses}
                         />
                     ) : activeStep === steps[2] ? (
                         <DioptersSubSection
                             handleChangeStep={handleChangeStep}
-
+                            combinedProduct={combinedProduct}
                         />
                     ) : (
                                     <SummarySubSection
+                                        handleRemoveProduct={handleRemoveProduct}
                                         handleChangeStep={handleChangeStep}
-
+                                        selectedProduct={selectedProduct}
+                                        selectedLenses={selectedLenses}
+                                        combinedProduct={combinedProduct}
                                     />
                                 )}
 
