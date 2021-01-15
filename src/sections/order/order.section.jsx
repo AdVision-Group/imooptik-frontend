@@ -20,6 +20,8 @@ import SummarySubSection from './sub-sections/summary/summary.sub-section'
 
 import Fuse from 'fuse.js'
 
+import { initUserObj } from '../../context/user/user.utils'
+
 
 import {
     Header,
@@ -29,11 +31,16 @@ import {
     AddProductButton,
     SearchContainer,
     SearchButton,
+    UserList
 } from './order.styles'
 
 const OrderSection = () => {
     const { userId } = useParams()
     const [searchQuery, setSearchQuery] = useState('')
+
+    const [selectedUser, setSelectedUser] = useState(initUserObj)
+    const [isSearchingUser, setIsSearchingUser] = useState(false)
+    const [userSearchResult, setUserSearchResult] = useState([])
 
     const {
         closeModal,
@@ -47,7 +54,7 @@ const OrderSection = () => {
         user,
         getUser,
         getUsers,
-        handleChange
+        // handleChange
     } = useContext(UserContext)
 
     const {
@@ -76,6 +83,22 @@ const OrderSection = () => {
         handleParameterChange
     } = useContext(OrdersContext)
 
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setSelectedUser({
+            ...selectedUser,
+            [name]: value
+        })
+    }
+
+    const handleSelectUser = (user) => {
+        setIsSearchingUser(false)
+        setSelectedUser({
+            ...selectedUser,
+            ...user
+        })
+    }
+
     useEffect(() => {
         if (!users) {
             getUsers()
@@ -83,7 +106,9 @@ const OrderSection = () => {
     }, [users])
 
     useEffect(() => {
-        getUser(userId)
+        if (userId !== 'nova-objednavka') {
+            getUser(userId)
+        }
         if (!products) {
             getProducts()
         }
@@ -92,32 +117,66 @@ const OrderSection = () => {
         }
     }, [products, lensesArr])
 
-    console.log(users)
+    useEffect(() => {
+        if (userId !== 'nova-objednavka') {
+            if (user) {
+                setSelectedUser({
+                    ...user
+                })
+            }
+        }
+    }, [user])
 
-    // useEffect(() => {
-    //     const results = fuse.search(searchQuery)
-    //     if (results.length > 0) {
-    //         setAllProducts(results.map(result => result.item))
-    //     }
-    //     if (!searchQuery) {
-    //         if (products) {
-    //             setAllProducts([
-    //                 ...products,
-    //             ])
-    //         }
+    useEffect(() => {
+        if (users) {
+            const userFuse = new Fuse(users, {
+                keys: [
+                    'name',
+                    'email',
+                ]
+            })
+            if (selectedUser._id) {
+                setSelectedUser({
+                    ...selectedUser,
+                    _id: null
+                })
+            }
+            if (!selectedUser._id) {
+                setIsSearchingUser(true)
+                setUserSearchResult(userFuse.search(selectedUser.name))
+            }
+        }
 
-    //     }
-    // }, [searchQuery])
+    }, [selectedUser.name])
 
-    if (!user._id || showModal || !products || !lensesArr) return <Popup loading={isLoading} title={message} close={closeModal} />
+    useEffect(() => {
+        if (users) {
+            const userFuse = new Fuse(users, {
+                keys: [
+                    'name',
+                    'email',
+                ]
+            })
+            if (selectedUser._id) {
+                setSelectedUser({
+                    ...selectedUser,
+                    _id: null
+                })
+            }
+            if (!selectedUser._id) {
+                setIsSearchingUser(true)
+                setUserSearchResult(userFuse.search(selectedUser.email))
+            }
+        }
 
-    const fuse = new Fuse(products, {
-        keys: [
-            'name',
-            'brand',
-            'description'
-        ]
-    })
+    }, [selectedUser.email])
+
+
+
+    if (showModal || !products || !lensesArr) return <Popup loading={isLoading} title={message} close={closeModal} />
+
+
+
 
     return (
         <section>
@@ -140,16 +199,11 @@ const OrderSection = () => {
                             label="Meno priezvisko*"
                             type='text'
                             name='name'
-                            value={user.name}
+                            value={selectedUser.name}
                             handleChange={(e) => handleChange(e)}
                             required
-                            list={'userNames'}
+                            autocomplete="off"
                         />
-                        <datalist id="userNames">
-                            {users.map(user => (
-                                <option key={user._id} value={user.name} />
-                            ))}
-                        </datalist>
                     </InputRow>
                     <InputRow
                         label="Identifikačné číslo zákaznika"
@@ -159,18 +213,22 @@ const OrderSection = () => {
                             label="email zákaznika*"
                             type='email'
                             name='email'
-                            value={user.email}
+                            value={selectedUser.email}
                             handleChange={(e) => handleChange(e)}
                             required
-                            list={'userEmails'}
+                            autocomplete="off"
 
                         />
-                        <datalist id="userEmails">
-                            {users.map(user => (
-                                <option key={user._id} value={user.email} />
-                            ))}
-                        </datalist>
                     </InputRow>
+                    {isSearchingUser && <UserList>
+                        {userSearchResult.map((user, idx) => (
+                            <div key={idx} onClick={() => handleSelectUser(user.item)}>
+                                <p>{user.item.name}</p>
+                                <p>{user.item.email}</p>
+                                <p>{user.item.phone}</p>
+                            </div>
+                        ))}
+                    </UserList>}
                 </Container>
                 <Container>
                     <h2>Spôsob platby</h2>

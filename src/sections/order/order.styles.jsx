@@ -26,6 +26,41 @@ export const SubmitOrderButton = styled(CustomButton)`
 
 export const Container = styled.div`
     margin-bottom: 3rem;
+    position: relative;
+`
+
+export const UserList = styled.div`
+    position: absolute;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    width: 35rem;
+    max-height: 40rem;
+    z-index: 999;
+    top: 18rem;
+    overflow-y: scroll;
+
+    div {
+        cursor: pointer;
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+
+        transition: background-color .2s ease-out;
+        background-color: #f5f5f5;
+
+        &:hover {
+            background-color: lightgray;
+        }
+
+        p:nth-child(2) {
+            color: gray;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
 `
 
 export const ProductContainer = styled.div`

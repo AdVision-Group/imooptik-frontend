@@ -20,7 +20,7 @@ export const initCombinedProductObj = {
     // "_id": "5ff46112adf1801b447ff3cd",
     product: "",
     lens: "",
-    price: 2220,
+    price: 0,
     // "__v": 0
 }
 

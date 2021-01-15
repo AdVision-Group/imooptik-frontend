@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { OrdersContext } from '../../context/orders/orders.context'
+import { useHistory } from 'react-router-dom'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
@@ -9,6 +10,7 @@ import OrderOverview from '../../components/order-overview/order-overview.compon
 
 const OrdersSection = () => {
     const { currentUser } = useContext(AuthContext)
+    const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
         {
@@ -47,6 +49,7 @@ const OrdersSection = () => {
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
+                handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
                 title="Objednávky"
             />
 
