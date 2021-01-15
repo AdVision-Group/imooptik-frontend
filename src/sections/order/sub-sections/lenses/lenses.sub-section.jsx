@@ -6,15 +6,17 @@ import { FaLessThan } from 'react-icons/fa'
 
 import {
     ProductContainer,
-    BackButton
+    BackButton,
+    Title,
+    NextButton
 } from '../../order.styles'
 
 const LensesSubSection = ({ handleChangeStep, lenses, handleSelectLenses }) => {
     return (
         <React.Fragment>
-            <h1>LENSES PRODUCTS</h1>
-
             <BackButton onClick={() => handleChangeStep(0)}><FaLessThan /></BackButton>
+            <Title>LENSES PRODUCTS</Title>
+
             <ProductContainer>
                 {
                     lenses.map((product, idx) => (
@@ -22,7 +24,7 @@ const LensesSubSection = ({ handleChangeStep, lenses, handleSelectLenses }) => {
                     ))
                 }
             </ProductContainer>
-            <button onClick={() => handleChangeStep(2)}>Next</button>
+            <NextButton onClick={() => handleChangeStep(2)}>Next</NextButton>
         </React.Fragment>
     )
 }

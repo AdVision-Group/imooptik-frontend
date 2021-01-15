@@ -7,18 +7,22 @@ import {
 } from 'react-icons/fa'
 
 import {
-    BackButton
+    BackButton,
+    Title,
+    ParametersContainer,
+    NextButton
 } from '../../order.styles'
 
 const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameterChange }) => {
     return (
         <React.Fragment>
             <BackButton onClick={() => handleChangeStep(1)}><FaLessThan /></BackButton>
+            <Title>Parametre</Title>
 
-            <div>
+            <ParametersContainer>
                 <div>
                     <div>
-                        <h1>Dioptrie</h1>
+                        <h3>Dioptrie</h3>
                     </div>
                     <div>
                         <CustomInput
@@ -42,7 +46,7 @@ const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameter
 
                 <div>
                     <div>
-                        <h1>Vzdialenosť</h1>
+                        <h3>Vzdialenosť</h3>
                     </div>
                     <div>
                         <CustomInput
@@ -66,7 +70,7 @@ const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameter
 
                 <div>
                     <div>
-                        <h1>Cylinder</h1>
+                        <h3>Cylinder</h3>
                     </div>
                     <div>
                         <CustomInput
@@ -90,7 +94,7 @@ const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameter
 
                 <div>
                     <div>
-                        <h1>Os cylindrov</h1>
+                        <h3>Os cylindrov</h3>
                     </div>
                     <div>
                         <CustomInput
@@ -111,9 +115,9 @@ const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameter
                         />
                     </div>
                 </div>
-            </div>
+            </ParametersContainer>
 
-            <button onClick={() => handleChangeStep(3)}>Next</button>
+            <NextButton onClick={() => handleChangeStep(3)}>Next</NextButton>
         </React.Fragment>
     )
 }

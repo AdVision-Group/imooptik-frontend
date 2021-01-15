@@ -3,12 +3,27 @@ import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
 import { initCombinedProductObj, paymentOptionsArr, stepsArr } from './orders.utils'
+import { initUserObj } from '../user/user.utils'
+
 
 import {
-    fetchOrders
+    fetchOrders,
+    postOrder,
+    postCombinedProduct
 } from './orders.queries'
 
 export const OrdersContext = createContext({
+    selectedUser: null,
+    setSelectedUser: () => { },
+    isDifferentAddress: false,
+    setIsDifferentAddress: () => { },
+    overwrite: {},
+    coupon: '',
+    setCoupon: () => { },
+    handleOverwriteChange: () => { },
+    handleChangeSelectedUser: () => { },
+    isSearchingUser: false,
+    handleSelectUser: () => { },
     orders: null,
     getOrders: () => { },
     productsToOrder: [],
@@ -26,7 +41,9 @@ export const OrdersContext = createContext({
     handleSelectProduct: () => { },
     handleSelectLenses: () => { },
     handleRemoveProduct: () => { },
-    handleParameterChange: () => { }
+    handleParameterChange: () => { },
+    createOrder: () => { },
+    createCombinedProduct: () => { },
 })
 
 const OrdersProvider = ({ children }) => {
@@ -48,6 +65,47 @@ const OrdersProvider = ({ children }) => {
     const steps = stepsArr
     const [deposit, setDeposit] = useState(0)
 
+    const [coupon, setCoupon] = useState('')
+
+    const [selectedUser, setSelectedUser] = useState(initUserObj)
+    const [isSearchingUser, setIsSearchingUser] = useState(false)
+
+    const [isDifferentAddress, setIsDifferentAddress] = useState(false)
+    const [overwrite, setOverWrite] = useState({
+        address: '',
+        psc: '',
+        city: '',
+        country: ''
+    })
+
+    const handleOverwriteChange = (e) => {
+        const { name, value } = e.target
+        setOverWrite({
+            ...overwrite,
+            [name]: value
+        })
+    }
+
+
+    const handleChangeSelectedUser = (e) => {
+        const { name, value } = e.target
+        setIsSearchingUser(true)
+        setSelectedUser({
+            ...selectedUser,
+            [name]: value
+        })
+    }
+
+
+    const handleSelectUser = (user) => {
+        setSelectedUser({
+            ...selectedUser,
+            ...user
+        })
+        setIsSearchingUser(false)
+
+    }
+
     const [activeStep, setActiveStep] = useState('eshop')
     const handleChangeStep = (idx) => {
         setActiveStep(steps[idx])
@@ -68,7 +126,8 @@ const OrdersProvider = ({ children }) => {
         setSelectedProduct(productToAdd)
         setCombinedProduct({
             ...combinedProduct,
-            product: productToAdd._id
+            product: productToAdd._id,
+            price: combinedProduct.price + productToAdd.price
         })
         setActiveStep(steps[1])
     }
@@ -79,14 +138,16 @@ const OrdersProvider = ({ children }) => {
         setSelectedLenses(lensesToAdd)
         setCombinedProduct({
             ...combinedProduct,
-            lens: lensesToAdd._id
+            lens: lensesToAdd._id,
+            price: combinedProduct.price + lensesToAdd.price
+
         })
         setActiveStep(steps[2])
     }
 
-    const handleRemoveProduct = (e, productToRemove, idx) => {
+    const handleRemoveProduct = (e, productToRemove) => {
         e.preventDefault()
-        setProductsToOrder(productsToOrder.filter((product, index) => index !== idx))
+        setProductsToOrder(productsToOrder.filter((product) => product._id !== productToRemove._id))
     }
 
     const handleParameterChange = (e, idx) => {
@@ -127,13 +188,74 @@ const OrdersProvider = ({ children }) => {
 
     }
 
-    console.log("combinedProduct")
-    console.log(combinedProduct)
-    console.log("combinedProduct")
+    const createOrder = async (user, combinedProducts) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.orderId) {
+
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createCombinedProduct = async (combinedProductToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postCombinedProduct(combinedProductToAdd)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.combinedProduct) {
+
+                setProductsToOrder([
+                    ...productsToOrder,
+                    data.combinedProduct
+                ])
+
+                setIsLoading(false)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     return (
         <OrdersContext.Provider
             value={{
+                selectedUser,
+                setSelectedUser,
+                isDifferentAddress,
+                setIsDifferentAddress,
+                overwrite,
+                coupon,
+                setCoupon,
+                handleOverwriteChange,
+                handleChangeSelectedUser,
+                isSearchingUser,
+                handleSelectUser,
                 orders,
                 getOrders,
                 productsToOrder,
@@ -152,6 +274,8 @@ const OrdersProvider = ({ children }) => {
                 handleSelectLenses,
                 handleRemoveProduct,
                 handleParameterChange,
+                createOrder,
+                createCombinedProduct,
             }}
         >
             {children}

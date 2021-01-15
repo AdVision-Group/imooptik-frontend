@@ -9,7 +9,9 @@ import InputRow from '../../components/product-input-row/product-input-row.compo
 import CustomInput from '../../components/custom-input/custom-input.component'
 import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import OrderProductOverview from '../../components/order-product-overview/order-product-overview.component'
+// import OrderProductOverview from '../../components/order-product-overview/order-product-overview.component'
+import CustomCheckBox from '../../components/custom-checkbox/custom-checkbox.component'
+import CombinedProductOverview from '../../components/combined-product-overview/combined-product-overview.component'
 
 import Popup from "../../components/popup/pop-up.component"
 
@@ -19,8 +21,6 @@ import DioptersSubSection from './sub-sections/diopters/diopters.seb-section'
 import SummarySubSection from './sub-sections/summary/summary.sub-section'
 
 import Fuse from 'fuse.js'
-
-import { initUserObj } from '../../context/user/user.utils'
 
 
 import {
@@ -37,9 +37,6 @@ import {
 const OrderSection = () => {
     const { userId } = useParams()
     const [searchQuery, setSearchQuery] = useState('')
-
-    const [selectedUser, setSelectedUser] = useState(initUserObj)
-    const [isSearchingUser, setIsSearchingUser] = useState(false)
     const [userSearchResult, setUserSearchResult] = useState([])
 
     const {
@@ -65,6 +62,17 @@ const OrderSection = () => {
     } = useContext(WarehouseContext)
 
     const {
+        selectedUser,
+        setSelectedUser,
+        isDifferentAddress,
+        setIsDifferentAddress,
+        overwrite,
+        coupon,
+        setCoupon,
+        handleOverwriteChange,
+        handleChangeSelectedUser,
+        handleSelectUser,
+        isSearchingUser,
         paymentOptions,
         steps,
         activeStep,
@@ -80,24 +88,10 @@ const OrderSection = () => {
         selectedProduct,
         productsToOrder,
         handleRemoveProduct,
-        handleParameterChange
+        handleParameterChange,
+        createOrder,
+        createCombinedProduct
     } = useContext(OrdersContext)
-
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setSelectedUser({
-            ...selectedUser,
-            [name]: value
-        })
-    }
-
-    const handleSelectUser = (user) => {
-        setIsSearchingUser(false)
-        setSelectedUser({
-            ...selectedUser,
-            ...user
-        })
-    }
 
     useEffect(() => {
         if (!users) {
@@ -135,16 +129,7 @@ const OrderSection = () => {
                     'email',
                 ]
             })
-            if (selectedUser._id) {
-                setSelectedUser({
-                    ...selectedUser,
-                    _id: null
-                })
-            }
-            if (!selectedUser._id) {
-                setIsSearchingUser(true)
-                setUserSearchResult(userFuse.search(selectedUser.name))
-            }
+            setUserSearchResult(userFuse.search(selectedUser.name))
         }
 
     }, [selectedUser.name])
@@ -157,24 +142,19 @@ const OrderSection = () => {
                     'email',
                 ]
             })
-            if (selectedUser._id) {
-                setSelectedUser({
-                    ...selectedUser,
-                    _id: null
-                })
-            }
-            if (!selectedUser._id) {
-                setIsSearchingUser(true)
-                setUserSearchResult(userFuse.search(selectedUser.email))
-            }
+            setUserSearchResult(userFuse.search(selectedUser.email))
         }
 
     }, [selectedUser.email])
 
-
-
     if (showModal || !products || !lensesArr) return <Popup loading={isLoading} title={message} close={closeModal} />
 
+    console.log("selectedUser")
+    console.log(selectedUser)
+    console.log("selectedUser")
+    console.log("productsToOrder")
+    console.log(productsToOrder)
+    console.log("productsToOrder")
 
 
 
@@ -185,7 +165,7 @@ const OrderSection = () => {
                     <h1>Pridať objednávku</h1>
                 </div>
                 <div>
-                    <SubmitOrderButton>Pridať objednávku</SubmitOrderButton>
+                    <SubmitOrderButton onClick={() => createOrder(selectedUser, productsToOrder)}>Pridať objednávku</SubmitOrderButton>
                 </div>
             </Header>
             <ScrollContainer>
@@ -200,13 +180,13 @@ const OrderSection = () => {
                             type='text'
                             name='name'
                             value={selectedUser.name}
-                            handleChange={(e) => handleChange(e)}
+                            handleChange={(e) => handleChangeSelectedUser(e)}
                             required
-                            autocomplete="off"
+                            autoComplete="off"
                         />
                     </InputRow>
                     <InputRow
-                        label="Identifikačné číslo zákaznika"
+                        label="E-mail zákaznika"
                         example=''
                     >
                         <CustomInput
@@ -214,9 +194,9 @@ const OrderSection = () => {
                             type='email'
                             name='email'
                             value={selectedUser.email}
-                            handleChange={(e) => handleChange(e)}
+                            handleChange={(e) => handleChangeSelectedUser(e)}
                             required
-                            autocomplete="off"
+                            autoComplete="off"
 
                         />
                     </InputRow>
@@ -229,6 +209,90 @@ const OrderSection = () => {
                             </div>
                         ))}
                     </UserList>}
+                </Container>
+                {selectedUser._id && (
+                    <Container>
+                        <h3>Doručovacia adresa</h3>
+                        <div>
+                            <p>{selectedUser.name}</p>
+                            <p>{selectedUser.address}</p>
+                            <p>{`${selectedUser.psc} ${selectedUser.city}`}</p>
+                            <p>{selectedUser.country}</p>
+                        </div>
+                        <CustomCheckBox
+                            label="Iná adresa"
+                            isActive={isDifferentAddress}
+                            handleClick={() => setIsDifferentAddress(!isDifferentAddress)}
+                        />
+
+                        {isDifferentAddress && (
+                            <div>
+                                <InputRow
+                                    label=""
+                                    example=''
+                                >
+                                    <CustomInput
+                                        label="Ulica a čislo domu"
+                                        type='text'
+                                        name='address'
+                                        value={overwrite.address}
+                                        handleChange={(e) => handleOverwriteChange(e)}
+                                    />
+                                </InputRow>
+                                <InputRow
+                                    label=""
+                                    example=''
+                                >
+                                    <CustomInput
+                                        label="PSČ"
+                                        type='text'
+                                        name='psc'
+                                        value={overwrite.psc}
+                                        handleChange={(e) => handleOverwriteChange(e)}
+                                    />
+                                </InputRow>
+                                <InputRow
+                                    label=""
+                                    example=''
+                                >
+                                    <CustomInput
+                                        label="Mesto"
+                                        type='text'
+                                        name='city'
+                                        value={overwrite.city}
+                                        handleChange={(e) => handleOverwriteChange(e)}
+                                    />
+                                </InputRow>
+                                <InputRow
+                                    label=""
+                                    example=''
+                                >
+                                    <CustomInput
+                                        label="Krajina"
+                                        type='text'
+                                        name='country'
+                                        value={overwrite.country}
+                                        handleChange={(e) => handleOverwriteChange(e)}
+                                    />
+                                </InputRow>
+                            </div>
+                        )}
+                    </Container>
+                )}
+                <Container>
+                    <h2>Zľavový kupón</h2>
+                    <InputRow
+                        label=""
+                        example=''
+                    >
+                        <CustomInput
+                            label="Kód"
+                            type='text'
+                            name='coupon'
+                            value={coupon}
+                            handleChange={(e) => setCoupon(e.terget.value)}
+                        />
+                    </InputRow>
                 </Container>
                 <Container>
                     <h2>Spôsob platby</h2>
@@ -258,7 +322,7 @@ const OrderSection = () => {
                     </SearchContainer>
                     <ProductContainer>
                         {productsToOrder.length > 0 ? productsToOrder.map((product, idx) => (
-                            <OrderProductOverview key={idx} product={product} handleRemoveProduct={(e) => handleRemoveProduct(e, product, idx)} />
+                            <CombinedProductOverview key={idx} product={product} handleRemoveProduct={(e) => handleRemoveProduct(e, product)} />
                         )) : (
                                 <div>Žiadné produkty</div>
                             )}
@@ -293,6 +357,7 @@ const OrderSection = () => {
                                         selectedProduct={selectedProduct}
                                         selectedLenses={selectedLenses}
                                         combinedProduct={combinedProduct}
+                                        createCombinedProduct={createCombinedProduct}
                                     />
                                 )}
 
