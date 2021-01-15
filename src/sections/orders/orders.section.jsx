@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
+import { OrdersContext } from '../../context/orders/orders.context'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
@@ -31,10 +32,15 @@ const OrdersSection = () => {
             name: "Rok"
         },
     ]
-
     const [activeIndex, setActiveIndex] = useState(2)
 
-    console.log(currentUser)
+    const {
+        getOrders
+    } = useContext(OrdersContext)
+
+    useEffect(() => {
+        getOrders()
+    }, [])
 
     return (
         <section>

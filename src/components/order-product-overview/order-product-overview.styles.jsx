@@ -12,6 +12,7 @@ export const ProductContainer = styled.div`
 
     grid-template-areas:    "i i"
                             "t t"
+                            "s s"
                             "p b";
 
     border-radius: .5rem;
@@ -25,6 +26,13 @@ export const ProductContainer = styled.div`
 
     h3 {
         grid-area: t;
+    }
+
+    span {
+        grid-area: s;
+        font-size: 1.2rem;
+        color: gray;
+        margin-bottom: 1rem;
     }
 
     p {

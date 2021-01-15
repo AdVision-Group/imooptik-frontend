@@ -147,6 +147,8 @@ const AuthProvider = ({ children }) => {
         setShowModal(true)
         setIsLoading(true)
 
+        console.log(resetSecret)
+
         if (!resetSecret) {
             console.log("Ziadny reset token")
             setShowModal(false)

@@ -8,7 +8,7 @@ import {
 } from './order-product-overview.styles'
 
 const OrderProductOverview = ({ product, handleClick, handleRemoveProduct }) => {
-    const { image, name, price } = product
+    const { image, name, price, eanCode } = product
     console.log(product)
 
     return (
@@ -18,6 +18,7 @@ const OrderProductOverview = ({ product, handleClick, handleRemoveProduct }) => 
             </ImageContainer>
 
             <h3>{name}</h3>
+            <span>{eanCode}</span>
 
             <p>{(price / 100).toFixed(2)}€</p>
 

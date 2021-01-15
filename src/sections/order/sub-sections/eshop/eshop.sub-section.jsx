@@ -6,7 +6,8 @@ import CustomInput from '../../../../components/custom-input/custom-input.compon
 import {
     SearchContainer,
     SearchButton,
-    ProductContainer
+    ProductContainer,
+
 } from '../../order.styles'
 
 const EshopSubSection = ({ searchQuery, setSearchQuery, allProducts, handleClick }) => {

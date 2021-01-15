@@ -110,7 +110,8 @@ const EshopSection = () => {
         keys: [
             'name',
             'brand',
-            'description'
+            'description',
+            'eanCode'
         ]
     })
 

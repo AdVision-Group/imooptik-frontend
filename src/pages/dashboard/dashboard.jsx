@@ -22,6 +22,7 @@ const BlogProvider = lazy(() => import('../../context/blog/blog.context'))
 const UserProvider = lazy(() => import('../../context/user/user.context'))
 const WarehouseProvider = lazy(() => import('../../context/warehouse/warehouse.context'))
 const BookingProvider = lazy(() => import('../../context/booking/booking.context'))
+const OrdersProvider = lazy(() => import("../../context/orders/orders.context"))
 
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
@@ -110,11 +111,17 @@ const Dashboard = () => {
                             )} />
 
 
-                            <Route exact path={`${match.path}/objednavky`} component={OrdersSection} />
+                            <Route exact path={`${match.path}/objednavky`} render={() => (
+                                <OrdersProvider>
+                                    <OrdersSection />
+                                </OrdersProvider>
+                            )} />
                             <Route path={`${match.path}/objednavky/:userId`} render={() => (
                                 <UserProvider>
                                     <WarehouseProvider>
-                                        <OrderSection />
+                                        <OrdersProvider>
+                                            <OrderSection />
+                                        </OrdersProvider>
                                     </WarehouseProvider>
                                 </UserProvider>
                             )

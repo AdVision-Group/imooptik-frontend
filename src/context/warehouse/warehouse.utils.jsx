@@ -57,8 +57,8 @@ export const initLensesObj = {
 export const retailNames = [
     "Obchodná 57, Bratislava",
     "Miletičova 38, Bratislava",
-    "Senica, OC Branč",
     "Vajnory, Bratislava",
+    "Senica, OC Branč",
     "Trnava, City Aréna"
 ]
 

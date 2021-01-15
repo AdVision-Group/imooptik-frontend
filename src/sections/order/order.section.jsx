@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { UserContext } from '../../context/user/user.context'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
+import { OrdersContext } from '../../context/orders/orders.context'
 import { useParams } from 'react-router-dom'
 
 import InputRow from '../../components/product-input-row/product-input-row.component'
@@ -33,57 +34,6 @@ import {
 const OrderSection = () => {
     const { userId } = useParams()
     const [searchQuery, setSearchQuery] = useState('')
-    const [productsToOrder, setProductsToOrder] = useState([])
-    const [allProducts, setAllProducts] = useState([])
-    const [selectedProduct, setSelectedProduct] = useState(null)
-    const [selectedLenses, setSelectedLenses] = useState(null)
-    const [combinedProduct, setCombinedProduct] = useState({
-        lenses: {
-            diopters: [
-                2,
-                2
-            ],
-            distance: [
-                0,
-                0
-            ],
-            cylinder: [
-                0,
-                0
-            ],
-            cylinderAxes: [
-                0,
-                0
-            ]
-        },
-        // "_id": "5ff46112adf1801b447ff3cd",
-        product: "",
-        lens: "",
-        price: 2220,
-        // "__v": 0
-    })
-
-    const steps = [
-        'eshop',
-        'lenses',
-        'diopters',
-        'summary'
-    ]
-
-    const paymentOptions = [
-        {
-            name: "Hotovosť"
-        },
-        {
-            name: "Karta"
-        },
-        {
-            name: "Záloha"
-        }
-    ]
-    const [selectedPayment, setSelectedPayment] = useState(0)
-
-    const [activeStep, setActiveStep] = useState('eshop')
 
     const {
         closeModal,
@@ -93,8 +43,10 @@ const OrderSection = () => {
     } = useContext(LoadingModalContext)
 
     const {
+        users,
         user,
         getUser,
+        getUsers,
         handleChange
     } = useContext(UserContext)
 
@@ -105,44 +57,30 @@ const OrderSection = () => {
         lensesArr
     } = useContext(WarehouseContext)
 
-    const handleChangeStep = (idx) => {
-        setActiveStep(steps[idx])
-    }
+    const {
+        paymentOptions,
+        steps,
+        activeStep,
+        handleChangePayment,
+        handleChangeStep,
+        selectedPayment,
+        deposit,
+        setDeposit,
+        handleSelectLenses,
+        handleSelectProduct,
+        combinedProduct,
+        selectedLenses,
+        selectedProduct,
+        productsToOrder,
+        handleRemoveProduct,
+        handleParameterChange
+    } = useContext(OrdersContext)
 
-    const handleChangePayment = (e, idx) => {
-        e.preventDefault()
-        setSelectedPayment(idx)
-    }
-
-    const handleClick = (e, productToAdd) => {
-        e.preventDefault()
-        // setProductsToOrder([
-        //     ...productsToOrder,
-        //     productToAdd
-        // ])
-        setSelectedProduct(productToAdd)
-        setCombinedProduct({
-            ...combinedProduct,
-            product: productToAdd._id
-        })
-        setActiveStep(steps[1])
-    }
-
-    const handleSelectLenses = (e, lensesToAdd) => {
-        console.log(lensesToAdd)
-        e.preventDefault()
-        setSelectedLenses(lensesToAdd)
-        setCombinedProduct({
-            ...combinedProduct,
-            lens: lensesToAdd._id
-        })
-        setActiveStep(steps[2])
-    }
-
-    const handleRemoveProduct = (e, productToRemove, idx) => {
-        e.preventDefault()
-        setProductsToOrder(productsToOrder.filter((product, index) => index !== idx))
-    }
+    useEffect(() => {
+        if (!users) {
+            getUsers()
+        }
+    }, [users])
 
     useEffect(() => {
         getUser(userId)
@@ -152,40 +90,34 @@ const OrderSection = () => {
         if (!lensesArr) {
             getLenses()
         }
-    }, [])
+    }, [products, lensesArr])
 
-    useEffect(() => {
-        if (products) {
-            setAllProducts([
-                ...products,
-            ])
-        }
-    }, [products])
+    console.log(users)
 
-    const fuse = new Fuse(allProducts, {
+    // useEffect(() => {
+    //     const results = fuse.search(searchQuery)
+    //     if (results.length > 0) {
+    //         setAllProducts(results.map(result => result.item))
+    //     }
+    //     if (!searchQuery) {
+    //         if (products) {
+    //             setAllProducts([
+    //                 ...products,
+    //             ])
+    //         }
+
+    //     }
+    // }, [searchQuery])
+
+    if (!user._id || showModal || !products || !lensesArr) return <Popup loading={isLoading} title={message} close={closeModal} />
+
+    const fuse = new Fuse(products, {
         keys: [
             'name',
             'brand',
             'description'
         ]
     })
-
-    useEffect(() => {
-        const results = fuse.search(searchQuery)
-        if (results.length > 0) {
-            setAllProducts(results.map(result => result.item))
-        }
-        if (!searchQuery) {
-            if (products) {
-                setAllProducts([
-                    ...products,
-                ])
-            }
-
-        }
-    }, [searchQuery])
-
-    if (!user._id || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
 
     return (
         <section>
@@ -201,19 +133,6 @@ const OrderSection = () => {
                 <Container>
                     <h2>Informácie o zákazníkovovi</h2>
                     <InputRow
-                        label="Identifikačné číslo zákaznika"
-                        example=''
-                    >
-                        <CustomInput
-                            label="ID zákaznika*"
-                            type='text'
-                            name='id'
-                            value={user._id}
-                            handleChange={(e) => handleChange(e)}
-                            required
-                        />
-                    </InputRow>
-                    <InputRow
                         label="Meno a priezvisko zákaznika"
                         example=''
                     >
@@ -224,7 +143,33 @@ const OrderSection = () => {
                             value={user.name}
                             handleChange={(e) => handleChange(e)}
                             required
+                            list={'userNames'}
                         />
+                        <datalist id="userNames">
+                            {users.map(user => (
+                                <option key={user._id} value={user.name} />
+                            ))}
+                        </datalist>
+                    </InputRow>
+                    <InputRow
+                        label="Identifikačné číslo zákaznika"
+                        example=''
+                    >
+                        <CustomInput
+                            label="email zákaznika*"
+                            type='email'
+                            name='email'
+                            value={user.email}
+                            handleChange={(e) => handleChange(e)}
+                            required
+                            list={'userEmails'}
+
+                        />
+                        <datalist id="userEmails">
+                            {users.map(user => (
+                                <option key={user._id} value={user.email} />
+                            ))}
+                        </datalist>
                     </InputRow>
                 </Container>
                 <Container>
@@ -235,6 +180,19 @@ const OrderSection = () => {
                         activeIndex={selectedPayment}
                         handleClick={handleChangePayment}
                     />
+                    {selectedPayment === 2 && <InputRow
+                        label="Výška zálohy"
+                        example=''
+                    >
+                        <CustomInput
+                            label="Záloha*"
+                            type='number'
+                            name='deposit'
+                            value={deposit.toString()}
+                            handleChange={(e) => setDeposit(e.target.value)}
+                            required
+                        />
+                    </InputRow>}
                 </Container>
                 <Container>
                     <SearchContainer>
@@ -247,7 +205,6 @@ const OrderSection = () => {
                                 <div>Žiadné produkty</div>
                             )}
                     </ProductContainer>
-                    <AddProductButton>Pridať produkt</AddProductButton>
                 </Container>
 
 
@@ -256,8 +213,8 @@ const OrderSection = () => {
                         <EshopSubSecton
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
-                            allProducts={allProducts}
-                            handleClick={handleClick}
+                            allProducts={products}
+                            handleClick={handleSelectProduct}
                         />
                     ) : activeStep === steps[1] ? (
                         <LensesSubSection
@@ -269,6 +226,7 @@ const OrderSection = () => {
                         <DioptersSubSection
                             handleChangeStep={handleChangeStep}
                             combinedProduct={combinedProduct}
+                            handleParameterChange={handleParameterChange}
                         />
                     ) : (
                                     <SummarySubSection

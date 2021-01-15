@@ -61,7 +61,7 @@ export const patchUser = (token, user) => {
         premises: Number(premises) === 0 ? undefined : premises,
         city: city || undefined,
         country: country || undefined,
-        email: email,
+        // email: email || undefined,
         lenses: {
             cylinder: cylinder,
             cylinderAxes: cylinderAxes,

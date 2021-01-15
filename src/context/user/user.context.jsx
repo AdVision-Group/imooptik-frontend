@@ -66,17 +66,17 @@ const UserProvider = ({ children }) => {
         },
         {
             id: 1,
-            name: "Zamestnanci 1",
+            name: "Zamestnanci",
             filter: 1,
         },
         {
             id: 2,
-            name: "Zamestnanci 2",
+            name: "Vedúci",
             filter: 2,
         },
         {
             id: 3,
-            name: "Admin 3",
+            name: "Velký brat",
             filter: 3,
         }
     ]

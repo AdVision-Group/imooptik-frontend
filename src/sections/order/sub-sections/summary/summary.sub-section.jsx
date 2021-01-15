@@ -1,20 +1,23 @@
 import React from 'react'
 
 import OrderProductOverview from '../../../../components/order-product-overview/order-product-overview.component'
+import { FaLessThan } from 'react-icons/fa'
+
 
 import {
-    AddProductButton
+    AddProductButton,
+    BackButton
 } from '../../order.styles'
 
 const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, combinedProduct, handleRemoveProduct }) => {
     return (
         <React.Fragment>
-            <button onClick={() => handleChangeStep(2)}>Back</button>
+            <BackButton onClick={() => handleChangeStep(2)}><FaLessThan /></BackButton>
             <h1>Summary</h1>
             <h2>Produkt</h2>
-            <OrderProductOverview product={selectedProduct} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedProduct)} />
+            {selectedProduct && <OrderProductOverview product={selectedProduct} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedProduct)} />}
             <h2>Šošovky</h2>
-            <OrderProductOverview product={selectedLenses} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedLenses)} />
+            {selectedLenses && <OrderProductOverview product={selectedLenses} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedLenses)} />}
             <h2>Parametre</h2>
             <div>
                 <h3>Dioptrie</h3>
@@ -24,7 +27,7 @@ const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, 
                 </div>
                 <div>
                     <p>Pravé oko</p>
-                    <p>{combinedProduct.lenses.diopters[0]}</p>
+                    <p>{combinedProduct.lenses.diopters[1]}</p>
                 </div>
             </div>
             <div>
@@ -35,7 +38,7 @@ const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, 
                 </div>
                 <div>
                     <p>Pravé oko</p>
-                    <p>{combinedProduct.lenses.distance[0]}</p>
+                    <p>{combinedProduct.lenses.distance[1]}</p>
                 </div>
             </div>
 
@@ -47,7 +50,7 @@ const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, 
                 </div>
                 <div>
                     <p>Pravé oko</p>
-                    <p>{combinedProduct.lenses.cylinder[0]}</p>
+                    <p>{combinedProduct.lenses.cylinder[1]}</p>
                 </div>
             </div>
 
@@ -59,7 +62,7 @@ const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, 
                 </div>
                 <div>
                     <p>Pravé oko</p>
-                    <p>{combinedProduct.lenses.cylinderAxes[0]}</p>
+                    <p>{combinedProduct.lenses.cylinderAxes[1]}</p>
                 </div>
             </div>
 

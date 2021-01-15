@@ -2,16 +2,19 @@ import React from 'react'
 
 import OrderProductOverview from '../../../../components/order-product-overview/order-product-overview.component'
 
+import { FaLessThan } from 'react-icons/fa'
+
 import {
-    ProductContainer
+    ProductContainer,
+    BackButton
 } from '../../order.styles'
 
 const LensesSubSection = ({ handleChangeStep, lenses, handleSelectLenses }) => {
     return (
         <React.Fragment>
-            <button onClick={() => handleChangeStep(0)}>Back</button>
             <h1>LENSES PRODUCTS</h1>
 
+            <BackButton onClick={() => handleChangeStep(0)}><FaLessThan /></BackButton>
             <ProductContainer>
                 {
                     lenses.map((product, idx) => (
