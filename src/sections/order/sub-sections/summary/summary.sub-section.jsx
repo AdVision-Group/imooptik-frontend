@@ -19,9 +19,9 @@ const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, 
             <BackButton onClick={() => handleChangeStep(2)}><FaLessThan /></BackButton>
             <Title>Prehľad produktu</Title>
             <SubTitle>Produkt</SubTitle>
-            {selectedProduct && <OrderProductOverview product={selectedProduct} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedProduct)} />}
+            {selectedProduct && <OrderProductOverview product={selectedProduct} />}
             <SubTitle>Šošovky</SubTitle>
-            {selectedLenses && <OrderProductOverview product={selectedLenses} handleRemoveProduct={(e) => handleRemoveProduct(e, selectedLenses)} />}
+            {selectedLenses && <OrderProductOverview product={selectedLenses} />}
             <SummaryParametersContainer>
 
                 <SummaryParameterCol>

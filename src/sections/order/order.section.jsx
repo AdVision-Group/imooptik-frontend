@@ -170,7 +170,7 @@ const OrderSection = () => {
             </Header>
             <ScrollContainer>
                 <Container>
-                    <h2>Informácie o zákazníkovovi</h2>
+                    <h2>Informácie o zákazníkovi</h2>
                     <InputRow
                         label="Meno a priezvisko zákaznika"
                         example=''
@@ -283,14 +283,14 @@ const OrderSection = () => {
                     <h2>Zľavový kupón</h2>
                     <InputRow
                         label=""
-                        example=''
+                        example='napr: 50OFF'
                     >
                         <CustomInput
                             label="Kód"
                             type='text'
                             name='coupon'
                             value={coupon}
-                            handleChange={(e) => setCoupon(e.terget.value)}
+                            handleChange={(e) => setCoupon(e.target.value)}
                         />
                     </InputRow>
                 </Container>

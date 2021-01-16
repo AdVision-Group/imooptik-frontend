@@ -16,7 +16,7 @@ import {
 import { brands, retailNames } from '../../context/warehouse/warehouse.utils'
 
 
-const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange, handleAvailableChange, categories, handleCategoryChange, activeCategoryIndex }) => {
+const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange, handleAvailableChange, categories, handleCategoryChange, activeCategoryIndex, lensesParameters, handleParameterChange }) => {
 
     return (
         <React.Fragment>
@@ -118,7 +118,64 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
                     </div>
                 </TextareaRow>
 
-
+                {
+                    product.type === 4 && (
+                        <React.Fragment>
+                            <h3>Parametre</h3>
+                            <ProductInputRow
+                                label={`Dioptrie`}
+                                example="napr: 0"
+                            >
+                                <CustomInput
+                                    label={"minimum"}
+                                    type='number'
+                                    name='diopters'
+                                    value={lensesParameters.diopters[0].toString()}
+                                    handleChange={e => handleParameterChange(e, 0)}
+                                />
+                            </ProductInputRow>
+                            <ProductInputRow
+                                label={`Dioptrie`}
+                                example="napr: 0"
+                            >
+                                <CustomInput
+                                    label={"maximum"}
+                                    type='number'
+                                    value={""}
+                                    name='diopters'
+                                    value={lensesParameters.diopters[1].toString()}
+                                    handleChange={e => handleParameterChange(e, 1)}
+                                />
+                            </ProductInputRow>
+                            <ProductInputRow
+                                label={``}
+                                example="napr: 8.5"
+                            >
+                                <CustomInput
+                                    label={"Zakrivenie"}
+                                    type='number'
+                                    value={""}
+                                    name='curvature'
+                                    value={lensesParameters.curvature.toString()}
+                                // handleChange={e => handleLensesDioptersRangeChange(e, idx)}
+                                />
+                            </ProductInputRow>
+                            <ProductInputRow
+                                label={``}
+                                example="napr: 14"
+                            >
+                                <CustomInput
+                                    label={"Priemer"}
+                                    type='number'
+                                    value={""}
+                                    name="average"
+                                    value={lensesParameters.average.toString()}
+                                // handleChange={e => handleLensesDioptersRangeChange(e, idx)}
+                                />
+                            </ProductInputRow>
+                        </React.Fragment>
+                    )
+                }
 
                 {
                     !(product.type === 5 || product.type === 4) && (

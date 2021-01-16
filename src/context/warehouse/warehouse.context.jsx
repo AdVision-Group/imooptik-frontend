@@ -56,7 +56,9 @@ export const WarehouseContext = createContext({
     getLenses: () => { },
     getSigleLenses: () => { },
     updateLenses: () => { },
-    deleteLenses: () => { }
+    deleteLenses: () => { },
+    lensesParameters: {},
+    handleParameterChange: () => { }
 })
 
 
@@ -94,6 +96,22 @@ const WarehouseProvider = ({ children }) => {
 
     const [lenses, setLenses] = useState(initLensesObj)
     const [lensesArr, setLensesArr] = useState(null)
+
+    const [lensesParameters, setLensesParameters] = useState({
+        diopters: [0, 0],
+        curvature: 0,
+        average: 0
+    })
+
+    const handleParameterChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = lensesParameters.lenses[name]
+        arr[idx] = Number(value)
+        setLensesParameters({
+            ...lensesParameters,
+            [name]: arr
+        })
+    }
 
     // ------------------------
     // PRODUCT ACTIONS
@@ -554,7 +572,9 @@ const WarehouseProvider = ({ children }) => {
                 getLenses,
                 getSigleLenses,
                 updateLenses,
-                deleteLenses
+                deleteLenses,
+                lensesParameters,
+                handleParameterChange,
             }}
         >
             {children}

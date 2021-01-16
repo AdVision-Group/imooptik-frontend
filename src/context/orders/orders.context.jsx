@@ -87,6 +87,7 @@ const OrdersProvider = ({ children }) => {
     }
 
 
+
     const handleChangeSelectedUser = (e) => {
         const { name, value } = e.target
         setIsSearchingUser(true)
@@ -133,7 +134,6 @@ const OrdersProvider = ({ children }) => {
     }
 
     const handleSelectLenses = (e, lensesToAdd) => {
-        console.log(lensesToAdd)
         e.preventDefault()
         setSelectedLenses(lensesToAdd)
         setCombinedProduct({
@@ -160,6 +160,23 @@ const OrdersProvider = ({ children }) => {
                 ...combinedProduct.lenses,
                 [name]: arr
             }
+        })
+    }
+
+
+    const resetInput = () => {
+        setSelectedLenses(null)
+        setSelectedProduct(null)
+        setActiveStep('eshop')
+        setCombinedProduct(initCombinedProductObj)
+        setSelectedPayment(0)
+        setDeposit(0)
+        setCoupon('')
+        setOverWrite({
+            address: '',
+            psc: '',
+            city: '',
+            country: ''
         })
     }
 
@@ -192,8 +209,10 @@ const OrdersProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+        console.log(paymentOptions[selectedPayment].name)
+
         try {
-            const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite)
+            const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite, coupon, deposit, paymentOptions[selectedPayment].name)
             const data = await response.json()
 
             console.log(data)
@@ -227,7 +246,7 @@ const OrdersProvider = ({ children }) => {
                     ...productsToOrder,
                     data.combinedProduct
                 ])
-
+                resetInput()
                 setIsLoading(false)
                 closeModal()
                 return

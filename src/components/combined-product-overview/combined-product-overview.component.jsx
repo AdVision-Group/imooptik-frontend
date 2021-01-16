@@ -1,32 +1,41 @@
 import React from 'react'
 
 import {
-    CombinedProductContainer
+    CombinedProductContainer,
+    ProductsContainer,
+    PriceContainer,
+    ParametersContainer,
+    RemoveButton,
 } from './combined-product-overview.styles'
 
 const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
-    console.log(product)
 
     return (
         <CombinedProductContainer>
-            <div>
-                <button onClick={handleRemoveProduct}>
-                    Vymazat
-                </button>
-            </div>
-            <div>
-                <h3>ID Okuliarov</h3>
-                <p>{product.product}</p>
-            </div>
-            <div>
-                <h3>ID šošoviek</h3>
-                <p>{product.lens}</p>
-            </div>
-            <div>
-                <h3>Cena</h3>
-                <p>{(product.price / 100).toFixed(2)}€</p>
-            </div>
-            <div>
+            <ProductsContainer>
+                <div>
+                    <h3>ID Okuliarov</h3>
+                    <p>{product.product}</p>
+                </div>
+                <div>
+                    <h3>ID šošoviek</h3>
+                    <p>{product.lens}</p>
+                </div>
+            </ProductsContainer>
+            <PriceContainer>
+                <div>
+                    <RemoveButton onClick={handleRemoveProduct}>
+                        Vymazat
+                    </RemoveButton>
+                </div>
+
+                <div>
+                    <h3>Cena</h3>
+                    <p>{(product.price / 100).toFixed(2)}€</p>
+                </div>
+
+            </PriceContainer>
+            <ParametersContainer>
 
                 <div>
                     <h3>Parametre</h3>
@@ -75,7 +84,7 @@ const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
                         <p>{product.lenses.cylinderAxes[1]}</p>
                     </div>
                 </div>
-            </div>
+            </ParametersContainer>
         </CombinedProductContainer>
     )
 }

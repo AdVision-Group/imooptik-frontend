@@ -10,6 +10,7 @@ import {
     Options,
     UpdateButton,
     DeleteButton,
+    PriceContainer
 } from './product-overview.styles'
 
 const ProductOverview = (props) => {
@@ -24,9 +25,13 @@ const ProductOverview = (props) => {
             <ProductContent>
                 <h2>{name}</h2>
                 <ProductId>{id}</ProductId>
-                <StockInfo>{stock != null ? `Na sklade ${stock} kusov` : "Šošovka"}</StockInfo>
-                <Price>{price}€</Price>
+
             </ProductContent>
+
+            <PriceContainer>
+                <Price>{price}€</Price>
+                <StockInfo>{stock != null ? `Na sklade ${stock} kusov` : "Šošovka"}</StockInfo>
+            </PriceContainer>
 
             <Options>
                 <UpdateButton onClick={handleUpdateButton}>

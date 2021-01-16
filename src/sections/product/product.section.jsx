@@ -55,7 +55,9 @@ const ProductSection = () => {
         deleteLenses,
         getSingleProduct,
         handleChange,
-        handleSpecsChange
+        handleSpecsChange,
+        lensesParameters,
+        handleParameterChange
     } = warData
 
     const {
@@ -155,6 +157,8 @@ const ProductSection = () => {
                         handleSpecsChange={handleSpecsChange}
                         handleCategoryChange={handleCategoryChange}
                         handleAvailableChange={handleAvailableChange}
+                        lensesParameters={lensesParameters}
+                        handleParameterChange={handleParameterChange}
                     />
                 ) : (
                         <ProductLensesForm

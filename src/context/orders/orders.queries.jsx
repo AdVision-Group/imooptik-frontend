@@ -12,7 +12,7 @@ export const fetchOrders = (token) => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders`, requestOptions)
 }
 
-export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite) => {
+export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite, coupon, deposit, paymentOption) => {
     const {
         user,
         combinedProducts
@@ -28,8 +28,13 @@ export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite) => {
     const raw = JSON.stringify({
         user: user._id,
         combinedProducts: combinedProducts.map(product => product._id),
-        overwrite: isDifferentAddress ? overwrite : undefined
+        overwrite: isDifferentAddress ? overwrite : undefined,
+        coupon: coupon === "" ? undefined : coupon,
+        deposit: deposit > 0 ? deposit : undefined,
+        // paymentOption: paymentOption || undefined
     })
+
+    console.log(raw)
 
     const requestOptions = {
         method: 'POST',
@@ -66,7 +71,7 @@ export const postCombinedProduct = (combinedProductToAdd) => {
         },
         // "_id": "5ff46112adf1801b447ff3cd",
         product: product,
-        lens: lens,
+        lens: lens || undefined,
         // price: price,
         // "__v": 0
     })
