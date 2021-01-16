@@ -1,12 +1,11 @@
 import React from 'react'
 
 import OrderProductOverview from '../../../../components/order-product-overview/order-product-overview.component'
-import { FaLessThan } from 'react-icons/fa'
-
+import OrderLensesOverview from '../../../../components/order-lenses-overview/order-lenses-overview.component'
+import CustomBackButton from '../../../../components/custom-back-button/custom-back-button.component'
 
 import {
     AddProductButton,
-    BackButton,
     Title,
     SummaryParametersContainer,
     SummaryParameterCol,
@@ -16,12 +15,12 @@ import {
 const SummarySubSection = ({ handleChangeStep, selectedProduct, selectedLenses, combinedProduct, handleRemoveProduct, createCombinedProduct }) => {
     return (
         <React.Fragment>
-            <BackButton onClick={() => handleChangeStep(2)}><FaLessThan /></BackButton>
+            <CustomBackButton onClick={() => handleChangeStep(2)} />
             <Title>Prehľad produktu</Title>
             <SubTitle>Produkt</SubTitle>
             {selectedProduct && <OrderProductOverview product={selectedProduct} />}
             <SubTitle>Šošovky</SubTitle>
-            {selectedLenses && <OrderProductOverview product={selectedLenses} />}
+            {selectedLenses && <OrderLensesOverview product={selectedLenses} />}
             <SummaryParametersContainer>
 
                 <SummaryParameterCol>

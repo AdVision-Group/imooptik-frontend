@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../../context/auth/auth.context'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import { ImageContext } from '../../context/image/image.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -25,7 +26,7 @@ import {
 
 const ProductSection = () => {
     const [showImageModal, setImageModal] = useState(false)
-
+    const { currentUser } = useContext(AuthContext)
     const { id } = useParams()
     const warData = useContext(WarehouseContext)
     const {
@@ -159,6 +160,7 @@ const ProductSection = () => {
                         handleAvailableChange={handleAvailableChange}
                         lensesParameters={lensesParameters}
                         handleParameterChange={handleParameterChange}
+                        currentUser={currentUser}
                     />
                 ) : (
                         <ProductLensesForm

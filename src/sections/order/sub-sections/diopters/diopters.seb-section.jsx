@@ -1,13 +1,9 @@
 import React from 'react'
 
 import CustomInput from '../../../../components/custom-input/custom-input.component'
+import CustomBackButton from '../../../../components/custom-back-button/custom-back-button.component'
 
 import {
-    FaLessThan
-} from 'react-icons/fa'
-
-import {
-    BackButton,
     Title,
     ParametersContainer,
     NextButton
@@ -16,7 +12,7 @@ import {
 const DioptersSubSection = ({ handleChangeStep, combinedProduct, handleParameterChange }) => {
     return (
         <React.Fragment>
-            <BackButton onClick={() => handleChangeStep(1)}><FaLessThan /></BackButton>
+            <CustomBackButton onClick={() => handleChangeStep(1)} />
             <Title>Parametre</Title>
 
             <ParametersContainer>

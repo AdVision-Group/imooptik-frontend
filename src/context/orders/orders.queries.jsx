@@ -29,7 +29,7 @@ export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite, coup
         user: user._id,
         combinedProducts: combinedProducts.map(product => product._id),
         overwrite: isDifferentAddress ? overwrite : undefined,
-        coupon: coupon === "" ? undefined : coupon,
+        coupon: coupon === "" ? undefined : Number(coupon),
         deposit: deposit > 0 ? deposit : undefined,
         // paymentOption: paymentOption || undefined
     })

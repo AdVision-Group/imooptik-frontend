@@ -149,24 +149,17 @@ export const postProduct = (token, newProduct) => {
         imagePath
     } = newProduct
 
-
-    console.log(imagePath)
-
-    // let newArr = []
-
-    // if (Array.isArray(available)) {
-    //     newArr = available.map(num => Number(num))
-    // }
-
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
     let raw = {}
 
+    console.log(available)
+
     if (type === 4 || type === 5) {
         raw = JSON.stringify({
-            available,
+            available: available.length > 1 ? [...available, 0] : available[0],
             brand: brand || " ",
             colorCode: colorCode || " ",
             // colorName,
@@ -187,7 +180,7 @@ export const postProduct = (token, newProduct) => {
         })
     } else {
         raw = JSON.stringify({
-            available,
+            available: available.length > 1 ? [...available, 0] : available[0],
             brand: brand || " ",
             colorCode: colorCode || " ",
             // colorName,
@@ -249,10 +242,9 @@ export const patchProduct = (token, product) => {
 
     let raw = {}
 
-
     if (type === 4 || type === 5) {
         raw = JSON.stringify({
-            available,
+            available: available.length > 1 ? [...available, 0] : available[0],
             brand: brand || " ",
             colorCode: colorCode || " ",
             // colorName,
@@ -273,7 +265,7 @@ export const patchProduct = (token, product) => {
         })
     } else {
         raw = JSON.stringify({
-            available,
+            available: available.length > 1 ? [...available, 0] : available[0],
             brand: brand || " ",
             colorCode: colorCode || " ",
             // colorName,

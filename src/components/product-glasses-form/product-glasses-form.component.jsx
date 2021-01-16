@@ -16,7 +16,19 @@ import {
 import { brands, retailNames } from '../../context/warehouse/warehouse.utils'
 
 
-const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpecsChange, handleAvailableChange, categories, handleCategoryChange, activeCategoryIndex, lensesParameters, handleParameterChange }) => {
+const ProductGlassesForm = ({
+    product,
+    handleChange,
+    handleSizeChange,
+    handleSpecsChange,
+    handleAvailableChange,
+    categories,
+    handleCategoryChange,
+    activeCategoryIndex,
+    lensesParameters,
+    handleParameterChange,
+    currentUser
+}) => {
 
     return (
         <React.Fragment>
@@ -198,8 +210,9 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
                                 example=""
                             >
                                 <CustomSelect name='sex' value={product.specs.sex} onChange={e => handleSpecsChange(e)}>
-                                    <option value='M'>Muži</option>
-                                    <option value='W'>Ženy</option>
+                                    <option value='M'>Pánske</option>
+                                    <option value='W'>Dámske</option>
+                                    <option value='D'>Detské</option>
                                     <option value='U'>Nezáleží</option>
                                 </CustomSelect>
                             </ProductInputRow>
@@ -278,7 +291,6 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
 
                 <Title>Skladové zásoby</Title>
                 {product && product.available.map((value, idx) => {
-                    if (product.available.length - 1 === idx) return
 
                     return (
                         <ProductInputRow
@@ -287,7 +299,7 @@ const ProductGlassesForm = ({ product, handleChange, handleSizeChange, handleSpe
                             example="napr: 0"
                         >
                             <CustomInput
-                                label={retailNames[idx]}
+                                label={currentUser.admin === 1 ? retailNames[currentUser.premises - 1] : retailNames[idx]}
                                 type='number'
                                 // name={store.name}
                                 value={value.toString()}

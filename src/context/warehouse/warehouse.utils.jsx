@@ -13,7 +13,7 @@ export const initProductObj = {
     //kolko sa ich zatial predalo
     soldAmount: 0,
     //kolko je kusov na ktorej prevádzke [arr] 
-    available: [0, 0, 0, 0, 0],
+    available: [0],
     //ean kod = unikatny kod ktory ma kazdy produkt
     eanCode: "",
     //farebny kod, ktory spolu s ean kodom tvori "identitu" produktu. Moze existovat viacero

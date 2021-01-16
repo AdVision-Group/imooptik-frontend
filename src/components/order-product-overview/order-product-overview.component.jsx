@@ -9,7 +9,6 @@ import {
 
 const OrderProductOverview = ({ product, handleClick, handleRemoveProduct }) => {
     const { image, name, price, eanCode } = product
-    console.log(product)
 
     return (
         <ProductContainer>

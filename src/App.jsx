@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, Suspense, lazy } from 'react'
 import { AuthContext } from './context/auth/auth.context'
 import { GlobalStyles } from './global.styles'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up'
-import DashboardPage from './pages/dashboard/dashboard'
-import ResetPasswordPage from './pages/reset-password/reset-password'
+import Popup from './components/popup/pop-up.component'
+
+const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up'))
+const DashboardPage = lazy(() => import('./pages/dashboard/dashboard'))
+const ResetPasswordPage = lazy(() => import('./pages/reset-password/reset-password'))
 
 const App = () => {
   console.log("RENDER APP")
@@ -14,14 +16,16 @@ const App = () => {
   return (
     <React.Fragment>
       <GlobalStyles />
-      <HashRouter basename='/'>
-        <Switch>
-          <Route path='/prihlasenie' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
-          <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='/prihlasenie' />} />
-          <Route path='/reset/:token' component={ResetPasswordPage} />
-          {currentUser ? <Redirect to='/dashboard/obchod' /> : <Redirect to='/prihlasenie' />}
-        </Switch>
-      </HashRouter>
+      <Suspense fallback={<Popup loading={true} />}>
+        <HashRouter basename='/'>
+          <Switch>
+            <Route path='/prihlasenie' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
+            <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='/prihlasenie' />} />
+            <Route path='/reset/:token' component={ResetPasswordPage} />
+            {currentUser ? <Redirect to='/dashboard/obchod' /> : <Redirect to='/prihlasenie' />}
+          </Switch>
+        </HashRouter>
+      </Suspense>
     </React.Fragment>
   );
 }

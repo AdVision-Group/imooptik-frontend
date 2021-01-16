@@ -80,6 +80,8 @@ export const ProductContainer = styled.div`
 `
 
 export const AddProductButton = styled(CustomButton)`
+    display: block;
+    margin-left: auto;
 `
 
 export const SearchContainer = styled.div`
@@ -91,17 +93,6 @@ export const SearchContainer = styled.div`
 
 export const SearchButton = styled(CustomButton)`
 
-`
-
-export const BackButton = styled.div`
-    cursor: pointer;
-    border: 4px solid #000;
-    border-radius: 50%;
-    padding: 1.2rem 1.2rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 3rem;
 `
 
 export const NextButton = styled(CustomButton)`

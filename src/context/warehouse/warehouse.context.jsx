@@ -63,7 +63,7 @@ export const WarehouseContext = createContext({
 
 
 const WarehouseProvider = ({ children }) => {
-    const { token } = useContext(AuthContext)
+    const { token, currentUser } = useContext(AuthContext)
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
     const { setSelectedImage } = useContext(ImageContext)
     const { push } = useHistory()
@@ -89,7 +89,7 @@ const WarehouseProvider = ({ children }) => {
     // ------------------------
 
     const [categories] = useState(productCategories)
-    const [product, setProduct] = useState(initProductObj)
+    const [product, setProduct] = useState(currentUser.admin === 1 ? initProductObj : { ...initProductObj, available: [0, 0, 0, 0] })
     const [products, setProducts] = useState(null)
 
     // ------------------------
@@ -192,7 +192,7 @@ const WarehouseProvider = ({ children }) => {
     }
 
     const resetProduct = () => {
-        setProduct(initProductObj)
+        setProduct(currentUser.admin === 1 ? initProductObj : { ...initProductObj, available: [0, 0, 0, 0] })
         setLenses(initLensesObj)
         setSelectedImage(null)
         setIsUpdating(false)
@@ -280,15 +280,30 @@ const WarehouseProvider = ({ children }) => {
             }
 
             if (data.product) {
-                setProduct({
-                    ...product,
-                    ...data.product,
-                    specs: {
-                        ...product.specs,
-                        ...data.product.specs
-                    },
-                    imagePath: data.product.image._id
-                })
+                if (currentUser.admin === 1) {
+                    setProduct({
+                        ...product,
+                        ...data.product,
+                        specs: {
+                            ...product.specs,
+                            ...data.product.specs
+                        },
+                        imagePath: data.product.image._id,
+                        available: [data.product.available[currentUser.premises - 1]]
+                    })
+                } else {
+                    setProduct({
+                        ...product,
+                        ...data.product,
+                        specs: {
+                            ...product.specs,
+                            ...data.product.specs
+                        },
+                        imagePath: data.product.image._id,
+                        available: data.product.available.filter((num, idx) => idx !== 4)
+
+                    })
+                }
                 setActiveCategoryIndex(data.product.type)
                 setSelectedImage(data.product.image)
                 setIsUpdating(true)
