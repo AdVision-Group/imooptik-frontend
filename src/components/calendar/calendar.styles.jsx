@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(7, 1fr);
     border: 1px solid rgba(0,0,0,.1);
     min-width: 55rem;
 `
@@ -32,5 +33,22 @@ export const Dayblock = styled.div`
         background-color: rgba(0,0,0,.1);
     }
 
-    background-color: ${({ active }) => active ? " rgb(235, 172, 1);" : "unset"}
+`
+
+export const DayRowContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+`
+
+export const BookingContainer = styled.p`
+    background-color: ${({ active }) => active ? " rgb(235, 172, 1)" : "#eee"};
+    color: ${({ active }) => active ? "#fff" : "#000"};
+    border-radius: 50%;
+    font-weight: bolder;
+    padding: .2rem .9rem;
+`
+
+export const DayNumber = styled.p`
+    margin-left: auto
 `

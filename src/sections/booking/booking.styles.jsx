@@ -5,24 +5,6 @@ export const Title = styled.h2`
     margin-bottom: 2rem;
 `
 
-export const ContainerOverview = styled.div`
-    padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
-
-    &:not(:last-child) {
-        /* margin-right: 2rem; */
-    }
-
-    h3  { 
-        font-size: 1.8rem;
-    }
-
-    p {
-        font-size: 1.4rem;
-        color: gray;
-    }
-`
-
 export const GridRow = styled.div`
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(25rem, 1fr) );
@@ -30,12 +12,6 @@ export const GridRow = styled.div`
     grid-gap: 2rem;
 `
 
-export const UpdateButton = styled(CustomButton)`
-    margin-top: 2rem;
-    font-size: 1.4rem;
-    display: block;
-    margin-left: auto;
-`
 
 export const CalendarGridContainer = styled.div`
     margin-top: 3rem;
