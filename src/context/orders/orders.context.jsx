@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
@@ -9,7 +10,8 @@ import { initUserObj } from '../user/user.utils'
 import {
     fetchOrders,
     postOrder,
-    postCombinedProduct
+    postCombinedProduct,
+    fetchUserOrder
 } from './orders.queries'
 
 export const OrdersContext = createContext({
@@ -44,9 +46,15 @@ export const OrdersContext = createContext({
     handleParameterChange: () => { },
     createOrder: () => { },
     createCombinedProduct: () => { },
+    getUserOrder: () => { },
+    isUpdating: false,
+    status: '',
+    orderPremises: 0,
+    resetOrder: () => { },
 })
 
 const OrdersProvider = ({ children }) => {
+    const { push } = useHistory()
     const { token } = useContext(AuthContext)
     const {
         getMessage,
@@ -54,6 +62,10 @@ const OrdersProvider = ({ children }) => {
         setShowModal,
         closeModal
     } = useContext(LoadingModalContext)
+
+    const [isUpdating, setIsUpdating] = useState(false)
+    const [status, setStatus] = useState('')
+    const [orderPremises, setOrderPremises] = useState(0)
 
     const [orders, setOrders] = useState(null)
     const [productsToOrder, setProductsToOrder] = useState([])
@@ -99,8 +111,8 @@ const OrdersProvider = ({ children }) => {
 
 
     const handleSelectUser = (user) => {
+        console.log(user)
         setSelectedUser({
-            ...selectedUser,
             ...user
         })
         setIsSearchingUser(false)
@@ -164,6 +176,12 @@ const OrdersProvider = ({ children }) => {
     }
 
 
+    const resetOrder = () => {
+        console.log('reset order')
+        setStatus('')
+        setIsUpdating(false)
+    }
+
     const resetInput = () => {
         setSelectedLenses(null)
         setSelectedProduct(null)
@@ -187,6 +205,8 @@ const OrdersProvider = ({ children }) => {
         try {
             const response = await fetchOrders(token)
             const data = await response.json()
+
+            console.log(data)
 
             if (data.orders) {
                 setOrders(data.orders)
@@ -218,7 +238,9 @@ const OrdersProvider = ({ children }) => {
             console.log(data)
 
             if (data.orderId) {
-
+                resetInput()
+                push('/dashboard/objednavky')
+                getOrders()
             }
 
             getMessage(data.message)
@@ -261,6 +283,31 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+    const getUserOrder = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await fetchUserOrder(token, id)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.order) {
+                setIsUpdating(true)
+                setProductsToOrder(data.order.combinedProducts)
+                setStatus(data.order.status)
+                setOrderPremises(data.order.premises)
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <OrdersContext.Provider
             value={{
@@ -295,6 +342,11 @@ const OrdersProvider = ({ children }) => {
                 handleParameterChange,
                 createOrder,
                 createCombinedProduct,
+                getUserOrder,
+                isUpdating,
+                status,
+                orderPremises,
+                resetOrder,
             }}
         >
             {children}

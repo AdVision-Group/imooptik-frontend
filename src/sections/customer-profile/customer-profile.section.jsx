@@ -41,7 +41,7 @@ const CustomerProfile = () => {
         formToShow,
         switchFormButtons,
         toggleUserForm,
-        createUser
+        createUser,
     } = useContext(UserContext)
 
     const handleSubmit = (e) => {
@@ -68,7 +68,6 @@ const CustomerProfile = () => {
             resetUser()
         }
     }, [])
-
 
     return (
         <section>

@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import CustomButton from '../custom-button/custom-button.component'
 
 export const OrderContainer = styled.div`
-    position:relative;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 25rem;
@@ -21,47 +20,34 @@ export const OrderContainer = styled.div`
 `
 
 export const OrderContent = styled.div`
+
     h2 {
         font-size: 1.6rem;
     }
 `
 
-export const OrderId = styled.p`
-    font-size: 1.2rem;
-    color: gray;
-    margin-bottom: 2rem;
-`
-
-export const DateContainer = styled.p`
-    font-size: 1.4rem;
-    /* font-weight: 700; */
-    color: gray;
-    /* margin-bottom: 2rem; */
-`
-
-export const Price = styled.p`
-    font-weight: 700;
-    font-size: 1.8rem;
-`
-
 export const Options = styled.div`
     align-self: end;
     justify-self: end;
-
-    p {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        text-transform: uppercase;
-    }
 `
 
 export const UpdateButton = styled(CustomButton)`
     font-size: 1rem;
-    margin-right: 1rem;
+    margin-left: auto;
+    display:block;
+
 `
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1rem;
     background-color: rgb(235, 172, 1);
+    margin-bottom: 1rem;
+    display:block;
+
+`
+
+export const OrderId = styled.p`
+    font-size: 1.2rem;
+    color: gray;
+    /* margin-bottom: 2rem; */
 `

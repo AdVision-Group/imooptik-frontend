@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
-// import OrderOverview from '../order-overview/order-overview.component'
+import ProfileOrderOverview from '../profile-order-overview/profile-order-overview.component'
 
 import {
     retailNames
@@ -269,13 +269,15 @@ const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChang
                 </OrderHeader>
 
                 <div>
-                    <p>Žiadné objednávky</p>
-                    {/* <OrderOverview
-                        name='Product name'
-                        id='[Product ID]'
-                        date='28. November 2020'
-                        totalPrice='99.99'
-                    /> */}
+                    {user.orders.length > 0 ? user.orders.map((order, idx) => (
+                        <ProfileOrderOverview
+                            key={idx}
+                            id={order}
+                        />
+                    )) : (
+                            <p>Žiadné objednávky</p>
+                        )}
+
 
                 </div>
             </div>}

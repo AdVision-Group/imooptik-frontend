@@ -5,27 +5,30 @@ import {
     OrderContent,
     Options,
     OrderId,
-    Date,
+    DateContainer,
     DeleteButton,
     Price,
     UpdateButton
 } from './order-overview.styles'
 
-const OrderOverview = (props) => {
-    const { name, id, date, totalPrice } = props
+const OrderOverview = ({ order, handleUpdateClick }) => {
+    const { _id, date, status } = order
+
+    const d = new Date(date)
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     return (
         <OrderContainer>
 
             <OrderContent>
-                <h2>{name}</h2>
-                <OrderId>{id}</OrderId>
-                <Date>{date}</Date>
-                <Price>{totalPrice}€</Price>
+                <h2>ID objednávky</h2>
+                <OrderId>{_id}</OrderId>
+                <DateContainer>{d.toLocaleDateString("sk-SK", options)}</DateContainer>
             </OrderContent>
 
             <Options>
-                <UpdateButton>
+                <p>{status}</p>
+                <UpdateButton onClick={handleUpdateClick}>
                     Upraviť
                 </UpdateButton>
                 <DeleteButton>

@@ -37,12 +37,15 @@ const OrdersSection = () => {
     const [activeIndex, setActiveIndex] = useState(2)
 
     const {
-        getOrders
+        getOrders,
+        orders
     } = useContext(OrdersContext)
 
     useEffect(() => {
         getOrders()
     }, [])
+
+    console.log(orders)
 
     return (
         <section>
@@ -60,14 +63,12 @@ const OrdersSection = () => {
             />
 
             <ScrollContainer>
-                {currentUser.orders.length ?
-                    currentUser.orders.map((order, idx) => (
+                {orders && orders.length ?
+                    orders.map((order, idx) => (
                         <OrderOverview
                             key={idx}
-                            name='Product name'
-                            id='[Product ID]'
-                            date='28. November 2020'
-                            totalPrice='99.99'
+                            order={order}
+                            handleUpdateClick={() => push(`/dashboard/objednavky/${order.orderedBy._id}/${order._id}`)}
                         />
                     )) : (
                         <div>

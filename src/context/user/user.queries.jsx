@@ -1,5 +1,3 @@
-
-
 export const fetchUsers = (token) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);

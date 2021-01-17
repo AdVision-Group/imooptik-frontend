@@ -170,7 +170,7 @@ const EshopSection = () => {
                             price={(product.price / 100).toFixed(2)}
                             image={product.image}
                             handleUpdateButton={() => {
-                                showUpdateForm(product.available ? 0 : 1)
+                                showUpdateForm(product.type ? 0 : 1)
                                 push(`sklad/${product._id}`)
                             }}
                             handleDeleteButton={product.dioptersRange ? () => deleteLenses(product._id) : () => handleProductDelete(product._id)}

@@ -22,6 +22,7 @@ import SummarySubSection from './sub-sections/summary/summary.sub-section'
 
 import Fuse from 'fuse.js'
 
+import { retailNames } from '../../context/warehouse/warehouse.utils'
 
 import {
     Header,
@@ -35,9 +36,11 @@ import {
 } from './order.styles'
 
 const OrderSection = () => {
-    const { userId } = useParams()
+    const { userId, orderId } = useParams()
     const [searchQuery, setSearchQuery] = useState('')
     const [userSearchResult, setUserSearchResult] = useState([])
+
+    console.log(orderId)
 
     const {
         closeModal,
@@ -90,7 +93,12 @@ const OrderSection = () => {
         handleRemoveProduct,
         handleParameterChange,
         createOrder,
-        createCombinedProduct
+        createCombinedProduct,
+        getUserOrder,
+        resetOrder,
+        isUpdating,
+        status,
+        orderPremises
     } = useContext(OrdersContext)
 
     useEffect(() => {
@@ -102,6 +110,9 @@ const OrderSection = () => {
     useEffect(() => {
         if (userId !== 'nova-objednavka') {
             getUser(userId)
+        }
+        if (orderId) {
+            getUserOrder(orderId)
         }
         if (!products) {
             getProducts()
@@ -147,28 +158,31 @@ const OrderSection = () => {
 
     }, [selectedUser.email])
 
+    useEffect(() => {
+        return () => {
+            resetOrder()
+        }
+    }, [])
+
     if (showModal || !products || !lensesArr) return <Popup loading={isLoading} title={message} close={closeModal} />
-
-    console.log("selectedUser")
-    console.log(selectedUser)
-    console.log("selectedUser")
-    console.log("productsToOrder")
-    console.log(productsToOrder)
-    console.log("productsToOrder")
-
-
 
     return (
         <section>
             <Header>
                 <div>
-                    <h1>Pridať objednávku</h1>
+                    <h1>{isUpdating ? "Prehľad objednávky" : "Pridať objednávku"}</h1>
+
                 </div>
                 <div>
-                    <SubmitOrderButton onClick={() => createOrder(selectedUser, productsToOrder)}>Pridať objednávku</SubmitOrderButton>
+                    {!isUpdating && <SubmitOrderButton onClick={() => createOrder(selectedUser, productsToOrder)}>Pridať objednávku</SubmitOrderButton>}
                 </div>
             </Header>
             <ScrollContainer>
+                {isUpdating && <Container>
+                    <h1>Informácie k objednávke</h1>
+                    <p>Status: {status}</p>
+                    <p>Vybavuje: {retailNames[orderPremises]}</p>
+                </Container>}
                 <Container>
                     <h2>Informácie o zákazníkovi</h2>
                     <InputRow
@@ -216,7 +230,7 @@ const OrderSection = () => {
                         <div>
                             <p>{selectedUser.name}</p>
                             <p>{selectedUser.address}</p>
-                            <p>{`${selectedUser.psc} ${selectedUser.city}`}</p>
+                            {selectedUser.psc && selectedUser.city && <p>{`${selectedUser.psc} ${selectedUser.city}`}</p>}
                             <p>{selectedUser.country}</p>
                         </div>
                         <CustomCheckBox
@@ -330,7 +344,7 @@ const OrderSection = () => {
                 </Container>
 
 
-                <Container>
+                {!isUpdating && <Container>
                     {activeStep === steps[0] ? (
                         <EshopSubSecton
                             searchQuery={searchQuery}
@@ -361,7 +375,7 @@ const OrderSection = () => {
                                     />
                                 )}
 
-                </Container>
+                </Container>}
 
             </ScrollContainer>
         </section>

@@ -104,6 +104,10 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (id !== "novy-produkt") {
+
+            console.log("formToShow")
+            console.log(formToShow)
+            console.log("formToShow")
             if (formToShow === 0) {
                 getSingleProduct(id)
             } else {

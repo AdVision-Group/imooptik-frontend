@@ -116,7 +116,7 @@ const Dashboard = () => {
                                     <OrdersSection />
                                 </OrdersProvider>
                             )} />
-                            <Route path={`${match.path}/objednavky/:userId`} render={() => (
+                            <Route exact path={`${match.path}/objednavky/:userId`} render={() => (
                                 <UserProvider>
                                     <WarehouseProvider>
                                         <OrdersProvider>
@@ -126,6 +126,23 @@ const Dashboard = () => {
                                 </UserProvider>
                             )
                             } />
+                            <Route path={`${match.path}/objednavky/:userId/:orderId`} render={() => (
+                                <UserProvider>
+                                    <WarehouseProvider>
+                                        <OrdersProvider>
+                                            <OrderSection />
+                                        </OrdersProvider>
+                                    </WarehouseProvider>
+                                </UserProvider>
+                            )
+                            } />
+
+                            {/* <Route path={`${match.path}/objednavky/:userId/:orderId`} render={() => (
+                                <OrderProvider>
+                                    <OrderPageSection />
+                                </OrderProvider>
+                            )
+                            } /> */}
 
 
                             <Route path={`${match.path}/analytika`} component={AnalyticsSection} />

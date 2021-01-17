@@ -19,18 +19,20 @@ export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite, coup
     } = orderToAdd
 
     const myHeaders = new Headers();
-    myHeaders.append("auth-token", token);
+    // myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
     console.log(user._id)
     console.log(combinedProducts.map(product => product._id))
 
+    console.log(paymentOption)
+
     const raw = JSON.stringify({
         user: user._id,
         combinedProducts: combinedProducts.map(product => product._id),
         overwrite: isDifferentAddress ? overwrite : undefined,
-        coupon: coupon === "" ? undefined : Number(coupon),
-        deposit: deposit > 0 ? deposit : undefined,
+        coupon: coupon === "" ? undefined : coupon,
+        deposit: paymentOption === "Záloha" ? deposit > 0 ? Number(deposit) : 0 : undefined,
         // paymentOption: paymentOption || undefined
     })
 
@@ -84,4 +86,18 @@ export const postCombinedProduct = (combinedProductToAdd) => {
     };
 
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/combinedProducts`, requestOptions)
+}
+
+export const fetchUserOrder = (token, id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}`, requestOptions)
 }

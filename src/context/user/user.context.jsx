@@ -8,7 +8,7 @@ import {
     fetchUser,
     patchUser,
     postAdmin,
-    postUser
+    postUser,
 } from './user.queries'
 
 import {
@@ -35,7 +35,7 @@ export const UserContext = createContext({
     formToShow: 0,
     switchFormButtons: [],
     toggleUserForm: () => { },
-    createUser: () => { }
+    createUser: () => { },
 })
 
 const UserProvider = ({ children }) => {
@@ -74,11 +74,11 @@ const UserProvider = ({ children }) => {
             name: "Vedúci",
             filter: 2,
         },
-        // {
-        //     id: 3,
-        //     name: "Velký brat",
-        //     filter: 3,
-        // }
+        {
+            id: 3,
+            name: "Velký brat",
+            filter: 3,
+        }
     ]
 
     // ------------------------
@@ -349,7 +349,7 @@ const UserProvider = ({ children }) => {
                 formToShow,
                 switchFormButtons,
                 toggleUserForm,
-                createUser
+                createUser,
             }}
         >
             {children}
