@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import ModelInfoContainer from '../modal-info-container/modal-info-container.component'
 
 import {
     CombinedProductContainer,
@@ -9,17 +11,30 @@ import {
 } from './combined-product-overview.styles'
 
 const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
+    const [showModal, setShowModal] = useState(false)
+    const [productType, setProductType] = useState('')
+
+    const handleMouseHover = (boolean, type) => {
+        setShowModal(boolean)
+        setProductType(type)
+    }
+
+    const closeModal = () => {
+        setShowModal(false)
+        setProductType('')
+    }
 
     return (
         <CombinedProductContainer>
+            {showModal && <ModelInfoContainer product={product} productType={productType} closeModal={closeModal} />}
             <ProductsContainer>
                 <div>
                     <h3>ID Okuliarov</h3>
-                    <p>{product.product}</p>
+                    <p onClick={() => handleMouseHover(true, 'product')}>{product.product}</p>
                 </div>
                 <div>
                     <h3>ID šošoviek</h3>
-                    <p>{product.lens}</p>
+                    <p onClick={() => handleMouseHover(true, 'lens')}>{product.lens}</p>
                 </div>
             </ProductsContainer>
             <PriceContainer>

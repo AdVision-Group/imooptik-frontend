@@ -273,6 +273,7 @@ const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChang
                         <ProfileOrderOverview
                             key={idx}
                             id={order}
+                            handleUpdateClick={() => push(`/dashboard/objednavky/${user._id}/${order}`)}
                         />
                     )) : (
                             <p>Žiadné objednávky</p>

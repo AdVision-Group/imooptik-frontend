@@ -181,7 +181,7 @@ const OrderSection = () => {
                 {isUpdating && <Container>
                     <h1>Informácie k objednávke</h1>
                     <p>Status: {status}</p>
-                    <p>Vybavuje: {retailNames[orderPremises]}</p>
+                    <p>Vybavuje: {orderPremises === 0 ? "0 - neuvedené" : retailNames[orderPremises - 1]}</p>
                 </Container>}
                 <Container>
                     <h2>Informácie o zákazníkovi</h2>

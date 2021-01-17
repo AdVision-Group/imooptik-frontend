@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { AuthContext } from '../../context/auth/auth.context'
 import { OrdersContext } from '../../context/orders/orders.context'
 import { useHistory } from 'react-router-dom'
 
@@ -9,7 +8,6 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import OrderOverview from '../../components/order-overview/order-overview.component'
 
 const OrdersSection = () => {
-    const { currentUser } = useContext(AuthContext)
     const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
@@ -44,8 +42,6 @@ const OrdersSection = () => {
     useEffect(() => {
         getOrders()
     }, [])
-
-    console.log(orders)
 
     return (
         <section>

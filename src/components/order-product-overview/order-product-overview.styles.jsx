@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import CustomButton from '../custom-button/custom-button.component'
 
 export const ProductContainer = styled.div`
+    background-color: #fff;
     padding: 2rem;
     width: 30rem;
     border-radius: .5rem;

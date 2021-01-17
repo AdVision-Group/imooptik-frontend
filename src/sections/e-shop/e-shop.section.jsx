@@ -94,9 +94,6 @@ const EshopSection = () => {
         }
     }, [])
 
-    console.log(currentUser.premises)
-    // fuse.search(searchQuery)
-
     const [allProducts, setAllProducts] = useState([])
     useEffect(() => {
         if (products && lensesArr)
@@ -137,8 +134,6 @@ const EshopSection = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
-    console.log(products)
 
     return (
         <section>

@@ -9,7 +9,7 @@ import {
     OrderId
 } from './profile-order-overview.styles'
 
-const ProfileOrderOverview = ({ id }) => {
+const ProfileOrderOverview = ({ id, handleUpdateClick }) => {
     return (
         <OrderContainer>
             <OrderContent>
@@ -21,7 +21,7 @@ const ProfileOrderOverview = ({ id }) => {
                 <DeleteButton>
                     Vymazať
                 </DeleteButton>
-                <UpdateButton>
+                <UpdateButton onClick={handleUpdateClick}>
                     Upraviť
                 </UpdateButton>
 

@@ -3,6 +3,7 @@ import CustomButton from '../custom-button/custom-button.component'
 
 
 export const CombinedProductContainer = styled.div`
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr auto;
@@ -18,6 +19,14 @@ export const CombinedProductContainer = styled.div`
 export const ProductsContainer = styled.div`
     grid-area: p;
     padding: 2rem;
+
+    p {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 
 `
 
