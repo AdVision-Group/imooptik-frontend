@@ -59,7 +59,7 @@ export const patchUser = (token, user) => {
         premises: Number(premises) === 0 ? undefined : premises,
         city: city || undefined,
         country: country || undefined,
-        // email: email || undefined,
+        email: email || undefined,
         lenses: {
             cylinder: cylinder,
             cylinderAxes: cylinderAxes,
@@ -78,14 +78,10 @@ export const patchUser = (token, user) => {
         redirect: 'follow'
     };
 
-    console.log(id)
-
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/${id}`, requestOptions)
 }
 
 export const postUser = (token, user) => {
-    console.log(user)
-
     const {
         name,
         email,

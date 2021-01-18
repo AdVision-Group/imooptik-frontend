@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
@@ -17,6 +17,7 @@ import {
 export const OrdersContext = createContext({
     selectedUser: null,
     setSelectedUser: () => { },
+    hasAddress: false,
     isDifferentAddress: false,
     setIsDifferentAddress: () => { },
     overwrite: {},
@@ -82,6 +83,7 @@ const OrdersProvider = ({ children }) => {
     const [selectedUser, setSelectedUser] = useState(initUserObj)
     const [isSearchingUser, setIsSearchingUser] = useState(false)
 
+    const [hasAddress, setHasAddress] = useState(false)
     const [isDifferentAddress, setIsDifferentAddress] = useState(false)
     const [overwrite, setOverWrite] = useState({
         address: '',
@@ -97,8 +99,6 @@ const OrdersProvider = ({ children }) => {
             [name]: value
         })
     }
-
-
 
     const handleChangeSelectedUser = (e) => {
         const { name, value } = e.target
@@ -308,11 +308,24 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+    useEffect(() => {
+        if (selectedUser) {
+            const { address, city, psc, country } = selectedUser
+            if (address && city && psc && country) {
+                setHasAddress(true)
+            } else {
+                setHasAddress(false)
+            }
+
+        }
+    }, [selectedUser])
+
     return (
         <OrdersContext.Provider
             value={{
                 selectedUser,
                 setSelectedUser,
+                hasAddress,
                 isDifferentAddress,
                 setIsDifferentAddress,
                 overwrite,

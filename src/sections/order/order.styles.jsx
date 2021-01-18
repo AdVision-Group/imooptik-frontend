@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { paddingStyles } from '../../global.styles'
 
 import CustomButton from "../../components/custom-button/custom-button.component"
+import CustomCheckBox from '../../components/custom-checkbox/custom-checkbox.component'
 
 export const Header = styled.div`
     display: flex;
@@ -95,6 +96,10 @@ export const SearchButton = styled(CustomButton)`
 
 `
 
+export const AddAddressButton = styled(CustomButton)`
+    font-size: 1rem;
+`
+
 export const NextButton = styled(CustomButton)`
     display: block;
     margin-left: auto;
@@ -136,4 +141,8 @@ export const SummaryParameterCol = styled.div`
         margin-bottom: 1rem;
         font-size: 1.8rem;
     }
+`
+
+export const DifferentAddress = styled(CustomCheckBox)`
+    margin-top: 3rem;
 `

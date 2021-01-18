@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { ImageContext } from '../../context/image/image.context'
 // import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'

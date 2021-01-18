@@ -10,8 +10,9 @@ import CustomInput from '../../components/custom-input/custom-input.component'
 import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 // import OrderProductOverview from '../../components/order-product-overview/order-product-overview.component'
-import CustomCheckBox from '../../components/custom-checkbox/custom-checkbox.component'
+// import CustomCheckBox from '../../components/custom-checkbox/custom-checkbox.component'
 import CombinedProductOverview from '../../components/combined-product-overview/combined-product-overview.component'
+import OrderAddressForm from '../../components/order-address-form/order-address-form.component'
 
 import Popup from "../../components/popup/pop-up.component"
 
@@ -29,9 +30,11 @@ import {
     SubmitOrderButton,
     Container,
     ProductContainer,
-    AddProductButton,
+    // AddProductButton,
     SearchContainer,
-    SearchButton,
+    // SearchButton,
+    AddAddressButton,
+    DifferentAddress,
     UserList
 } from './order.styles'
 
@@ -39,6 +42,7 @@ const OrderSection = () => {
     const { userId, orderId } = useParams()
     const [searchQuery, setSearchQuery] = useState('')
     const [userSearchResult, setUserSearchResult] = useState([])
+    const [showAddressForm, setShowAddressForm] = useState(false)
 
     console.log(orderId)
 
@@ -67,6 +71,7 @@ const OrderSection = () => {
     const {
         selectedUser,
         setSelectedUser,
+        hasAddress,
         isDifferentAddress,
         setIsDifferentAddress,
         overwrite,
@@ -227,13 +232,19 @@ const OrderSection = () => {
                 {selectedUser._id && (
                     <Container>
                         <h3>Doručovacia adresa</h3>
-                        <div>
+                        {hasAddress ? (<div>
                             <p>{selectedUser.name}</p>
                             <p>{selectedUser.address}</p>
                             {selectedUser.psc && selectedUser.city && <p>{`${selectedUser.psc} ${selectedUser.city}`}</p>}
                             <p>{selectedUser.country}</p>
-                        </div>
-                        <CustomCheckBox
+                        </div>) : (
+                                <div>
+                                    <p>Nie je uvedená žiadna adresa.</p>
+                                    <AddAddressButton onClick={() => setShowAddressForm(true)}>Pridať adresu</AddAddressButton>
+                                    {showAddressForm && <OrderAddressForm selectedUser={selectedUser} setSelectedUser={setSelectedUser} getUsers={getUsers} id={selectedUser._id} closeForm={() => setShowAddressForm(false)} />}
+                                </div>
+                            )}
+                        <DifferentAddress
                             label="Iná adresa"
                             isActive={isDifferentAddress}
                             handleClick={() => setIsDifferentAddress(!isDifferentAddress)}
