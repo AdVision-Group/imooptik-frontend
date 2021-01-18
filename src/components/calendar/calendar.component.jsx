@@ -60,11 +60,11 @@ const Calendar = ({ calendar, setSelectedDate }) => {
         } else if (i < daysInMonth + firstDayOfCurrentMonth - 1) {
             let obj = {}
             let numberOfBookings = 1
-            bookedDays.forEach(day => {
+            bookedDays.forEach((day, idx) => {
                 if (j === Number(day.split('/')[0])) {
                     obj = {
                         bookDate: day,
-                        booked: numberOfBookings,
+                        booked: calendar.booked[day].length,
                     }
                     return
                 }
