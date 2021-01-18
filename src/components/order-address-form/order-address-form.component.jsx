@@ -18,10 +18,11 @@ const OrderAddressForm = ({ closeForm, id, getUsers, selectedUser, setSelectedUs
     const { token } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState({
-        address: '',
-        psc: '',
-        city: '',
-        country: ''
+        address: selectedUser.address || '',
+        psc: selectedUser.psc || '',
+        city: selectedUser.city || '',
+        country: selectedUser.country || '',
+        phone: selectedUser.phone || ''
     })
 
     const handleChange = (e) => {
@@ -46,6 +47,7 @@ const OrderAddressForm = ({ closeForm, id, getUsers, selectedUser, setSelectedUs
                 city: address.city,
                 country: address.country,
                 psc: address.psc,
+                phone: address.phone
             })
 
             const requestOptions = {
@@ -63,10 +65,10 @@ const OrderAddressForm = ({ closeForm, id, getUsers, selectedUser, setSelectedUs
                 setSelectedUser({
                     ...data.user
                 })
+                closeForm()
             }
 
             setIsLoading(false)
-            // closeForm()
         } catch (err) {
             console.log(err)
             setIsLoading(false)
@@ -133,6 +135,18 @@ const OrderAddressForm = ({ closeForm, id, getUsers, selectedUser, setSelectedUs
                         type='text'
                         name='country'
                         value={address.country}
+                        handleChange={(e) => handleChange(e)}
+                    />
+                </InputRow>
+                <InputRow
+                    label=""
+                    example='napr: 0912 345 567'
+                >
+                    <CustomInput
+                        label="Tel. číslo"
+                        type='text'
+                        name='phone'
+                        value={address.phone}
                         handleChange={(e) => handleChange(e)}
                     />
                 </InputRow>

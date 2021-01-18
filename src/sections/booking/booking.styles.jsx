@@ -17,6 +17,8 @@ export const CalendarGridContainer = styled.div`
     margin-top: 3rem;
     display: grid;
     grid-template-columns: 4fr 2fr;
+    align-items: start;
+    margin-bottom: 10rem;
 `
 export const AppoimentOverview = styled.div`
     margin-left: 2rem;  
@@ -34,40 +36,60 @@ export const Line = styled.div`
     height: 1px;
     background-color: #eee;
     width: 100%;
-    margin: .5rem 0;
+    margin: .5rem 0 1rem;
 `
 
-export const TwoRowGrid = styled.div`
+export const AppoimentCol = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:    "i b"
+                            "n n";
+`
+
+export const NoteContainer = styled.div`
+    grid-area: n;
+    padding: .5rem 0;
+
+    p {
+        color: gray;
+    }
 `
 
 export const Name = styled.p`
     font-size: 1.4rem;
     font-weight: 700;
     line-height: 1;
-    margin-top: .5rem;
+    /* margin-top: .5rem; */
 `
 
 export const Desc = styled.span`
     color: gray;
     font-size: 1.2rem;
+    line-height: 1;
 `
 
 export const Options = styled.div`
     align-self: end;
+    justify-self: end;
 `
 
 export const ConfirmButton = styled(CustomButton)`
+    display:block;  
     font-size: 1.2rem;
-    margin-right: .5rem;
+    /* margin-right: .5rem; */
     padding: .2rem .8rem;
     border-radius: .5rem;
+    margin-left: auto;
+    margin-bottom: .5rem;
+
 `
 
 export const DeclineButton = styled(CustomButton)`
+    display:block;  
+    margin-left: auto;
     font-size: 1.2rem;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
     padding: .2rem .8rem;
     border-radius: .5rem;
 `

@@ -63,7 +63,8 @@ const Calendar = ({ calendar, setSelectedDate }) => {
             bookedDays.forEach(day => {
                 if (j === Number(day.split('/')[0])) {
                     obj = {
-                        booked: numberOfBookings++,
+                        bookDate: day,
+                        booked: numberOfBookings,
                     }
                     return
                 }
@@ -76,13 +77,14 @@ const Calendar = ({ calendar, setSelectedDate }) => {
         }
     }
 
-    const handleClick = (day, idx) => {
+    const handleClick = (day, idx, bookDate) => {
         const d = new Date(year, month, day)
         const options = { weekday: 'long', month: 'long', day: 'numeric' };
-        // d.toLocaleDateString("sk-SK", options)
-        console.log(d.toLocaleDateString("sk-SK", options))
         setActiveIndex(idx)
-        setSelectedDate(d.toLocaleDateString("sk-SK", options))
+        setSelectedDate({
+            name: d.toLocaleDateString("sk-SK", options),
+            value: bookDate
+        })
     }
 
     return (
@@ -95,8 +97,8 @@ const Calendar = ({ calendar, setSelectedDate }) => {
                 ))
             }
             {
-                arr.map(({ day, booked }, idx) => (
-                    <Dayblock key={idx} onClick={booked ? () => handleClick(day, idx) : null}>
+                arr.map(({ day, booked, bookDate }, idx) => (
+                    <Dayblock key={idx} onClick={booked ? () => handleClick(day, idx, bookDate) : null}>
                         {!(day === 0) && (
                             <DayRowContainer>
                                 {booked && <BookingContainer active={idx === activeIndex}>{booked}</BookingContainer>}

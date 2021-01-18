@@ -310,8 +310,8 @@ const OrdersProvider = ({ children }) => {
 
     useEffect(() => {
         if (selectedUser) {
-            const { address, city, psc, country } = selectedUser
-            if (address && city && psc && country) {
+            const { address, city, psc, country, phone } = selectedUser
+            if (address && city && psc && country && phone) {
                 setHasAddress(true)
             } else {
                 setHasAddress(false)

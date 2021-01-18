@@ -23,7 +23,10 @@ export const BookingContext = createContext({
     // getBookingRows: () => { },
     activeCalendar: 0,
     resetBooking: () => { },
-    selectedDate: '',
+    selectedDate: {
+        name: "",
+        value: ''
+    },
     setSelectedDate: () => { }
 })
 
@@ -42,7 +45,10 @@ const BookingProvider = ({ children }) => {
     const [activeCalendar, setActiveCalendar] = useState(0)
     const [calendars, setCalendars] = useState(null)
     const [calendar, setCalendar] = useState(null)
-    const [selectedDate, setSelectedDate] = useState('')
+    const [selectedDate, setSelectedDate] = useState({
+        name: '',
+        value: ''
+    })
 
     // Get all calendars
     const getCalendars = async () => {
@@ -78,6 +84,10 @@ const BookingProvider = ({ children }) => {
     const getCalendar = async (id, idx) => {
         setIsLoading(true)
         setShowModal(true)
+        setSelectedDate({
+            name: '',
+            value: ''
+        })
 
         try {
             const response = await fetchSingleCalendar(id)
@@ -159,40 +169,6 @@ const BookingProvider = ({ children }) => {
             setIsLoading(false)
         }
     }
-
-    // ------------------------
-    // BOOKINGSROW ACTIONS
-    // ------------------------
-    // const [bookingRows, setBookingRows] = useState(null)
-
-    // const getBookingRows = async () => {
-    //     setIsLoading(true)
-    //     setShowModal(true)
-
-    //     try {
-    //         const response = await fetchBookingRows()
-    //         const data = await response.json()
-
-    //         if (data.error) {
-    //             getMessage(data.message)
-    //             setIsLoading(false)
-    //             return
-    //         }
-
-    //         if (data.bookingRows) {
-    //             setBookingRows(data.bookingRows)
-    //             setIsLoading(false)
-    //             closeModal()
-    //         }
-
-    //         getMessage(data.message)
-    //         setIsLoading(false)
-    //     } catch (err) {
-    //         console.log(err)
-    //         getMessage("Nieco sa pokazilo")
-    //         setIsLoading(false)
-    //     }
-    // }
 
     const resetBooking = () => {
         setActiveCalendar(0)

@@ -16,13 +16,15 @@ import {
     AppoimentOverview,
     Time,
     Line,
-    TwoRowGrid,
+    // TwoRowGrid,
     Name,
     Desc,
     Options,
     ConfirmButton,
     DeclineButton,
-    AppoimentContainer
+    AppoimentContainer,
+    AppoimentCol,
+    NoteContainer
 } from './booking.styles'
 
 const BookingSection = () => {
@@ -33,21 +35,25 @@ const BookingSection = () => {
         showModal
     } = useContext(LoadingModalContext)
 
+    const bookingData = useContext(BookingContext)
+
+    console.log(bookingData)
+
     const {
         calendar,
         calendars,
-        // bookings,
+        bookings,
         // bookingRows,
         getCalendars,
         getCalendar,
         userBookings,
         getUserBookings,
-        // getBookings,
+        getBookings,
         // getBookingRows
         activeCalendar,
         selectedDate,
         setSelectedDate,
-    } = useContext(BookingContext)
+    } = bookingData
 
     const [searchQuery, setSearchQuery] = useState('')
 
@@ -58,11 +64,11 @@ const BookingSection = () => {
         }
     }, [calendars])
 
-    // useEffect(() => {
-    //     if (!bookings) {
-    //         getBookings()
-    //     }
-    // }, [calendars])
+    useEffect(() => {
+        if (!bookings) {
+            getBookings()
+        }
+    }, [calendars])
 
     // useEffect(() => {
     //     if (!bookingRows) {
@@ -94,57 +100,55 @@ const BookingSection = () => {
                     ))}
                 </GridRow>
 
-                <Title>Kalendár</Title>
-                <CalendarGridContainer>
-                    {calendar && <Calendar calendar={calendar} setSelectedDate={setSelectedDate} />}
+                {calendar && (
+                    <React.Fragment>
+                        <Title>Kalendár</Title>
+                        <CalendarGridContainer>
+                            <Calendar calendar={calendar} setSelectedDate={setSelectedDate} />
 
-                    {calendar && selectedDate && <AppoimentOverview>
-                        <Title>{selectedDate.charAt(0).toUpperCase() + selectedDate.slice(1)}</Title>
+                            {calendar && selectedDate.name && <AppoimentOverview>
+                                <Title>{selectedDate.name.charAt(0).toUpperCase() + selectedDate.name.slice(1)}</Title>
 
-                        <AppoimentContainer>
-                            <Time>12:00</Time>
-                            <Line />
-                            <TwoRowGrid>
-                                <div>
-                                    <Name>Meno Priezvisko</Name>
-                                    <Desc>Kontrola očí</Desc>
-                                </div>
-                                <Options>
-                                    <ConfirmButton>Vybavený</ConfirmButton>
-                                    <DeclineButton>Neprišiel</DeclineButton>
-                                </Options>
-                            </TwoRowGrid>
-                        </AppoimentContainer>
-                        <AppoimentContainer>
-                            <Time>12:00</Time>
-                            <Line />
-                            <TwoRowGrid>
-                                <div>
-                                    <Name>Meno Priezvisko</Name>
-                                    <Desc>Kontrola očí</Desc>
-                                </div>
-                                <Options>
-                                    <ConfirmButton>Vybavený</ConfirmButton>
-                                    <DeclineButton>Neprišiel</DeclineButton>
-                                </Options>
-                            </TwoRowGrid>
-                        </AppoimentContainer>
-                        <AppoimentContainer>
-                            <Time>12:00</Time>
-                            <Line />
-                            <TwoRowGrid>
-                                <div>
-                                    <Name>Meno Priezvisko</Name>
-                                    <Desc>Kontrola očí</Desc>
-                                </div>
-                                <Options>
-                                    <ConfirmButton>Vybavený</ConfirmButton>
-                                    <DeclineButton>Neprišiel</DeclineButton>
-                                </Options>
-                            </TwoRowGrid>
-                        </AppoimentContainer>
-                    </AppoimentOverview>}
-                </CalendarGridContainer>
+                                {
+                                    calendar.booked[selectedDate.value].map((date, idx) => {
+                                        const filteredUserBookings = userBookings.filter(booking => booking.dueDate === selectedDate.value && booking.dueTime.split(":")[0] === date)
+                                        const time = date.split('/')[0] + ":" + date.split('/')[1]
+
+                                        return (
+                                            <React.Fragment>
+                                                <AppoimentContainer key={idx}>
+                                                    <Time>{time}</Time>
+                                                    <Line />
+                                                    {
+                                                        filteredUserBookings.map(user => {
+                                                            const bookingType = bookings.find(booking => booking._id === user.booking)
+
+                                                            return (
+                                                                <AppoimentCol>
+                                                                    <div>
+                                                                        <Name>{user.name}</Name>
+                                                                        <Desc>{bookingType.name}</Desc>
+                                                                    </div>
+                                                                    <Options>
+                                                                        <ConfirmButton>Vybavený</ConfirmButton>
+                                                                        <DeclineButton>Neprišiel</DeclineButton>
+                                                                    </Options>
+                                                                    <NoteContainer>
+                                                                        <p>{user.note}</p>
+                                                                    </NoteContainer>
+                                                                </AppoimentCol>
+                                                            )
+                                                        })
+                                                    }
+                                                </AppoimentContainer>
+                                            </React.Fragment>
+                                        )
+                                    })
+                                }
+                            </AppoimentOverview>}
+                        </CalendarGridContainer>
+                    </React.Fragment>
+                )}
             </ScrollContainer>
         </section>
     )
