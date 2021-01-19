@@ -9,7 +9,9 @@ import {
     fetchBookings,
     // fetchBookingRows,
     fetchUserBookings,
-    postCalendar
+    postCalendar,
+    patchCalendar,
+    deleteCalendar
 } from './booking.queries'
 
 import {
@@ -24,6 +26,8 @@ export const BookingContext = createContext({
     getCalendars: () => { },
     getCalendar: () => { },
     createCalendar: () => { },
+    updateCalendar: () => { },
+    delCalendar: () => { },
     isUpdatingCalendar: false,
     bookings: null,
     getBookings: () => { },
@@ -99,6 +103,7 @@ const BookingProvider = ({ children }) => {
                 setCalendars(data.calendars)
                 setIsLoading(false)
                 closeModal()
+                return
             }
 
             getMessage(data.message)
@@ -154,12 +159,60 @@ const BookingProvider = ({ children }) => {
             if (data.calendar) {
                 setIsLoading(false)
                 closeModal()
+                getCalendars()
                 push('/dashboard/rezervacie')
+                return
             }
 
             setIsLoading(false)
             getMessage(data.message)
 
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const updateCalendar = async (calendarToUpdate) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await patchCalendar(token, calendarToUpdate)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.calendar) {
+                setIsLoading(false)
+                closeModal()
+                getCalendars()
+                push('/dashboard/rezervacie')
+                return
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const delCalendar = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await deleteCalendar(id)
+            const data = await response.json()
+
+            console.log(data)
+
+            setIsLoading(false)
+            getMessage(data.message)
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
@@ -242,6 +295,8 @@ const BookingProvider = ({ children }) => {
                 getCalendars,
                 getCalendar,
                 createCalendar,
+                updateCalendar,
+                delCalendar,
                 isUpdatingCalendar,
                 bookings,
                 getBookings,

@@ -12,7 +12,8 @@ import {
     Header,
     DayTimesContainer,
     CreateCalendarButton,
-    DayNames
+    DayNames,
+    DeleteCalendarButton
 } from './calendar.styles'
 
 const CalendarSection = () => {
@@ -23,6 +24,8 @@ const CalendarSection = () => {
         handleDayTimeChange,
         getCalendar,
         createCalendar,
+        updateCalendar,
+        delCalendar,
         calendar,
         resetBooking
     } = useContext(BookingContext)
@@ -40,6 +43,7 @@ const CalendarSection = () => {
             createCalendar(calendar)
         } else {
             console.log('update calendar')
+            updateCalendar(calendar)
         }
     }
 
@@ -66,10 +70,11 @@ const CalendarSection = () => {
             <form onSubmit={handleSubmit}>
                 <Header>
                     <div>
-                        <h1>Nový kalendár</h1>
+                        <h1>{isUpdatingCalendar ? `Kalendár: ${calendar.name}` : "Nový kalendár"}</h1>
                     </div>
                     <div>
-                        <CreateCalendarButton>Vytvoriť kalendár</CreateCalendarButton>
+                        {isUpdatingCalendar && <DeleteCalendarButton onClick={() => delCalendar(calendarId)}>Odstrániť</DeleteCalendarButton>}
+                        <CreateCalendarButton>{isUpdatingCalendar ? "Upraviť kalendár" : "Vytvoriť kalendár"}</CreateCalendarButton>
                     </div>
                 </Header>
                 <ScrollContainer>

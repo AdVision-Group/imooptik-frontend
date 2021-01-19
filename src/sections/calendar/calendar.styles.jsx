@@ -11,6 +11,10 @@ export const Header = styled.div`
 `
 
 export const CreateCalendarButton = styled(CustomButton)`
+    margin-left: 1rem;
+`
+export const DeleteCalendarButton = styled(CustomButton)`
+    background-color: #DD4C4C;
 
 `
 
