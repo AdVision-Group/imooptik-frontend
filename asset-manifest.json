@@ -6,8 +6,8 @@
     "static/js/1.1c9d2d55.chunk.js.map": "/imooptik-frontend/static/js/1.1c9d2d55.chunk.js.map",
     "main.js": "/imooptik-frontend/static/js/main.32a22467.chunk.js",
     "main.js.map": "/imooptik-frontend/static/js/main.32a22467.chunk.js.map",
-    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.ecd8c941.js",
-    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.ecd8c941.js.map",
+    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.b1baa360.js",
+    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.b1baa360.js.map",
     "static/js/4.0f928743.chunk.js": "/imooptik-frontend/static/js/4.0f928743.chunk.js",
     "static/js/4.0f928743.chunk.js.map": "/imooptik-frontend/static/js/4.0f928743.chunk.js.map",
     "static/js/5.079a7c24.chunk.js": "/imooptik-frontend/static/js/5.079a7c24.chunk.js",
@@ -18,8 +18,8 @@
     "static/js/7.25a5c163.chunk.js.map": "/imooptik-frontend/static/js/7.25a5c163.chunk.js.map",
     "static/js/8.e538c049.chunk.js": "/imooptik-frontend/static/js/8.e538c049.chunk.js",
     "static/js/8.e538c049.chunk.js.map": "/imooptik-frontend/static/js/8.e538c049.chunk.js.map",
-    "static/js/9.98e1f7ce.chunk.js": "/imooptik-frontend/static/js/9.98e1f7ce.chunk.js",
-    "static/js/9.98e1f7ce.chunk.js.map": "/imooptik-frontend/static/js/9.98e1f7ce.chunk.js.map",
+    "static/js/9.e6b5eee5.chunk.js": "/imooptik-frontend/static/js/9.e6b5eee5.chunk.js",
+    "static/js/9.e6b5eee5.chunk.js.map": "/imooptik-frontend/static/js/9.e6b5eee5.chunk.js.map",
     "static/js/10.f19a0626.chunk.js": "/imooptik-frontend/static/js/10.f19a0626.chunk.js",
     "static/js/10.f19a0626.chunk.js.map": "/imooptik-frontend/static/js/10.f19a0626.chunk.js.map",
     "static/js/11.c37d0f0e.chunk.js": "/imooptik-frontend/static/js/11.c37d0f0e.chunk.js",
@@ -67,7 +67,7 @@
     "static/media/undraw_security_o890.95a3670a.svg": "/imooptik-frontend/static/media/undraw_security_o890.95a3670a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ecd8c941.js",
+    "static/js/runtime-main.b1baa360.js",
     "static/js/5.079a7c24.chunk.js",
     "static/js/main.32a22467.chunk.js"
   ]
