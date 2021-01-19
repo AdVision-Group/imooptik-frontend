@@ -26,10 +26,6 @@ export const UserContext = createContext({
     getUsers: () => { },
     getUser: () => { },
     handleChange: () => { },
-    handleDioptersChange: () => { },
-    handleDistanceChange: () => { },
-    handleCylinderChange: () => { },
-    handleCylinderAxesChange: () => { },
     updateUser: () => { },
     resetUser: () => { },
     formToShow: 0,
@@ -74,11 +70,11 @@ const UserProvider = ({ children }) => {
             name: "Vedúci",
             filter: 2,
         },
-        {
-            id: 3,
-            name: "Velký brat",
-            filter: 3,
-        }
+        // {
+        //     id: 3,
+        //     name: "Velký brat",
+        //     filter: 3,
+        // }
     ]
 
     // ------------------------
@@ -113,51 +109,15 @@ const UserProvider = ({ children }) => {
         })
     }
 
-    const handleDioptersChange = (e, idx) => {
-        let arr = user.lenses.diopters
-        arr[idx] = Number(e.target.value)
+    const handleParameterChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = user.lenses[name]
+        arr[idx] = Number(value)
         setUser({
             ...user,
             lenses: {
                 ...user.lenses,
-                diopters: arr
-            }
-        })
-    }
-
-    const handleDistanceChange = (e, idx) => {
-        let arr = user.lenses.distance
-        arr[idx] = Number(e.target.value)
-        setUser({
-            ...user,
-            lenses: {
-                ...user.lenses,
-                distance: arr
-            }
-        })
-    }
-
-    const handleCylinderChange = (e, idx) => {
-        let arr = user.lenses.cylinder
-        arr[idx] = Number(e.target.value)
-        setUser({
-            ...user,
-            lenses: {
-                ...user.lenses,
-                cylinder: arr
-            }
-        })
-    }
-
-
-    const handleCylinderAxesChange = (e, idx) => {
-        let arr = user.lenses.cylinderAxes
-        arr[idx] = Number(e.target.value)
-        setUser({
-            ...user,
-            lenses: {
-                ...user.lenses,
-                cylinderAxes: arr
+                [name]: arr
             }
         })
     }
@@ -224,10 +184,13 @@ const UserProvider = ({ children }) => {
                     ...user,
                     ...data.user,
                     lenses: {
-                        cylinder: data.user.lenses.cylinder.length ? data.user.lenses.cylinder : [0, 0],
-                        cylinderAxes: data.user.lenses.cylinderAxes.length ? data.user.lenses.cylinderAxes : [0, 0],
-                        diopters: data.user.lenses.diopters.length ? data.user.lenses.diopters : [0, 0],
-                        distance: data.user.lenses.distance.length ? data.user.lenses.distance : [0, 0],
+                        cylinder: data.user.lenses.cylinder.length ? data.user.lenses.cylinder : [0, 0, 0, 0],
+                        cylinderAxes: data.user.lenses.cylinderAxes.length ? data.user.lenses.cylinderAxes : [0, 0, 0, 0],
+                        diopters: data.user.lenses.diopters.length ? data.user.lenses.diopters : [0, 0, 0, 0],
+                        distance: data.user.lenses.distance.length ? data.user.lenses.distance : [0, 0, 0, 0],
+                        addition: data.user.lenses.addition.length ? data.user.lenses.addition : [0, 0, 0, 0],
+                        basis: data.user.lenses.basis.length ? data.user.lenses.basis : [0, 0, 0, 0],
+                        prism: data.user.lenses.prism.length ? data.user.lenses.prism : [0, 0, 0, 0],
                     },
                     fName: data.user.name ? data.user.name.split(" ")[0] : "",
                     lName: data.user.name ? data.user.name.split(" ")[1] : ""
@@ -340,10 +303,7 @@ const UserProvider = ({ children }) => {
                 getUsers,
                 getUser,
                 handleChange,
-                handleDioptersChange,
-                handleDistanceChange,
-                handleCylinderChange,
-                handleCylinderAxesChange,
+                handleParameterChange,
                 updateUser,
                 resetUser,
                 formToShow,

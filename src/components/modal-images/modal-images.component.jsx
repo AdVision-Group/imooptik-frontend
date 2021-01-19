@@ -175,7 +175,7 @@ const ModalImages = ({ close, setImage }) => {
                                         handleChange={(e) => setImageAlt(e.target.value)}
                                     />
 
-                                    <CropButton onClick={(e) => handleSubmit(e)} disabled={isDisabled} >Orezať a nahrať</CropButton>
+                                    <CropButton onClick={(e) => handleSubmit(e)} disabled={isDisabled} >Vybrať obrázok</CropButton>
                                 </React.Fragment>
                             )}
                         </div>

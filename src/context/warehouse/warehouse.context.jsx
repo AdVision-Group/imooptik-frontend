@@ -23,6 +23,8 @@ import {
     productCategories
 } from './warehouse.utils'
 
+import { useFetch } from '../../hooks/useFetch'
+
 
 export const WarehouseContext = createContext({
     formToShow: 0,
@@ -31,6 +33,7 @@ export const WarehouseContext = createContext({
     isUpdating: false,
     activeCategoryIndex: 0,
     categories: [],
+    getEanCode: () => { },
     toggleDraft: () => { },
     handleCategoryChange: () => { },
     handleAvailableChange: () => { },
@@ -116,6 +119,13 @@ const WarehouseProvider = ({ children }) => {
     // ------------------------
     // PRODUCT ACTIONS
     // ------------------------
+
+    const getEanCode = (code) => {
+        setProduct({
+            ...product,
+            eanCode: code
+        })
+    }
 
     const toggleProductForms = (e, idx) => {
         e.preventDefault()
@@ -552,6 +562,9 @@ const WarehouseProvider = ({ children }) => {
     // END LENSES ACTIONS
     // ------------------------
 
+    console.log(product)
+
+
     return (
         <WarehouseContext.Provider
             value={{
@@ -562,6 +575,7 @@ const WarehouseProvider = ({ children }) => {
                 isUpdating,
                 activeCategoryIndex,
                 categories,
+                getEanCode,
                 toggleDraft,
                 handleCategoryChange,
                 handleAvailableChange,

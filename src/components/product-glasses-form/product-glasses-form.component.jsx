@@ -27,7 +27,7 @@ const ProductGlassesForm = ({
     activeCategoryIndex,
     lensesParameters,
     handleParameterChange,
-    currentUser
+    currentUser,
 }) => {
 
     return (
@@ -57,13 +57,13 @@ const ProductGlassesForm = ({
                 <h3>Základné informacie</h3>
                 <ProductInputRow
                     label="Unikátny kód produktu"
-                    example="napr: TH1590807"
+                    example=""
                 >
                     <CustomInput
                         label="Ean kód*"
                         type='text'
                         name='eanCode'
-                        value={product.eanCode}
+                        value={product.eanCode.toString()}
                         handleChange={(e) => handleChange(e)}
                         required
                     />
@@ -130,7 +130,7 @@ const ProductGlassesForm = ({
                     </div>
                 </TextareaRow>
 
-                {
+                {/* {
                     product.type === 4 && (
                         <React.Fragment>
                             <h3>Parametre</h3>
@@ -187,7 +187,7 @@ const ProductGlassesForm = ({
                             </ProductInputRow>
                         </React.Fragment>
                     )
-                }
+                } */}
 
                 {
                     !(product.type === 5 || product.type === 4) && (

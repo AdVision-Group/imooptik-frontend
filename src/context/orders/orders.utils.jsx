@@ -1,21 +1,12 @@
 export const initCombinedProductObj = {
     lenses: {
-        diopters: [
-            0,
-            0
-        ],
-        distance: [
-            0,
-            0
-        ],
-        cylinder: [
-            0,
-            0
-        ],
-        cylinderAxes: [
-            0,
-            0
-        ]
+        cylinder: [0, 0, 0, 0],
+        cylinderAxes: [0, 0, 0, 0],
+        diopters: [0, 0, 0, 0],
+        distance: [0, 0, 0, 0],
+        addition: [0, 0, 0, 0],
+        basis: [0, 0, 0, 0],
+        prism: [0, 0, 0, 0],
     },
     // "_id": "5ff46112adf1801b447ff3cd",
     product: "",
@@ -26,13 +17,16 @@ export const initCombinedProductObj = {
 
 export const paymentOptionsArr = [
     {
-        name: "Hotovosť"
+        name: "Hotovosť",
+        value: "cash"
     },
     {
-        name: "Karta"
+        name: "Karta",
+        value: "card"
     },
     {
-        name: "Záloha"
+        name: "Záloha",
+        value: "coupon"
     }
 ]
 

@@ -24,18 +24,20 @@ const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
         setProductType('')
     }
 
+    console.log(product)
+
     return (
         <CombinedProductContainer>
             {showModal && <ModelInfoContainer product={product} productType={productType} closeModal={closeModal} />}
             <ProductsContainer>
                 <div>
-                    <h3>ID Okuliarov</h3>
+                    <h3>ID produktu</h3>
                     <p onClick={() => handleMouseHover(true, 'product')}>{product.product}</p>
                 </div>
-                <div>
+                {product.lens && <div>
                     <h3>ID šošoviek</h3>
                     <p onClick={() => handleMouseHover(true, 'lens')}>{product.lens}</p>
-                </div>
+                </div>}
             </ProductsContainer>
             <PriceContainer>
                 <div>
@@ -50,7 +52,7 @@ const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
                 </div>
 
             </PriceContainer>
-            <ParametersContainer>
+            {product.lenses.diopters.length ? <ParametersContainer>
 
                 <div>
                     <h3>Parametre</h3>
@@ -99,7 +101,7 @@ const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
                         <p>{product.lenses.cylinderAxes[1]}</p>
                     </div>
                 </div>
-            </ParametersContainer>
+            </ParametersContainer> : null}
         </CombinedProductContainer>
     )
 }

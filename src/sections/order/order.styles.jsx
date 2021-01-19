@@ -131,6 +131,17 @@ export const SummaryParametersContainer = styled(ParametersContainer)`
 
 `
 
+export const SummaryParameterTitleCol = styled.div`
+    
+    h3 {
+        margin-bottom: 2rem;
+    }
+
+    div {
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+    }
+`
 export const SummaryParameterCol = styled.div`
     
     h3 {
@@ -140,6 +151,7 @@ export const SummaryParameterCol = styled.div`
     div {
         margin-bottom: 1rem;
         font-size: 1.8rem;
+        text-align: end;
     }
 `
 

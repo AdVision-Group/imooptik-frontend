@@ -14,6 +14,8 @@ import CustomFormSwitch from '../../components/custom-form-switch/custom-form-sw
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 
+import { useFetch } from '../../hooks/useFetch'
+
 import {
     Header,
     AddButton,
@@ -25,8 +27,21 @@ import {
 } from './product.styles'
 
 const ProductSection = () => {
+    const { currentUser, token } = useContext(AuthContext)
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+
+    const { response } = useFetch('api/admin/products/nextEanCode', requestOptions)
+
     const [showImageModal, setImageModal] = useState(false)
-    const { currentUser } = useContext(AuthContext)
     const { id } = useParams()
     const warData = useContext(WarehouseContext)
     const {
@@ -36,6 +51,7 @@ const ProductSection = () => {
         isUpdating,
         activeCategoryIndex,
         categories,
+        getEanCode,
         toggleDraft,
         handleCategoryChange,
         handleAvailableChange,
@@ -104,15 +120,13 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (id !== "novy-produkt") {
-
-            console.log("formToShow")
-            console.log(formToShow)
-            console.log("formToShow")
             if (formToShow === 0) {
                 getSingleProduct(id)
             } else {
                 getSigleLenses(id)
             }
+        } else {
+
         }
     }, [id])
 
@@ -122,6 +136,15 @@ const ProductSection = () => {
             resetProduct()
         }
     }, [])
+
+    useEffect(() => {
+        if (response) {
+            if (!product.eanCode) {
+                getEanCode(response.eanCode)
+            }
+        }
+    }, [response])
+
 
     return (
         <form onSubmit={e => handleSubmit(e)}>

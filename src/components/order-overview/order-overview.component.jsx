@@ -1,5 +1,8 @@
 import React from 'react'
 
+
+import { retailNames } from '../../context/warehouse/warehouse.utils'
+
 import {
     OrderContainer,
     OrderContent,
@@ -8,7 +11,10 @@ import {
     DateContainer,
     DeleteButton,
     Price,
-    UpdateButton
+    PdfButton,
+    UpdateButton,
+    OrderDetailsContainer,
+    StatusContainer
 } from './order-overview.styles'
 
 const OrderOverview = ({ order, handleUpdateClick }) => {
@@ -26,10 +32,22 @@ const OrderOverview = ({ order, handleUpdateClick }) => {
                 <DateContainer>{d.toLocaleDateString("sk-SK", options)}</DateContainer>
             </OrderContent>
 
+            <OrderDetailsContainer>
+                <div>
+                    <StatusContainer>{status}</StatusContainer>
+                    <p>Vybavuje:</p>
+                    <p>{order.premises === 0 ? "Neuvedené" : retailNames[order.premises]}</p>
+                </div>
+                <div>
+
+                </div>
+            </OrderDetailsContainer>
             <Options>
-                <p>{status}</p>
+                <PdfButton href={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.pdfPath}`} target="_blank" rel="noreferrer noopener">
+                    Zobraz PDF
+                </PdfButton>
                 <UpdateButton onClick={handleUpdateClick}>
-                    Upraviť
+                    Zobraziť
                 </UpdateButton>
                 <DeleteButton>
                     Vymazať

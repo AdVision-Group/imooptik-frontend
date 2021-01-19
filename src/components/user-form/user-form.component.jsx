@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
 import ProfileOrderOverview from '../profile-order-overview/profile-order-overview.component'
+import ParametersTable from '../parameters-table/parameters-table.component'
 
 import {
     retailNames
@@ -24,7 +25,17 @@ import {
     AdminPanelContainer
 } from './user.form-styles'
 
-const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChange, handleDistanceChange, handleCylinderChange, handleCylinderAxesChange }) => {
+const UserForm = ({
+    isAdmin,
+    isUpdating,
+    user,
+    handleChange,
+    handleParameterChange,
+    handleDioptersChange,
+    handleDistanceChange,
+    handleCylinderChange,
+    handleCylinderAxesChange
+}) => {
     const { push } = useHistory()
 
     const handleAddOrderButtonClick = e => {
@@ -160,101 +171,10 @@ const UserForm = ({ isAdmin, isUpdating, user, handleChange, handleDioptersChang
                 <Container>
                     <h2>Parametre</h2>
 
-                    <ThreeColRow>
-                        <div>
-                            Dioptrie
-                                </div>
-                        <div>
-                            <CustomInput
-                                label="Ľavé oko"
-                                type='text'
-                                name='city'
-                                value={user.lenses.diopters[0].toString()}
-                                handleChange={(e) => handleDioptersChange(e, 0)}
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label="Pravé oko"
-                                type='text'
-                                name='state'
-                                value={user.lenses.diopters[1].toString()}
-                                handleChange={(e) => handleDioptersChange(e, 1)}
-                            />
-                        </div>
-                    </ThreeColRow>
-
-                    <ThreeColRow>
-                        <div>
-                            Vzdialenosť
-                                </div>
-                        <div>
-                            <CustomInput
-                                label="Ľavé oko"
-                                type='text'
-                                name='city'
-                                value={user.lenses.distance[0].toString()}
-                                handleChange={(e) => handleDistanceChange(e, 0)}
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label="Pravé oko"
-                                type='text'
-                                name='state'
-                                value={user.lenses.distance[1].toString()}
-                                handleChange={(e) => handleDistanceChange(e, 1)}
-                            />
-                        </div>
-                    </ThreeColRow>
-
-                    <ThreeColRow>
-                        <div>
-                            Cylinder
-                                </div>
-                        <div>
-                            <CustomInput
-                                label="Ľavé oko"
-                                type='text'
-                                name='city'
-                                value={user.lenses.cylinder[0].toString()}
-                                handleChange={(e) => handleCylinderChange(e, 0)}
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label="Pravé oko"
-                                type='text'
-                                name='state'
-                                value={user.lenses.cylinder[1].toString()}
-                                handleChange={(e) => handleCylinderChange(e, 1)}
-                            />
-                        </div>
-                    </ThreeColRow>
-
-                    <ThreeColRow>
-                        <div>
-                            Os cylindrov
-                                </div>
-                        <div>
-                            <CustomInput
-                                label="Ľavé oko"
-                                type='text'
-                                name='city'
-                                value={user.lenses.cylinderAxes[0].toString()}
-                                handleChange={(e) => handleCylinderAxesChange(e, 0)}
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label="Pravé oko"
-                                type='text'
-                                name='state'
-                                value={user.lenses.cylinderAxes[1].toString()}
-                                handleChange={(e) => handleCylinderAxesChange(e, 1)}
-                            />
-                        </div>
-                    </ThreeColRow>
+                    <ParametersTable
+                        parameters={user.lenses}
+                        handleChange={handleParameterChange}
+                    />
                 </Container>
 
 

@@ -32,7 +32,8 @@ const PostSection = () => {
         setIsLoading,
         getPost,
         post,
-        handlePostUpdate
+        handlePostUpdate,
+        resetBlog
     } = useContext(BlogContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [title, setTitle] = useState('')
@@ -82,6 +83,19 @@ const PostSection = () => {
             }
         }
     }, [post])
+
+    useEffect(() => {
+        return () => {
+            resetBlog()
+            setTitle('')
+            setDescription('')
+            setContent('')
+            setImage('')
+            toggleDraft(false)
+            setImageModal(false)
+            setIsUpdating(false)
+        }
+    }, [])
 
     return (
         <form onSubmit={handleSubmit}>

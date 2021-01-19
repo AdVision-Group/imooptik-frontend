@@ -32,6 +32,7 @@ const CustomerProfile = () => {
         user,
         getUser,
         handleChange,
+        handleParameterChange,
         handleDioptersChange,
         handleDistanceChange,
         handleCylinderChange,
@@ -92,6 +93,7 @@ const CustomerProfile = () => {
                                 isUpdating={isUpdating}
                                 user={user}
                                 handleChange={handleChange}
+                                handleParameterChange={handleParameterChange}
                                 handleDioptersChange={handleDioptersChange}
                                 handleDistanceChange={handleDistanceChange}
                                 handleCylinderChange={handleCylinderChange}

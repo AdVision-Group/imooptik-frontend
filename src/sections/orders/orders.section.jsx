@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { OrdersContext } from '../../context/orders/orders.context'
 import { useHistory } from 'react-router-dom'
 
@@ -7,30 +8,40 @@ import SectionNavbar from '../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import OrderOverview from '../../components/order-overview/order-overview.component'
 
+import Popup from '../../components/popup/pop-up.component'
+
 const OrdersSection = () => {
     const { push } = useHistory()
+    const {
+        closeModal,
+        isLoading,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
     const [searchQuery, setSearchQuery] = useState('')
     const items = [
         {
             id: 1,
-            name: "Všetko"
+            name: "Zaplatené",
+            value: "paid"
         },
         {
             id: 2,
-            name: "Deň"
+            name: "Zálohované",
+            value: "half-paid"
+
         },
         {
             id: 3,
-            name: "Týžden"
+            name: "Spracované",
+            value: "processed"
         },
         {
             id: 4,
-            name: "Mesiac"
-        },
-        {
-            id: 5,
-            name: "Rok"
-        },
+            name: "Splnené",
+            value: "fulfilled"
+
+        }
     ]
     const [activeIndex, setActiveIndex] = useState(2)
 
@@ -42,6 +53,14 @@ const OrdersSection = () => {
     useEffect(() => {
         getOrders()
     }, [])
+
+    if (!orders) return <Popup loading={isLoading} title={message} close={closeModal} />
+
+    const filteredOrders = orders.filter(order => order.status === items[activeIndex - 1].value)
+
+    console.log(orders[0].status)
+    console.log(items[activeIndex - 1].value)
+    console.log(filteredOrders)
 
     return (
         <section>
@@ -59,8 +78,8 @@ const OrdersSection = () => {
             />
 
             <ScrollContainer>
-                {orders && orders.length ?
-                    orders.map((order, idx) => (
+                {orders && filteredOrders.length ?
+                    filteredOrders.map((order, idx) => (
                         <OrderOverview
                             key={idx}
                             order={order}

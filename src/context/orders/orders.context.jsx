@@ -142,7 +142,13 @@ const OrdersProvider = ({ children }) => {
             product: productToAdd._id,
             price: combinedProduct.price + productToAdd.price
         })
-        setActiveStep(steps[1])
+        if (productToAdd.type === 4) {
+            setActiveStep(steps[3])
+        } else if (productToAdd.type === 5) {
+            setActiveStep(steps[3])
+        } else {
+            setActiveStep(steps[1])
+        }
     }
 
     const handleSelectLenses = (e, lensesToAdd) => {
@@ -229,10 +235,14 @@ const OrdersProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(paymentOptions[selectedPayment].name)
+        let payment = 'paid'
+
+        if (selectedPayment === 2) {
+            payment = 'half-paid'
+        }
 
         try {
-            const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite, coupon, deposit, paymentOptions[selectedPayment].name)
+            const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite, coupon, deposit, payment, paymentOptions[selectedPayment].value)
             const data = await response.json()
 
             console.log(data)
@@ -256,8 +266,28 @@ const OrdersProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+        let productToAdd = {}
+
+        if (selectedProduct.type === 5) {
+            productToAdd = {
+                product: combinedProductToAdd.product,
+                // lens: ""
+            }
+        } else if (selectedProduct.type === 4) {
+            productToAdd = {
+                product: combinedProductToAdd.product,
+                // lenses: combinedProductToAdd.lenses
+            }
+        } else {
+            productToAdd = {
+                lenses: combinedProductToAdd.lenses,
+                product: combinedProductToAdd.product,
+                lens: combinedProductToAdd.lens,
+            }
+        }
+
         try {
-            const response = await postCombinedProduct(combinedProductToAdd)
+            const response = await postCombinedProduct(productToAdd)
             const data = await response.json()
 
             console.log(data)

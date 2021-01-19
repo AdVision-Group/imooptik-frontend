@@ -19,6 +19,7 @@ export const BlogContext = createContext({
     getPost: () => { },
     handlePostUpdate: () => { },
     handlePostDelete: () => { },
+    resetBlog: () => { }
 })
 
 const BlogProvider = ({ children }) => {
@@ -137,6 +138,10 @@ const BlogProvider = ({ children }) => {
         }
     }
 
+    const resetBlog = () => {
+        setPost(null)
+    }
+
     return (
         <BlogContext.Provider
             value={{
@@ -148,6 +153,7 @@ const BlogProvider = ({ children }) => {
                 getPost,
                 handlePostUpdate,
                 handlePostDelete,
+                resetBlog,
             }}
         >
             {children}
