@@ -1,20 +1,30 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
+import { useHistory } from 'react-router-dom'
 
 import {
     fetchCalendars,
     fetchSingleCalendar,
     fetchBookings,
     // fetchBookingRows,
-    fetchUserBookings
+    fetchUserBookings,
+    postCalendar
 } from './booking.queries'
+
+import {
+    initCalendarObj
+} from './booking.utils'
 
 export const BookingContext = createContext({
     calendar: null,
     calendars: null,
+    handleCalendarChange: () => { },
+    handleDayTimeChange: () => { },
     getCalendars: () => { },
     getCalendar: () => { },
+    createCalendar: () => { },
+    isUpdatingCalendar: false,
     bookings: null,
     getBookings: () => { },
     userBookings: null,
@@ -31,6 +41,7 @@ export const BookingContext = createContext({
 })
 
 const BookingProvider = ({ children }) => {
+    const { push } = useHistory()
     const { token } = useContext(AuthContext)
     const {
         getMessage,
@@ -42,13 +53,32 @@ const BookingProvider = ({ children }) => {
     // ------------------------
     // CALENDAR ACTIONS
     // ------------------------
+    const [isUpdatingCalendar, setIsUpdatingCalendar] = useState(false)
     const [activeCalendar, setActiveCalendar] = useState(0)
     const [calendars, setCalendars] = useState(null)
-    const [calendar, setCalendar] = useState(null)
+    const [calendar, setCalendar] = useState(initCalendarObj)
     const [selectedDate, setSelectedDate] = useState({
         name: '',
         value: ''
     })
+
+    const handleCalendarChange = (e) => {
+        const { name, value } = e.target
+        setCalendar({
+            ...calendar,
+            [name]: value
+        })
+    }
+
+    const handleDayTimeChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = calendar.startTimes
+        arr[idx] = value
+        setCalendar({
+            ...calendar,
+            [name]: arr
+        })
+    }
 
     // Get all calendars
     const getCalendars = async () => {
@@ -88,6 +118,9 @@ const BookingProvider = ({ children }) => {
             name: '',
             value: ''
         })
+        if (!idx) {
+            setIsUpdatingCalendar(true)
+        }
 
         try {
             const response = await fetchSingleCalendar(id)
@@ -103,6 +136,29 @@ const BookingProvider = ({ children }) => {
 
             getMessage(data.message)
             setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createCalendar = async (calendarToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+        try {
+            const response = await postCalendar(token, calendarToAdd)
+            const data = await response.json()
+
+            if (data.calendar) {
+                setIsLoading(false)
+                closeModal()
+                push('/dashboard/rezervacie')
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
 
         } catch (err) {
             console.log(err)
@@ -172,6 +228,8 @@ const BookingProvider = ({ children }) => {
 
     const resetBooking = () => {
         setActiveCalendar(0)
+        setCalendar(initCalendarObj)
+        setIsUpdatingCalendar(false)
     }
 
     return (
@@ -179,8 +237,12 @@ const BookingProvider = ({ children }) => {
             value={{
                 calendar,
                 calendars,
+                handleCalendarChange,
+                handleDayTimeChange,
                 getCalendars,
                 getCalendar,
+                createCalendar,
+                isUpdatingCalendar,
                 bookings,
                 getBookings,
                 userBookings,

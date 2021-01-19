@@ -48,8 +48,11 @@ const Calendar = ({ calendar, setSelectedDate }) => {
 
     let arr = []
     let j = 1
+    let bookedDays = []
 
-    const bookedDays = Object.keys(calendar.booked)
+    if (calendar.booked) {
+        bookedDays = Object.keys(calendar.booked)
+    }
     // const bookedDays = ["28/12/2020", "28/12/2020", "28/12/2020", "28/12/2020", "28/12/2020", "25/12/2020", "30/12/2020", "28/12/2020", "25/12/2020", "30/12/2020"]
 
     for (let i = 0; i < 42; i++) {

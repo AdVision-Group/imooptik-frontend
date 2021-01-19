@@ -36,6 +36,7 @@ const BookingSection = lazy(() => import('../../sections/booking/booking.section
 const PostSection = lazy(() => import('../../sections/post/post.section'))
 const NoPermisionSection = lazy(() => import('../../sections/no-permission/no-permission.section'))
 const OrderSection = lazy(() => import('../../sections/order/order.section'))
+const CalendarSection = lazy(() => import('../../sections/calendar/calendar.section'))
 
 const Dashboard = () => {
     const match = useRouteMatch()
@@ -147,9 +148,14 @@ const Dashboard = () => {
 
                             <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
 
-                            <Route path={`${match.path}/rezervacie`} render={() => (
+                            <Route exact path={`${match.path}/rezervacie`} render={() => (
                                 <BookingProvider>
                                     <BookingSection />
+                                </BookingProvider>
+                            )} />
+                            <Route path={`${match.path}/rezervacie/:calendarId`} render={() => (
+                                <BookingProvider>
+                                    <CalendarSection />
                                 </BookingProvider>
                             )} />
 

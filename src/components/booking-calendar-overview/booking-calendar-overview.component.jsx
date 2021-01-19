@@ -7,7 +7,7 @@ import {
     ShowButton
 } from './booking-calendar-overview.styles'
 
-const BookingCalendarOverview = ({ calendar, handleClick, isActive }) => {
+const BookingCalendarOverview = ({ calendar, handleClick, isActive, handleUpdateClick }) => {
     return (
         <ContainerOverview>
             <h3>{calendar.name}</h3>
@@ -16,7 +16,7 @@ const BookingCalendarOverview = ({ calendar, handleClick, isActive }) => {
             <p>obchodna@imooptik.sk</p>
             <Options>
                 <ShowButton onClick={handleClick} isActive={isActive}>Zobraziť</ShowButton>
-                <UpdateButton>Upraviť</UpdateButton>
+                <UpdateButton onClick={handleUpdateClick}>Upraviť</UpdateButton>
             </Options>
         </ContainerOverview>
     )

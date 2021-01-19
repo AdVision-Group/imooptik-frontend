@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { BookingContext } from '../../context/booking/booking.context'
+import { useHistory } from 'react-router-dom'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -28,6 +29,7 @@ import {
 } from './booking.styles'
 
 const BookingSection = () => {
+    const { push } = useHistory()
     const {
         closeModal,
         isLoading,
@@ -36,8 +38,6 @@ const BookingSection = () => {
     } = useContext(LoadingModalContext)
 
     const bookingData = useContext(BookingContext)
-
-    console.log(bookingData)
 
     const {
         calendar,
@@ -53,6 +53,7 @@ const BookingSection = () => {
         activeCalendar,
         selectedDate,
         setSelectedDate,
+        resetBooking
     } = bookingData
 
     const [searchQuery, setSearchQuery] = useState('')
@@ -70,18 +71,13 @@ const BookingSection = () => {
         }
     }, [calendars])
 
-    // useEffect(() => {
-    //     if (!bookingRows) {
-    //         getBookingRows()
-    //     }
-    // }, [calendars])
-
-    // console.log(bookings)
-    // console.log(bookingRows)
+    useEffect(() => {
+        return () => {
+            resetBooking()
+        }
+    }, [])
 
     if (!calendars) return <Popup loading={isLoading} title={message} close={closeModal} />
-
-    console.log(userBookings)
 
     return (
         <section>
@@ -89,6 +85,7 @@ const BookingSection = () => {
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
+                handleAddButton={() => push('rezervacie/novy-kalendar')}
                 title="Kalendar objednávok"
             />
 
@@ -96,17 +93,17 @@ const BookingSection = () => {
                 <Title>Pobočky</Title>
                 <GridRow>
                     {calendars.map((calendar, idx) => (
-                        <BookingCalendarOverview key={idx} calendar={calendar} handleClick={() => getCalendar(calendar._id, idx + 1)} isActive={activeCalendar === idx + 1} />
+                        <BookingCalendarOverview key={idx} calendar={calendar} handleClick={() => getCalendar(calendar._id, idx + 1)} handleUpdateClick={() => push(`rezervacie/${calendar._id}`)} isActive={activeCalendar === idx + 1} />
                     ))}
                 </GridRow>
 
-                {calendar && (
+                {calendar.name && (
                     <React.Fragment>
                         <Title>Kalendár</Title>
                         <CalendarGridContainer>
                             <Calendar calendar={calendar} setSelectedDate={setSelectedDate} />
 
-                            {calendar && selectedDate.name && <AppoimentOverview>
+                            {calendar.name && selectedDate.name && <AppoimentOverview>
                                 <Title>{selectedDate.name.charAt(0).toUpperCase() + selectedDate.name.slice(1)}</Title>
 
                                 {
@@ -115,33 +112,31 @@ const BookingSection = () => {
                                         const time = date.split('/')[0] + ":" + date.split('/')[1]
 
                                         return (
-                                            <React.Fragment>
-                                                <AppoimentContainer key={idx}>
-                                                    <Time>{time}</Time>
-                                                    <Line />
-                                                    {
-                                                        filteredUserBookings.map(user => {
-                                                            const bookingType = bookings.find(booking => booking._id === user.booking)
+                                            <AppoimentContainer key={idx}>
+                                                <Time>{time}</Time>
+                                                <Line />
+                                                {
+                                                    filteredUserBookings.map((user, idx) => {
+                                                        const bookingType = bookings.find(booking => booking._id === user.booking)
 
-                                                            return (
-                                                                <AppoimentCol>
-                                                                    <div>
-                                                                        <Name>{user.name}</Name>
-                                                                        <Desc>{bookingType.name}</Desc>
-                                                                    </div>
-                                                                    <Options>
-                                                                        <ConfirmButton>Vybavený</ConfirmButton>
-                                                                        <DeclineButton>Neprišiel</DeclineButton>
-                                                                    </Options>
-                                                                    <NoteContainer>
-                                                                        <p>{user.note}</p>
-                                                                    </NoteContainer>
-                                                                </AppoimentCol>
-                                                            )
-                                                        })
-                                                    }
-                                                </AppoimentContainer>
-                                            </React.Fragment>
+                                                        return (
+                                                            <AppoimentCol key={idx}>
+                                                                <div>
+                                                                    <Name>{user.name}</Name>
+                                                                    <Desc>{bookingType.name}</Desc>
+                                                                </div>
+                                                                <Options>
+                                                                    <ConfirmButton>Vybavený</ConfirmButton>
+                                                                    <DeclineButton>Neprišiel</DeclineButton>
+                                                                </Options>
+                                                                <NoteContainer>
+                                                                    <p>{user.note}</p>
+                                                                </NoteContainer>
+                                                            </AppoimentCol>
+                                                        )
+                                                    })
+                                                }
+                                            </AppoimentContainer>
                                         )
                                     })
                                 }
