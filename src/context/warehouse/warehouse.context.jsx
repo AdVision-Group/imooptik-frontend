@@ -20,10 +20,10 @@ import {
 import {
     initProductObj,
     initLensesObj,
-    productCategories
+    productCategories,
+    formatPrice
 } from './warehouse.utils'
 
-import { useFetch } from '../../hooks/useFetch'
 
 
 export const WarehouseContext = createContext({
@@ -290,7 +290,9 @@ const WarehouseProvider = ({ children }) => {
             }
 
             if (data.product) {
+                console.log(data.product)
                 if (currentUser.admin === 1) {
+
                     setProduct({
                         ...product,
                         ...data.product,
@@ -299,7 +301,8 @@ const WarehouseProvider = ({ children }) => {
                             ...data.product.specs
                         },
                         imagePath: data.product.image._id,
-                        available: [data.product.available[currentUser.premises - 1]]
+                        available: [data.product.available[currentUser.premises - 1]],
+                        price: (data.product.price / 100).toFixed(2)
                     })
                 } else {
                     setProduct({
@@ -310,7 +313,9 @@ const WarehouseProvider = ({ children }) => {
                             ...data.product.specs
                         },
                         imagePath: data.product.image._id,
-                        available: data.product.available.filter((num, idx) => idx !== 4)
+                        available: data.product.available.filter((num, idx) => idx !== 4),
+                        price: (data.product.price / 100).toFixed(2)
+
 
                     })
                 }
@@ -334,7 +339,10 @@ const WarehouseProvider = ({ children }) => {
         setShowModal(true)
 
         try {
-            const response = await postProduct(token, productToAdd)
+            const response = await postProduct(token, {
+                ...productToAdd,
+                price: formatPrice(productToAdd.price.toString())
+            })
             const data = await response.json()
 
             console.log(data)
@@ -365,7 +373,10 @@ const WarehouseProvider = ({ children }) => {
         setShowModal(true)
 
         try {
-            const response = await patchProduct(token, productToUpdate)
+            const response = await patchProduct(token, {
+                ...productToUpdate,
+                price: formatPrice(productToUpdate.price.toString())
+            })
             const data = await response.json()
             console.log(data)
 
@@ -466,7 +477,8 @@ const WarehouseProvider = ({ children }) => {
                 setLenses({
                     ...lenses,
                     ...data.lenses,
-                    imagePath: data.lenses.image._id
+                    imagePath: data.lenses.image._id,
+                    price: (data.lenses.price / 100).toFixed(2)
                 })
                 setSelectedImage(data.lenses.image)
                 setIsUpdating(true)
@@ -487,8 +499,13 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+
+
         try {
-            const response = await postLenses(token, productToAdd)
+            const response = await postLenses(token, {
+                ...productToAdd,
+                price: formatPrice(productToAdd.price.toString())
+            })
             const data = await response.json()
 
             if (data) {
@@ -511,10 +528,11 @@ const WarehouseProvider = ({ children }) => {
         setShowModal(true)
 
         try {
-            const response = await patchLenses(token, productToAdd)
+            const response = await patchLenses(token, {
+                ...productToAdd,
+                price: formatPrice(productToAdd.price.toString())
+            })
             const data = await response.json()
-
-            console.log(data)
 
             if (data) {
                 setIsLoading(false)
@@ -561,9 +579,6 @@ const WarehouseProvider = ({ children }) => {
     // ------------------------
     // END LENSES ACTIONS
     // ------------------------
-
-    console.log(product)
-
 
     return (
         <WarehouseContext.Provider

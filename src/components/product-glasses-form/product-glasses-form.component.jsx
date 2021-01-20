@@ -107,7 +107,7 @@ const ProductGlassesForm = ({
                 >
                     <CustomInput
                         label="Cena*"
-                        type='number'
+                        type='text'
                         name='price'
                         value={product.price.toString()}
                         handleChange={(e) => handleChange(e)}
