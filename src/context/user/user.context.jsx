@@ -168,6 +168,7 @@ const UserProvider = ({ children }) => {
         }
     }
 
+    console.log(user)
 
     // Get single user
     const getUser = async (id) => {
@@ -184,6 +185,13 @@ const UserProvider = ({ children }) => {
                     ...user,
                     ...data.user,
                     lenses: {
+                        // cylinder: [0, 0, 0, 0],
+                        // cylinderAxes: [0, 0, 0, 0],
+                        // diopters: [0, 0, 0, 0],
+                        // distance: [0, 0, 0, 0],
+                        // addition: [0, 0, 0, 0],
+                        // basis: [0, 0, 0, 0],
+                        // prism: [0, 0, 0, 0],
                         cylinder: data.user.lenses.cylinder.length ? data.user.lenses.cylinder : [0, 0, 0, 0],
                         cylinderAxes: data.user.lenses.cylinderAxes.length ? data.user.lenses.cylinderAxes : [0, 0, 0, 0],
                         diopters: data.user.lenses.diopters.length ? data.user.lenses.diopters : [0, 0, 0, 0],
@@ -223,8 +231,14 @@ const UserProvider = ({ children }) => {
             console.log(data)
 
             if (data.error) {
-                setIsLoading(false)
                 getMessage(data.message)
+                if (data.error === 'format' && data.message.includes('lenses.cylinderAxes')) {
+                    getMessage("Osa musí byt väčšia alebo rovná 0")
+                }
+                if (data.error === 'phone-exists') {
+                    getMessage("Telefónne číslo už v databázy existuje")
+                }
+                setIsLoading(false)
                 return
             }
 
@@ -249,21 +263,49 @@ const UserProvider = ({ children }) => {
 
         try {
             if (formToShow === 0) {
-                const response = await postUser(token, user)
-                const data = await response.json()
+                let data
+                if (!user._id) {
+                    console.log('creating new user')
+                    const response = await postUser(token, user)
 
-                console.log(data)
+                    data = await response.json()
 
-                if (data.error) {
-                    getMessage(data.message)
-                    setIsLoading(false)
-                    return
+                    console.log(data)
+
+                    if (data.error) {
+                        getMessage(data.message)
+
+                        if (data.type === 'email') {
+                            getMessage("Email existuje")
+                        }
+                        if (data.error === 'format' && data.message.includes('email')) {
+                            getMessage("Email musi byt platny email")
+                        }
+                        setIsLoading(false)
+                        return
+                    }
+
+                    setUser({
+                        ...user,
+                        _id: data.user._id
+                    })
                 }
 
-                setIsLoading(false)
-                getUsers()
-                push('/dashboard/zakaznici')
-                closeModal()
+                updateUser({
+                    _id: user._id,
+                    lenses: {
+                        ...user.lenses
+                    },
+                    address: user.city,
+                    city: user.city,
+                    country: user.country,
+                    phone: user.phone,
+                    psc: user.phone,
+                })
+                // setIsLoading(false)
+                // getUsers()
+                // push('/dashboard/zakaznici')
+                // closeModal()
 
             } else {
                 const response = await postAdmin(token, user)

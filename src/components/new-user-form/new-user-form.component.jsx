@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import CustomFormSwitch from '../custom-form-switch/custom-form-switch.component'
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
+import ParametersTable from '../parameters-table/parameters-table.component'
 
 import {
     retailNames
 } from '../../context/warehouse/warehouse.utils'
 
 import {
-    CustomSelect
+    CustomSelect,
+    Container,
+    GridRow,
+    ZeroMargin
 } from './new-user-form.styles'
 
 
-const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, handleChange, isAdmin }) => {
+const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, handleChange, isAdmin, handleParameterChange }) => {
+
+
     return (
         <div>
             {/* Akého uživatela chcete vytvoriť? */}
@@ -65,7 +71,72 @@ const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, hand
                                     handleChange={(e) => handleChange(e)}
                                 />
                             </InputRow>
+                            <InputRow
+                                label=""
+                                example='napr: 091234567'
+                            >
+                                <CustomInput
+                                    label="Telefónne číslo"
+                                    type='text'
+                                    name='phone'
+                                    value={user.phone}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                            </InputRow>
                         </div>
+
+                        <Container>
+                            <h2>Fakturačné údaje</h2>
+                            <GridRow>
+                                <ZeroMargin>
+                                    <CustomInput
+                                        label="Ulica a čislo domu"
+                                        type='text'
+                                        name='address'
+                                        value={user.address}
+                                        handleChange={(e) => handleChange(e)}
+                                    />
+                                </ZeroMargin>
+                                <ZeroMargin>
+                                    <CustomInput
+                                        label="PSČ"
+                                        type='text'
+                                        name='psc'
+                                        value={user.psc}
+                                        handleChange={(e) => handleChange(e)}
+                                    />
+                                </ZeroMargin>
+                            </GridRow>
+                            <GridRow>
+                                <div>
+                                    <CustomInput
+                                        label="Mesto"
+                                        type='text'
+                                        name='city'
+                                        value={user.city}
+                                        handleChange={(e) => handleChange(e)}
+                                    />
+                                </div>
+                                <div>
+                                    <CustomInput
+                                        label="Krajina"
+                                        type='text'
+                                        name='country'
+                                        value={user.country}
+                                        handleChange={(e) => handleChange(e)}
+                                    />
+                                </div>
+                            </GridRow>
+                        </Container>
+
+                        <Container>
+                            <h2>Parametre</h2>
+
+                            <ParametersTable
+                                parameters={user.lenses}
+                                handleChange={handleParameterChange}
+                            />
+                        </Container>
                     </div>
                 ) : (
                         <div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import InputRow from '../product-input-row/product-input-row.component'
@@ -30,7 +30,7 @@ const UserForm = ({
     isUpdating,
     user,
     handleChange,
-    handleParameterChange
+    handleParameterChange,
 }) => {
     const { push } = useHistory()
 
@@ -38,7 +38,6 @@ const UserForm = ({
         e.preventDefault()
         push(`/dashboard/objednavky/${user._id}`)
     }
-
 
     return (
         <GridContainer>

@@ -3,7 +3,8 @@ import React from 'react'
 import {
     TableContainer,
     TitleCol,
-    Col
+    Col,
+    OsContainer
 } from './parameters-table.styles'
 
 const ParametersTable = ({ parameters, handleChange }) => {
@@ -12,10 +13,22 @@ const ParametersTable = ({ parameters, handleChange }) => {
         <TableContainer>
             <TitleCol>
                 <div>{" "}</div>
-                <div>Pravé oko -</div>
-                <div>Ľavé oko -</div>
-                <div>Pravé oko +</div>
-                <div>Ľavé oko +</div>
+                <div>
+                    <p>Pravé oko</p>
+                    <p>-</p>
+                </div>
+                <div>
+                    <p>Ľavé oko</p>
+                    <p>-</p>
+                </div>
+                <div>
+                    <p>Pravé oko</p>
+                    <p>+</p>
+                </div>
+                <div>
+                    <p>Ľavé oko</p>
+                    <p>+</p>
+                </div>
             </TitleCol>
 
 
@@ -59,7 +72,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
 
                 {parameters.cylinderAxes.map((value, idx) => {
                     return (
-                        <div key={idx}>
+                        <OsContainer key={idx}>
                             <input
                                 step={0.25}
 
@@ -68,7 +81,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                             />
-                        </div>
+                        </OsContainer>
                     )
                 })}
             </Col>
@@ -109,7 +122,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                 })}
             </Col>
             <Col>
-                <div>vrstva</div>
+                <div>addicia</div>
 
                 {parameters.addition.map((value, idx) => {
                     return (

@@ -102,8 +102,8 @@ const ProductGlassesForm = ({
                     </datalist>
                 </ProductInputRow>
                 <ProductInputRow
-                    label="Cena v centoch"
-                    example="napr: 1055 = 10,55€"
+                    label="Cena"
+                    example="napr: 10,55€"
                 >
                     <CustomInput
                         label="Cena*"

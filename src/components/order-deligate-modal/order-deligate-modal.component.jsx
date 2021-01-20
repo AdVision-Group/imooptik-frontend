@@ -52,6 +52,9 @@ const OrderDeligateModal = ({ close, premise, id }) => {
             if (response.status === 400) {
                 getMessage("Faktúra musí byt zaplatená, aby mohla byť priradená prevádzke")
             }
+            if (response.status === 401) {
+                getMessage("Musíš byt vedúci, aby si mohol manipulovať s priradovanim")
+            }
             const data = await response.json()
 
             if (data.order) {

@@ -33,10 +33,6 @@ const CustomerProfile = () => {
         getUser,
         handleChange,
         handleParameterChange,
-        handleDioptersChange,
-        handleDistanceChange,
-        handleCylinderChange,
-        handleCylinderAxesChange,
         updateUser,
         resetUser,
         formToShow,
@@ -70,6 +66,8 @@ const CustomerProfile = () => {
         }
     }, [])
 
+    console.log(isUpdating)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -94,15 +92,12 @@ const CustomerProfile = () => {
                                 user={user}
                                 handleChange={handleChange}
                                 handleParameterChange={handleParameterChange}
-                                handleDioptersChange={handleDioptersChange}
-                                handleDistanceChange={handleDistanceChange}
-                                handleCylinderChange={handleCylinderChange}
-                                handleCylinderAxesChange={handleCylinderAxesChange}
+
                             />
                         ) : (
                                 <NewUserForm
                                     isAdmin={isAdmin}
-
+                                    handleParameterChange={handleParameterChange}
                                     formToShow={formToShow}
                                     switchFormButtons={switchFormButtons}
                                     toggleUserForm={toggleUserForm}
