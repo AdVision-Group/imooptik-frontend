@@ -34,12 +34,12 @@ const OrdersSection = () => {
         {
             id: 3,
             name: "Spracované",
-            value: "processed"
+            value: "fulfilled"
         },
         {
             id: 4,
             name: "Splnené",
-            value: "fulfilled"
+            value: "finished"
 
         }
     ]

@@ -13,18 +13,16 @@ import {
 } from './new-user-form.styles'
 
 
-const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, handleChange }) => {
-    console.log(user)
-
+const NewUserForm = ({ formToShow, switchFormButtons, toggleUserForm, user, handleChange, isAdmin }) => {
     return (
         <div>
             {/* Akého uživatela chcete vytvoriť? */}
-            <CustomFormSwitch
+            {isAdmin && <CustomFormSwitch
                 items={switchFormButtons}
                 title="Akého uživatela chcete vytvoriť?"
                 activeIndex={formToShow}
                 handleClick={toggleUserForm}
-            />
+            />}
 
             {
                 formToShow === 0 ? (

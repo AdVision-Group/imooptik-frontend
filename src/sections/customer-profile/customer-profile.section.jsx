@@ -101,6 +101,8 @@ const CustomerProfile = () => {
                             />
                         ) : (
                                 <NewUserForm
+                                    isAdmin={isAdmin}
+
                                     formToShow={formToShow}
                                     switchFormButtons={switchFormButtons}
                                     toggleUserForm={toggleUserForm}

@@ -30,11 +30,7 @@ const UserForm = ({
     isUpdating,
     user,
     handleChange,
-    handleParameterChange,
-    handleDioptersChange,
-    handleDistanceChange,
-    handleCylinderChange,
-    handleCylinderAxesChange
+    handleParameterChange
 }) => {
     const { push } = useHistory()
 
@@ -42,6 +38,7 @@ const UserForm = ({
         e.preventDefault()
         push(`/dashboard/objednavky/${user._id}`)
     }
+
 
     return (
         <GridContainer>

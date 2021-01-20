@@ -26,6 +26,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
                                 type='Number'
                                 value={value}
                                 name="diopters"
@@ -42,6 +43,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="cylinder"
@@ -58,6 +61,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="cylinderAxes"
@@ -74,6 +79,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="prism"
@@ -90,6 +97,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="basis"
@@ -106,6 +115,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="addition"
@@ -123,6 +134,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
+                                step={0.25}
+
                                 type='Number'
                                 value={value}
                                 name="distance"

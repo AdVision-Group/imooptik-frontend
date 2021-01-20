@@ -42,13 +42,13 @@ const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleF
 
             <OrderDetailsContainer>
                 <div>
-                    <FulfilledButton onClick={() => handleFulfill(_id)}>Fulfill</FulfilledButton>
+                    <FulfilledButton onClick={() => handleFulfill(_id)}>Spracovať</FulfilledButton>
                     <FulfilledButton onClick={() => handleFinish(_id)}>Dokončiť</FulfilledButton>
                 </div>
                 {showModal && <OrderDeligateModal close={close} premise={order.premises} id={order._id} />}
                 <div onClick={() => setshowModal(true)}>
                     <p>Vybavuje</p>
-                    <p>{order.premises === 0 ? "Neuvedené" : retailNames[order.premises]}</p>
+                    <p>{order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}</p>
                     <p>Stav</p>
 
                     {status && <StatusContainer>{svkStatus.name}</StatusContainer>}

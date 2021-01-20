@@ -37,6 +37,11 @@ export const Col = styled.div`
             font-size: inherit;
             background-color: #F5F5F5;
             border-radius: .5rem;
+            outline: none;
+
+            &:focus {
+                outline: none;
+            }
         }
 
         input[type=number]::-webkit-inner-spin-button, 
