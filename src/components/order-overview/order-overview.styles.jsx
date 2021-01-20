@@ -47,36 +47,49 @@ export const Price = styled.p`
 export const OrderDetailsContainer = styled.div`
     cursor: pointer;
     justify-self: end;
-    text-align: end;
+    text-align: center;
     align-self: start;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
     display: flex;
+    flex-direction:column;
+
+`
+
+export const OptionsContainer = styled.div`
+    display:flex;
+    /* flex-direction: column; */
+    align-self: flex-end;
+    justify-content: flex-start;
+
+
+    button {
+        /* background-color:red; */
+        margin: 0 .5rem;
+        margin-bottom: 1rem;
+    }
+`
+
+export const DeligateContainer = styled.div`
+    /* min-width: 30rem; */
+    padding: 2rem;
+    border-radius: .5rem;
+    background-color: #f5f5f5;
+    transition: background-color .3s ease-out;
+    margin: 0 0 1rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    p:nth-child(2) {
+        opacity: .83;
+    }
 
     div:nth-child(1) {
-        display:flex;
-        flex-direction: column;
-
-        button:nth-child(1) {
-            /* background-color:red; */
-            margin-bottom: .5rem;
-        }
+        margin-right: 2rem;
     }
-    div:nth-child(2) {
-        padding: 2rem;
-        border-radius: .5rem;
-        background-color: #f5f5f5;
-        transition: background-color .3s ease-out;
-        margin-left: 2rem;
-
-        &:hover {
-            background-color: #eee;
-        }
-
-        p:nth-child(2) {
-            opacity: .63;
-        }
-    }
-
 `
 
 export const FulfilledButton = styled(CustomButton)`
@@ -89,19 +102,20 @@ export const Options = styled.div`
     grid-column: 2;
     align-self: end;
     justify-self: end;
-
 `
 
 export const StatusContainer = styled.p`
     opacity: .63;
     top: 2rem;
     right: 2rem;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 `
 
 export const UpdateButton = styled(CustomButton)`
     font-size: 1rem;
     margin-right: 1rem;
+    background-color: rgb(235, 172, 1);
+    font-weight: bolder;
 `
 
 export const DeleteButton = styled(CustomButton)`

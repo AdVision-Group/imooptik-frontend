@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../../context/auth/auth.context'
 import { useHistory } from 'react-router-dom'
 import { UserContext } from '../../context/user/user.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -24,6 +25,7 @@ import {
 const CustomersSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const { push } = useHistory()
+    const { isAdmin } = useContext(AuthContext)
 
     const {
         isLoading,
@@ -92,7 +94,12 @@ const CustomersSection = () => {
             />
 
             <SectionNavbar
-                items={filterItems}
+                items={isAdmin ? filterItems : [
+                    {
+                        id: 0,
+                        name: "Zákazníci",
+                        filter: 0,
+                    },]}
                 activeIndex={activeIndex}
                 setActiveIndex={handleChangeFilterItem}
             />
@@ -103,7 +110,7 @@ const CustomersSection = () => {
                         <CustomerContainer key={user._id}>
                             <Content>
                                 <h2>{user.name || user.email}</h2>
-                                <ProductId>{user._id}</ProductId>
+                                {/* <ProductId>{user._id}</ProductId> */}
                                 <Description>Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi...</Description>
                             </Content>
 

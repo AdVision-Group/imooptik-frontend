@@ -394,6 +394,7 @@ const OrderSection = () => {
                         />
                     ) : activeStep === steps[2] ? (
                         <DioptersSubSection
+                            selectedUser={selectedUser}
                             handleChangeStep={handleChangeStep}
                             combinedProduct={combinedProduct}
                             handleParameterChange={handleParameterChange}

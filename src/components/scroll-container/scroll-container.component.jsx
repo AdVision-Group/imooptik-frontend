@@ -1,10 +1,12 @@
 import React from 'react'
-import { Container } from './scroll-container.styles'
+import { Container, FixedContainer } from './scroll-container.styles'
 
 const ScrollContainer = ({ children }) => {
     return (
         <Container>
-            {children}
+            <FixedContainer>
+                {children}
+            </FixedContainer>
         </Container>
     )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import CustomInput from '../../../../components/custom-input/custom-input.component'
 import CustomBackButton from '../../../../components/custom-back-button/custom-back-button.component'
 import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
 

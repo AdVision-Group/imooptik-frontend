@@ -16,3 +16,7 @@ export const Container = styled.div`
         margin-bottom: 8rem;
     }
 `
+
+export const FixedContainer = styled.div`
+    max-width: 115rem;
+`

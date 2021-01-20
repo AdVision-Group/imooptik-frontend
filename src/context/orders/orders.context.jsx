@@ -241,19 +241,18 @@ const OrdersProvider = ({ children }) => {
 
         let payment = 'paid'
 
-        console.log("selectedPayment")
-        console.log(selectedPayment)
-        console.log("selectedPayment")
-
         if (selectedPayment === 2) {
             payment = 'half-paid'
         }
 
         try {
             const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite, coupon, deposit, payment, paymentOptions[selectedPayment].value)
+            if (response.status === 200) {
+                getMessage("Objednavkabola vytvorená")
+            }
+
             const data = await response.json()
 
-            console.log(data)
 
             if (data.order) {
                 resetInput()
@@ -261,7 +260,6 @@ const OrdersProvider = ({ children }) => {
                 getOrders()
             }
 
-            getMessage(data.message)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -298,7 +296,6 @@ const OrdersProvider = ({ children }) => {
             const response = await postCombinedProduct(productToAdd)
             const data = await response.json()
 
-            console.log(data)
 
             if (data.combinedProduct) {
 
@@ -353,6 +350,10 @@ const OrdersProvider = ({ children }) => {
 
         try {
             const response = await postFulfill(token, id)
+            if (response.status === 400) {
+                getMessage("Objednávka nieje priradena k prevádzke")
+
+            }
             const data = await response.json()
 
             console.log(data)
@@ -364,7 +365,6 @@ const OrdersProvider = ({ children }) => {
             }
 
             setIsLoading(false)
-            getMessage(data.message)
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")

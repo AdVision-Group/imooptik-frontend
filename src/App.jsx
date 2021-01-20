@@ -22,7 +22,7 @@ const App = () => {
             <Route path='/prihlasenie' render={() => currentUser ? <Redirect to='/dashboard' /> : <SignInAndSignUpPage />} />
             <Route path='/dashboard' render={() => currentUser ? <DashboardPage /> : <Redirect to='/prihlasenie' />} />
             <Route path='/reset/:token' component={ResetPasswordPage} />
-            {currentUser ? <Redirect to='/dashboard/obchod' /> : <Redirect to='/prihlasenie' />}
+            {currentUser ? <Redirect to='/dashboard/zakaznici' /> : <Redirect to='/prihlasenie' />}
           </Switch>
         </HashRouter>
       </Suspense>

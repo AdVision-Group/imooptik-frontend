@@ -15,7 +15,9 @@ import {
     PdfButton,
     UpdateButton,
     OrderDetailsContainer,
-    StatusContainer
+    StatusContainer,
+    OptionsContainer,
+    DeligateContainer
 } from './order-overview.styles'
 
 const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleFinish }) => {
@@ -36,23 +38,28 @@ const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleF
 
             <OrderContent>
                 <h2>ID objednávky</h2>
-                <OrderId>{_id}</OrderId>
+                <OrderId>{order.customId}</OrderId>
                 <DateContainer>{d.toLocaleDateString("sk-SK", options)}</DateContainer>
             </OrderContent>
 
             <OrderDetailsContainer>
-                <div>
-                    <FulfilledButton onClick={() => handleFulfill(_id)}>Spracovať</FulfilledButton>
-                    <FulfilledButton onClick={() => handleFinish(_id)}>Dokončiť</FulfilledButton>
-                </div>
+                <OptionsContainer>
+                    {status === "paid" && <FulfilledButton onClick={() => handleFulfill(_id)}>Spracovať</FulfilledButton>}
+                    {status === "fulfilled" && <FulfilledButton onClick={() => handleFinish(_id)}>Dokončiť</FulfilledButton>}
+                </OptionsContainer>
                 {showModal && <OrderDeligateModal close={close} premise={order.premises} id={order._id} />}
-                <div onClick={() => setshowModal(true)}>
-                    <p>Vybavuje</p>
-                    <p>{order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}</p>
-                    <p>Stav</p>
+                <DeligateContainer onClick={() => setshowModal(true)}>
+                    <div>
+                        <p>Vybavuje</p>
+                        <p style={order.premises === 0 ? { color: "#DD4C4C" } : null}>{order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}</p>
+                    </div>
+                    <div>
+                        <p>Stav</p>
+                        {status && <StatusContainer style={status === "finished" || status === "paid" ? { color: "#1e824c" } : null}>{svkStatus.name}</StatusContainer>}
+                    </div>
+                </DeligateContainer>
 
-                    {status && <StatusContainer>{svkStatus.name}</StatusContainer>}
-                </div>
+
 
             </OrderDetailsContainer>
             <Options>
@@ -62,9 +69,9 @@ const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleF
                 <UpdateButton onClick={handleUpdateClick}>
                     Zobraziť
                 </UpdateButton>
-                <DeleteButton>
+                {/* <DeleteButton>
                     Vymazať
-                </DeleteButton>
+                </DeleteButton> */}
             </Options>
 
         </OrderContainer>

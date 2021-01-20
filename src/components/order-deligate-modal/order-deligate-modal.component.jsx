@@ -48,6 +48,10 @@ const OrderDeligateModal = ({ close, premise, id }) => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/delegate`, requestOptions)
+            console.log(response)
+            if (response.status === 400) {
+                getMessage("Faktúra musí byt zaplatená, aby mohla byť priradená prevádzke")
+            }
             const data = await response.json()
 
             if (data.order) {
@@ -57,7 +61,7 @@ const OrderDeligateModal = ({ close, premise, id }) => {
                 return
             }
 
-            getMessage(data.message)
+            // getMessage(data.message)
             setIsLoading(false)
         } catch (err) {
             console.log(err)

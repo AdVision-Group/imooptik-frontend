@@ -19,13 +19,8 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null)
     const [isAdmin, setIsAdmin] = useState(false)
 
-
-    console.log(isAdmin)
     const checkIfAdmin = (user) => {
-        console.log(user.admin)
         if (user.admin > 2) {
-            console.log(user.admin)
-
             setIsAdmin(true)
         } else {
             setIsAdmin(false)

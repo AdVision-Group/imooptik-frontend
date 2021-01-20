@@ -42,24 +42,23 @@ const Dashboard = () => {
     const match = useRouteMatch()
     const routes = [
         {
-            name: 'E-shop',
-            path: '/obchod',
-            permission: 1,
-            icon: AiOutlineHome
-        },
-        {
-            name: 'Uživatelia',
+            name: 'Zákazníci',
             path: '/zakaznici',
             permission: 1,
             icon: AiOutlineUser
-
         },
         {
-            name: 'Objednávky',
+            name: 'Zákazky',
             path: '/objednavky',
             permission: 0,
             icon: AiOutlineInbox
 
+        },
+        {
+            name: 'Sklad',
+            path: '/obchod',
+            permission: 1,
+            icon: AiOutlineHome
         },
         {
             name: 'Rezervácie',
@@ -177,7 +176,7 @@ const Dashboard = () => {
 
                         </Switch>
                         {/* {currentUser.admin === 0 ? <Redirect to={`${match.path}/objednavky`} /> : <Redirect to={`${match.path}/obchod`} />} */}
-                        <Redirect to={`${match.path}/obchod`} />
+                        <Redirect to={`${match.path}/zakaznici`} />
                     </ImageProvider>
                 </Suspense>
             </main>
