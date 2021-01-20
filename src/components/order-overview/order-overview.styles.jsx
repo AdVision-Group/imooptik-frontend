@@ -47,19 +47,42 @@ export const Price = styled.p`
 export const OrderDetailsContainer = styled.div`
     cursor: pointer;
     justify-self: end;
-    /* text-align: end; */
+    text-align: end;
     align-self: start;
-    padding: 2rem;
-    border-radius: .5rem;
-    background-color: #f5f5f5;
     margin-bottom: 3rem;
-    transition: background-color .3s ease-out;
+    display: flex;
 
-    &:hover {
-        background-color: #eee;
+    div:nth-child(1) {
+        display:flex;
+        flex-direction: column;
 
+        button:nth-child(1) {
+            /* background-color:red; */
+            margin-bottom: .5rem;
+        }
+    }
+    div:nth-child(2) {
+        padding: 2rem;
+        border-radius: .5rem;
+        background-color: #f5f5f5;
+        transition: background-color .3s ease-out;
+        margin-left: 2rem;
+
+        &:hover {
+            background-color: #eee;
+        }
+
+        p:nth-child(2) {
+            opacity: .63;
+        }
     }
 
+`
+
+export const FulfilledButton = styled(CustomButton)`
+    font-size: 1.2rem;
+    border-radius: 9999rem;
+    padding: .3rem 1.5rem;
 `
 
 export const Options = styled.div`

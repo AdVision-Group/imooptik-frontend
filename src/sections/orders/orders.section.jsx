@@ -43,11 +43,13 @@ const OrdersSection = () => {
 
         }
     ]
-    const [activeIndex, setActiveIndex] = useState(2)
+    const [activeIndex, setActiveIndex] = useState(1)
 
     const {
         getOrders,
-        orders
+        orders,
+        handleFulfill,
+        handleFinish
     } = useContext(OrdersContext)
 
     useEffect(() => {
@@ -58,12 +60,9 @@ const OrdersSection = () => {
 
     const filteredOrders = orders.filter(order => order.status === items[activeIndex - 1].value)
 
-    console.log(orders[0].status)
-    console.log(items[activeIndex - 1].value)
-    console.log(filteredOrders)
-
     return (
         <section>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
@@ -84,6 +83,9 @@ const OrdersSection = () => {
                             key={idx}
                             order={order}
                             handleUpdateClick={() => push(`/dashboard/objednavky/${order.orderedBy._id}/${order._id}`)}
+                            items={items}
+                            handleFulfill={handleFulfill}
+                            handleFinish={handleFinish}
                         />
                     )) : (
                         <div>

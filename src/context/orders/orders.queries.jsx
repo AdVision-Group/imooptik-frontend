@@ -100,3 +100,36 @@ export const fetchUserOrder = (token, id) => {
 
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}`, requestOptions)
 }
+
+export const postFulfill = (token, id) => {
+    // /api/admin/orders/:id/fulfill
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/fulfill`, requestOptions)
+}
+
+
+export const postFinish = (token, id) => {
+    // /api/admin/orders/:id/fulfill
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/finish`, requestOptions)
+}

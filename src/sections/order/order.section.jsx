@@ -44,8 +44,6 @@ const OrderSection = () => {
     const [userSearchResult, setUserSearchResult] = useState([])
     const [showAddressForm, setShowAddressForm] = useState(false)
 
-    console.log(orderId)
-
     const {
         closeModal,
         isLoading,

@@ -11,7 +11,9 @@ import {
     fetchOrders,
     postOrder,
     postCombinedProduct,
-    fetchUserOrder
+    fetchUserOrder,
+    postFulfill,
+    postFinish
 } from './orders.queries'
 
 export const OrdersContext = createContext({
@@ -52,6 +54,8 @@ export const OrdersContext = createContext({
     status: '',
     orderPremises: 0,
     resetOrder: () => { },
+    handleFulfill: () => { },
+    handleFinish: () => { }
 })
 
 const OrdersProvider = ({ children }) => {
@@ -237,6 +241,10 @@ const OrdersProvider = ({ children }) => {
 
         let payment = 'paid'
 
+        console.log("selectedPayment")
+        console.log(selectedPayment)
+        console.log("selectedPayment")
+
         if (selectedPayment === 2) {
             payment = 'half-paid'
         }
@@ -247,7 +255,7 @@ const OrdersProvider = ({ children }) => {
 
             console.log(data)
 
-            if (data.orderId) {
+            if (data.order) {
                 resetInput()
                 push('/dashboard/objednavky')
                 getOrders()
@@ -338,6 +346,55 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+
+    const handleFulfill = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postFulfill(token, id)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.order) {
+
+                getOrders()
+                setIsLoading(false)
+                return
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+    const handleFinish = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await postFinish(token, id)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.order) {
+                getOrders()
+                setIsLoading(false)
+                return
+            }
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (selectedUser) {
             const { address, city, psc, country, phone } = selectedUser
@@ -349,6 +406,7 @@ const OrdersProvider = ({ children }) => {
 
         }
     }, [selectedUser])
+
 
     return (
         <OrdersContext.Provider
@@ -390,6 +448,8 @@ const OrdersProvider = ({ children }) => {
                 status,
                 orderPremises,
                 resetOrder,
+                handleFulfill,
+                handleFinish
             }}
         >
             {children}
