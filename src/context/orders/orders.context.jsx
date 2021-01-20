@@ -190,6 +190,9 @@ const OrdersProvider = ({ children }) => {
         console.log('reset order')
         setStatus('')
         setIsUpdating(false)
+        setSelectedPayment(0)
+        setDeposit(0)
+        setCoupon('')
     }
 
     const resetInput = () => {
@@ -197,9 +200,6 @@ const OrdersProvider = ({ children }) => {
         setSelectedProduct(null)
         setActiveStep('eshop')
         setCombinedProduct(initCombinedProductObj)
-        setSelectedPayment(0)
-        setDeposit(0)
-        setCoupon('')
         setOverWrite({
             address: '',
             psc: '',

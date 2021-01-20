@@ -43,6 +43,7 @@ const OrderSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [userSearchResult, setUserSearchResult] = useState([])
     const [showAddressForm, setShowAddressForm] = useState(false)
+    const [productsSearchResult, setProductsSearchResult] = useState([])
 
     const {
         closeModal,
@@ -160,6 +161,30 @@ const OrderSection = () => {
         }
 
     }, [selectedUser.email])
+    useEffect(() => {
+        if (searchQuery.length) {
+            const userFuse = new Fuse(products, {
+                keys: [
+                    'name',
+                    'brand',
+                    'eanCode',
+                    'description'
+                ]
+            })
+
+            const results = userFuse.search(searchQuery)
+
+            console.log("result")
+            console.log(results)
+            console.log("result")
+            setProductsSearchResult(results.map((result) => ({
+                ...result.item
+            })))
+        }
+
+    }, [searchQuery])
+
+    console.log(productsSearchResult)
 
     useEffect(() => {
         return () => {
@@ -358,7 +383,7 @@ const OrderSection = () => {
                         <EshopSubSecton
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
-                            allProducts={products}
+                            allProducts={productsSearchResult.length && searchQuery.length ? productsSearchResult : products}
                             handleClick={handleSelectProduct}
                         />
                     ) : activeStep === steps[1] ? (

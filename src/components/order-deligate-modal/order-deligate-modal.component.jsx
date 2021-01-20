@@ -46,13 +46,10 @@ const OrderDeligateModal = ({ close, premise, id }) => {
             redirect: 'follow'
         };
 
-        console.log(raw)
-
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/delegate`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.order) {
                 getOrders()
                 setIsLoading(false)
@@ -74,7 +71,7 @@ const OrderDeligateModal = ({ close, premise, id }) => {
         <ModalContainer >
             <CloseButton onClick={close} />
             <Modal>
-                <h3>Priradiť prevádzke</h3>
+                <h3>Priradiť k prevádzke</h3>
                 <CustomSelect value={value} onChange={(e) => setValue(e.target.value)}>
                     <option value={0}>Nezadané</option>
                     {retailNames.map((name, idx) => {
