@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import OrderDeligateModal from '../order-deligate-modal/order-deligate-modal.component'
+import OrderPayModal from '../order-pay-modal/order-pay-modal.component'
 
 import { retailNames } from '../../context/warehouse/warehouse.utils'
 
@@ -23,6 +24,7 @@ import {
 const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleFinish }) => {
     const { _id, date, status } = order
     const [showModal, setshowModal] = useState(false)
+    const [showPayModal, setShowPayModal] = useState(false)
 
     const d = new Date(date)
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -31,6 +33,10 @@ const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleF
 
     const close = () => {
         setshowModal(false)
+    }
+
+    const closePayModal = () => {
+        setShowPayModal(false)
     }
 
     return (
@@ -43,11 +49,13 @@ const OrderOverview = ({ order, handleUpdateClick, items, handleFulfill, handleF
             </OrderContent>
 
             <OrderDetailsContainer>
+                {showModal && <OrderDeligateModal close={close} premise={order.premises} id={order._id} />}
+                {showPayModal && <OrderPayModal close={closePayModal} order={order} />}
                 <OptionsContainer>
+                    {/* {status === "half-paid" && <FulfilledButton onClick={() => setShowPayModal(true)}>Zaplatiť</FulfilledButton>} */}
                     {status === "paid" && <FulfilledButton onClick={() => handleFulfill(_id)}>Spracovať</FulfilledButton>}
                     {status === "fulfilled" && <FulfilledButton onClick={() => handleFinish(_id)}>Dokončiť</FulfilledButton>}
                 </OptionsContainer>
-                {showModal && <OrderDeligateModal close={close} premise={order.premises} id={order._id} />}
                 <DeligateContainer onClick={() => setshowModal(true)}>
                     <div>
                         <p>Vybavuje</p>

@@ -245,6 +245,15 @@ const OrdersProvider = ({ children }) => {
             payment = 'half-paid'
         }
 
+
+        if (!isDifferentAddress) {
+            if (!selectedUser.address || !selectedUser.city || !selectedUser.psc || !selectedUser.country) {
+                getMessage("Chyba adressa")
+                setIsLoading(false)
+                return
+            }
+        }
+
         try {
             const response = await postOrder(token, { user, combinedProducts }, isDifferentAddress, overwrite, coupon, deposit, payment, paymentOptions[selectedPayment].value)
             if (response.status === 200) {
@@ -406,6 +415,18 @@ const OrdersProvider = ({ children }) => {
 
         }
     }, [selectedUser])
+
+    useEffect(() => {
+        if (selectedUser) {
+            if (selectedUser.lenses) {
+                setCombinedProduct({
+                    ...combinedProduct,
+                    lenses: selectedUser.lenses
+                })
+            }
+        }
+    }, [selectedUser])
+
 
 
     return (

@@ -161,6 +161,7 @@ const OrderSection = () => {
         }
 
     }, [selectedUser.email])
+
     useEffect(() => {
         if (searchQuery.length) {
             const userFuse = new Fuse(products, {
@@ -174,17 +175,12 @@ const OrderSection = () => {
 
             const results = userFuse.search(searchQuery)
 
-            console.log("result")
-            console.log(results)
-            console.log("result")
             setProductsSearchResult(results.map((result) => ({
                 ...result.item
             })))
         }
 
     }, [searchQuery])
-
-    console.log(productsSearchResult)
 
     useEffect(() => {
         return () => {

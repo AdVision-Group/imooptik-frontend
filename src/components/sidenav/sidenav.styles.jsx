@@ -82,7 +82,7 @@ export const NavLinksContainer = styled.ul`
         position: relative;
         display: flex;
         align-items: center;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
 
 
             &:hover {

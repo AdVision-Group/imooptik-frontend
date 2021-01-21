@@ -13,7 +13,8 @@ import {
     AiOutlineInbox,
     AiOutlineCalendar,
     AiOutlineFileDone,
-    AiOutlineLineChart
+    AiOutlineLineChart,
+    AiOutlineTag
 } from 'react-icons/ai'
 
 const ImageProvider = lazy(() => import('../../context/image/image.context'))
@@ -23,6 +24,7 @@ const UserProvider = lazy(() => import('../../context/user/user.context'))
 const WarehouseProvider = lazy(() => import('../../context/warehouse/warehouse.context'))
 const BookingProvider = lazy(() => import('../../context/booking/booking.context'))
 const OrdersProvider = lazy(() => import("../../context/orders/orders.context"))
+const CouponsProvider = lazy(() => import('../../context/coupons/coupons.context'))
 
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
@@ -37,6 +39,8 @@ const PostSection = lazy(() => import('../../sections/post/post.section'))
 const NoPermisionSection = lazy(() => import('../../sections/no-permission/no-permission.section'))
 const OrderSection = lazy(() => import('../../sections/order/order.section'))
 const CalendarSection = lazy(() => import('../../sections/calendar/calendar.section'))
+const CouponsSection = lazy(() => import('../../sections/coupons/coupons.section'))
+const CouponSection = lazy(() => import('../../sections/coupon/coupon.section'))
 
 const Dashboard = () => {
     const match = useRouteMatch()
@@ -59,6 +63,12 @@ const Dashboard = () => {
             path: '/obchod',
             permission: 1,
             icon: AiOutlineHome
+        },
+        {
+            name: 'Kupóny',
+            path: '/kupony',
+            permission: 1,
+            icon: AiOutlineTag
         },
         {
             name: 'Rezervácie',
@@ -137,12 +147,16 @@ const Dashboard = () => {
                             )
                             } />
 
-                            {/* <Route path={`${match.path}/objednavky/:userId/:orderId`} render={() => (
-                                <OrderProvider>
-                                    <OrderPageSection />
-                                </OrderProvider>
-                            )
-                            } /> */}
+                            <Route exact path={`${match.path}/kupony`} render={() => (
+                                <CouponsProvider>
+                                    <CouponsSection />
+                                </CouponsProvider>
+                            )} />
+                            <Route path={`${match.path}/kupony/:couponId`} render={() => (
+                                <CouponsProvider>
+                                    <CouponSection />
+                                </CouponsProvider>
+                            )} />
 
 
                             <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
