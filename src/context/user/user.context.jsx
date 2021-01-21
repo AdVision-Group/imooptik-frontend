@@ -263,7 +263,7 @@ const UserProvider = ({ children }) => {
 
         try {
             if (formToShow === 0) {
-                let data
+                let data = {}
                 if (!user._id) {
                     console.log('creating new user')
                     const response = await postUser(token, user)
@@ -292,7 +292,7 @@ const UserProvider = ({ children }) => {
                 }
 
                 updateUser({
-                    _id: user._id,
+                    _id: data.user ? data.user._id : user._id,
                     lenses: {
                         ...user.lenses
                     },
