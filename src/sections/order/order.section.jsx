@@ -101,13 +101,18 @@ const OrderSection = () => {
         orderPremises
     } = useContext(OrdersContext)
 
+    useEffect(() => {
+        return () => {
+            setStep('selectUser')
+        }
+    }, [])
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Header>
                 <div>
-                    <h1>Pridať objednávku</h1>
+                    <h1>Nová objednávka</h1>
                 </div>
             </Header>
             <ScrollContainer>
