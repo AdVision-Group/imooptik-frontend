@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 
 import InputRow from '../product-input-row/product-input-row.component'
@@ -90,6 +90,15 @@ const UserForm = ({
                                 type='text'
                                 name='lName'
                                 value={user.lName}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                // label="Priezvisko*"
+                                type='date'
+                                name='birthDate'
+                                value={""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>

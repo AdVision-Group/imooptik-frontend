@@ -14,20 +14,16 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <TitleCol>
                 <div>{" "}</div>
                 <div>
-                    <p>Pravé oko</p>
-                    <p>-</p>
+                    <p>P</p>
                 </div>
                 <div>
-                    <p>Ľavé oko</p>
-                    <p>-</p>
+                    <p>Ľ</p>
                 </div>
                 <div>
-                    <p>Pravé oko</p>
-                    <p>+</p>
+                    <p>P</p>
                 </div>
                 <div>
-                    <p>Ľavé oko</p>
-                    <p>+</p>
+                    <p>Ľ</p>
                 </div>
             </TitleCol>
 
@@ -39,8 +35,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
-                                step={0.25}
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="diopters"
                                 onChange={(e) => handleChange(e, idx)}
@@ -56,9 +51,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
-                                step={0.25}
-
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="cylinder"
                                 onChange={(e) => handleChange(e, idx)}
@@ -68,20 +61,34 @@ const ParametersTable = ({ parameters, handleChange }) => {
                 })}
             </Col>
             <Col>
-                <div>osa</div>
+                <div>ax</div>
 
                 {parameters.cylinderAxes.map((value, idx) => {
                     return (
                         <OsContainer key={idx}>
                             <input
-                                step={0.25}
-
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                             />
                         </OsContainer>
+                    )
+                })}
+            </Col>
+            <Col>
+                <div>PD</div>
+
+                {parameters.distance.map((value, idx) => {
+                    return (
+                        <div key={idx}>
+                            <input
+                                type='text'
+                                value={value}
+                                name="distance"
+                                onChange={(e) => handleChange(e, idx)}
+                            />
+                        </div>
                     )
                 })}
             </Col>
@@ -92,9 +99,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
-                                step={0.25}
-
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="prism"
                                 onChange={(e) => handleChange(e, idx)}
@@ -110,9 +115,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
-                                step={0.25}
-
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="basis"
                                 onChange={(e) => handleChange(e, idx)}
@@ -128,9 +131,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                     return (
                         <div key={idx}>
                             <input
-                                step={0.25}
-
-                                type='Number'
+                                type='text'
                                 value={value}
                                 name="addition"
                                 onChange={(e) => handleChange(e, idx)}
@@ -140,24 +141,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                 })}
             </Col>
 
-            <Col>
-                <div>P.D.</div>
 
-                {parameters.distance.map((value, idx) => {
-                    return (
-                        <div key={idx}>
-                            <input
-                                step={0.25}
-
-                                type='Number'
-                                value={value}
-                                name="distance"
-                                onChange={(e) => handleChange(e, idx)}
-                            />
-                        </div>
-                    )
-                })}
-            </Col>
         </TableContainer>
     )
 }

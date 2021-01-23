@@ -66,8 +66,6 @@ const CustomerProfile = () => {
         }
     }, [])
 
-    console.log(isUpdating)
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
