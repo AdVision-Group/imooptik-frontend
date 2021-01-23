@@ -113,9 +113,9 @@ export const DropdownMenu = styled.div`
 `
 
 export const Line = styled.div`
-    width: 100%;
+    width: 75%;
     height: .1rem;
     background-color: #000;
-    margin: 1rem 0;
-    opacity: .3;
+    margin: 1rem auto;
+    opacity: .1;
 `
