@@ -33,6 +33,7 @@ export const UserContext = createContext({
     toggleUserForm: () => { },
     createUser: () => { },
     getFilteredUsers: () => { },
+    getUserByQuery: () => { }
 })
 
 const UserProvider = ({ children }) => {
@@ -374,6 +375,41 @@ const UserProvider = ({ children }) => {
         }
     }
 
+    const getUserByQuery = async (query) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        console.log(query)
+        const raw = JSON.stringify(query)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/filter`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.users) {
+                setUsers(data.users)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <UserContext.Provider
             value={{
@@ -394,7 +430,8 @@ const UserProvider = ({ children }) => {
                 switchFormButtons,
                 toggleUserForm,
                 createUser,
-                getFilteredUsers
+                getFilteredUsers,
+                getUserByQuery
             }}
         >
             {children}
