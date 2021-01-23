@@ -9,7 +9,7 @@ import SectionNavbar from "../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 
-import Fuse from 'fuse.js'
+// import Fuse from 'fuse.js'
 
 
 import {
@@ -41,7 +41,14 @@ const CustomersSection = () => {
         users,
         totalCount,
         getFilteredUsers,
+        getUserByQuery
     } = useContext(UserContext)
+
+    const handleSearch = () => {
+        getUserByQuery({
+            query: searchQuery
+        })
+    }
 
     useEffect(() => {
         if (!users) {
@@ -69,20 +76,7 @@ const CustomersSection = () => {
 
     useEffect(() => {
         if (users) {
-            if (searchQuery !== '') {
-                const fuse = new Fuse(userItems, {
-                    keys: [
-                        'name',
-                        'email',
-                        'address',
-                        'phone'
-                    ]
-                })
-
-                const results = fuse.search(searchQuery)
-
-                setUserItems(results.map(result => result.item))
-            } else {
+            if (searchQuery === '') {
                 getFilteredUsers({
                     filters: {
                         admin: activeIndex
@@ -102,6 +96,7 @@ const CustomersSection = () => {
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
+                handleSearch={handleSearch}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('zakaznici/novy-zakaznik')}
                 count={totalCount}
