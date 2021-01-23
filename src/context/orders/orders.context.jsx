@@ -3,8 +3,13 @@ import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
-import { initCombinedProductObj, paymentOptionsArr, stepsArr } from './orders.utils'
-import { initUserObj } from '../user/user.utils'
+import {
+    initCombinedProductObj,
+    paymentOptionsArr,
+    stepsArr,
+    tabItems
+} from './orders.utils'
+import { initUserObj, } from '../user/user.utils'
 
 
 import {

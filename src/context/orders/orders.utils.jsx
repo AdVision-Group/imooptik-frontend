@@ -36,3 +36,17 @@ export const stepsArr = [
     'diopters',
     'summary'
 ]
+
+export const tabItems = [
+    {
+        id: 1,
+        name: "Nevybavené",
+        value: "fulfilled"
+    },
+    {
+        id: 2,
+        name: "Vybavené",
+        value: "finished"
+
+    }
+]

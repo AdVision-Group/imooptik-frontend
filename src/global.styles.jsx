@@ -23,6 +23,20 @@ export const GlobalStyles = createGlobalStyle`
         height: 100vh;
     }
 
+    input {
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+        display:block;
+    }
+
 `
 export const paddingStyles = css`
     padding: 0 3rem;
