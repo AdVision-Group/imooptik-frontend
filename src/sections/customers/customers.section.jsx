@@ -13,11 +13,10 @@ import Fuse from 'fuse.js'
 
 
 import {
-    CustomerContainer,
-    Content,
-    Options,
-    ProductId,
-    Description,
+    TableCol,
+    TableContainer,
+    TableHead,
+    TableRow,
     UpdateButton,
     DeleteButton
 } from './customers.styles'
@@ -26,6 +25,7 @@ const CustomersSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const { push } = useHistory()
     const { isAdmin } = useContext(AuthContext)
+    const [userItems, setUserItems] = useState([])
 
     const {
         isLoading,
@@ -40,51 +40,66 @@ const CustomersSection = () => {
         filterItems,
         users,
         totalCount,
-        getUsers,
+        getFilteredUsers,
     } = useContext(UserContext)
 
     useEffect(() => {
         if (!users) {
-            getUsers()
+            getFilteredUsers({
+                filters: {
+                    admin: activeIndex
+                }
+            })
+        }
+        if (users) {
+            setUserItems(users)
         }
     }, [users])
 
-
-
-    const [allUsers, setAllUsers] = useState([])
     useEffect(() => {
-        if (users)
-            setAllUsers(users.filter(user => filterItems[activeIndex].filter === user.admin))
-    }, [users])
-
-    const fuse = new Fuse(allUsers, {
-        keys: [
-            'name',
-            'email',
-            'address',
-            'phone'
-        ]
-    })
-
-    useEffect(() => {
-        const results = fuse.search(searchQuery)
-        if (results.length > 0) {
-            setAllUsers(results.map(result => result.item))
+        if (users) {
+            getFilteredUsers({
+                filters: {
+                    admin: activeIndex
+                }
+            })
+            setUserItems(users)
         }
-        if (!searchQuery) {
-            if (users) {
-                setAllUsers(users.filter(user => filterItems[activeIndex].filter === user.admin))
+    }, [activeIndex])
+
+    useEffect(() => {
+        if (users) {
+            if (searchQuery !== '') {
+                const fuse = new Fuse(userItems, {
+                    keys: [
+                        'name',
+                        'email',
+                        'address',
+                        'phone'
+                    ]
+                })
+
+                const results = fuse.search(searchQuery)
+
+                setUserItems(results.map(result => result.item))
+            } else {
+                getFilteredUsers({
+                    filters: {
+                        admin: activeIndex
+                    }
+                })
+                setUserItems(users)
             }
-
         }
+    }, [searchQuery])
 
-    }, [searchQuery, activeIndex])
 
-    if (!users || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
+
+
 
     return (
         <section>
-
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
@@ -105,27 +120,23 @@ const CustomersSection = () => {
             />
 
             <ScrollContainer>
-                {
-                    allUsers && allUsers.map(user => (
-                        <CustomerContainer key={user._id}>
-                            <Content>
-                                <h2>{user.name || user.email}</h2>
-                                {/* <ProductId>{user._id}</ProductId> */}
-                                <Description>Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi...</Description>
-                            </Content>
-
-                            <Options>
-                                <UpdateButton onClick={() => push(`zakaznici/${user._id}`)}>
-                                    Upraviť
-                        </UpdateButton>
-                                <DeleteButton>
-                                    Vymazať
-                        </DeleteButton>
-                            </Options>
-                        </CustomerContainer>
-                    ))
-                }
-
+                <TableContainer>
+                    <TableHead>
+                        <TableCol>Meno a priezvisko</TableCol>
+                        <TableCol>Email</TableCol>
+                        <TableCol>Možnosti</TableCol>
+                    </TableHead>
+                    {userItems.map((user, idx) => (
+                        <TableRow key={idx}>
+                            <TableCol>{user.name}</TableCol>
+                            <TableCol>{user.email}</TableCol>
+                            <TableCol>
+                                <UpdateButton onClick={() => push(`zakaznici/${user._id}`)}>Upraviť</UpdateButton>
+                                <DeleteButton onClick={() => alert("Pekný pokus! Tu velím zatiaľ ja :)")}>Odstrániť</DeleteButton>
+                            </TableCol>
+                        </TableRow>
+                    ))}
+                </TableContainer>
             </ScrollContainer>
 
         </section>

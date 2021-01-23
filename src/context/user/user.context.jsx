@@ -32,6 +32,7 @@ export const UserContext = createContext({
     switchFormButtons: [],
     toggleUserForm: () => { },
     createUser: () => { },
+    getFilteredUsers: () => { },
 })
 
 const UserProvider = ({ children }) => {
@@ -167,8 +168,6 @@ const UserProvider = ({ children }) => {
             setIsLoading(false)
         }
     }
-
-    console.log(user)
 
     // Get single user
     const getUser = async (id) => {
@@ -332,6 +331,49 @@ const UserProvider = ({ children }) => {
         }
     }
 
+    // ----------------------------------------------
+    // ----------------------------------------------
+    // ----------------------------------------------
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    const getFilteredUsers = async (filter) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        console.log(filter)
+        const raw = JSON.stringify(filter)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/filter`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.users) {
+                setUsers(data.users)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <UserContext.Provider
             value={{
@@ -352,6 +394,7 @@ const UserProvider = ({ children }) => {
                 switchFormButtons,
                 toggleUserForm,
                 createUser,
+                getFilteredUsers
             }}
         >
             {children}
