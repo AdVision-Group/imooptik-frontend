@@ -1,2 +1,0 @@
-(this.webpackJsonpimooptik=this.webpackJsonpimooptik||[]).push([[32],{58:function(t,r,n){"use strict";n.d(r,"a",(function(){return i}));var e=n(21);var o=n(32);function i(t){return function(t){if(Array.isArray(t))return Object(e.a)(t)}(t)||function(t){if("undefined"!==typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||Object(o.a)(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}}}]);
-//# sourceMappingURL=32.3f0f1c44.chunk.js.map
