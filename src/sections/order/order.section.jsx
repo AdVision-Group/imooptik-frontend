@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { UserContext } from '../../context/user/user.context'
-import { WarehouseContext } from '../../context/warehouse/warehouse.context'
-import { OrdersContext } from '../../context/orders/orders.context'
+// import { UserContext } from '../../context/user/user.context'
+// import { WarehouseContext } from '../../context/warehouse/warehouse.context'
+// import { OrdersContext } from '../../context/orders/orders.context'
 import { useParams } from 'react-router-dom'
 
 // import InputRow from '../../components/product-input-row/product-input-row.component'
@@ -27,6 +27,8 @@ import Popup from "../../components/popup/pop-up.component"
 
 import SelectUserComponent from './steps/select-user.component'
 import FindProductComponent from "./steps/find-product.component"
+import SelectLensesComponent from './steps/select-lenses.component'
+import SummaryComponent from './steps/summary.component'
 
 import {
     Header,
@@ -34,12 +36,22 @@ import {
 
 const OrderSection = () => {
     const { userId, orderId } = useParams()
-    const [searchQuery, setSearchQuery] = useState('')
-    const [userSearchResult, setUserSearchResult] = useState([])
-    const [showAddressForm, setShowAddressForm] = useState(false)
-    const [productsSearchResult, setProductsSearchResult] = useState([])
-
     const [step, setStep] = useState('selectUser')
+    const [order, setOrder] = useState({
+
+    })
+
+    const handleOrderChange = valueToAdd => {
+        const { name, value } = valueToAdd
+        setOrder({
+            ...order,
+            [name]: value
+        })
+    }
+
+    console.log("order")
+    console.log(order)
+    console.log("order")
 
     const {
         closeModal,
@@ -48,58 +60,6 @@ const OrderSection = () => {
         message
     } = useContext(LoadingModalContext)
 
-    const {
-        users,
-        user,
-        getUser,
-        getUsers,
-        // handleChange
-    } = useContext(UserContext)
-
-    const {
-        getProducts,
-        getLenses,
-        products,
-        lensesArr
-    } = useContext(WarehouseContext)
-
-    const {
-        selectedUser,
-        setSelectedUser,
-        hasAddress,
-        isDifferentAddress,
-        setIsDifferentAddress,
-        overwrite,
-        coupon,
-        setCoupon,
-        handleOverwriteChange,
-        handleChangeSelectedUser,
-        handleSelectUser,
-        isSearchingUser,
-        paymentOptions,
-        steps,
-        activeStep,
-        handleChangePayment,
-        handleChangeStep,
-        selectedPayment,
-        deposit,
-        setDeposit,
-        handleSelectLenses,
-        handleSelectProduct,
-        combinedProduct,
-        selectedLenses,
-        selectedProduct,
-        productsToOrder,
-        handleRemoveProduct,
-        handleParameterChange,
-        createOrder,
-        createCombinedProduct,
-        getUserOrder,
-        resetOrder,
-        isUpdating,
-        status,
-        orderPremises
-    } = useContext(OrdersContext)
 
     useEffect(() => {
         return () => {
@@ -116,16 +76,35 @@ const OrderSection = () => {
                 </div>
             </Header>
             <ScrollContainer>
-                {step === 'selectUser' && (
-                    <SelectUserComponent
-                        next={() => setStep('findProduct')}
-                    />
-                )}
-                {step === 'findProduct' && (
-                    <FindProductComponent
-                        next={() => setStep('findProduct')}
-                    />
-                )}
+                <div>
+                    {step === 'selectUser' && (
+                        <SelectUserComponent
+                            next={() => setStep('findProduct')}
+                            addToOrder={handleOrderChange}
+                        />
+                    )}
+                    {step === 'findProduct' && (
+                        <FindProductComponent
+                            back={() => setStep("selectUser")}
+                            next={setStep}
+                            addToOrder={handleOrderChange}
+                        />
+                    )}
+                    {step === 'selectLenses' && (
+                        <SelectLensesComponent
+                            back={() => setStep("findProduct")}
+                            next={() => setStep('summary')}
+                            addToOrder={handleOrderChange}
+                            order={order}
+                        />
+                    )}
+                    {step === 'summary' && (
+                        <SummaryComponent
+                            back={() => setStep("selectLenses")}
+                            order={order}
+                        />
+                    )}
+                </div>
 
             </ScrollContainer>
         </section>

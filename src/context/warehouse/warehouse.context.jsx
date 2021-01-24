@@ -61,7 +61,8 @@ export const WarehouseContext = createContext({
     updateLenses: () => { },
     deleteLenses: () => { },
     lensesParameters: {},
-    handleParameterChange: () => { }
+    handleParameterChange: () => { },
+    getProductsByQuery: () => { }
 })
 
 
@@ -580,6 +581,49 @@ const WarehouseProvider = ({ children }) => {
     // END LENSES ACTIONS
     // ------------------------
 
+    // ----------------------------------------------
+    // ----------------------------------------------
+    // ----------------------------------------------
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    const getProductsByQuery = async (query) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        console.log(query)
+        const raw = JSON.stringify(query)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/filter`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.products) {
+                setProducts(data.products)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <WarehouseContext.Provider
             value={{
@@ -619,6 +663,7 @@ const WarehouseProvider = ({ children }) => {
                 deleteLenses,
                 lensesParameters,
                 handleParameterChange,
+                getProductsByQuery
             }}
         >
             {children}

@@ -3,35 +3,54 @@ import { UserContext } from '../../../context/user/user.context'
 
 import CustomInput from '../../../components/custom-input/custom-input.component'
 
-import Fuse from 'fuse.js'
-
 import {
-    SelectUserContainer,
-    UserTableContainer,
+    SearchContainer,
+    TableContainer,
     UserTableHead,
     UserTableRow,
-    UserTableCol
+    TableCol,
+    SearchButton
 } from '../order.styles'
 
-const SelectUserComponent = ({ next }) => {
+const SelectUserComponent = ({ next, addToOrder }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [userItems, setUserItems] = useState([])
 
     const {
         users,
-        getUsers,
+        getFilteredUsers,
+        getUserByQuery
     } = useContext(UserContext)
 
     const handleClick = (user) => {
-        console.log("Selected user")
-        console.log(user)
-        console.log("Selected user")
+        addToOrder({
+            name: "user",
+            value: user
+        })
         next()
+    }
+
+    const handleSearchOnEnter = (e) => {
+        if (searchQuery !== '') {
+            if (e.key === 'Enter') {
+                getUserByQuery({
+                    query: searchQuery
+                })
+            }
+        }
+    }
+    const handleSearch = () => {
+        if (searchQuery === '') return
+        getUserByQuery({
+            query: searchQuery
+        })
     }
 
     useEffect(() => {
         if (!users) {
-            getUsers()
+            getFilteredUsers({
+                limit: 5
+            })
         }
         if (users) {
             setUserItems(users)
@@ -40,17 +59,10 @@ const SelectUserComponent = ({ next }) => {
 
     useEffect(() => {
         if (users) {
-            const fuse = new Fuse(users, {
-                keys: [
-                    'name',
-                    'email',
-                    'phone'
-                ]
-            })
-            if (searchQuery !== '') {
-                const results = fuse.search(searchQuery)
-                setUserItems(results.map(result => result.item))
-            } else {
+            if (searchQuery === '') {
+                getFilteredUsers({
+                    limit: 5
+                })
                 setUserItems(users)
             }
         }
@@ -65,31 +77,33 @@ const SelectUserComponent = ({ next }) => {
 
     return (
         <div>
-            <SelectUserContainer>
+            <SearchContainer>
                 <h3>Vyhľadať zákaznika</h3>
                 <div>
                     <CustomInput
                         label={"Meno, priezvisko, email alebo tel. číslo"}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyPress={handleSearchOnEnter}
                     />
                 </div>
-            </SelectUserContainer>
+                <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
+            </SearchContainer>
 
-            <UserTableContainer>
+            <TableContainer>
                 <UserTableHead>
-                    <UserTableCol>Meno a priezvisko</UserTableCol>
-                    <UserTableCol>Email</UserTableCol>
-                    <UserTableCol>Možnosti</UserTableCol>
+                    <TableCol>Meno a priezvisko</TableCol>
+                    <TableCol>Email</TableCol>
+                    <TableCol>Možnosti</TableCol>
                 </UserTableHead>
                 {userItems.map((user, idx) => (
                     <UserTableRow key={idx} onClick={() => handleClick(user)}>
-                        <UserTableCol>{user.name}</UserTableCol>
-                        <UserTableCol>{user.email}</UserTableCol>
-                        <UserTableCol>{user.phone}</UserTableCol>
+                        <TableCol>{user.name}</TableCol>
+                        <TableCol>{user.email}</TableCol>
+                        <TableCol>{user.phone}</TableCol>
                     </UserTableRow>
                 ))}
-            </UserTableContainer>
+            </TableContainer>
 
         </div>
     )
