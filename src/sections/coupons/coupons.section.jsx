@@ -11,7 +11,11 @@ import Popup from '../../components/popup/pop-up.component'
 import {
     CouponOverviewContainer,
     DeleteButton,
-    OpenButton
+    OpenButton,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCol
 } from './coupons.styles'
 
 const CouponsSection = () => {
@@ -37,6 +41,8 @@ const CouponsSection = () => {
         }
     }, [coupons])
 
+    console.log(coupons)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -49,22 +55,27 @@ const CouponsSection = () => {
             />
             <ScrollContainer>
 
-                {coupons && coupons.map((coupon, idx) => {
-                    console.log(coupon)
-
-                    return (
-                        <CouponOverviewContainer key={idx}>
-                            <div>
-                                <h3>Kupón: {coupon.code}</h3>
-                                <span>{coupon._id}</span>
-                            </div>
-                            <div>
-                                <DeleteButton onClick={() => deleteCoupon(coupon._id)}>Ostrániť</DeleteButton>
+                <TableContainer>
+                    <TableHead>
+                        <TableCol>#</TableCol>
+                        <TableCol>Kód</TableCol>
+                        <TableCol>Typ</TableCol>
+                        <TableCol>Hodnota</TableCol>
+                        <TableCol>Možnosti</TableCol>
+                    </TableHead>
+                    {coupons && coupons.map((coupon, idx) => (
+                        <TableRow key={idx}>
+                            <TableCol>{idx + 1}</TableCol>
+                            <TableCol>{coupon.code}</TableCol>
+                            <TableCol>{coupon.type === "percentage" ? "Percentá" : "Fixná suma"}</TableCol>
+                            <TableCol>{coupon.value}</TableCol>
+                            <TableCol>
                                 <OpenButton onClick={() => push(`kupony/${coupon._id}`)}>Zobraziť</OpenButton>
-                            </div>
-                        </CouponOverviewContainer>
-                    )
-                })}
+                                <DeleteButton onClick={() => deleteCoupon(coupon._id)}>Ostrániť</DeleteButton>
+                            </TableCol>
+                        </TableRow>
+                    ))}
+                </TableContainer>
             </ScrollContainer>
         </section>
     )
