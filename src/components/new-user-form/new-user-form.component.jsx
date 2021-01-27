@@ -33,7 +33,6 @@ const NewUserForm = ({
     useEffect(() => {
         return () => {
             console.log("UNMOUNT NEW USER FORM")
-            resetUser()
             handleChange({
                 target: {
                     name: 'lenses',
