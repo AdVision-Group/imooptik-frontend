@@ -12,6 +12,14 @@ import {
 } from './section-header.styles'
 
 const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count = 999, handleAddButton = () => { } }) => {
+    const handleSearchOnEnter = (e) => {
+        if (searchQuery !== '') {
+            if (e.key === 'Enter') {
+                handleSearch()
+            }
+        }
+    }
+
     return (
         <HeaderContainer>
             <Left>
@@ -25,6 +33,7 @@ const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count =
                         name='searchbox'
                         value={searchQuery}
                         handleChange={handleChange}
+                        onKeyPress={handleSearchOnEnter}
                         label='Vyhľadať'
                     />
                 </div>

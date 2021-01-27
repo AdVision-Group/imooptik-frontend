@@ -57,7 +57,6 @@ const UserForm = ({
                                     if (idx === 4) return
                                     return (
                                         <option key={idx} value={idx + 1}>{name}</option>
-
                                     )
                                 })
                             }

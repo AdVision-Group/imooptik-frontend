@@ -12,6 +12,19 @@ export const CustomSelect = styled.select`
     display: block;
 `
 
+
+export const CustomerForm = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    align-items: start;
+`
+
+export const ColContainer = styled.div`
+    padding: 2rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+`
+
 export const ZeroMargin = styled.div`
     input {
         margin-bottom: 0 !important;

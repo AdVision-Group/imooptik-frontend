@@ -8,9 +8,7 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import SectionNavbar from "../../components/section-navbar/section-navbar.component"
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
-
-// import Fuse from 'fuse.js'
-
+import Pagination from '../../components/pagination/pagination.component'
 
 import {
     TableCol,
@@ -35,6 +33,7 @@ const CustomersSection = () => {
     } = useContext(LoadingModalContext)
 
     const {
+        user,
         activeIndex,
         handleChangeFilterItem,
         filterItems,
@@ -45,9 +44,11 @@ const CustomersSection = () => {
     } = useContext(UserContext)
 
     const handleSearch = () => {
-        getUserByQuery({
-            query: searchQuery
-        })
+        if (searchQuery !== '') {
+            getUserByQuery({
+                query: searchQuery
+            })
+        }
     }
 
     useEffect(() => {
@@ -87,6 +88,13 @@ const CustomersSection = () => {
         }
     }, [searchQuery])
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const [usersPerPage] = useState(10)
+    const indexOfLastUser = currentPage * usersPerPage
+    const indexOfFirstUser = indexOfLastUser - usersPerPage
+    const currentUsers = userItems.slice(indexOfFirstUser, indexOfLastUser)
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -117,7 +125,7 @@ const CustomersSection = () => {
                         <TableCol>Email</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
-                    {userItems.map((user, idx) => (
+                    {currentUsers.map((user, idx) => (
                         <TableRow key={idx}>
                             <TableCol>{user.name}</TableCol>
                             <TableCol>{user.email}</TableCol>
@@ -128,6 +136,13 @@ const CustomersSection = () => {
                         </TableRow>
                     ))}
                 </TableContainer>
+
+                <Pagination
+                    productsPerPage={usersPerPage}
+                    totalProducts={userItems.length}
+                    paginate={paginate}
+                    activePage={currentPage}
+                />
             </ScrollContainer>
 
         </section>

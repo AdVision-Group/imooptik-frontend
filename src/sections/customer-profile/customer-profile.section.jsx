@@ -50,9 +50,60 @@ const CustomerProfile = () => {
         const { name, value } = e.target
 
         handleChange(e)
+
+
+        if (value === '') {
+            delete userObj[name]
+            // delete userObj.company[]
+            return
+        }
+
         setUserObj({
             ...userObj,
             [name]: value
+        })
+    }
+
+    const handleLensesParameterChange = (e, idx) => {
+        setHasChanges(true)
+
+        const { name, value } = e.target
+        let arr = user.lenses[name]
+        arr[idx] = Number(value)
+
+        handleParameterChange(e, idx)
+        setUserObj({
+            ...userObj,
+            lenses: {
+                ...user.lenses,
+                [name]: arr
+            }
+        })
+    }
+
+    const handleCompanyAddressChange = (e) => {
+        setHasChanges(true)
+
+        const { name, value } = e.target
+        handleCompanyChange(e)
+
+        console.log(value)
+
+        if (value === '') {
+            delete userObj.company[name]
+            if (Object.keys(userObj.company).length === 0) {
+                delete userObj["company"]
+            }
+            // delete userObj.company[]
+            return
+        }
+
+        setUserObj({
+            ...userObj,
+            company: {
+                ...userObj.company,
+                [name]: value
+            }
         })
     }
 
@@ -62,7 +113,11 @@ const CustomerProfile = () => {
 
         if (id === 'novy-zakaznik') {
             console.log("Create new user")
-            createUser(user)
+            if (userObj.fName || userObj.lName) {
+                delete userObj["fName"]
+                delete userObj["lName"]
+            }
+            createUser(userObj)
         } else {
             console.log("Update existing user")
             if (userObj.fName || userObj.lName) {
@@ -95,6 +150,9 @@ const CustomerProfile = () => {
         }
     }, [])
 
+    console.log(userObj)
+    console.log(user)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -121,18 +179,21 @@ const CustomerProfile = () => {
                                 isUpdating={isUpdating}
                                 user={user}
                                 handleChange={handleUserChange}
-                                handleParameterChange={handleParameterChange}
-                                handleCompanyChange={handleCompanyChange}
+                                handleParameterChange={handleLensesParameterChange}
+                                handleCompanyChange={handleCompanyAddressChange}
                             />
                         ) : (
                                 <NewUserForm
                                     isAdmin={isAdmin}
-                                    handleParameterChange={handleParameterChange}
+                                    handleParameterChange={handleLensesParameterChange}
                                     formToShow={formToShow}
                                     switchFormButtons={switchFormButtons}
                                     toggleUserForm={toggleUserForm}
                                     user={user}
                                     handleChange={handleUserChange}
+                                    handleCompanyChange={handleCompanyAddressChange}
+                                    resetUser={resetUser}
+
                                 />
                             )
                     }

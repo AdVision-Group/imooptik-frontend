@@ -8,6 +8,16 @@ import {
 } from './parameters-table.styles'
 
 const ParametersTable = ({ parameters, handleChange }) => {
+    const checkParameters = (parameter, idx) => {
+        if (parameter.length === 0) {
+            return ""
+        }
+        if (parameter[idx] === 1001) {
+            return ""
+        }
+
+        return parameter[idx]
+    }
 
     return (
         <TableContainer>
@@ -36,7 +46,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.diopters[idx] ?? ""}
+                                value={checkParameters(parameters.diopters, idx)}
                                 name="diopters"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -52,7 +62,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.cylinder[idx] ?? ""}
+                                value={checkParameters(parameters.cylinder, idx)}
                                 name="cylinder"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -68,7 +78,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <OsContainer key={idx}>
                             <input
                                 type='text'
-                                value={parameters.cylinderAxes[idx] ?? ""}
+                                value={checkParameters(parameters.cylinderAxes, idx)}
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -84,7 +94,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.distance[idx] ?? ""}
+                                value={checkParameters(parameters.distance, idx)}
                                 name="distance"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -100,7 +110,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.prism[idx] ?? ""}
+                                value={checkParameters(parameters.prism, idx)}
                                 name="prism"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -116,7 +126,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.basis[idx] ?? ""}
+                                value={checkParameters(parameters.basis, idx)}
                                 name="basis"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -132,7 +142,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={parameters.addition[idx] ?? ""}
+                                value={checkParameters(parameters.addition, idx)}
                                 name="addition"
                                 onChange={(e) => handleChange(e, idx)}
                             />

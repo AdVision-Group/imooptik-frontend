@@ -26,6 +26,7 @@ export const UserContext = createContext({
     // getUsers: () => { },
     getUser: () => { },
     handleChange: () => { },
+    handleParameterChange: () => { },
     handleCompanyChange: () => { },
     updateUser: () => { },
     resetUser: () => { },
@@ -117,7 +118,7 @@ const UserProvider = ({ children }) => {
     const handleParameterChange = (e, idx) => {
         const { name, value } = e.target
         let arr = user.lenses[name]
-        arr[idx] = Number(value)
+        arr[idx] = value === '' ? 1001 : Number(value)
         setUser({
             ...user,
             lenses: {
@@ -146,9 +147,7 @@ const UserProvider = ({ children }) => {
     }, [user.fName, user.lName])
 
     const resetUser = () => {
-        setUser({
-            ...initUserObj
-        })
+        setUser(initUserObj)
         setIsUpdating(false)
         setFormToShow(0)
     }
@@ -230,6 +229,13 @@ const UserProvider = ({ children }) => {
 
             if (data.error) {
                 getMessage(data.message)
+                if (data.error === 'low-privileges') {
+                    getMessage("Nemôžeš upravovať užívateľov s väčšími alebo rovnakými právami ako máš ty")
+
+                }
+                if (data.error === 'format') {
+                    getMessage("Chyba formátovania: " + data.message)
+                }
                 if (data.error === 'format' && data.message.includes('lenses.cylinderAxes')) {
                     getMessage("Osa musí byt väčšia alebo rovná 0")
                 }
@@ -269,10 +275,7 @@ const UserProvider = ({ children }) => {
                 if (!user._id) {
                     console.log('creating new user')
                     const response = await postUser(token, user)
-
                     data = await response.json()
-
-                    console.log(data)
 
                     if (data.error) {
                         getMessage(data.message)
@@ -288,22 +291,17 @@ const UserProvider = ({ children }) => {
                     }
 
                     setUser({
-                        ...user,
+                        ...data.user,
                         _id: data.user._id
                     })
                 }
 
+                const userId = data.user ? data.user._id : user._id
+
                 updateUser({
-                    _id: data.user ? data.user._id : user._id,
-                    lenses: {
-                        ...user.lenses
-                    },
-                    address: user.city,
-                    city: user.city,
-                    country: user.country,
-                    phone: user.phone,
-                    psc: user.phone,
-                })
+                    ...user
+                }, userId)
+
                 // setIsLoading(false)
                 // getUsers()
                 // push('/dashboard/zakaznici')
