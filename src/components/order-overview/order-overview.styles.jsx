@@ -1,136 +1,109 @@
 import styled from 'styled-components'
-import CustomButton from '../custom-button/custom-button.component'
 
-export const OrderContainer = styled.div`
-    position:relative;
+export const OrderOverviewRow = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 35rem;
-
+    grid-template-columns: 10rem 2fr 2fr 1fr 10rem;
+    align-content: center;
+    margin-bottom: 1rem;
     box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+`
+
+export const TableCol = styled.div`
+    position: relative;
     padding: 2rem;
-
-    &:not(:last-child) {
-        margin-bottom: 2rem;
-    }
-
-    @media all and (max-width: 800px) {
-        grid-template-columns: 1fr;
-
-    }
-`
-
-export const OrderContent = styled.div`
-    h2 {
-        font-size: 1.6rem;
-    }
-`
-
-export const OrderId = styled.p`
-    font-size: 1.2rem;
-    color: gray;
-    margin-bottom: 2rem;
-`
-
-export const DateContainer = styled.p`
-    font-size: 1.4rem;
-    /* font-weight: 700; */
-    color: gray;
-    /* margin-bottom: 2rem; */
-`
-
-export const Price = styled.p`
-    font-weight: 700;
-    font-size: 1.8rem;
-`
-
-export const OrderDetailsContainer = styled.div`
-    cursor: pointer;
-    justify-self: end;
     text-align: center;
-    align-self: start;
-    /* margin-bottom: 3rem; */
-    display: flex;
-    flex-direction:column;
-
 `
 
-export const OptionsContainer = styled.div`
-    display:flex;
-    /* flex-direction: column; */
-    align-self: flex-end;
-    justify-content: flex-start;
-
-
-    button {
-        /* background-color:red; */
-        margin: 0 .5rem;
-        margin-bottom: 1rem;
-    }
+export const DeligateCol = styled(TableCol)`
+    cursor: pointer;
+    padding: 1rem;
+    transition: background-color .3s ease-out; 
 `
 
-export const DeligateContainer = styled.div`
-    /* min-width: 30rem; */
-    padding: 2rem;
-    border-radius: .5rem;
-    background-color: #f5f5f5;
-    transition: background-color .3s ease-out;
-    margin: 0 0 1rem 2rem;
-    display: flex;
-    justify-content: flex-end;
+export const DeligateButton = styled.div`
+    padding: 1rem;
 
     &:hover {
-        background-color: #eee;
-    }
-
-    p:nth-child(2) {
-        opacity: .83;
-    }
-
-    div:nth-child(1) {
-        margin-right: 2rem;
+        background-color: #f5f5f5;
     }
 `
 
-export const FulfilledButton = styled(CustomButton)`
-    font-size: 1.2rem;
-    border-radius: 9999rem;
-    padding: .3rem 1.5rem;
-`
-
-export const Options = styled.div`
-    grid-column: 2;
-    align-self: end;
-    justify-self: end;
-`
-
-export const StatusContainer = styled.p`
-    opacity: .63;
-    top: 2rem;
-    right: 2rem;
-    /* text-transform: uppercase; */
-`
-
-export const UpdateButton = styled(CustomButton)`
-    font-size: 1rem;
-    margin-right: 1rem;
-    background-color: rgb(235, 172, 1);
-    font-weight: bolder;
-`
-
-export const DeleteButton = styled(CustomButton)`
-    font-size: 1rem;
-    background-color: rgb(235, 172, 1);
-`
-
-export const PdfButton = styled.a`
-    font-size: 1rem;
-
-    text-decoration: none;
-    color: #fff;
+export const IconContainer = styled.div`
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+    border-radius: 50%;
     background-color: #000;
-    padding: .8rem 1.5rem;
-    border-radius: .5rem;
-    margin-right: 1rem;
 
+    svg {
+        font-size: 1.2rem;
+        margin-top: .1rem;
+        display: block;
+        color: #fff;
+    }
+`
+
+export const DropdownMenu = styled.div`
+    position: absolute;
+    padding: 2rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    border-radius: .5rem;
+    background-color: #fff;
+    z-index: 99;
+    right: 3rem;
+    top: 6rem;
+    width: 20rem;
+    text-align: start;
+
+    ul {
+        list-style: none;
+
+        li {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color .3s ease-out;
+            border-radius: 9999rem .5rem .5rem 9999rem;
+
+
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem;
+                background-color: #f5f5f5;
+                border-radius: 50%;
+                margin-right: 1rem;
+
+                svg {
+                    transition: color .3s ease-out;
+                }
+            }
+
+            &:hover {
+                background-color: #f5f5f5;
+
+                div {
+                    svg {
+                        color: rgb(235, 172, 1);
+                    }
+                }
+            }
+
+        }
+        a:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+`
+
+export const Line = styled.div`
+    width: 75%;
+    height: .1rem;
+    background-color: #000;
+    margin: 1rem auto;
+    opacity: .1;
 `

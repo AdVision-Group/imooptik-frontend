@@ -1,8 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-// import { UserContext } from '../../context/user/user.context'
-// import { WarehouseContext } from '../../context/warehouse/warehouse.context'
-// import { OrdersContext } from '../../context/orders/orders.context'
 import { useParams, Prompt } from 'react-router-dom'
 
 // import InputRow from '../../components/product-input-row/product-input-row.component'
@@ -15,15 +12,6 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 // import OrderAddressForm from '../../components/order-address-form/order-address-form.component'
 
 import Popup from "../../components/popup/pop-up.component"
-
-// import EshopSubSecton from './sub-sections/eshop/eshop.sub-section'
-// import LensesSubSection from './sub-sections/lenses/lenses.sub-section'
-// import DioptersSubSection from './sub-sections/diopters/diopters.seb-section'
-// import SummarySubSection from './sub-sections/summary/summary.sub-section'
-
-// import Fuse from 'fuse.js'
-
-// import { retailNames } from '../../context/warehouse/warehouse.utils'
 
 import SelectUserComponent from './steps/select-user.component'
 import FindProductComponent from "./steps/find-product.component"

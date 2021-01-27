@@ -43,7 +43,10 @@ const SelectLensesComponent = ({ back, next, addToOrder, order }) => {
             <div>
                 <ParametersContainer>
                     <h3>Parametre zákaznika</h3>
-                    <ParametersTable parameters={order.user.lenses} />
+                    <ParametersTable
+                        parameters={order.user.lenses}
+                        disabledInputs={true}
+                    />
                 </ParametersContainer>
 
             </div>

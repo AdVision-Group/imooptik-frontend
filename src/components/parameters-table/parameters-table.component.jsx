@@ -7,7 +7,7 @@ import {
     OsContainer
 } from './parameters-table.styles'
 
-const ParametersTable = ({ parameters, handleChange }) => {
+const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) => {
     const checkParameters = (parameter, idx) => {
         if (parameter.length === 0) {
             return ""
@@ -49,6 +49,7 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.diopters, idx)}
                                 name="diopters"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
                             />
                         </div>
                     )
@@ -65,6 +66,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.cylinder, idx)}
                                 name="cylinder"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </div>
                     )
@@ -81,6 +84,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.cylinderAxes, idx)}
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </OsContainer>
                     )
@@ -97,6 +102,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.distance, idx)}
                                 name="distance"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </div>
                     )
@@ -113,6 +120,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.prism, idx)}
                                 name="prism"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </div>
                     )
@@ -129,6 +138,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.basis, idx)}
                                 name="basis"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </div>
                     )
@@ -145,6 +156,8 @@ const ParametersTable = ({ parameters, handleChange }) => {
                                 value={checkParameters(parameters.addition, idx)}
                                 name="addition"
                                 onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+
                             />
                         </div>
                     )

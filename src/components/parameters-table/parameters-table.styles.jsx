@@ -44,6 +44,10 @@ export const Col = styled.div`
             &:focus {
                 outline: none;
             }
+
+            &:disabled {
+                opacity: .83;
+            }
         }
 
         input[type=number]::-webkit-inner-spin-button, 

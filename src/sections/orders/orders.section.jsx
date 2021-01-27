@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import React, { useState, useContext, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Fuse from 'fuse.js'
 
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -9,9 +9,9 @@ import { OrdersContext } from '../../context/orders/orders.context'
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-// import OrderOverview from '../../components/order-overview/order-overview.component'
-import OrderDeligateModal from '../../components/order-deligate-modal/order-deligate-modal.component'
-
+import OrderOverview from '../../components/order-overview/order-overview.component'
+// import OrderDeligateModal from '../../components/order-deligate-modal/order-deligate-modal.component'
+import Pagination from '../../components/pagination/pagination.component'
 import Popup from '../../components/popup/pop-up.component'
 
 import {
@@ -19,28 +19,9 @@ import {
 } from '../../context/orders/orders.utils'
 
 import {
-    retailNames
-} from '../../context/warehouse/warehouse.utils'
-
-import {
-    AiFillCaretDown,
-    AiOutlineFilePdf,
-    AiOutlineFolderOpen,
-    AiOutlineCheck
-} from 'react-icons/ai'
-
-import { useOutsideHandler } from '../../hooks/useOutsideAlerter'
-
-import {
     TableHead,
-    OrderOverviewRow,
-    IconContainer,
     OrdersTable,
     TableCol,
-    DropdownMenu,
-    Line,
-    DeligateCol,
-    DeligateButton
 } from './orders.styles'
 
 const OrdersSection = () => {
@@ -62,7 +43,22 @@ const OrdersSection = () => {
         orders
     } = useContext(OrdersContext)
 
+    const handleSearch = () => {
+        if (orders) {
+            const fuse = new Fuse(orders, {
+                keys: [
+                    'customId',
+                    'status',
+                    'date'
+                ]
+            })
+            if (searchQuery !== '') {
+                const results = fuse.search(searchQuery)
+                setOrderItems(results.map(result => result.item))
+            }
 
+        }
+    }
 
     useEffect(() => {
         if (!orders) {
@@ -89,17 +85,6 @@ const OrdersSection = () => {
 
     useEffect(() => {
         if (orders) {
-            const fuse = new Fuse(orders, {
-                keys: [
-                    'customId',
-                    'status',
-                    'date'
-                ]
-            })
-            if (searchQuery !== '') {
-                const results = fuse.search(searchQuery)
-                setOrderItems(results.map(result => result.item))
-            }
             if (!searchQuery) {
                 if (activeIndex === 2) {
                     setOrderItems(orders.filter(order => order.status === 'finished'))
@@ -108,14 +93,22 @@ const OrdersSection = () => {
                 }
             }
         }
-
     }, [searchQuery])
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [ordersPerPage] = useState(10)
+    const indexOfLastOrder = currentPage * ordersPerPage
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage
+    const currentOrders = orderItems.slice(indexOfFirstOrder, indexOfLastOrder)
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
+                handleSearch={handleSearch}
+
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
                 title="Objednávky"
@@ -136,71 +129,22 @@ const OrdersSection = () => {
                         <TableCol>Status</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
-                    {orders && orderItems.map((order, idx) => (
+                    {currentOrders.map((order, idx) => (
                         <OrderOverview key={idx} order={order} />
                     ))}
                 </OrdersTable>
+
+                <Pagination
+                    productsPerPage={ordersPerPage}
+                    totalProducts={orderItems.length}
+                    paginate={paginate}
+                    activePage={currentPage}
+                />
             </ScrollContainer>
         </section>
     )
 }
 
-const OrderOverview = ({ order }) => {
-    const [showDropdownMenu, setShowDropdownMenu] = useState(false)
-    const date = new Date(order.date)
-    const dropdownRef = useRef(null)
-    useOutsideHandler(dropdownRef, () => setShowDropdownMenu(false))
-    const [showOrderDeligateModal, setShowOrderDeligateModal] = useState(false)
 
-    return (
-        <OrderOverviewRow>
-            <TableCol>{order.customId}</TableCol>
-            <TableCol>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</TableCol>
-            <DeligateCol>
-                <DeligateButton onClick={() => setShowOrderDeligateModal(true)} >
-                    {order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}
-                </DeligateButton>
-                {showOrderDeligateModal && <OrderDeligateModal close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
-            </DeligateCol>
-            <TableCol>{order.status}</TableCol>
-            <TableCol>
-                <IconContainer onClick={() => setShowDropdownMenu(!showDropdownMenu)}>
-                    <AiFillCaretDown />
-                </IconContainer>
-                {showDropdownMenu && (
-                    <DropdownMenu ref={dropdownRef} >
-                        <ul>
-                            <li>
-                                <div>
-                                    <AiOutlineCheck />
-                                </div>
-                                    Vybavené
-                            </li>
-                        </ul>
-                        <Line />
-                        <ul>
-                            <a href={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.pdfPath}`} target="_blank" rel="noreferrer noopener">
-                                <li>
-                                    <div>
-                                        <AiOutlineFilePdf />
-                                    </div>
-                                    Zobraz PDF
-                                </li>
-                            </a>
-                            <Link to={`/dashboard/objednavky/${order.orderedBy._id}/${order._id}`}>
-                                <li>
-                                    <div>
-                                        <AiOutlineFolderOpen />
-                                    </div>
-                                    Zobraziť
-                                </li>
-                            </Link>
-                        </ul>
-                    </DropdownMenu>
-                )}
-            </TableCol>
-        </OrderOverviewRow>
-    )
-}
 
 export default OrdersSection
