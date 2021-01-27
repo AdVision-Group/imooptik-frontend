@@ -6,6 +6,7 @@ export const AuthContext = createContext({
     currentUser: null,
     isAdmin: false,
     token: null,
+    stats: null,
     logIn: () => { },
     logOut: () => { },
     register: () => { },
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [token, setToken] = useState(null)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [stats, setStats] = useState(null)
 
     const checkIfAdmin = (user) => {
         if (user.admin > 1) {
@@ -175,6 +177,33 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+
+    const getStats = async () => {
+        setShowModal(true)
+        setIsLoading(true)
+
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats/collectionCounts`, requestOptions)
+            const data = await response.json()
+
+            setStats(data)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN)) {
             setToken(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN))
@@ -192,6 +221,7 @@ const AuthProvider = ({ children }) => {
                 }
             }
             getUserProfile()
+            getStats()
         }
     }, [token])
 
@@ -201,6 +231,7 @@ const AuthProvider = ({ children }) => {
                 token,
                 currentUser,
                 isAdmin,
+                stats,
                 logIn,
                 logOut,
                 register,

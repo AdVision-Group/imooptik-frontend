@@ -17,7 +17,7 @@ import Fuse from 'fuse.js'
 
 
 const EshopSection = () => {
-    const { currentUser, token } = useContext(AuthContext)
+    const { currentUser, token, stats } = useContext(AuthContext)
 
     const {
         isLoading,
@@ -134,6 +134,8 @@ const EshopSection = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    console.log(stats)
 
     return (
         <section>

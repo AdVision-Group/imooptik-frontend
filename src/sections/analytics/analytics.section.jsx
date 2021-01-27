@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { AnalyticsContext } from '../../context/analytics/analytics.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
+import Popup from '../../components/popup/pop-up.component'
 
 import {
     Header,
@@ -9,33 +12,52 @@ import {
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
+    const {
+        closeModal,
+        isLoading,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
+    const { stats, getAnalytics } = useContext(AnalyticsContext)
+
+
     const items = [
         {
             id: 1,
-            name: "Všetko"
+            name: "Všetko",
+            value: "all"
         },
         {
             id: 2,
-            name: "Deň"
+            name: "Deň",
+            value: "day"
         },
         {
             id: 3,
-            name: "Týžden"
+            name: "Týžden",
+            value: "week"
         },
         {
             id: 4,
-            name: "Mesiac"
+            name: "Mesiac",
+            value: "month"
         },
         {
             id: 5,
-            name: "Rok"
+            name: "Rok",
+            value: "year"
         },
     ]
 
     const [activeIndex, setActiveIndex] = useState(2)
 
+    useEffect(() => {
+        getAnalytics(items[activeIndex - 1].value)
+    }, [activeIndex])
+
     return (
         <section>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Header>
                 <h1>Analytiká</h1>
             </Header>

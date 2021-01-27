@@ -3,7 +3,7 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 // import { UserContext } from '../../context/user/user.context'
 // import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 // import { OrdersContext } from '../../context/orders/orders.context'
-import { useParams } from 'react-router-dom'
+import { useParams, Prompt } from 'react-router-dom'
 
 // import InputRow from '../../components/product-input-row/product-input-row.component'
 // import CustomInput from '../../components/custom-input/custom-input.component'
@@ -68,7 +68,12 @@ const OrderSection = () => {
     }, [])
 
     return (
+
         <section>
+            <Prompt
+                when={order.user}
+                message={"Máte nedokončenú objednávku, skutočne chcete odísť?"}
+            />
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Header>
                 <div>

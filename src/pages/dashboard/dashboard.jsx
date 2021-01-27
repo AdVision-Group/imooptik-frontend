@@ -25,7 +25,7 @@ const WarehouseProvider = lazy(() => import('../../context/warehouse/warehouse.c
 const BookingProvider = lazy(() => import('../../context/booking/booking.context'))
 const OrdersProvider = lazy(() => import("../../context/orders/orders.context"))
 const CouponsProvider = lazy(() => import('../../context/coupons/coupons.context'))
-
+const AnalyticsProvider = lazy(() => import('../../context/analytics/analytics.context'))
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
 const CustomersSection = lazy(() => import('../../sections/customers/customers.section'))
@@ -159,7 +159,11 @@ const Dashboard = () => {
                             )} />
 
 
-                            <Route path={`${match.path}/analytika`} component={AnalyticsSection} />
+                            <Route path={`${match.path}/analytika`} render={() => (
+                                <AnalyticsProvider>
+                                    <AnalyticsSection />
+                                </AnalyticsProvider>
+                            )} />
 
                             <Route exact path={`${match.path}/rezervacie`} render={() => (
                                 <BookingProvider>
