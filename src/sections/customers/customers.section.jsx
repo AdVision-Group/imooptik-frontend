@@ -87,10 +87,6 @@ const CustomersSection = () => {
         }
     }, [searchQuery])
 
-
-
-
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}

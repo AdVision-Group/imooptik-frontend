@@ -5,6 +5,7 @@ import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
 import ProfileOrderOverview from '../profile-order-overview/profile-order-overview.component'
 import ParametersTable from '../parameters-table/parameters-table.component'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 import {
     retailNames
@@ -31,6 +32,7 @@ const UserForm = ({
     user,
     handleChange,
     handleParameterChange,
+    handleCompanyChange
 }) => {
     const { push } = useHistory()
 
@@ -71,6 +73,19 @@ const UserForm = ({
                             <option value={2}>Vedúci</option>
                         </CustomSelect>
                     </InputRow>
+
+                    <Container>
+                        <CustomCheckbox
+                            label='Optometrista'
+                            handleClick={() => handleChange({
+                                target: {
+                                    name: "optometrist",
+                                    value: !user.optometrist
+                                }
+                            })}
+                            isActive={user.optometrist}
+                        />
+                    </Container>
                 </AdminPanelContainer>}
                 <div>
                     <h2>Informácie</h2>
@@ -80,7 +95,7 @@ const UserForm = ({
                                 label="Meno*"
                                 type='text'
                                 name='fName'
-                                value={user.fName}
+                                value={user.fName ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -89,7 +104,7 @@ const UserForm = ({
                                 label="Priezvisko*"
                                 type='text'
                                 name='lName'
-                                value={user.lName}
+                                value={user.lName ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -98,7 +113,7 @@ const UserForm = ({
                                 // label="Priezvisko*"
                                 type='date'
                                 name='birthDate'
-                                value={""}
+                                value={user.birthDate}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -113,7 +128,7 @@ const UserForm = ({
                                 label="E-mail*"
                                 type='email'
                                 name='email'
-                                value={user.email}
+                                value={user.email ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -122,7 +137,7 @@ const UserForm = ({
                                 label="Telefónne číslo"
                                 type='text'
                                 name='phone'
-                                value={user.phone}
+                                value={user.phone ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -137,7 +152,7 @@ const UserForm = ({
                                 label="Ulica a čislo domu"
                                 type='text'
                                 name='address'
-                                value={user.address}
+                                value={user.address ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </ZeroMargin>
@@ -146,7 +161,7 @@ const UserForm = ({
                                 label="PSČ"
                                 type='text'
                                 name='psc'
-                                value={user.psc}
+                                value={user.psc ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </ZeroMargin>
@@ -157,7 +172,7 @@ const UserForm = ({
                                 label="Mesto"
                                 type='text'
                                 name='city'
-                                value={user.city}
+                                value={user.city ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -166,8 +181,71 @@ const UserForm = ({
                                 label="Krajina"
                                 type='text'
                                 name='country'
-                                value={user.country}
+                                value={user.country ?? ""}
                                 handleChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                    </GridRow>
+                </Container>
+                <Container>
+                    <h2>Firemné údaje</h2>
+                    <GridRow>
+                        <ZeroMargin>
+                            <CustomInput
+                                label="IČO"
+                                type='text'
+                                name='ico'
+                                value={user.company.ico ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </ZeroMargin>
+                        <ZeroMargin>
+                            <CustomInput
+                                label="DIČ"
+                                type='text'
+                                name='dic'
+                                value={user.company.dic ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </ZeroMargin>
+                    </GridRow>
+                    <GridRow>
+                        <ZeroMargin>
+                            <CustomInput
+                                label="Ulica a čislo domu"
+                                type='text'
+                                name='address'
+                                value={user.company.address ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </ZeroMargin>
+                        <ZeroMargin>
+                            <CustomInput
+                                label="PSČ"
+                                type='text'
+                                name='psc'
+                                value={user.company.psc ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </ZeroMargin>
+                    </GridRow>
+                    <GridRow>
+                        <div>
+                            <CustomInput
+                                label="Mesto"
+                                type='text'
+                                name='city'
+                                value={user.company.city ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label="Krajina"
+                                type='text'
+                                name='country'
+                                value={user.company.country ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
                             />
                         </div>
                     </GridRow>

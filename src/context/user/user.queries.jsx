@@ -28,28 +28,28 @@ export const fetchUser = (token, id) => {
     return fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/${id}`, requestOptions)
 }
 
-export const patchUser = (token, user) => {
-    const {
-        _id: id,
-        address,
-        admin,
-        city,
-        country,
-        email,
-        lenses: {
-            cylinder,
-            cylinderAxes,
-            diopters,
-            distance,
-            addition,
-            basis,
-            prism,
-        },
-        name,
-        phone,
-        psc,
-        premises
-    } = user
+export const patchUser = (token, user, id) => {
+    // const {
+    //     _id: id,
+    //     address,
+    //     admin,
+    //     city,
+    //     country,
+    //     email,
+    //     lenses: {
+    //         cylinder,
+    //         cylinderAxes,
+    //         diopters,
+    //         distance,
+    //         addition,
+    //         basis,
+    //         prism,
+    //     },
+    //     name,
+    //     phone,
+    //     psc,
+    //     premises
+    // } = user
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
@@ -57,24 +57,25 @@ export const patchUser = (token, user) => {
 
 
     const raw = JSON.stringify({
-        address: address || undefined,
-        admin: admin,
-        premises: Number(premises) === 0 ? undefined : premises,
-        city: city || undefined,
-        country: country || undefined,
-        email: email || undefined,
-        lenses: {
-            cylinder: cylinder,
-            cylinderAxes: cylinderAxes,
-            diopters: diopters,
-            distance: distance,
-            addition: addition,
-            basis: basis,
-            prism: prism,
-        },
-        name: name,
-        phone: phone || undefined,
-        psc: psc || undefined,
+        ...user
+        // address: address || undefined,
+        // admin: admin,
+        // premises: Number(premises) === 0 ? undefined : premises,
+        // city: city || undefined,
+        // country: country || undefined,
+        // email: email || undefined,
+        // lenses: {
+        //     cylinder: cylinder,
+        //     cylinderAxes: cylinderAxes,
+        //     diopters: diopters,
+        //     distance: distance,
+        //     addition: addition,
+        //     basis: basis,
+        //     prism: prism,
+        // },
+        // name: name,
+        // phone: phone || undefined,
+        // psc: psc || undefined,
     })
 
     const requestOptions = {

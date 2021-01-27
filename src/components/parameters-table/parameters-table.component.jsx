@@ -31,12 +31,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>sph</div>
 
-                {parameters.diopters.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.diopters[idx] ?? ""}
                                 name="diopters"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -47,12 +47,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>cyl</div>
 
-                {parameters.cylinder.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.cylinder[idx] ?? ""}
                                 name="cylinder"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -63,12 +63,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>ax</div>
 
-                {parameters.cylinderAxes.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <OsContainer key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.cylinderAxes[idx] ?? ""}
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -79,12 +79,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>PD</div>
 
-                {parameters.distance.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.distance[idx] ?? ""}
                                 name="distance"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -95,12 +95,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>prizma</div>
 
-                {parameters.prism.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.prism[idx] ?? ""}
                                 name="prism"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -111,12 +111,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>basis</div>
 
-                {parameters.basis.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.basis[idx] ?? ""}
                                 name="basis"
                                 onChange={(e) => handleChange(e, idx)}
                             />
@@ -127,12 +127,12 @@ const ParametersTable = ({ parameters, handleChange }) => {
             <Col>
                 <div>addicia</div>
 
-                {parameters.addition.map((value, idx) => {
+                {[...Array(4)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={value}
+                                value={parameters.addition[idx] ?? ""}
                                 name="addition"
                                 onChange={(e) => handleChange(e, idx)}
                             />
