@@ -35,6 +35,7 @@ export const UpdateButton = styled(CustomButton)`
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1.4rem;
-    background-color: rgb(235, 172, 1);
+    background-color: #DD4C4C;
+    /* background-color: rgb(235, 172, 1); */
     padding: .5rem 1.8rem;
 `

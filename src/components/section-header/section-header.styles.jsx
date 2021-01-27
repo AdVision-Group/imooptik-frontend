@@ -44,7 +44,7 @@ export const SearchButton = styled(CustomButton)`
 
 export const AddButton = styled(CustomButton)`
     margin-top: 2rem;
-
     margin-left: 1rem;
-
+    background-color: rgb(235, 172, 1);
+    font-weight: bolder;
 `

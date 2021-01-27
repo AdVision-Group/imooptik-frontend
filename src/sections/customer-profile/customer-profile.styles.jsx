@@ -21,4 +21,6 @@ export const DeleteProfileButton = styled(CustomButton)`
 export const SaveButton = styled(CustomButton)`
     margin-left: 2rem;
     font-size: 1.4rem;
+    background-color: rgb(235, 172, 1);
+    font-weight: bolder;
 `

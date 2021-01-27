@@ -147,6 +147,20 @@ const CustomerProfile = () => {
         return () => {
             console.log("UNMOUNT")
             resetUser()
+            handleChange({
+                target: {
+                    name: 'lenses',
+                    value: {
+                        cylinder: [1001, 1001, 1001, 1001],
+                        cylinderAxes: [1001, 1001, 1001, 1001],
+                        diopters: [1001, 1001, 1001, 1001],
+                        distance: [1001, 1001, 1001, 1001],
+                        addition: [1001, 1001, 1001, 1001],
+                        basis: [1001, 1001, 1001, 1001],
+                        prism: [1001, 1001, 1001, 1001],
+                    },
+                }
+            })
         }
     }, [])
 

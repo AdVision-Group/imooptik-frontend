@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import CustomFormSwitch from '../custom-form-switch/custom-form-switch.component'
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
 import ParametersTable from '../parameters-table/parameters-table.component'
+import CustomCheckbox from "../custom-checkbox/custom-checkbox.component"
 
 import {
     retailNames
@@ -20,7 +21,6 @@ import {
 
 
 const NewUserForm = ({
-    resetUser,
     formToShow,
     switchFormButtons,
     toggleUserForm,
@@ -30,25 +30,6 @@ const NewUserForm = ({
     handleParameterChange,
     handleCompanyChange
 }) => {
-    useEffect(() => {
-        return () => {
-            console.log("UNMOUNT NEW USER FORM")
-            handleChange({
-                target: {
-                    name: 'lenses',
-                    value: {
-                        cylinder: [1001, 1001, 1001, 1001],
-                        cylinderAxes: [1001, 1001, 1001, 1001],
-                        diopters: [1001, 1001, 1001, 1001],
-                        distance: [1001, 1001, 1001, 1001],
-                        addition: [1001, 1001, 1001, 1001],
-                        basis: [1001, 1001, 1001, 1001],
-                        prism: [1001, 1001, 1001, 1001],
-                    },
-                }
-            })
-        }
-    }, [])
 
     return (
         <div>
@@ -110,6 +91,18 @@ const NewUserForm = ({
                                     type='text'
                                     name='phone'
                                     value={user.phone ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                            </InputRow>
+                            <InputRow
+                                label="Dátum narodenia"
+                                example=''
+                            >
+                                <CustomInput
+                                    // label="Priezvisko*"
+                                    type='date'
+                                    name='birthDate'
+                                    value={user.birthDate}
                                     handleChange={(e) => handleChange(e)}
                                 />
                             </InputRow>
@@ -277,7 +270,7 @@ const NewUserForm = ({
                                     />
                                 </InputRow>
                                 <InputRow
-                                    label="Heslo použivatela, aspoň 1 velké pismeno, 1 malé pismeno a 1 číslo*"
+                                    label="Aspoň 1 velké pismeno, 1 malé pismeno a 1 číslo*"
                                     example=''
                                 >
                                     <CustomInput
@@ -305,7 +298,7 @@ const NewUserForm = ({
                             </ColContainer>
 
                             <ColContainer>
-                                <h2>Admin panel</h2>
+                                <h2>Admin privilégia</h2>
                                 <InputRow
                                     label="Predajňa na ktorej uživatel pracuje"
                                     example=''
@@ -337,6 +330,18 @@ const NewUserForm = ({
                                     </CustomSelect>
 
                                 </InputRow>
+                                <Container>
+                                    <CustomCheckbox
+                                        label='Optometrista'
+                                        handleClick={() => handleChange({
+                                            target: {
+                                                name: "optometrist",
+                                                value: !user.optometrist
+                                            }
+                                        })}
+                                        isActive={user.optometrist}
+                                    />
+                                </Container>
                             </ColContainer>
                         </CustomerForm>
                     )

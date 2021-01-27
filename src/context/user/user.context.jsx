@@ -89,7 +89,7 @@ const UserProvider = ({ children }) => {
             name: "Zákazník"
         },
         {
-            name: "Admin"
+            name: "Zamestnanec"
         }
     ]
 
@@ -308,6 +308,12 @@ const UserProvider = ({ children }) => {
                 // closeModal()
 
             } else {
+                if (user.password !== user.confirmPassword) {
+                    getMessage("Heslá sa nezhodujú")
+                    setIsLoading(false)
+                    return
+                }
+
                 const response = await postAdmin(token, user)
                 const data = await response.json()
 
