@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { UserContext } from '../../context/user/user.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { useParams } from 'react-router-dom'
+import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import UserForm from '../../components/user-form/user-form.component'
@@ -33,6 +33,7 @@ const CustomerProfile = () => {
         getUser,
         handleChange,
         handleParameterChange,
+        handleCompanyChange,
         updateUser,
         resetUser,
         formToShow,
@@ -41,17 +42,45 @@ const CustomerProfile = () => {
         createUser,
     } = useContext(UserContext)
 
+    const [userObj, setUserObj] = useState({})
+    const [hasChanges, setHasChanges] = useState(false)
+
+    const handleUserChange = (e) => {
+        setHasChanges(true)
+        const { name, value } = e.target
+
+        handleChange(e)
+        setUserObj({
+            ...userObj,
+            [name]: value
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        setHasChanges(false)
 
         if (id === 'novy-zakaznik') {
             console.log("Create new user")
             createUser(user)
         } else {
             console.log("Update existing user")
-            updateUser(user)
+            if (userObj.fName || userObj.lName) {
+                delete userObj["fName"]
+                delete userObj["lName"]
+            } else if (!userObj.fName || !userObj.lName) {
+                delete userObj["name"]
+            }
+            updateUser(userObj, user._id)
         }
     }
+
+    useEffect(() => {
+        setUserObj({
+            ...userObj,
+            name: user.fName + " " + user.lName
+        })
+    }, [userObj.fName, userObj.lName])
 
     useEffect(() => {
         if (id !== 'novy-zakaznik') {
@@ -69,7 +98,10 @@ const CustomerProfile = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-
+            <Prompt
+                when={hasChanges}
+                message={"Máte neuložené zmeny, chcete aj tak odísť ?"}
+            />
             <form onSubmit={handleSubmit}>
                 <Header>
                     <h1>Profil</h1>
@@ -88,9 +120,9 @@ const CustomerProfile = () => {
                                 isAdmin={isAdmin}
                                 isUpdating={isUpdating}
                                 user={user}
-                                handleChange={handleChange}
+                                handleChange={handleUserChange}
                                 handleParameterChange={handleParameterChange}
-
+                                handleCompanyChange={handleCompanyChange}
                             />
                         ) : (
                                 <NewUserForm
@@ -100,7 +132,7 @@ const CustomerProfile = () => {
                                     switchFormButtons={switchFormButtons}
                                     toggleUserForm={toggleUserForm}
                                     user={user}
-                                    handleChange={handleChange}
+                                    handleChange={handleUserChange}
                                 />
                             )
                     }

@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState(false)
 
     const checkIfAdmin = (user) => {
-        if (user.admin > 2) {
+        if (user.admin > 1) {
             setIsAdmin(true)
         } else {
             setIsAdmin(false)

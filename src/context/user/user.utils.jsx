@@ -8,14 +8,22 @@ export const initUserObj = {
     date: "",
     email: "",
     finishedRegistration: false,
+    company: {
+        ico: "",
+        dic: "",
+        icdph: "",
+        address: '',
+        psc: '',
+        country: '',
+    },
     lenses: {
-        cylinder: [0, 0, 0, 0],
-        cylinderAxes: [0, 0, 0, 0],
-        diopters: [0, 0, 0, 0],
-        distance: [0, 0, 0, 0],
-        addition: [0, 0, 0, 0],
-        basis: [0, 0, 0, 0],
-        prism: [0, 0, 0, 0],
+        cylinder: [],
+        cylinderAxes: [],
+        diopters: [],
+        distance: [],
+        addition: [],
+        basis: [],
+        prism: [],
     },
     name: "",
     orders: [],
@@ -27,5 +35,8 @@ export const initUserObj = {
     fName: "",
     lName: "",
     password: '',
-    confirmPassword: ""
+    confirmPassword: "",
+    birthDate: Date.now(),
+    optometrist: false
+
 }

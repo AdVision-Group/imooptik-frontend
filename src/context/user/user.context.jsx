@@ -23,9 +23,10 @@ export const UserContext = createContext({
     totalCount: 0,
     users: null,
     user: null,
-    getUsers: () => { },
+    // getUsers: () => { },
     getUser: () => { },
     handleChange: () => { },
+    handleCompanyChange: () => { },
     updateUser: () => { },
     resetUser: () => { },
     formToShow: 0,
@@ -105,6 +106,8 @@ const UserProvider = ({ children }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target
+
+        console.log(name, value)
         setUser({
             ...user,
             [name]: value
@@ -120,6 +123,17 @@ const UserProvider = ({ children }) => {
             lenses: {
                 ...user.lenses,
                 [name]: arr
+            }
+        })
+    }
+
+    const handleCompanyChange = (e) => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            company: {
+                ...user.company,
+                [name]: value
             }
         })
     }
@@ -144,31 +158,31 @@ const UserProvider = ({ children }) => {
     // ------------------------
 
     // Get all users
-    const getUsers = async () => {
-        setIsLoading(true)
-        setShowModal(true)
+    // const getUsers = async () => {
+    //     setIsLoading(true)
+    //     setShowModal(true)
 
-        try {
-            const response = await fetchUsers(token)
-            const data = await response.json()
+    //     try {
+    //         const response = await fetchUsers(token)
+    //         const data = await response.json()
 
-            console.log(data)
-            if (data.users) {
-                setUsers(data.users)
-                setTotalCount(data.count)
-                setIsLoading(false)
-                closeModal()
+    //         console.log(data)
+    //         if (data.users) {
+    //             setUsers(data.users)
+    //             setTotalCount(data.count)
+    //             setIsLoading(false)
+    //             closeModal()
 
-            } else {
-                getMessage(data.message)
-                setIsLoading(false)
-            }
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
+    //         } else {
+    //             getMessage(data.message)
+    //             setIsLoading(false)
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //         getMessage("Nieco sa pokazilo")
+    //         setIsLoading(false)
+    //     }
+    // }
 
     // Get single user
     const getUser = async (id) => {
@@ -184,22 +198,6 @@ const UserProvider = ({ children }) => {
                 setUser({
                     ...user,
                     ...data.user,
-                    lenses: {
-                        // cylinder: [0, 0, 0, 0],
-                        // cylinderAxes: [0, 0, 0, 0],
-                        // diopters: [0, 0, 0, 0],
-                        // distance: [0, 0, 0, 0],
-                        // addition: [0, 0, 0, 0],
-                        // basis: [0, 0, 0, 0],
-                        // prism: [0, 0, 0, 0],
-                        cylinder: data.user.lenses.cylinder.length ? data.user.lenses.cylinder : [0, 0, 0, 0],
-                        cylinderAxes: data.user.lenses.cylinderAxes.length ? data.user.lenses.cylinderAxes : [0, 0, 0, 0],
-                        diopters: data.user.lenses.diopters.length ? data.user.lenses.diopters : [0, 0, 0, 0],
-                        distance: data.user.lenses.distance.length ? data.user.lenses.distance : [0, 0, 0, 0],
-                        addition: data.user.lenses.addition.length ? data.user.lenses.addition : [0, 0, 0, 0],
-                        basis: data.user.lenses.basis.length ? data.user.lenses.basis : [0, 0, 0, 0],
-                        prism: data.user.lenses.prism.length ? data.user.lenses.prism : [0, 0, 0, 0],
-                    },
                     fName: data.user.name ? data.user.name.split(" ")[0] : "",
                     lName: data.user.name ? data.user.name.split(" ")[1] : ""
                 })
@@ -218,14 +216,14 @@ const UserProvider = ({ children }) => {
     }
 
     // Update user
-    const updateUser = async (user) => {
+    const updateUser = async (user, id) => {
         setIsLoading(true)
         setShowModal(true)
 
         console.log(user)
 
         try {
-            const response = await patchUser(token, user)
+            const response = await patchUser(token, user, id)
             const data = await response.json()
 
             console.log(data)
@@ -246,7 +244,11 @@ const UserProvider = ({ children }) => {
             setIsLoading(false)
             closeModal()
             push('/dashboard/zakaznici')
-            getUsers()
+            getFilteredUsers({
+                filters: {
+                    admin: activeIndex
+                }
+            })
             // http://localhost:1000/#/dashboard/zakaznici
 
 
@@ -320,7 +322,11 @@ const UserProvider = ({ children }) => {
                 }
 
                 setIsLoading(false)
-                getUsers()
+                getFilteredUsers({
+                    filters: {
+                        admin: activeIndex
+                    }
+                })
                 push('/dashboard/zakaznici')
                 closeModal()
             }
@@ -420,10 +426,11 @@ const UserProvider = ({ children }) => {
                 users,
                 user,
                 totalCount,
-                getUsers,
+                // getUsers,
                 getUser,
                 handleChange,
                 handleParameterChange,
+                handleCompanyChange,
                 updateUser,
                 resetUser,
                 formToShow,

@@ -3,8 +3,8 @@ import CustomButton from '../custom-button/custom-button.component'
 
 
 export const Profile = styled.div`
-    /* padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
+    padding: 2rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
     margin-right: 2rem;
 
 `
