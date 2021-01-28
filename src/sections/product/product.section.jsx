@@ -3,7 +3,7 @@ import { AuthContext } from '../../context/auth/auth.context'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import { ImageContext } from '../../context/image/image.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { useParams } from 'react-router-dom'
+import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
@@ -86,6 +86,9 @@ const ProductSection = () => {
 
     const { selectedImage } = useContext(ImageContext)
 
+    const [productObj, setProductObj] = useState({})
+    const [hasChanged, setHasChanged] = useState(false)
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -148,6 +151,10 @@ const ProductSection = () => {
 
     return (
         <form onSubmit={e => handleSubmit(e)}>
+            <Prompt
+                when={hasChanged}
+                message="Chcete opustiť formulár?"
+            />
             { showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={selectImage} />}
             <Header>

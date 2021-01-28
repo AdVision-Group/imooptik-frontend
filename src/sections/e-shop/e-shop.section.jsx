@@ -34,6 +34,7 @@ const EshopSection = () => {
         getLenses,
         handleProductDelete,
         deleteLenses,
+        getProductsByQuery
     } = useContext(WarehouseContext)
 
     const { push } = useHistory()
@@ -76,17 +77,26 @@ const EshopSection = () => {
     const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.admin >= 2)
     const [activeIndex, setActiveIndex] = useState(2)
 
+    const handleSearch = () => {
+        if (searchQuery === '') return
+        getProductsByQuery({
+            query: searchQuery
+        })
+    }
+
     useEffect(() => {
         console.log("fetch products")
         if (!products) {
-            getProducts()
+            getProductsByQuery({
+                limit: 10
+            })
             getLenses()
         }
 
         if (!message) {
             closeModal()
         }
-    }, [products, lensesArr, token])
+    }, [products, lensesArr])
 
     useEffect(() => {
         if (filteredItems.length) {
@@ -95,6 +105,7 @@ const EshopSection = () => {
     }, [])
 
     const [allProducts, setAllProducts] = useState([])
+
     useEffect(() => {
         if (products && lensesArr)
             setAllProducts([
@@ -103,28 +114,11 @@ const EshopSection = () => {
             ])
     }, [lensesArr, products])
 
-    const fuse = new Fuse(allProducts, {
-        keys: [
-            'name',
-            'brand',
-            'description',
-            'eanCode'
-        ]
-    })
-
     useEffect(() => {
-        const results = fuse.search(searchQuery)
-        if (results.length > 0) {
-            setAllProducts(results.map(result => result.item))
-        }
-        if (!searchQuery) {
-            if (products && lensesArr) {
-                setAllProducts([
-                    ...products,
-                    ...lensesArr
-                ])
-            }
-
+        if (searchQuery === '') {
+            getProductsByQuery({
+                limit: 10
+            })
         }
     }, [searchQuery])
 
@@ -135,14 +129,13 @@ const EshopSection = () => {
     const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-    console.log(stats)
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
 
             <SectionHeader
                 searchQuery={searchQuery}
+                handleSearch={handleSearch}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('sklad/novy-produkt')}
 
@@ -174,19 +167,6 @@ const EshopSection = () => {
                         />
                     ))
                 }
-                {/* {
-                    lenses && lenses.map(product => (
-                        <ProductOverview
-                            key={product._id}
-                            name={product.name}
-                            id={product._id}
-                            price={(product.price / 100).toFixed(2)}
-                            image={product.image}
-                            handleUpdateButton={() => push(`sklad/${product._id}`)}
-                            handleDeleteButton={() => deleteLense(product._id)}
-                        />
-                    ))
-                } */}
 
                 <Pagination
                     productsPerPage={productsPerPage}

@@ -102,9 +102,9 @@ const WarehouseProvider = ({ children }) => {
     const [lensesArr, setLensesArr] = useState(null)
 
     const [lensesParameters, setLensesParameters] = useState({
-        diopters: [0, 0],
-        curvature: 0,
-        average: 0
+        dioptersRange: [0, 0],
+        allowedDiameters: [0, 0],
+        allowedCurves: [0, 0, 0]
     })
 
     const handleParameterChange = (e, idx) => {

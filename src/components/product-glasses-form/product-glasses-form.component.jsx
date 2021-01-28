@@ -13,7 +13,7 @@ import {
     CategoryTitle,
 } from './product-glasses-form.styles.jsx'
 
-import { brands, retailNames } from '../../context/warehouse/warehouse.utils'
+import { brands, retailNames, lensesBrands } from '../../context/warehouse/warehouse.utils'
 
 
 const ProductGlassesForm = ({
@@ -96,7 +96,9 @@ const ProductGlassesForm = ({
                         autoComplete='off'
                     />
                     <datalist id="brands">
-                        {brands.map(brand => (
+                        {product.type === 4 ? lensesBrands.map(brand => (
+                            <option key={brand} value={brand} />
+                        )) : brands.map(brand => (
                             <option key={brand} value={brand} />
                         ))}
                     </datalist>
@@ -130,7 +132,7 @@ const ProductGlassesForm = ({
                     </div>
                 </TextareaRow>
 
-                {/* {
+                {
                     product.type === 4 && (
                         <React.Fragment>
                             <h3>Parametre</h3>
@@ -142,7 +144,7 @@ const ProductGlassesForm = ({
                                     label={"minimum"}
                                     type='number'
                                     name='diopters'
-                                    value={lensesParameters.diopters[0].toString()}
+                                    value={lensesParameters.dioptersRange[0].toString()}
                                     handleChange={e => handleParameterChange(e, 0)}
                                 />
                             </ProductInputRow>
@@ -155,7 +157,7 @@ const ProductGlassesForm = ({
                                     type='number'
                                     value={""}
                                     name='diopters'
-                                    value={lensesParameters.diopters[1].toString()}
+                                    value={lensesParameters.dioptersRange[1].toString()}
                                     handleChange={e => handleParameterChange(e, 1)}
                                 />
                             </ProductInputRow>
@@ -168,7 +170,7 @@ const ProductGlassesForm = ({
                                     type='number'
                                     value={""}
                                     name='curvature'
-                                    value={lensesParameters.curvature.toString()}
+                                    value={lensesParameters.allowedCurves[0].toString()}
                                 // handleChange={e => handleLensesDioptersRangeChange(e, idx)}
                                 />
                             </ProductInputRow>
@@ -181,13 +183,13 @@ const ProductGlassesForm = ({
                                     type='number'
                                     value={""}
                                     name="average"
-                                    value={lensesParameters.average.toString()}
+                                    value={lensesParameters.allowedDiameters[0].toString()}
                                 // handleChange={e => handleLensesDioptersRangeChange(e, idx)}
                                 />
                             </ProductInputRow>
                         </React.Fragment>
                     )
-                } */}
+                }
 
                 {
                     !(product.type === 5 || product.type === 4) && (

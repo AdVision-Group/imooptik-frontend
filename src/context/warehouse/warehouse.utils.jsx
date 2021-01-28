@@ -96,6 +96,25 @@ export const resetLensesObj = () => {
     return initLensesObj
 }
 
+
+
+export const lensesBrands = [
+    "Acuvue",
+    "Adore",
+    "Air Optix",
+    "Biofinity",
+    "Biomedics",
+    "Clariti",
+    "ColourVue",
+    "Comfilcon A",
+    "Dailies",
+    "Freshlook",
+    "Lenjoy",
+    "Proclear",
+    "Purevision",
+    "Soflens",
+]
+
 export const brands = [
     "Adidas",
     "Armani Exchange",
