@@ -49,8 +49,8 @@ const CouponsSection = () => {
 
             <SectionHeader
                 title='Kupóny'
-                searchQuery={searchQuery}
-                handleChange={e => setSearchQuery(e.target.value)}
+                // searchQuery={searchQuery}
+                // handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('kupony/novy-kupon')}
             />
             <ScrollContainer>

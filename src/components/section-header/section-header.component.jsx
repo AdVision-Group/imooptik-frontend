@@ -27,7 +27,7 @@ const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count =
                 {/* <Notification>{count}</Notification> */}
             </Left>
             <Right>
-                <div>
+                {handleSearch && <div>
                     <CustomInput
                         type='search'
                         name='searchbox'
@@ -36,7 +36,7 @@ const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count =
                         onKeyPress={handleSearchOnEnter}
                         label='Vyhľadať'
                     />
-                </div>
+                </div>}
                 {handleSearch && <SearchButton onClick={handleSearch}>Vyhľadať</SearchButton>}
                 <AddButton onClick={handleAddButton}>Pridať</AddButton>
             </Right>

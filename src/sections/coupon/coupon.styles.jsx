@@ -29,3 +29,16 @@ export const DeleteButton = styled(CustomButton)`
     background-color: #DD4C4C;
 
 `
+
+export const GridRow = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 3rem;
+    align-items: start;
+    justify-items: start;
+`
+export const GridCol = styled.div`
+    padding: 2rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    
+`

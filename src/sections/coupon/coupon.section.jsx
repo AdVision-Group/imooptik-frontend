@@ -12,7 +12,9 @@ import {
     Header,
     CustomSelect,
     SubmitButton,
-    DeleteButton
+    DeleteButton,
+    GridRow,
+    GridCol
 } from './coupon.styles'
 
 const CouponSection = () => {
@@ -60,75 +62,86 @@ const CouponSection = () => {
                 </div>
             </Header>
             <ScrollContainer>
-                <InputRow
-                    label="Kód kupónu"
-                    example="napr: 50off"
-                >
-                    <CustomInput
-                        label="Kód"
-                        type='text'
-                        name='code'
-                        value={coupon.code}
-                        handleChange={(e) => handleChange(e)}
-                    />
-                </InputRow>
-                <InputRow
-                    label="Typ kupónu"
-                    example=""
-                >
-                    <CustomSelect name='type' value={coupon.type} onChange={(e) => handleChange(e)}>
-                        <option value={"percentage"}>Percentá</option>
-                        <option value={"flat"}>Fixná suma</option>
-                    </CustomSelect>
-                </InputRow>
-                <InputRow
-                    label="Hodnota"
-                    example=""
-                >
-                    <CustomInput
-                        label="Suma"
-                        type='number'
-                        name='value'
-                        value={coupon.value.toString()}
-                        handleChange={(e) => handleChange(e)}
-                    />
-                </InputRow>
-                <InputRow
-                    label="Kolko maximalne krat moze tento kupon byt pouzity jednym clovek, default je nekonecne"
-                    example=""
-                >
-                    <CustomInput
-                        label="Suma"
-                        type='number'
-                        name='maxUses'
-                        value={coupon.maxUses.toString()}
-                        handleChange={(e) => handleChange(e)}
-                    />
-                </InputRow>
-                <InputRow
-                    label="Minimalna hodnota objednavky v centoch, aby bol tento kupon aplikovatelny, default je 0"
-                    example=""
-                >
-                    <CustomInput
-                        label="Suma"
-                        type='number'
-                        name='minValue'
-                        value={coupon.minValue.toString()}
-                        handleChange={(e) => handleChange(e)}
-                    />
-                </InputRow>
-                <InputRow
-                    label="Kolko maximalne krat moze tento kupon byt pouzity dohromady vsetkymi uzivatelmi, default je nekonecne"
-                    example=""
-                >
-                    <CustomInput
-                        label="Suma"
-                        type='number'
-                        name='maxUsesTotal'
-                        value={coupon.maxUsesTotal.toString()}
-                        handleChange={(e) => handleChange(e)}
-                    />
-                </InputRow>
+                <GridRow>
+                    <GridCol>
+                        <h3>Základné informácie</h3>
+                        <InputRow
+                            label="Kód kupónu"
+                            example="napr: 50off"
+                        >
+                            <CustomInput
+                                label="Kód"
+                                type='text'
+                                name='code'
+                                value={coupon.code}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </InputRow>
+                        <InputRow
+                            label="Typ kupónu"
+                            example=""
+                        >
+                            <CustomSelect name='type' value={coupon.type} onChange={(e) => handleChange(e)}>
+                                <option value={"percentage"}>Percentá</option>
+                                <option value={"flat"}>Fixná suma</option>
+                            </CustomSelect>
+                        </InputRow>
+                    </GridCol>
+                    <GridCol>
+                        <h3>Parametre</h3>
+
+                        <InputRow
+                            label="Hodnota"
+                            example=""
+                        >
+                            <CustomInput
+                                label="Suma"
+                                type='number'
+                                name='value'
+                                value={coupon.value.toString()}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </InputRow>
+                        <InputRow
+                            label="Koľko maximálne krát môže tento kupón byt použitý jedným človek."
+                            example=""
+                        >
+                            <CustomInput
+                                label="Suma"
+                                type='number'
+                                name='maxUses'
+                                value={coupon.maxUses.toString()}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </InputRow>
+                        <InputRow
+                            label="Minimálna hodnota objednávky v centoch, aby bol tento kupón aplikovateľný."
+                            example=""
+                        >
+                            <CustomInput
+                                label="Suma"
+                                type='number'
+                                name='minValue'
+                                value={coupon.minValue.toString()}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </InputRow>
+                        <InputRow
+                            label="Koľko maximálne krát môže tento kupón byt použitý dohromady všetkými užívateľmi."
+                            example=""
+                        >
+                            <CustomInput
+                                label="Suma"
+                                type='number'
+                                name='maxUsesTotal'
+                                value={coupon.maxUsesTotal.toString()}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </InputRow>
+                    </GridCol>
+                </GridRow>
+
+
             </ScrollContainer>
         </section>
     )
