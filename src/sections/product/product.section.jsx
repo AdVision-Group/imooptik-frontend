@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-// import { AuthContext } from '../../context/auth/auth.context'
+import { AuthContext } from '../../context/auth/auth.context'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import { ImageContext } from '../../context/image/image.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -9,49 +9,73 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ModalImage from '../../components/modal-images/modal-images.component'
 import Popup from '../../components/popup/pop-up.component'
 
+import CustomInput from '../../components/custom-input/custom-input.component'
+import CustomTextarea from '../../components/custom-textarea/custom-textarea.component'
+
 // import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
 // import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 // import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
+import ProductAccessoriesForm from '../../components/product-accessories-form/product-accessories-form.component'
 
 // import { useFetch } from '../../hooks/useFetch'
 
-import { productCategories, checkParameter } from '../../context/warehouse/warehouse.utils'
+import { productCategories, checkParameter, brands, retailNames, diaConvert } from '../../context/warehouse/warehouse.utils'
 
 import {
     Header,
     CategoryContainer,
     CategoryCheckbox,
     SubmitButton,
+    ImageContainer,
+    ProductImage,
+    IsPublicCheckbox,
 } from './product.styles'
 
 const ProductSection = () => {
+    const { id } = useParams()
+    const { currentUser } = useContext(AuthContext)
     const { closeModal, message, isLoading, showModal, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [showImageModal, setImageModal] = useState(false)
 
     const {
+        eanCode,
+        product,
         lenses,
         handleLensesChange,
         handleLensesParameterChange,
+        createProduct,
+        resetProduct,
         resetLenses,
-        createLenses
+        createLenses,
+        handleProductChange,
+        handleProductAvailableChange,
+        getEanCode,
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
     const [productObj, setProductObj] = useState({})
 
-    console.log("PRODUCT OBJECT")
-    console.log(productObj)
+
 
     const handleChangeType = e => {
         setHasChanged(true)
         const { name, value } = e.target
 
-        if (Object.keys(productObj).length > 1) {
-            const confirm = window.confirm("Rozpisane polia budú vymazane")
-            if (confirm) {
-                resetLenses()
+        if (productObj.type === 0) {
+            if (Object.keys(productObj).length > 2) {
+                const confirm = window.confirm("Rozpisane polia budú vymazane")
+                if (confirm) {
+                    resetLenses()
+                }
+            }
+        } else {
+            if (Object.keys(productObj).length > 3) {
+                const confirm = window.confirm("Rozpisane polia budú vymazane")
+                if (confirm) {
+                    resetLenses()
+                }
             }
         }
 
@@ -64,8 +88,16 @@ const ProductSection = () => {
         setHasChanged(true)
         const { name, value } = e.target
 
+        console.log(name)
+        console.log(value)
+
+
         if (productObj.type === 0) {
             handleLensesChange(e)
+        }
+
+        if (productObj.type === 5) {
+            handleProductChange(e)
         }
 
         if (value === '') {
@@ -76,6 +108,18 @@ const ProductSection = () => {
         setProductObj({
             ...productObj,
             [name]: value
+        })
+    }
+
+    const handleAvailableChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = product[name]
+        arr[idx] = value === '' ? 1001 : Number(value)
+
+        handleProductAvailableChange(e, idx)
+        setProductObj({
+            ...productObj,
+            [name]: arr
         })
     }
 
@@ -99,7 +143,9 @@ const ProductSection = () => {
         })
     }
 
-    console.log(lenses)
+    console.log("PRODUCT OBJECT")
+    console.log(productObj)
+    console.log(product)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -115,10 +161,39 @@ const ProductSection = () => {
                 createLenses(productObj)
             }
         }
+
+        if (productObj.type === 5) {
+            if (!productObj.name || !productObj.price || !productObj.image) {
+                setShowModal(true)
+                getMessage("Povinné údaje sú prázdne")
+                return
+            } else {
+                setHasChanged(false)
+                createProduct(productObj)
+            }
+        }
     }
 
     useEffect(() => {
+        if (id === "novy-produkt") {
+            if (!eanCode) {
+                getEanCode()
+            } else {
+                if (productObj.type) {
+                    handleChange({
+                        target: {
+                            name: "eanCode",
+                            value: eanCode
+                        }
+                    })
+                }
+            }
+        }
+    }, [id, eanCode, productObj.type])
+
+    useEffect(() => {
         return () => {
+            resetProduct()
             resetLenses()
             setProductObj({})
             setSelectedImage(null)
@@ -138,6 +213,18 @@ const ProductSection = () => {
                     <h1>Nový Produkt</h1>
                 </div>
                 <div>
+                    <IsPublicCheckbox
+                        label="Verejné"
+                        // value={product.ehop}
+                        name='eshop'
+                        isActive={product.eshop}
+                        handleClick={() => handleChange({
+                            target: {
+                                name: "eshop",
+                                value: !product.eshop
+                            }
+                        })}
+                    />
                     <SubmitButton onClick={handleSubmit}>Vytvoriť</SubmitButton>
                 </div>
             </Header>
@@ -170,6 +257,19 @@ const ProductSection = () => {
                         handleChange={handleChange}
                         handleParameterChange={handleParameterChange}
                         checkParameter={checkParameter}
+                    />
+                )}
+
+                {productObj.type === 5 && (
+                    <ProductAccessoriesForm
+                        product={product}
+                        currentUser={currentUser}
+                        retailNames={retailNames}
+                        selectedImage={selectedImage}
+                        handleChange={handleChange}
+                        setImageModal={setImageModal}
+                        checkParameter={checkParameter}
+                        handleAvailableChange={handleAvailableChange}
                     />
                 )}
 

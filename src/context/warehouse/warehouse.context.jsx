@@ -3,9 +3,17 @@ import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
 
-import { premisesTabs, categoryTabs, initLensesObj, formatPrice } from './warehouse.utils'
+import {
+    premisesTabs,
+    categoryTabs,
+    initLensesObj,
+    initProductObj,
+    formatPrice,
+    diaConvert
+} from './warehouse.utils'
 
 export const WarehouseContext = createContext({
+    eanCode: null,
     product: {},
     lenses: {},
     totalProducts: 0,
@@ -18,13 +26,18 @@ export const WarehouseContext = createContext({
     handleChangeCategoryTypeTab: () => { },
     handleChangePremisesTab: () => { },
     getProductsByQuery: () => { },
+    handleProductChange: () => { },
+    handleProductAvailableChange: () => { },
     getSingleProduct: () => { },
+    createProduct: () => { },
     getSingleLenses: () => { },
     getLenses: () => { },
     createLenses: () => { },
     handleLensesChange: () => { },
     handleLensesParameterChange: () => { },
+    resetProduct: () => { },
     resetLenses: () => { },
+    getEanCode: () => { },
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -34,9 +47,10 @@ const WarehouseProvider = ({ children }) => {
 
     const [totalProducts, setTotalProducts] = useState(0)
     const [totalLenses, setTotalLenses] = useState(0)
+    const [eanCode, setEanCode] = useState(null)
 
-    const [product, setProduct] = useState({})
-    const [lenses, setLenses] = useState(initLensesObj)
+    const [product, setProduct] = useState({ ...initProductObj })
+    const [lenses, setLenses] = useState({ ...initLensesObj })
 
     const [products, setProducts] = useState(null)
     const [activePremisesTab, setActivePremisesTab] = useState(0)
@@ -45,13 +59,27 @@ const WarehouseProvider = ({ children }) => {
     const [productCategoryTypeTabs, setProductCategoryTypeTabs] = useState(categoryTabs)
     const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
 
-    const handleLensesChange = e => {
+    const handleProductChange = e => {
         const { name, value } = e.target
 
-        if (value === '') {
-            delete lenses[name]
-            return
-        }
+        setProduct({
+            ...product,
+            [name]: value
+        })
+    }
+
+    const handleProductAvailableChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = product[name]
+        arr[idx] = value === '' ? 1001 : Number(value)
+        setProduct({
+            ...product,
+            [name]: arr
+        })
+    }
+
+    const handleLensesChange = e => {
+        const { name, value } = e.target
 
         setLenses({
             ...lenses,
@@ -69,10 +97,18 @@ const WarehouseProvider = ({ children }) => {
         })
     }
 
+    const resetProduct = () => {
+        setProduct({
+            ...initProductObj,
+            available: [1001, 1001, 1001, 1001, 0],
+        })
+        setEanCode(null)
+    }
+
     const resetLenses = () => {
-        setLenses(initLensesObj)
+        // setLenses({ ...initLensesObj })
         setLenses({
-            ...lenses,
+            ...initLensesObj,
             dioptersRange: [1001, 1001],
             cylinderRange: [1001, 1001],
         })
@@ -92,6 +128,36 @@ const WarehouseProvider = ({ children }) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
+
+    const getEanCode = async () => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/nextEanCode`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.eanCode) {
+                setEanCode(data.eanCode)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     const getProductsByQuery = async (query) => {
         setIsLoading(true)
@@ -171,6 +237,50 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.product) {
                 setProduct(data.product)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createProduct = async (productToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const slug = diaConvert(productToAdd.name).replaceAll(" ", "-").toLowerCase().trim()
+
+        const raw = JSON.stringify({
+            ...productToAdd,
+            price: formatPrice(productToAdd.price.toString()),
+            link: slug,
+            available: productToAdd.available.map(value => value === 1001 ? 0 : value)
+        })
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.product) {
+                push('/dashboard/obchod')
+                getProductsByQuery({
+                    limit: 10
+                })
+                setEanCode(null)
                 closeModal()
                 return
             }
@@ -286,6 +396,7 @@ const WarehouseProvider = ({ children }) => {
     return (
         <WarehouseContext.Provider
             value={{
+                eanCode,
                 product,
                 lenses,
                 totalProducts,
@@ -298,13 +409,18 @@ const WarehouseProvider = ({ children }) => {
                 handleChangeCategoryTypeTab,
                 handleChangePremisesTab,
                 getProductsByQuery,
+                handleProductChange,
+                handleProductAvailableChange,
                 getLenses,
-                createLenses,
                 getSingleProduct,
+                createProduct,
                 getSingleLenses,
+                createLenses,
                 handleLensesChange,
                 handleLensesParameterChange,
+                resetProduct,
                 resetLenses,
+                getEanCode,
             }}
         >
             {children}

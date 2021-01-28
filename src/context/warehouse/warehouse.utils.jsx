@@ -5,9 +5,8 @@ export const initProductObj = {
     type: 0,
     brand: "",
     soldAmount: 0,
-    available: [1001, 1001, 1001, 1001],
+    available: [1001, 1001, 1001, 1001, 0],
     eanCode: "",
-    imagePath: "",
     image: "",
     eshop: true,
     link: '',
@@ -239,4 +238,20 @@ export const checkParameter = (parameter, idx) => {
     }
 
     return parameter[idx].toString()
+}
+
+const dia = "áäčďéíľĺňóôŕšťúýžÁČĎÉÍĽĹŇÓŠŤÚÝŽ";
+const nodia = "aacdeillnoorstuyzACDEILLNOSTUYZ";
+
+export const diaConvert = (text) => {
+    let convertText = "";
+    for (let i = 0; i < text.length; i++) {
+        if (dia.indexOf(text.charAt(i)) != -1) {
+            convertText += nodia.charAt(dia.indexOf(text.charAt(i)));
+        }
+        else {
+            convertText += text.charAt(i);
+        }
+    }
+    return convertText;
 }
