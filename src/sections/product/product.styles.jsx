@@ -13,20 +13,28 @@ export const Header = styled.div`
 
 `
 
-export const DeleteButton = styled(CustomButton)`
-    font-size: 1.4rem;
-    margin: 0 2rem 0 0;
-    background-color: #DD4C4C;
-`
-export const AddButton = styled(CustomButton)`
-    font-size: 1.4rem;
+export const SubmitButton = styled(CustomButton)`
+
 `
 
-export const Title = styled.h3`
-    margin-top: 2rem;
-    /* margin-bottom: 2rem; */
-`
 
+
+export const CategoryContainer = styled.div`
+    padding: 2rem; 
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    border-radius: .5rem;
+    display: inline-block;
+    margin-bottom: 3rem;
+
+    h3 {
+        margin-bottom: 1rem;
+    }
+`
+export const CategoryCheckbox = styled(CustomCheckbox)`
+    &:not(:last-child) {
+        margin-right: 1rem;
+    }
+`
 
 export const ImageContainer = styled.div`
     margin-top: 2rem;
@@ -39,26 +47,16 @@ export const ProductImage = styled.div`
     align-items: center;
     justify-content:center;
     background-color: ${({ hasImage }) => hasImage ? "transparent" : "#eee"};
-    margin: 3rem 0 5rem;
-    padding: 6rem;
+    margin: 3rem 0 2rem;
+    min-height: 20rem;
     position: relative;
-    max-width: 45rem;
+    /* max-width: 45rem; */
 
     img {
-        position: absolute;
         width: 100%;
-        /* max-height: 40rem; */
         object-fit:cover;
         object-position:center;
-
-        /* height: 100%; */
         left: 0;
         top: 0;
-
     }
 `
-
-export const DraftCheckBox = styled(CustomCheckbox)`
-    margin-right: 2rem;
-`
-

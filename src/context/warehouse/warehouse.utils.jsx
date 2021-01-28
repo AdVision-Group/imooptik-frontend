@@ -41,7 +41,7 @@ export const initLensesObj = {
     cylinderRange: [1001, 1001],
     price: 0,
     brand: "",
-    imagePath: ''
+    image: ''
 }
 
 export const retailNames = [
@@ -67,12 +67,16 @@ export const productCategories = [
         value: 3
     },
     {
-        name: "Šošovky",
+        name: "Kontaktné Šošovky",
         value: 4
     },
     {
         name: "Doplnky",
         value: 5
+    },
+    {
+        name: "Šošovky",
+        value: 0
     },
 ]
 
@@ -224,4 +228,15 @@ export const formatAvailable = (available, activePremisesTab) => {
             return `Na sklade ${available[activePremisesTab]} kusov`
         }
     }
+}
+
+export const checkParameter = (parameter, idx) => {
+    if (parameter.length === 0) {
+        return ""
+    }
+    if (parameter[idx] === 1001) {
+        return ""
+    }
+
+    return parameter[idx].toString()
 }
