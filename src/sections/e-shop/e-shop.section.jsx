@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { AuthContext } from '../..//context/auth/auth.context'
+// import { AuthContext } from '../..//context/auth/auth.context'
 import { WarehouseContext } from '../../context/warehouse/warehouse.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useHistory } from 'react-router-dom'
@@ -11,169 +11,94 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ProductOverview from '../../components/product-overview/product-overview.component'
 import Popup from '../../components/popup/pop-up.component'
 
-import Pagination from '../../components/pagination/pagination.component'
+// import Pagination from '../../components/pagination/pagination.component'
 
-import Fuse from 'fuse.js'
 
 
 const EshopSection = () => {
-    const { currentUser, token, stats } = useContext(AuthContext)
+    const { push } = useHistory()
+    const { closeModal, showModal, isLoading, message } = useContext(LoadingModalContext)
+    const [searchQuery, setSearchQuery] = useState('')
+    const [productItems, setProductItems] = useState([])
 
     const {
-        isLoading,
-        showModal,
-        message,
-        closeModal
-    } = useContext(LoadingModalContext)
-
-    const {
-        showUpdateForm,
+        // totalProducts,
+        // totalLenses,
+        activePremisesTab,
         products,
-        lensesArr,
-        getProducts,
-        getLenses,
-        handleProductDelete,
-        deleteLenses,
-        getProductsByQuery
+        retailPremisesTabs,
+        getProductsByQuery,
+        handleChangePremisesTab,
+        productCategoryTypeTabs,
+        activeCategoryTypeTab,
+        handleChangeCategoryTypeTab
     } = useContext(WarehouseContext)
 
-    const { push } = useHistory()
-
-    const [searchQuery, setSearchQuery] = useState('')
-
-    const items = [
-        {
-            id: 0,
-            name: "Všetko",
-            permission: 0,
-        },
-        {
-            id: 1,
-            name: "Obchodná 57, Bratislava",
-            permission: 1,
-        },
-        {
-            id: 2,
-            name: "Miletičova 38, Bratislava",
-            permission: 2,
-        },
-        {
-            id: 3,
-            name: "Senica, OC Branč",
-            permission: 3,
-        },
-        {
-            id: 4,
-            name: "Vajnory, Bratislava",
-            permission: 4,
-        },
-        // {
-        //     id: 5,
-        //     name: "Trnava, City Aréna",
-        //     permission: 5,
-        // },
-    ]
-
-    const filteredItems = items.filter(item => item.permission === currentUser.premises || currentUser.admin >= 2)
-    const [activeIndex, setActiveIndex] = useState(2)
-
     const handleSearch = () => {
-        if (searchQuery === '') return
-        getProductsByQuery({
-            query: searchQuery
-        })
+        if (searchQuery !== '') {
+            if (activeCategoryTypeTab === 0) {
+                getProductsByQuery({
+                    query: searchQuery
+                })
+            }
+        }
     }
 
     useEffect(() => {
-        console.log("fetch products")
         if (!products) {
             getProductsByQuery({
                 limit: 10
             })
-            getLenses()
         }
-
-        if (!message) {
-            closeModal()
+        if (products) {
+            setProductItems(products)
         }
-    }, [products, lensesArr])
+    }, [products])
 
     useEffect(() => {
-        if (filteredItems.length) {
-            setActiveIndex(filteredItems[0].id)
-        }
-    }, [])
-
-    const [allProducts, setAllProducts] = useState([])
-
-    useEffect(() => {
-        if (products && lensesArr)
-            setAllProducts([
-                ...products,
-                ...lensesArr
-            ])
-    }, [lensesArr, products])
-
-    useEffect(() => {
-        if (searchQuery === '') {
-            getProductsByQuery({
-                limit: 10
-            })
+        if (!searchQuery && products) {
+            if (activeCategoryTypeTab === 0) {
+                getProductsByQuery({
+                    limit: 10
+                })
+            }
         }
     }, [searchQuery])
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const [productsPerPage] = useState(10)
-    const indexOfLastProduct = currentPage * productsPerPage
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-    const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
 
             <SectionHeader
+                title="Sklad"
                 searchQuery={searchQuery}
                 handleSearch={handleSearch}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('sklad/novy-produkt')}
 
-                title="E-shop"
             />
 
             <SectionNavbar
-                items={filteredItems}
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
+                items={retailPremisesTabs}
+                activeIndex={activePremisesTab}
+                setActiveIndex={handleChangePremisesTab}
             />
 
-            {/* Products container */}
-            <ScrollContainer>
-                {
-                    currentProducts && currentProducts.map(product => (
-                        <ProductOverview
-                            key={product._id}
-                            name={product.name}
-                            stock={typeof product.available === "number" ? product.available : product.available ? activeIndex === 0 ? product.available.reduce((acc, currValue) => acc + currValue) : product.available[activeIndex - 1] : null}
-                            id={product.eanCode || product._id}
-                            price={(product.price / 100).toFixed(2)}
-                            image={product.image}
-                            handleUpdateButton={() => {
-                                showUpdateForm(product.type ? 0 : 1)
-                                push(`sklad/${product._id}`)
-                            }}
-                            handleDeleteButton={product.dioptersRange ? () => deleteLenses(product._id) : () => handleProductDelete(product._id)}
-                        />
-                    ))
-                }
+            <SectionNavbar
+                items={productCategoryTypeTabs}
+                activeIndex={activeCategoryTypeTab}
+                setActiveIndex={handleChangeCategoryTypeTab}
+            />
 
-                <Pagination
-                    productsPerPage={productsPerPage}
-                    totalProducts={allProducts.length}
-                    paginate={paginate}
-                    activePage={currentPage}
-                />
+            <ScrollContainer>
+                {productItems.map((product, idx) => (
+                    <ProductOverview
+                        key={idx}
+                        product={product}
+                        activePremisesTab={activePremisesTab}
+                    />
+                ))}
+
             </ScrollContainer>
         </section >
     )
