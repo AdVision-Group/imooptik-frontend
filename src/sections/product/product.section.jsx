@@ -9,27 +9,22 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ModalImage from '../../components/modal-images/modal-images.component'
 import Popup from '../../components/popup/pop-up.component'
 
-import CustomInput from '../../components/custom-input/custom-input.component'
-import CustomTextarea from '../../components/custom-textarea/custom-textarea.component'
-
 // import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
 // import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
-// import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
+import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 import ProductAccessoriesForm from '../../components/product-accessories-form/product-accessories-form.component'
 import ProductContactLensesForm from '../../components/product-contact-lenses-form/product-contact-lenses-form.component'
 
 // import { useFetch } from '../../hooks/useFetch'
 
-import { productCategories, checkParameter, brands, retailNames, diaConvert } from '../../context/warehouse/warehouse.utils'
+import { productCategories, checkParameter, retailNames } from '../../context/warehouse/warehouse.utils'
 
 import {
     Header,
     CategoryContainer,
     CategoryCheckbox,
     SubmitButton,
-    ImageContainer,
-    ProductImage,
     IsPublicCheckbox,
 
 } from './product.styles'
@@ -46,18 +41,23 @@ const ProductSection = () => {
         product,
         lenses,
         contactLensesParameters,
+        glassesParameters,
         handleLensesChange,
         handleLensesParameterChange,
         createProduct,
         resetProduct,
         resetLenses,
         resetContactLenses,
+        resetGlassesParameters,
         createLenses,
         handleProductChange,
         handleProductAvailableChange,
         getEanCode,
         handleAddNewParameter,
-        handleContactLensesParameterChange
+        handleContactLensesParameterChange,
+        handleGlassesParameterChange,
+        handleGlassesParameterSpecsChange,
+        handleGlassesSizeChange,
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
@@ -81,6 +81,8 @@ const ProductSection = () => {
                 const confirm = window.confirm("Rozpisane polia budú vymazane")
                 if (confirm) {
                     resetProduct()
+                    resetContactLenses()
+                    resetGlassesParameters()
                 }
             }
         }
@@ -94,10 +96,6 @@ const ProductSection = () => {
         setHasChanged(true)
         const { name, value } = e.target
 
-        console.log(name)
-        console.log(value)
-
-
         if (productObj.type === 0) {
             handleLensesChange(e)
         }
@@ -106,7 +104,13 @@ const ProductSection = () => {
             handleProductChange(e)
         }
 
+        if (productObj.type === 4) {
+            handleProductChange(e)
+        }
         if (productObj.type === 3) {
+            handleProductChange(e)
+        }
+        if (productObj.type === 2) {
             handleProductChange(e)
         }
 
@@ -118,6 +122,98 @@ const ProductSection = () => {
         setProductObj({
             ...productObj,
             [name]: value
+        })
+    }
+
+    const handleGlassesParametersChange = e => {
+        setHasChanged(true)
+        const { name, value } = e.target
+
+        handleGlassesParameterChange(e)
+
+        if (value === '') {
+            delete productObj[name]
+            return
+        }
+
+        setProductObj({
+            ...productObj,
+            [name]: value
+        })
+    }
+
+    const handleSpecsChange = (e) => {
+        setHasChanged(true)
+        const { name, value } = e.target
+
+        handleGlassesParameterSpecsChange(e)
+
+        if (value === '') {
+            delete productObj.specs[name]
+
+            if (Object.keys(productObj.specs).length === 0) {
+                delete productObj["specs"]
+            }
+            return
+        }
+
+        setProductObj({
+            ...productObj,
+            specs: {
+                ...productObj.specs,
+                [name]: value
+            }
+        })
+    }
+
+    const handleGlassesSpecsSizeChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = glassesParameters.specs[name]
+        arr[idx] = value === '' ? 1001 : value
+
+        handleGlassesSizeChange(e, idx)
+
+        if (value === '') {
+            if (productObj.specs[name].length > 1) {
+                arr[idx] = 1001
+
+                const firstIndex = arr[0]
+                const canDeleteSpecs = arr.map(value => {
+                    if (firstIndex !== value) {
+                        return false
+                    } else {
+                        return true
+                    }
+                })
+
+                const verdict = canDeleteSpecs.find(value => value === false)
+
+                if (verdict === false) {
+                    setProductObj({
+                        ...productObj,
+                        specs: {
+                            ...productObj.specs,
+                            [name]: arr
+                        }
+                    })
+                } else {
+                    delete productObj.specs[name]
+                }
+
+            }
+            if (Object.keys(productObj.specs).length === 0) {
+                delete productObj["specs"]
+            }
+            // delete userObj.company[]
+            return
+        }
+
+        setProductObj({
+            ...productObj,
+            specs: {
+                ...productObj.specs,
+                [name]: arr
+            }
         })
     }
 
@@ -192,6 +288,7 @@ const ProductSection = () => {
     console.log("PRODUCT OBJECT")
     console.log(productObj)
     console.log(product)
+    console.log(glassesParameters)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -208,7 +305,7 @@ const ProductSection = () => {
             }
         }
 
-        if (productObj.type === 5 || productObj.type === 3) {
+        if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2) {
             if (!productObj.name || !productObj.price || !productObj.image) {
                 setShowModal(true)
                 getMessage("Povinné údaje sú prázdne")
@@ -244,6 +341,7 @@ const ProductSection = () => {
             resetProduct()
             resetLenses()
             resetContactLenses()
+            resetGlassesParameters()
             setProductObj({})
             setSelectedImage(null)
         }
@@ -335,6 +433,23 @@ const ProductSection = () => {
                         handleAddNewParameter={handleAddNewParameter}
                         handleAvailableChange={handleAvailableChange}
                         handleContactLensesChange={handleContactLensesChange}
+                    />
+                )}
+
+                {(productObj.type === 2 || productObj.type === 4) && (
+                    <ProductGlassesForm
+                        product={product}
+                        retailNames={retailNames}
+                        currentUser={currentUser}
+                        selectedImage={selectedImage}
+                        glassesParameters={glassesParameters}
+                        handleChange={handleChange}
+                        setImageModal={setImageModal}
+                        checkParameter={checkParameter}
+                        handleSpecsChange={handleSpecsChange}
+                        handleAvailableChange={handleAvailableChange}
+                        handleGlassesSpecsSizeChange={handleGlassesSpecsSizeChange}
+                        handleGlassesParametersChange={handleGlassesParametersChange}
                     />
                 )}
 

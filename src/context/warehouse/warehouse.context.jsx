@@ -10,7 +10,8 @@ import {
     initProductObj,
     formatPrice,
     diaConvert,
-    initContactLensesObj
+    initContactLensesObj,
+    initGlassesObj
 } from './warehouse.utils'
 
 export const WarehouseContext = createContext({
@@ -18,6 +19,7 @@ export const WarehouseContext = createContext({
     product: {},
     lenses: {},
     contactLensesParameters: {},
+    glassesParameters: {},
     totalProducts: 0,
     totalLenses: 0,
     activePremisesTab: 0,
@@ -40,9 +42,13 @@ export const WarehouseContext = createContext({
     resetProduct: () => { },
     resetLenses: () => { },
     resetContactLenses: () => { },
+    resetGlassesParameters: () => { },
     getEanCode: () => { },
     handleAddNewParameter: () => { },
     handleContactLensesParameterChange: () => { },
+    handleGlassesParameterChange: () => { },
+    handleGlassesParameterSpecsChange: () => { },
+    handleGlassesSizeChange: () => { },
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -57,6 +63,7 @@ const WarehouseProvider = ({ children }) => {
     const [product, setProduct] = useState({ ...initProductObj })
     const [lenses, setLenses] = useState({ ...initLensesObj })
     const [contactLensesParameters, setContactLensesParameters] = useState({ ...initContactLensesObj })
+    const [glassesParameters, setGlassesParameters] = useState({ ...initGlassesObj })
 
     const [products, setProducts] = useState(null)
     const [activePremisesTab, setActivePremisesTab] = useState(0)
@@ -64,6 +71,39 @@ const WarehouseProvider = ({ children }) => {
 
     const [productCategoryTypeTabs, setProductCategoryTypeTabs] = useState(categoryTabs)
     const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
+
+    const handleGlassesParameterChange = e => {
+        const { name, value } = e.target
+        setGlassesParameters({
+            ...glassesParameters,
+            [name]: value
+        })
+    }
+
+    const handleGlassesParameterSpecsChange = e => {
+        const { name, value } = e.target
+        setGlassesParameters({
+            ...glassesParameters,
+            specs: {
+                ...glassesParameters.specs,
+                [name]: value
+            }
+        })
+    }
+
+    const handleGlassesSizeChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = glassesParameters.specs[name]
+        arr[idx] = value === '' ? 1001 : value
+        setGlassesParameters({
+            ...glassesParameters,
+            specs: {
+                ...glassesParameters.specs,
+                [name]: arr
+            }
+        })
+
+    }
 
     const handleAddNewParameter = e => {
         const { name } = e.target
@@ -146,6 +186,15 @@ const WarehouseProvider = ({ children }) => {
         })
     }
 
+    const resetGlassesParameters = () => {
+        setGlassesParameters({
+            ...initGlassesObj,
+            specs: {
+                ...initGlassesObj.specs,
+                size: [1001, 1001, 1001]
+            }
+        })
+    }
 
     const handleChangePremisesTab = (idx) => {
         setActivePremisesTab(idx)
@@ -293,6 +342,18 @@ const WarehouseProvider = ({ children }) => {
             price: formatPrice(productToAdd.price.toString()),
             link: slug,
             available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+        }
+
+        if (productToAdd.specs) {
+            if (productToAdd.specs.size) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    specs: {
+                        ...modifiedProduct.specs,
+                        size: productToAdd.specs.size.map(value => value === 1001 ? 0 : Number(value))
+                    }
+                }
+            }
         }
 
         if (productToAdd.contactLenses) {
@@ -473,6 +534,7 @@ const WarehouseProvider = ({ children }) => {
                 product,
                 lenses,
                 contactLensesParameters,
+                glassesParameters,
                 totalProducts,
                 totalLenses,
                 activePremisesTab,
@@ -495,9 +557,13 @@ const WarehouseProvider = ({ children }) => {
                 resetProduct,
                 resetLenses,
                 resetContactLenses,
+                resetGlassesParameters,
                 getEanCode,
                 handleAddNewParameter,
                 handleContactLensesParameterChange,
+                handleGlassesParameterChange,
+                handleGlassesParameterSpecsChange,
+                handleGlassesSizeChange,
             }}
         >
             {children}
