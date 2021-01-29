@@ -1,593 +1,195 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { ImageContext } from '../image/image.context'
-import {
-    fetchProducts,
-    postProduct,
-    deleteProduct,
-    patchProduct,
-    postLenses,
-    fetchLenses,
-    patchLenses,
-    delLense,
-    fetchSingleProduct,
-    fetchSingleLenses
-    // fetchFilteredProducts
-} from './warehouse.queries'
 
 import {
-    initProductObj,
+    premisesTabs,
+    categoryTabs,
     initLensesObj,
-    productCategories,
-    formatPrice
+    initProductObj,
+    formatPrice,
+    diaConvert,
+    initContactLensesObj
 } from './warehouse.utils'
 
-
-
 export const WarehouseContext = createContext({
-    formToShow: 0,
-    toggleProductForms: () => { },
-    showUpdateForm: () => { },
-    isUpdating: false,
-    activeCategoryIndex: 0,
-    categories: [],
-    getEanCode: () => { },
-    toggleDraft: () => { },
-    handleCategoryChange: () => { },
-    handleAvailableChange: () => { },
-    handleSizeChange: () => { },
-    selectImage: () => { },
-    product: null,
+    eanCode: null,
+    product: {},
+    lenses: {},
+    contactLensesParameters: {},
+    totalProducts: 0,
+    totalLenses: 0,
+    activePremisesTab: 0,
+    activeCategoryTypeTab: 0,
+    retailPremisesTabs: [],
+    productCategoryTypeTabs: [],
     products: null,
-    handleChange: () => { },
-    handleSpecsChange: () => { },
-    resetProduct: () => { },
-    lenses: null,
-    lensesArr: null,
-    handleLensesChange: () => { },
-    handleLensesDioptersRangeChange: () => { },
-    handleLensesCylinderRangeChange: () => { },
-    totalCount: 0,
-    getProducts: () => { },
+    handleChangeCategoryTypeTab: () => { },
+    handleChangePremisesTab: () => { },
+    getProductsByQuery: () => { },
+    handleProductChange: () => { },
+    handleProductAvailableChange: () => { },
     getSingleProduct: () => { },
-    createNewProduct: () => { },
-    handleProductDelete: () => { },
-    updateProduct: () => { },
-    createNewLenses: () => { },
+    createProduct: () => { },
+    getSingleLenses: () => { },
     getLenses: () => { },
-    getSigleLenses: () => { },
-    updateLenses: () => { },
-    deleteLenses: () => { },
-    lensesParameters: {},
-    handleParameterChange: () => { },
-    getProductsByQuery: () => { }
+    createLenses: () => { },
+    handleLensesChange: () => { },
+    handleLensesParameterChange: () => { },
+    resetProduct: () => { },
+    resetLenses: () => { },
+    resetContactLenses: () => { },
+    getEanCode: () => { },
+    handleAddNewParameter: () => { },
+    handleContactLensesParameterChange: () => { },
 })
 
-
 const WarehouseProvider = ({ children }) => {
-    const { token, currentUser } = useContext(AuthContext)
-    const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
-    const { setSelectedImage } = useContext(ImageContext)
     const { push } = useHistory()
+    const { token, isAdmin, currentUser, stats } = useContext(AuthContext)
+    const { closeModal, setIsLoading, setShowModal, getMessage } = useContext(LoadingModalContext)
 
-    // ------------------------
+    const [totalProducts, setTotalProducts] = useState(0)
+    const [totalLenses, setTotalLenses] = useState(0)
+    const [eanCode, setEanCode] = useState(null)
 
-    const [totalCount, setTotalCount] = useState(0)
-    const [isUpdating, setIsUpdating] = useState(false)
-    const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
+    const [product, setProduct] = useState({ ...initProductObj })
+    const [lenses, setLenses] = useState({ ...initLensesObj })
+    const [contactLensesParameters, setContactLensesParameters] = useState({ ...initContactLensesObj })
 
-    // ------------------------
-
-    const switchFormButtons = [
-        {
-            name: "Okuliare a i."
-        },
-        {
-            name: "Sklá"
-        }
-    ]
-    const [formToShow, setFormToShow] = useState(0)
-
-    // ------------------------
-
-    const [categories] = useState(productCategories)
-    const [product, setProduct] = useState(currentUser.admin === 1 ? initProductObj : { ...initProductObj, available: [0, 0, 0, 0] })
     const [products, setProducts] = useState(null)
+    const [activePremisesTab, setActivePremisesTab] = useState(0)
+    const [retailPremisesTabs, setRetailPremisesTabs] = useState([])
 
-    // ------------------------
+    const [productCategoryTypeTabs, setProductCategoryTypeTabs] = useState(categoryTabs)
+    const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
 
-    const [lenses, setLenses] = useState(initLensesObj)
-    const [lensesArr, setLensesArr] = useState(null)
+    const handleAddNewParameter = e => {
+        const { name } = e.target
+        setContactLensesParameters({
+            ...contactLensesParameters,
+            [name]: [...contactLensesParameters[name], 1001]
+        })
+    }
 
-    const [lensesParameters, setLensesParameters] = useState({
-        diopters: [0, 0],
-        curvature: 0,
-        average: 0
-    })
-
-    const handleParameterChange = (e, idx) => {
+    const handleContactLensesParameterChange = (e, idx) => {
         const { name, value } = e.target
-        let arr = lensesParameters.lenses[name]
-        arr[idx] = Number(value)
-        setLensesParameters({
-            ...lensesParameters,
+        let arr = contactLensesParameters[name]
+        arr[idx] = value === '' ? 1001 : value
+        setContactLensesParameters({
+            ...contactLensesParameters,
             [name]: arr
         })
     }
 
-    // ------------------------
-    // PRODUCT ACTIONS
-    // ------------------------
-
-    const getEanCode = (code) => {
-        setProduct({
-            ...product,
-            eanCode: code
-        })
-    }
-
-    const toggleProductForms = (e, idx) => {
-        e.preventDefault()
-        setFormToShow(idx)
-    }
-
-    const toggleDraft = () => {
-        setProduct({
-            ...product,
-            eshop: !product.eshop
-        })
-        setLenses({
-            ...lenses,
-            eshop: !product.eshop
-        })
-    }
-
-    const handleChange = (e) => {
+    const handleProductChange = e => {
         const { name, value } = e.target
+
         setProduct({
             ...product,
             [name]: value
         })
     }
-    const handleSpecsChange = (e) => {
+
+    const handleProductAvailableChange = (e, idx) => {
         const { name, value } = e.target
+        let arr = product[name]
+        arr[idx] = value === '' ? 1001 : Number(value)
         setProduct({
             ...product,
-            specs: {
-                ...product.specs,
-                [name]: value
-            }
+            [name]: arr
         })
     }
 
-    const handleCategoryChange = (value) => {
-        setActiveCategoryIndex(value)
-        setProduct({
-            ...product,
-            type: value
-        })
-    }
+    const handleLensesChange = e => {
+        const { name, value } = e.target
 
-    const handleAvailableChange = (e, idx) => {
-        let arr = product.available
-        arr[idx] = Number(e.target.value)
-        setProduct({
-            ...product,
-            available: arr
-        })
-    }
-
-    const handleSizeChange = (e, idx) => {
-        let arr = product.specs.size
-        arr[idx] = Number(e.target.value)
-        setProduct({
-            ...product,
-            specs: {
-                ...product.specs,
-                size: arr
-            }
-        })
-    }
-
-    const selectImage = (imgId) => {
-        setProduct({
-            ...product,
-            imagePath: imgId
-        })
         setLenses({
             ...lenses,
-            imagePath: imgId
+            [name]: value
+        })
+    }
+
+    const handleLensesParameterChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = lenses[name]
+        arr[idx] = value === '' ? 1001 : Number(value)
+        setLenses({
+            ...lenses,
+            [name]: arr
         })
     }
 
     const resetProduct = () => {
-        setProduct(currentUser.admin === 1 ? initProductObj : { ...initProductObj, available: [0, 0, 0, 0] })
-        setLenses(initLensesObj)
-        setSelectedImage(null)
-        setIsUpdating(false)
-        setActiveCategoryIndex(0)
-        setFormToShow(0)
+        setProduct({
+            ...initProductObj,
+            available: [1001, 1001, 1001, 1001, 0],
+        })
+        setEanCode(null)
     }
 
-    const handleLensesChange = (e) => {
-        const { name, value } = e.target
+    const resetLenses = () => {
+        // setLenses({ ...initLensesObj })
         setLenses({
-            ...lenses,
-            [name]: value
+            ...initLensesObj,
+            dioptersRange: [1001, 1001],
+            cylinderRange: [1001, 1001],
         })
     }
 
-    const handleLensesCylinderRangeChange = (e, idx) => {
-        let arr = lenses.cylinderRange
-        arr[idx] = Number(e.target.value)
-        setLenses({
-            ...lenses,
-            cylinderRange: arr
+    const resetContactLenses = () => {
+        setContactLensesParameters({
+            allowedCurves: [1001],
+            allowedDiameters: [1001],
+            dioptersRange: [1001, 1001]
         })
     }
 
-    const handleLensesDioptersRangeChange = (e, idx) => {
-        let arr = lenses.dioptersRange
-        arr[idx] = Number(e.target.value)
-        setLenses({
-            ...lenses,
-            dioptersRange: arr
-        })
+
+    const handleChangePremisesTab = (idx) => {
+        setActivePremisesTab(idx)
     }
 
-    const showUpdateForm = (formName) => {
-        setFormToShow(formName)
-        setIsUpdating(true)
-
+    const handleChangeCategoryTypeTab = (idx) => {
+        setActiveCategoryTypeTab(idx)
     }
 
-    // ------------------------
-    // START GLASSES ACTIONS
-    // ------------------------
 
-    // Get all products
-    const getProducts = async () => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await fetchProducts(token)
-            const data = await response.json()
-
-            if (data.products) {
-                setTotalCount(totalCount + data.count)
-                setProducts(data.products)
-                setIsLoading(false)
-                closeModal()
-                return
-            }
-
-            getMessage(data.message)
-            setIsLoading(false)
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Get single product
-
-    const getSingleProduct = async (id) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await fetchSingleProduct(id)
-            const data = await response.json()
-
-            if (data.error) {
-                getMessage(data.message)
-                setIsLoading(false)
-                return
-            }
-
-            if (data.product) {
-                console.log(data.product)
-                if (currentUser.admin === 1) {
-
-                    setProduct({
-                        ...product,
-                        ...data.product,
-                        specs: {
-                            ...product.specs,
-                            ...data.product.specs
-                        },
-                        imagePath: data.product.image._id,
-                        available: [data.product.available[currentUser.premises - 1]],
-                        price: (data.product.price / 100).toFixed(2)
-                    })
-                } else {
-                    setProduct({
-                        ...product,
-                        ...data.product,
-                        specs: {
-                            ...product.specs,
-                            ...data.product.specs
-                        },
-                        imagePath: data.product.image._id,
-                        available: data.product.available.filter((num, idx) => idx !== 4),
-                        price: (data.product.price / 100).toFixed(2)
-
-
-                    })
-                }
-                setActiveCategoryIndex(data.product.type)
-                setSelectedImage(data.product.image)
-                setIsUpdating(true)
-            }
-
-            closeModal()
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-
-    }
-
-    // Create Glasses
-    const createNewProduct = async (productToAdd) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await postProduct(token, {
-                ...productToAdd,
-                price: formatPrice(productToAdd.price.toString())
-            })
-            const data = await response.json()
-
-            console.log(data)
-
-            if (data.error) {
-                getMessage(data.message)
-                setIsLoading(false)
-                return
-            }
-
-            setIsLoading(false)
-            getMessage(data.success)
-            resetProduct()
-            push('/dashboard/obchod')
-            getProducts()
-            closeModal()
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Update Glasses
-    const updateProduct = async (productToUpdate) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await patchProduct(token, {
-                ...productToUpdate,
-                price: formatPrice(productToUpdate.price.toString())
-            })
-            const data = await response.json()
-            console.log(data)
-
-            if (data.error) {
-                getMessage(data.message)
-                setIsLoading(false)
-                return
-            }
-
-            getMessage(data.message)
-            setIsLoading(false)
-            push('/dashboard/obchod')
-            getProducts()
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Delete glasses
-    const handleProductDelete = async (id) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await deleteProduct(token, id)
-            const data = await response.json()
-
-            setIsLoading(false)
-            getMessage(data.message)
-            getProducts()
-            push('/dashboard/obchod')
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // ------------------------
-    // END GLASSES ACTIONS
-    // ------------------------
-
-
-    // ------------------------
-    // START LENSES ACTIONS
-    // ------------------------
-
-    // Get all lenses
-    const getLenses = async () => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await fetchLenses(token)
-            const data = await response.json()
-
-            if (data.lenses) {
-                setTotalCount(totalCount + data.count)
-                setLensesArr(data.lenses)
-                setIsLoading(false)
-                closeModal()
-                return
-            }
-
-            setIsLoading(false)
-            getMessage(data.message)
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Get single lenses
-    const getSigleLenses = async (id) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await fetchSingleLenses(id)
-            const data = await response.json()
-
-            console.log(data)
-
-
-            if (data.error) {
-                getMessage(data.message)
-                setIsLoading(false)
-                return
-            }
-
-            if (data.lenses) {
-                setLenses({
-                    ...lenses,
-                    ...data.lenses,
-                    imagePath: data.lenses.image._id,
-                    price: (data.lenses.price / 100).toFixed(2)
-                })
-                setSelectedImage(data.lenses.image)
-                setIsUpdating(true)
-            }
-
-            closeModal()
-
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Create Lense
-    const createNewLenses = async (productToAdd) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-
-
-        try {
-            const response = await postLenses(token, {
-                ...productToAdd,
-                price: formatPrice(productToAdd.price.toString())
-            })
-            const data = await response.json()
-
-            if (data) {
-                setIsLoading(false)
-                getMessage(data.message)
-                push('/dashboard/obchod')
-                getLenses()
-                closeModal()
-            }
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Update Lense
-    const updateLenses = async (productToAdd) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await patchLenses(token, {
-                ...productToAdd,
-                price: formatPrice(productToAdd.price.toString())
-            })
-            const data = await response.json()
-
-            if (data) {
-                setIsLoading(false)
-                getMessage(data.message)
-                push('/dashboard/obchod')
-                getLenses()
-            }
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // Delete Lense
-    const deleteLenses = async (id) => {
-        setIsLoading(true)
-        setShowModal(true)
-
-        try {
-            const response = await delLense(token, id)
-            const data = await response.json()
-
-            if (data.error) {
-                setIsLoading(false)
-                getMessage(data.message)
-            }
-
-
-            getLenses()
-            setIsLoading(false)
-            getMessage(data.message)
-            push('/dashboard/obchod')
-            closeModal()
-
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
-    }
-
-    // ------------------------
-    // END LENSES ACTIONS
-    // ------------------------
-
-    // ----------------------------------------------
-    // ----------------------------------------------
-    // ----------------------------------------------
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
+
+    const getEanCode = async () => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/nextEanCode`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.eanCode) {
+                setEanCode(data.eanCode)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     const getProductsByQuery = async (query) => {
         setIsLoading(true)
@@ -624,46 +226,278 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
+    const getLenses = async () => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.lenses) {
+                setProducts(data.lenses)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const getSingleProduct = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/products/${id}`)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.product) {
+                setProduct(data.product)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createProduct = async (productToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const slug = diaConvert(productToAdd.name).replaceAll(" ", "-").toLowerCase().trim()
+
+        let modifiedProduct = {
+            ...productToAdd,
+            price: formatPrice(productToAdd.price.toString()),
+            link: slug,
+            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+        }
+
+        if (productToAdd.contactLenses) {
+            if (productToAdd.contactLenses.allowedCurves) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedCurves: productToAdd.contactLenses.allowedCurves.map(value => Number(value))
+                    }
+                }
+            }
+            if (productToAdd.contactLenses.allowedDiameters) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedDiameters: productToAdd.contactLenses.allowedDiameters.map(value => Number(value))
+                    }
+                }
+            }
+            if (productToAdd.contactLenses.dioptersRange) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        dioptersRange: productToAdd.contactLenses.dioptersRange.map(value => Number(value))
+                    }
+                }
+            }
+        }
+
+        console.log("modifiedProduct")
+        console.log(modifiedProduct)
+
+
+        const raw = JSON.stringify({
+            ...productToAdd,
+            price: formatPrice(productToAdd.price.toString()),
+            link: slug,
+            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+        })
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.product) {
+                push('/dashboard/obchod')
+                getProductsByQuery({
+                    limit: 10
+                })
+                setEanCode(null)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const getSingleLenses = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/lenses/${id}`)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.lenses) {
+                setLenses(data.lenses)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createLenses = async (lensesToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify({
+            ...lensesToAdd,
+            price: formatPrice(lensesToAdd.price.toString())
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.lenses) {
+                push('/dashboard/obchod')
+                getLenses()
+                closeModal()
+                return
+            }
+
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        if (products) {
+            console.log(`GET ${productCategoryTypeTabs[activeCategoryTypeTab].name} DATA`)
+            if (activeCategoryTypeTab === 0) {
+                getProductsByQuery({
+                    limit: 10
+                })
+            } else {
+                getLenses()
+            }
+        }
+    }, [activeCategoryTypeTab])
+
+    useEffect(() => {
+        console.log("SET PREMISES")
+        if (currentUser) {
+            if (isAdmin) {
+                setRetailPremisesTabs(premisesTabs)
+                setActivePremisesTab(0)
+            } else {
+                setRetailPremisesTabs(premisesTabs.filter(tab => tab.premises === currentUser.premises))
+                setActivePremisesTab(0)
+            }
+        }
+    }, [currentUser, isAdmin])
+
+    useEffect(() => {
+        if (stats) {
+            console.log("SET STATS")
+            setTotalProducts(stats.products)
+            setTotalLenses(stats.lenses)
+        }
+    }, [stats])
+
     return (
         <WarehouseContext.Provider
             value={{
-                switchFormButtons,
-                formToShow,
-                toggleProductForms,
-                showUpdateForm,
-                isUpdating,
-                activeCategoryIndex,
-                categories,
-                getEanCode,
-                toggleDraft,
-                handleCategoryChange,
-                handleAvailableChange,
-                handleSizeChange,
-                selectImage,
+                eanCode,
                 product,
-                products,
-                handleChange,
-                handleSpecsChange,
-                resetProduct,
                 lenses,
-                lensesArr,
-                handleLensesChange,
-                handleLensesDioptersRangeChange,
-                handleLensesCylinderRangeChange,
-                totalCount,
-                getProducts,
-                getSingleProduct,
-                createNewProduct,
-                handleProductDelete,
-                updateProduct,
-                createNewLenses,
+                contactLensesParameters,
+                totalProducts,
+                totalLenses,
+                activePremisesTab,
+                activeCategoryTypeTab,
+                retailPremisesTabs,
+                productCategoryTypeTabs,
+                products,
+                handleChangeCategoryTypeTab,
+                handleChangePremisesTab,
+                getProductsByQuery,
+                handleProductChange,
+                handleProductAvailableChange,
                 getLenses,
-                getSigleLenses,
-                updateLenses,
-                deleteLenses,
-                lensesParameters,
-                handleParameterChange,
-                getProductsByQuery
+                getSingleProduct,
+                createProduct,
+                getSingleLenses,
+                createLenses,
+                handleLensesChange,
+                handleLensesParameterChange,
+                resetProduct,
+                resetLenses,
+                resetContactLenses,
+                getEanCode,
+                handleAddNewParameter,
+                handleContactLensesParameterChange,
             }}
         >
             {children}

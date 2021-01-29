@@ -1,6 +1,10 @@
 import React from 'react'
 
 import {
+    formatAvailable
+} from '../../context/warehouse/warehouse.utils'
+
+import {
     ProductContainer,
     ProductImage,
     ProductContent,
@@ -13,8 +17,9 @@ import {
     PriceContainer
 } from './product-overview.styles'
 
-const ProductOverview = (props) => {
-    const { name, stock, id, price, image, handleDeleteButton, handleUpdateButton } = props
+const ProductOverview = ({ product, handleDeleteButton, handleUpdateButton, activePremisesTab }) => {
+    const { name, available, eanCode, price, image } = product
+
 
     return (
         <ProductContainer>
@@ -24,13 +29,13 @@ const ProductOverview = (props) => {
 
             <ProductContent>
                 <h2>{name}</h2>
-                <ProductId>{id}</ProductId>
+                <ProductId>{eanCode}</ProductId>
 
             </ProductContent>
 
             <PriceContainer>
-                <Price>{price}€</Price>
-                <StockInfo>{stock != null ? `Na sklade ${stock} kusov` : "Šošovka"}</StockInfo>
+                <Price>{(price / 100).toFixed(2)}€</Price>
+                <StockInfo>{formatAvailable(available, activePremisesTab)}</StockInfo>
             </PriceContainer>
 
             <Options>

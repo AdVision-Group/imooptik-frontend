@@ -1,57 +1,46 @@
 export const initProductObj = {
-    // Product id
-    // Product name: Ultra glasses
     name: "",
-    // Product description: Awesome product
     description: "",
-    // price in cents: 1050 => 10.50
-    price: '0',
-    // product type: glesses, lenses, ...
-    type: 1,
-    // brand name: Adidas
+    price: 0,
+    type: 0,
     brand: "",
-    //kolko sa ich zatial predalo
     soldAmount: 0,
-    //kolko je kusov na ktorej prevádzke [arr] 
-    available: [0],
-    //ean kod = unikatny kod ktory ma kazdy produkt
+    available: [1001, 1001, 1001, 1001, 0],
     eanCode: "",
-    //farebny kod, ktory spolu s ean kodom tvori "identitu" produktu. Moze existovat viacero
-    //produktov s rovnakym ean kodom ale rozlicnym color kodom. Je to takto urobené kvôli skladovému
-    //systému napr. mam na sklade iny pocet zltych ramov isteho druhu ako ciernych
-    colorCode: "",
-    //meno farby
-    colorName: "",
-    //path k obrazku na serveri (toto bude mozno array este sa uvidi)
-    imagePath: "",
-    image: null,
+    image: "",
     eshop: true,
+    link: '',
+    category: ''
+}
 
+export const initGlassesObj = {
+    colorCode: "",
+    colorName: "",
     specs: {
         frameColor: "",
         frameMaterial: "",
         frameStyle: "",
         lensColor: "",
         sex: "M",
-        size: [0, 0, 0],
+        size: [1001, 1001, 1001],
     }
 }
 
+export const initContactLensesObj = {
+    allowedCurves: [1001],
+    allowedDiameters: [1001],
+    dioptersRange: [1001, 1001]
+}
+
 export const initLensesObj = {
-    // id [5fd4cae9f9432022689dd223]
     id: "",
-    // Lense name
     name: "",
-    // Paradne sosovky
     description: "",
-    //vsetky skla su dostupne len pre isty interval dioptrií a cylindrov, ak si zvolím ze mam dioptrie
-    //mimo tohto intervalu tak si tieto skla k mojim okuliarom vybrat nemozem
-    dioptersRange: ["0", "0"],
-    cylinderRange: ["0", "0"],
-    //cena v centoch
-    price: "0",
+    dioptersRange: [1001, 1001],
+    cylinderRange: [1001, 1001],
+    price: 0,
     brand: "",
-    imagePath: ''
+    image: ''
 }
 
 export const retailNames = [
@@ -73,28 +62,84 @@ export const productCategories = [
         value: 2
     },
     {
-        name: "Športové",
+        name: "Kontaktné Šošovky",
         value: 3
     },
     {
-        name: "Šošovky",
+        name: "Športové",
         value: 4
     },
     {
         name: "Doplnky",
         value: 5
     },
+    {
+        name: "Šošovky",
+        value: 0
+    },
 ]
 
+export const premisesTabs = [
+    {
+        id: 0,
+        name: "Všetko",
+        premises: 0,
 
+    },
+    {
+        id: 1,
+        name: "Obchodná 57, Bratislava",
+        premises: 1,
+    },
+    {
+        id: 2,
+        name: "Miletičova 38, Bratislava",
+        premises: 2,
+    },
+    {
+        id: 3,
+        name: "Senica, OC Branč",
+        premises: 3,
+    },
+    {
+        id: 4,
+        name: "Vajnory, Bratislava",
+        premises: 4,
+    },
+    // {
+    //     id: 5,
+    //     name: "Trnava, City Aréna",
+    //     permission: 5,
+    // },
+]
 
-export const resetProductObj = () => {
-    return initProductObj
-}
+export const categoryTabs = [
+    {
+        id: 0,
+        name: "Okuliare",
+    },
+    {
+        id: 1,
+        name: "Šosovky",
+    },
+]
 
-export const resetLensesObj = () => {
-    return initLensesObj
-}
+export const lensesBrands = [
+    "Acuvue",
+    "Adore",
+    "Air Optix",
+    "Biofinity",
+    "Biomedics",
+    "Clariti",
+    "ColourVue",
+    "Comfilcon A",
+    "Dailies",
+    "Freshlook",
+    "Lenjoy",
+    "Proclear",
+    "Purevision",
+    "Soflens",
+]
 
 export const brands = [
     "Adidas",
@@ -168,4 +213,45 @@ export const formatPrice = price => {
     } else {
         return Number(price * 100)
     }
+}
+
+export const formatAvailable = (available, activePremisesTab) => {
+    if (available === undefined) return "Šosovka"
+
+    if (typeof available === "number") {
+        return `Na sklade ${available} kusov`
+    } else {
+        if (activePremisesTab === 0) {
+            return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} kusov`
+        } else {
+            return `Na sklade ${available[activePremisesTab]} kusov`
+        }
+    }
+}
+
+export const checkParameter = (parameter, idx) => {
+    if (parameter.length === 0) {
+        return ""
+    }
+    if (parameter[idx] === 1001) {
+        return ""
+    }
+
+    return parameter[idx].toString()
+}
+
+const dia = "áäčďéíľĺňóôŕšťúýžÁČĎÉÍĽĹŇÓŠŤÚÝŽ";
+const nodia = "aacdeillnoorstuyzACDEILLNOSTUYZ";
+
+export const diaConvert = (text) => {
+    let convertText = "";
+    for (let i = 0; i < text.length; i++) {
+        if (dia.indexOf(text.charAt(i)) != -1) {
+            convertText += nodia.charAt(dia.indexOf(text.charAt(i)));
+        }
+        else {
+            convertText += text.charAt(i);
+        }
+    }
+    return convertText;
 }

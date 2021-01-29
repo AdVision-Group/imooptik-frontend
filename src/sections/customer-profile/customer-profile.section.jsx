@@ -164,9 +164,6 @@ const CustomerProfile = () => {
         }
     }, [])
 
-    console.log(userObj)
-    console.log(user)
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
