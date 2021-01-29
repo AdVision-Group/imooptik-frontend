@@ -70,17 +70,17 @@ const ProductSection = () => {
         const { name, value } = e.target
 
         if (productObj.type === 0) {
-            if (Object.keys(productObj).length > 2) {
+            if (Object.keys(productObj).length > 1) {
                 const confirm = window.confirm("Rozpisane polia budú vymazane")
                 if (confirm) {
                     resetLenses()
                 }
             }
         } else {
-            if (Object.keys(productObj).length > 3) {
+            if (Object.keys(productObj).length > 2) {
                 const confirm = window.confirm("Rozpisane polia budú vymazane")
                 if (confirm) {
-                    resetLenses()
+                    resetProduct()
                 }
             }
         }

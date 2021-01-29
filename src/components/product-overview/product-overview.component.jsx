@@ -18,7 +18,7 @@ import {
 } from './product-overview.styles'
 
 const ProductOverview = ({ product, handleDeleteButton, handleUpdateButton, activePremisesTab }) => {
-    const { name, available, id, price, image } = product
+    const { name, available, eanCode, price, image } = product
 
 
     return (
@@ -29,7 +29,7 @@ const ProductOverview = ({ product, handleDeleteButton, handleUpdateButton, acti
 
             <ProductContent>
                 <h2>{name}</h2>
-                <ProductId>{id}</ProductId>
+                <ProductId>{eanCode}</ProductId>
 
             </ProductContent>
 
