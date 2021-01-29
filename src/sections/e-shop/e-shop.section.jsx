@@ -32,7 +32,8 @@ const EshopSection = () => {
         productCategoryTypeTabs,
         activeCategoryTypeTab,
         handleChangeCategoryTypeTab,
-        deleteProduct
+        deleteProduct,
+        deleteLenses,
     } = useContext(WarehouseContext)
 
     const handleSearch = () => {
@@ -115,7 +116,7 @@ const EshopSection = () => {
                         product={product}
                         activePremisesTab={activePremisesTab}
                         handleUpdateButton={() => push(`sklad/${product._id}`)}
-                        handleDeleteButton={() => handleDeleteProduct(product._id)}
+                        handleDeleteButton={activeCategoryTypeTab === 0 ? () => handleDeleteProduct(product._id) : () => deleteLenses((product._id))}
                     />
                 ))}
 

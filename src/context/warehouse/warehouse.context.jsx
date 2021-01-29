@@ -42,6 +42,7 @@ export const WarehouseContext = createContext({
     getLenses: () => { },
     createLenses: () => { },
     updateLenses: () => { },
+    deleteLenses: () => { },
     handleLensesChange: () => { },
     handleLensesParameterChange: () => { },
     resetProduct: () => { },
@@ -740,6 +741,37 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
+    const deleteLenses = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${id}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.lenses) {
+                getLenses()
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (products) {
             console.log(`GET ${productCategoryTypeTabs[activeCategoryTypeTab].name} DATA`)
@@ -811,6 +843,7 @@ const WarehouseProvider = ({ children }) => {
                 getSingleLenses,
                 createLenses,
                 updateLenses,
+                deleteLenses,
                 handleLensesChange,
                 handleLensesParameterChange,
                 resetProduct,
