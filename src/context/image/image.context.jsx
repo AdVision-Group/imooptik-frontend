@@ -1,7 +1,12 @@
 import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
-import { deleteImage, fetchImages, uploadImage, fetchFilteredImages } from './image.queries'
+import {
+    deleteImage,
+    // fetchImages, 
+    uploadImage,
+    fetchFilteredImages
+} from './image.queries'
 
 export const ImageContext = createContext({
     isDisabled: false,
@@ -28,7 +33,7 @@ const ImageProvider = ({ children }) => {
     const [isDisabled, setIsDisabled] = useState(false)
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
-    const [limit, setLimit] = useState(4)
+    const [limit] = useState(4)
     const [skip, setSkip] = useState(0)
 
     const handleImage = async (img, imgName, imgAlt, setImage, close) => {

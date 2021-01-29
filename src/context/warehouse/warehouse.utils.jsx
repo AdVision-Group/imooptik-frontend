@@ -15,7 +15,6 @@ export const initProductObj = {
 
 export const initGlassesObj = {
     colorCode: "",
-    colorName: "",
     specs: {
         frameColor: "",
         frameMaterial: "",
@@ -265,4 +264,8 @@ export const diaConvert = (text) => {
         }
     }
     return convertText;
+}
+
+export const formatLink = (text) => {
+    return diaConvert(text).replaceAll(" ", "-").toLowerCase().trim()
 }

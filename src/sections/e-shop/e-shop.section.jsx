@@ -31,7 +31,8 @@ const EshopSection = () => {
         handleChangePremisesTab,
         productCategoryTypeTabs,
         activeCategoryTypeTab,
-        handleChangeCategoryTypeTab
+        handleChangeCategoryTypeTab,
+        deleteProduct
     } = useContext(WarehouseContext)
 
     const handleSearch = () => {
@@ -76,6 +77,11 @@ const EshopSection = () => {
         setCurrentPage(pageNumber)
     }
 
+    const handleDeleteProduct = (id) => {
+        setCurrentPage(1)
+        deleteProduct(id)
+    }
+
 
     return (
         <section>
@@ -108,6 +114,8 @@ const EshopSection = () => {
                         key={idx}
                         product={product}
                         activePremisesTab={activePremisesTab}
+                        handleUpdateButton={() => push(`sklad/${product._id}`)}
+                        handleDeleteButton={() => handleDeleteProduct(product._id)}
                     />
                 ))}
 

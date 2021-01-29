@@ -12,7 +12,8 @@ import {
     diaConvert,
     initContactLensesObj,
     initGlassesObj,
-    formatfloatNumber
+    formatfloatNumber,
+    formatLink
 } from './warehouse.utils'
 
 export const WarehouseContext = createContext({
@@ -35,6 +36,8 @@ export const WarehouseContext = createContext({
     handleProductAvailableChange: () => { },
     getSingleProduct: () => { },
     createProduct: () => { },
+    updateProduct: () => { },
+    deleteProduct: () => { },
     getSingleLenses: () => { },
     getLenses: () => { },
     createLenses: () => { },
@@ -181,6 +184,7 @@ const WarehouseProvider = ({ children }) => {
 
     const resetContactLenses = () => {
         setContactLensesParameters({
+            ...initContactLensesObj,
             allowedCurves: [1001],
             allowedDiameters: [1001],
             dioptersRange: [1001, 1001]
@@ -210,6 +214,7 @@ const WarehouseProvider = ({ children }) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
+
 
     const getEanCode = async () => {
         setIsLoading(true)
@@ -318,7 +323,23 @@ const WarehouseProvider = ({ children }) => {
             console.log(data)
 
             if (data.product) {
-                setProduct(data.product)
+                setProduct({
+                    ...data.product,
+                    price: (data.product.price / 100).toFixed(2)
+                })
+                if (data.product.type === 3) {
+                    setContactLensesParameters({
+                        ...data.product.contactLenses
+                    })
+                } else {
+                    setGlassesParameters({
+                        colorCode: data.product.colorCode ?? "",
+                        specs: {
+                            ...data.product.specs,
+                            size: [...Array(3)].map((value, idx) => data.product.specs.size[idx] ? data.product.specs.size[idx] : 0)
+                        }
+                    })
+                }
                 closeModal()
                 return
             }
@@ -363,7 +384,7 @@ const WarehouseProvider = ({ children }) => {
                     ...modifiedProduct,
                     contactLenses: {
                         ...modifiedProduct.contactLenses,
-                        allowedCurves: productToAdd.contactLenses.allowedCurves.map(value => Number(value))
+                        allowedCurves: productToAdd.contactLenses.allowedCurves.map(value => formatfloatNumber(value))
                     }
                 }
             }
@@ -372,7 +393,7 @@ const WarehouseProvider = ({ children }) => {
                     ...modifiedProduct,
                     contactLenses: {
                         ...modifiedProduct.contactLenses,
-                        allowedDiameters: productToAdd.contactLenses.allowedDiameters.map(value => Number(value))
+                        allowedDiameters: productToAdd.contactLenses.allowedDiameters.map(value => formatfloatNumber(value))
                     }
                 }
             }
@@ -381,7 +402,7 @@ const WarehouseProvider = ({ children }) => {
                     ...modifiedProduct,
                     contactLenses: {
                         ...modifiedProduct.contactLenses,
-                        dioptersRange: productToAdd.contactLenses.dioptersRange.map(value => Number(value))
+                        dioptersRange: productToAdd.contactLenses.dioptersRange.map(value => formatfloatNumber(value))
                     }
                 }
             }
@@ -413,6 +434,180 @@ const WarehouseProvider = ({ children }) => {
                     limit: 10
                 })
                 setEanCode(null)
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const updateProduct = async (productToUpdate) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        let modifiedProduct = {
+            ...productToUpdate,
+        }
+
+        if (modifiedProduct.price) {
+            modifiedProduct = {
+                ...modifiedProduct,
+                price: formatPrice(productToUpdate.price.toString()),
+            }
+        }
+
+        if (modifiedProduct.available) {
+            modifiedProduct = {
+                ...modifiedProduct,
+                available: productToUpdate.available ? productToUpdate.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+            }
+        }
+
+        if (productToUpdate.link) {
+            const slug = diaConvert(productToUpdate.link).replaceAll(" ", "-").toLowerCase().trim()
+            modifiedProduct = {
+                ...modifiedProduct,
+                link: slug
+            }
+        }
+
+        if (productToUpdate.specs) {
+            if (productToUpdate.specs.size) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    specs: {
+                        ...modifiedProduct.specs,
+                        size: productToUpdate.specs.size.map(value => value === 1001 ? 0 : formatfloatNumber(value))
+                    }
+                }
+            }
+        }
+
+        if (productToUpdate.contactLenses) {
+            if (productToUpdate.contactLenses.allowedCurves) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedCurves: productToUpdate.contactLenses.allowedCurves.map(value => formatfloatNumber(value))
+                    }
+                }
+            } else {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedCurves: contactLensesParameters.allowedCurves
+                    }
+                }
+            }
+
+            if (productToUpdate.contactLenses.allowedDiameters) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedDiameters: productToUpdate.contactLenses.allowedDiameters.map(value => formatfloatNumber(value))
+                    }
+                }
+            } else {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedDiameters: contactLensesParameters.allowedDiameters
+                    }
+                }
+            }
+            if (productToUpdate.contactLenses.dioptersRange) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        dioptersRange: productToUpdate.contactLenses.dioptersRange.map(value => formatfloatNumber(value))
+                    }
+                }
+            } else {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        dioptersRange: contactLensesParameters.dioptersRange
+                    }
+                }
+            }
+        }
+
+        const raw = JSON.stringify({
+            ...modifiedProduct,
+        })
+
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${product._id}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.error) {
+                getMessage(data.message)
+                setIsLoading(false)
+                return
+
+            }
+
+            if (data.product) {
+                push('/dashboard/obchod')
+                getProductsByQuery({
+                    limit: 10
+                })
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const deleteProduct = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${id}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.product) {
+                // push('/dashboard/obchod')
+                getProductsByQuery({
+                    limit: 10
+                })
                 closeModal()
                 return
             }
@@ -525,6 +720,15 @@ const WarehouseProvider = ({ children }) => {
         }
     }, [stats])
 
+    useEffect(() => {
+        if (product.name !== '') {
+            setProduct({
+                ...product,
+                link: formatLink(product.name)
+            })
+        }
+    }, [product.name])
+
     return (
         <WarehouseContext.Provider
             value={{
@@ -548,6 +752,8 @@ const WarehouseProvider = ({ children }) => {
                 getLenses,
                 getSingleProduct,
                 createProduct,
+                updateProduct,
+                deleteProduct,
                 getSingleLenses,
                 createLenses,
                 handleLensesChange,

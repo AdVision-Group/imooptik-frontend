@@ -26,7 +26,8 @@ const ProductGlassesForm = ({
     handleGlassesSpecsSizeChange,
     handleSpecsChange,
     glassesParameters,
-    setImageModal
+    setImageModal,
+    isUpdating,
 }) => {
 
     return (
@@ -63,6 +64,14 @@ const ProductGlassesForm = ({
                     value={product.category ?? ""}
                     handleChange={(e) => handleChange(e)}
                 />
+
+                {isUpdating && <CustomInput
+                    label="Link"
+                    type='text'
+                    name='link'
+                    value={product.link ?? ""}
+                    handleChange={(e) => handleChange(e)}
+                />}
 
                 <CustomTextarea
                     label="Popis"
@@ -146,7 +155,7 @@ const ProductGlassesForm = ({
                         {glassesParameters.specs.size.map((value, idx) => (
                             <CustomInput
                                 key={idx}
-                                label={idx + 1}
+                                label={idx === 0 ? "Veľkosť očnice" : idx === 1 ? "Veľkosť mostika" : "Veľkosť stranice"}
                                 type='text'
                                 name='size'
                                 value={checkParameter(glassesParameters.specs.size, idx)}

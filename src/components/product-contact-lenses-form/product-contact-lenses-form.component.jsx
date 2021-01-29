@@ -24,7 +24,8 @@ const ProductContactLensesForm = ({
     contactLensesParameters,
     retailNames,
     currentUser,
-    handleAvailableChange
+    handleAvailableChange,
+    isUpdating
 }) => {
     return (
         <ContactLensesFormContainer>
@@ -60,6 +61,14 @@ const ProductContactLensesForm = ({
                     value={product.category ?? ""}
                     handleChange={(e) => handleChange(e)}
                 />
+
+                {isUpdating && <CustomInput
+                    label="Link"
+                    type='text'
+                    name='link'
+                    value={product.link ?? ""}
+                    handleChange={(e) => handleChange(e)}
+                />}
 
                 <CustomTextarea
                     label="Popis"

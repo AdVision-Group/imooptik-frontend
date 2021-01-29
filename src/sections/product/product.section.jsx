@@ -18,7 +18,7 @@ import ProductContactLensesForm from '../../components/product-contact-lenses-fo
 
 // import { useFetch } from '../../hooks/useFetch'
 
-import { productCategories, checkParameter, retailNames } from '../../context/warehouse/warehouse.utils'
+import { productCategories, checkParameter, retailNames, formatLink } from '../../context/warehouse/warehouse.utils'
 
 import {
     Header,
@@ -35,6 +35,7 @@ const ProductSection = () => {
     const { closeModal, message, isLoading, showModal, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [showImageModal, setImageModal] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const {
         eanCode,
@@ -45,6 +46,7 @@ const ProductSection = () => {
         handleLensesChange,
         handleLensesParameterChange,
         createProduct,
+        updateProduct,
         resetProduct,
         resetLenses,
         resetContactLenses,
@@ -58,6 +60,7 @@ const ProductSection = () => {
         handleGlassesParameterChange,
         handleGlassesParameterSpecsChange,
         handleGlassesSizeChange,
+        getSingleProduct
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
@@ -69,31 +72,33 @@ const ProductSection = () => {
         setHasChanged(true)
         const { name, value } = e.target
 
-        if (productObj.type === 0) {
-            if (Object.keys(productObj).length > 1) {
-                const confirm = window.confirm("Rozpisane polia budú vymazane")
-                if (confirm) {
-                    resetLenses()
-                } else {
-                    return
+        if (!isUpdating) {
+            if (productObj.type === 0) {
+                if (Object.keys(productObj).length > 1) {
+                    const confirm = window.confirm("Rozpisane polia budú vymazane")
+                    if (confirm) {
+                        resetLenses()
+                    } else {
+                        return
+                    }
                 }
-            }
-        } else {
-            if (Object.keys(productObj).length > 2) {
-                const confirm = window.confirm("Rozpisane polia budú vymazane")
-                if (confirm) {
-                    resetProduct()
-                    resetContactLenses()
-                    resetGlassesParameters()
-                } else {
-                    return
+            } else {
+                if (Object.keys(productObj).length > 2) {
+                    const confirm = window.confirm("Rozpisane polia budú vymazane")
+                    if (confirm) {
+                        resetProduct()
+                        resetContactLenses()
+                        resetGlassesParameters()
+                    } else {
+                        return
+                    }
                 }
             }
         }
-
         setProductObj({
             [name]: value
         })
+
     }
 
     const handleChange = (e) => {
@@ -121,9 +126,22 @@ const ProductSection = () => {
             handleProductChange(e)
         }
 
+
+
         if (value === '') {
             delete productObj[name]
             return
+        }
+
+        if (isUpdating) {
+            if (name === 'name') {
+                setProductObj({
+                    ...productObj,
+                    [name]: value,
+                    link: formatLink(value)
+                })
+                return
+            }
         }
 
         setProductObj({
@@ -292,32 +310,49 @@ const ProductSection = () => {
         })
     }
 
+    console.log(hasChanged)
+
     console.log("PRODUCT OBJECT")
     console.log(productObj)
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (productObj.type === 0) {
-            if (!productObj.name || !productObj.brand || !productObj.description || !productObj.price || !productObj.image || !productObj.dioptersRange || !productObj.cylinderRange) {
-                setShowModal(true)
-                getMessage("Povinné údaje sú prázdne")
+        if (isUpdating) {
+            if (productObj.type === 0) {
+
+            } else if (productObj.type === 3) {
+                setHasChanged(false)
+                delete productObj['type']
+                updateProduct({ ...productObj, contactLenses: {} })
                 return
             } else {
                 setHasChanged(false)
                 delete productObj['type']
-                createLenses(productObj)
-            }
-        }
-
-        if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2 || productObj.type === 1) {
-            if (!productObj.name || !productObj.price || !productObj.image) {
-                setShowModal(true)
-                getMessage("Povinné údaje sú prázdne")
+                updateProduct(productObj)
                 return
-            } else {
-                setHasChanged(false)
-                createProduct(productObj)
+            }
+        } else {
+            if (productObj.type === 0) {
+                if (!productObj.name || !productObj.brand || !productObj.description || !productObj.price || !productObj.image || !productObj.dioptersRange || !productObj.cylinderRange) {
+                    setShowModal(true)
+                    getMessage("Povinné údaje sú prázdne")
+                    return
+                } else {
+                    setHasChanged(false)
+                    delete productObj['type']
+                    createLenses(productObj)
+                }
+            }
+            if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2 || productObj.type === 1) {
+                if (!productObj.name || !productObj.price || !productObj.image) {
+                    setShowModal(true)
+                    getMessage("Povinné údaje sú prázdne")
+                    return
+                } else {
+                    setHasChanged(false)
+                    createProduct(productObj)
+                }
             }
         }
 
@@ -339,7 +374,23 @@ const ProductSection = () => {
                 }
             }
         }
-    }, [id, eanCode, productObj.type, productObj.eanCode])
+    }, [id, eanCode, productObj.type, productObj.eanCode, product.type])
+
+    useEffect(() => {
+        if (id !== 'novy-produkt') {
+            getSingleProduct(id)
+            setIsUpdating(true)
+            if (!productObj.type) {
+                handleChangeType({
+                    target: {
+                        name: "type",
+                        value: product.type
+                    }
+                })
+                setSelectedImage(product.image)
+            }
+        }
+    }, [id, product.type])
 
     useEffect(() => {
         return () => {
@@ -349,6 +400,7 @@ const ProductSection = () => {
             resetGlassesParameters()
             setProductObj({})
             setSelectedImage(null)
+            setIsUpdating(false)
         }
     }, [])
 
@@ -382,7 +434,7 @@ const ProductSection = () => {
             </Header>
 
             <ScrollContainer>
-                <CategoryContainer>
+                {!isUpdating && <CategoryContainer>
                     <h3>Aký produkt chcete pridať?</h3>
                     {productCategories.map((category, idx) => (
                         <CategoryCheckbox
@@ -399,7 +451,7 @@ const ProductSection = () => {
                             })}
                         />
                     ))}
-                </CategoryContainer>
+                </CategoryContainer>}
 
                 {productObj.type === 0 && (
                     <ProductLensesForm
@@ -415,6 +467,7 @@ const ProductSection = () => {
                 {productObj.type === 5 && (
                     <ProductAccessoriesForm
                         product={product}
+                        isUpdating={isUpdating}
                         currentUser={currentUser}
                         retailNames={retailNames}
                         selectedImage={selectedImage}
@@ -428,6 +481,7 @@ const ProductSection = () => {
                 {productObj.type === 3 && (
                     <ProductContactLensesForm
                         product={product}
+                        isUpdating={isUpdating}
                         retailNames={retailNames}
                         currentUser={currentUser}
                         selectedImage={selectedImage}
@@ -444,6 +498,7 @@ const ProductSection = () => {
                 {(productObj.type === 1 || productObj.type === 2 || productObj.type === 4) && (
                     <ProductGlassesForm
                         product={product}
+                        isUpdating={isUpdating}
                         retailNames={retailNames}
                         currentUser={currentUser}
                         selectedImage={selectedImage}
