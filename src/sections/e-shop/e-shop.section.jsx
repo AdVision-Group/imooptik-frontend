@@ -11,7 +11,7 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ProductOverview from '../../components/product-overview/product-overview.component'
 import Popup from '../../components/popup/pop-up.component'
 
-// import Pagination from '../../components/pagination/pagination.component'
+import Pagination from '../../components/pagination/pagination.component'
 
 
 
@@ -22,7 +22,7 @@ const EshopSection = () => {
     const [productItems, setProductItems] = useState([])
 
     const {
-        // totalProducts,
+        totalProducts,
         // totalLenses,
         activePremisesTab,
         products,
@@ -65,6 +65,18 @@ const EshopSection = () => {
         }
     }, [searchQuery])
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productsPerPage] = useState(10)
+
+    const paginate = (pageNumber) => {
+        getProductsByQuery({
+            limit: 10,
+            skip: (pageNumber - 1) * productsPerPage
+        })
+        setCurrentPage(pageNumber)
+    }
+
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -99,6 +111,12 @@ const EshopSection = () => {
                     />
                 ))}
 
+                {activeCategoryTypeTab === 0 && <Pagination
+                    productsPerPage={10}
+                    totalProducts={totalProducts}
+                    paginate={paginate}
+                    activePage={currentPage}
+                />}
             </ScrollContainer>
         </section >
     )
