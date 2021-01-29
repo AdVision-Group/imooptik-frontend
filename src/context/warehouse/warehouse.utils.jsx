@@ -215,6 +215,17 @@ export const formatPrice = price => {
     }
 }
 
+export const formatfloatNumber = number => {
+    let value = 0
+    if (number.includes(',')) {
+        value = number.split(',')[0] + '.' + number.split(',')[1]
+        return Number(value)
+    } else {
+        return Number(number)
+
+    }
+}
+
 export const formatAvailable = (available, activePremisesTab) => {
     if (available === undefined) return "Šosovka"
 

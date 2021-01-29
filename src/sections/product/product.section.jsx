@@ -74,6 +74,8 @@ const ProductSection = () => {
                 const confirm = window.confirm("Rozpisane polia budú vymazane")
                 if (confirm) {
                     resetLenses()
+                } else {
+                    return
                 }
             }
         } else {
@@ -83,6 +85,8 @@ const ProductSection = () => {
                     resetProduct()
                     resetContactLenses()
                     resetGlassesParameters()
+                } else {
+                    return
                 }
             }
         }
@@ -111,6 +115,9 @@ const ProductSection = () => {
             handleProductChange(e)
         }
         if (productObj.type === 2) {
+            handleProductChange(e)
+        }
+        if (productObj.type === 1) {
             handleProductChange(e)
         }
 
@@ -287,8 +294,6 @@ const ProductSection = () => {
 
     console.log("PRODUCT OBJECT")
     console.log(productObj)
-    console.log(product)
-    console.log(glassesParameters)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -305,7 +310,7 @@ const ProductSection = () => {
             }
         }
 
-        if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2) {
+        if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2 || productObj.type === 1) {
             if (!productObj.name || !productObj.price || !productObj.image) {
                 setShowModal(true)
                 getMessage("Povinné údaje sú prázdne")
@@ -436,7 +441,7 @@ const ProductSection = () => {
                     />
                 )}
 
-                {(productObj.type === 2 || productObj.type === 4) && (
+                {(productObj.type === 1 || productObj.type === 2 || productObj.type === 4) && (
                     <ProductGlassesForm
                         product={product}
                         retailNames={retailNames}

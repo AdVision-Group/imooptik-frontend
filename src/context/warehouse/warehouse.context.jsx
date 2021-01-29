@@ -11,7 +11,8 @@ import {
     formatPrice,
     diaConvert,
     initContactLensesObj,
-    initGlassesObj
+    initGlassesObj,
+    formatfloatNumber
 } from './warehouse.utils'
 
 export const WarehouseContext = createContext({
@@ -350,7 +351,7 @@ const WarehouseProvider = ({ children }) => {
                     ...modifiedProduct,
                     specs: {
                         ...modifiedProduct.specs,
-                        size: productToAdd.specs.size.map(value => value === 1001 ? 0 : Number(value))
+                        size: productToAdd.specs.size.map(value => value === 1001 ? 0 : formatfloatNumber(value))
                     }
                 }
             }
@@ -391,10 +392,7 @@ const WarehouseProvider = ({ children }) => {
 
 
         const raw = JSON.stringify({
-            ...productToAdd,
-            price: formatPrice(productToAdd.price.toString()),
-            link: slug,
-            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+            ...modifiedProduct,
         })
 
         const requestOptions = {
