@@ -17,6 +17,7 @@ import CustomTextarea from '../../components/custom-textarea/custom-textarea.com
 // import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 import ProductAccessoriesForm from '../../components/product-accessories-form/product-accessories-form.component'
+import ProductContactLensesForm from '../../components/product-contact-lenses-form/product-contact-lenses-form.component'
 
 // import { useFetch } from '../../hooks/useFetch'
 
@@ -30,6 +31,7 @@ import {
     ImageContainer,
     ProductImage,
     IsPublicCheckbox,
+
 } from './product.styles'
 
 const ProductSection = () => {
@@ -43,15 +45,19 @@ const ProductSection = () => {
         eanCode,
         product,
         lenses,
+        contactLensesParameters,
         handleLensesChange,
         handleLensesParameterChange,
         createProduct,
         resetProduct,
         resetLenses,
+        resetContactLenses,
         createLenses,
         handleProductChange,
         handleProductAvailableChange,
         getEanCode,
+        handleAddNewParameter,
+        handleContactLensesParameterChange
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
@@ -100,6 +106,10 @@ const ProductSection = () => {
             handleProductChange(e)
         }
 
+        if (productObj.type === 3) {
+            handleProductChange(e)
+        }
+
         if (value === '') {
             delete productObj[name]
             return
@@ -120,6 +130,42 @@ const ProductSection = () => {
         setProductObj({
             ...productObj,
             [name]: arr
+        })
+    }
+
+    const handleContactLensesChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = contactLensesParameters[name]
+        arr[idx] = value === '' ? 1001 : value
+
+        handleContactLensesParameterChange(e, idx)
+
+        if (value === '') {
+            if (productObj.contactLenses[name].length > 1) {
+                arr.splice(idx, 1)
+                setProductObj({
+                    ...productObj,
+                    contactLenses: {
+                        ...productObj.contactLenses,
+                        [name]: arr
+                    }
+                })
+            } else {
+                delete productObj.contactLenses[name]
+            }
+            if (Object.keys(productObj.contactLenses).length === 0) {
+                delete productObj["contactLenses"]
+            }
+            // delete userObj.company[]
+            return
+        }
+
+        setProductObj({
+            ...productObj,
+            contactLenses: {
+                ...productObj.contactLenses,
+                [name]: arr
+            }
         })
     }
 
@@ -162,7 +208,7 @@ const ProductSection = () => {
             }
         }
 
-        if (productObj.type === 5) {
+        if (productObj.type === 5 || productObj.type === 3) {
             if (!productObj.name || !productObj.price || !productObj.image) {
                 setShowModal(true)
                 getMessage("Povinné údaje sú prázdne")
@@ -172,6 +218,8 @@ const ProductSection = () => {
                 createProduct(productObj)
             }
         }
+
+
     }
 
     useEffect(() => {
@@ -189,12 +237,13 @@ const ProductSection = () => {
                 }
             }
         }
-    }, [id, eanCode, productObj.type])
+    }, [id, eanCode, productObj.type, productObj.eanCode])
 
     useEffect(() => {
         return () => {
             resetProduct()
             resetLenses()
+            resetContactLenses()
             setProductObj({})
             setSelectedImage(null)
         }
@@ -270,6 +319,22 @@ const ProductSection = () => {
                         setImageModal={setImageModal}
                         checkParameter={checkParameter}
                         handleAvailableChange={handleAvailableChange}
+                    />
+                )}
+
+                {productObj.type === 3 && (
+                    <ProductContactLensesForm
+                        product={product}
+                        retailNames={retailNames}
+                        currentUser={currentUser}
+                        selectedImage={selectedImage}
+                        contactLensesParameters={contactLensesParameters}
+                        handleChange={handleChange}
+                        setImageModal={setImageModal}
+                        checkParameter={checkParameter}
+                        handleAddNewParameter={handleAddNewParameter}
+                        handleAvailableChange={handleAvailableChange}
+                        handleContactLensesChange={handleContactLensesChange}
                     />
                 )}
 

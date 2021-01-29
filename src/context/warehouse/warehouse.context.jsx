@@ -9,13 +9,15 @@ import {
     initLensesObj,
     initProductObj,
     formatPrice,
-    diaConvert
+    diaConvert,
+    initContactLensesObj
 } from './warehouse.utils'
 
 export const WarehouseContext = createContext({
     eanCode: null,
     product: {},
     lenses: {},
+    contactLensesParameters: {},
     totalProducts: 0,
     totalLenses: 0,
     activePremisesTab: 0,
@@ -37,7 +39,10 @@ export const WarehouseContext = createContext({
     handleLensesParameterChange: () => { },
     resetProduct: () => { },
     resetLenses: () => { },
+    resetContactLenses: () => { },
     getEanCode: () => { },
+    handleAddNewParameter: () => { },
+    handleContactLensesParameterChange: () => { },
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -51,6 +56,7 @@ const WarehouseProvider = ({ children }) => {
 
     const [product, setProduct] = useState({ ...initProductObj })
     const [lenses, setLenses] = useState({ ...initLensesObj })
+    const [contactLensesParameters, setContactLensesParameters] = useState({ ...initContactLensesObj })
 
     const [products, setProducts] = useState(null)
     const [activePremisesTab, setActivePremisesTab] = useState(0)
@@ -58,6 +64,24 @@ const WarehouseProvider = ({ children }) => {
 
     const [productCategoryTypeTabs, setProductCategoryTypeTabs] = useState(categoryTabs)
     const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
+
+    const handleAddNewParameter = e => {
+        const { name } = e.target
+        setContactLensesParameters({
+            ...contactLensesParameters,
+            [name]: [...contactLensesParameters[name], 1001]
+        })
+    }
+
+    const handleContactLensesParameterChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = contactLensesParameters[name]
+        arr[idx] = value === '' ? 1001 : value
+        setContactLensesParameters({
+            ...contactLensesParameters,
+            [name]: arr
+        })
+    }
 
     const handleProductChange = e => {
         const { name, value } = e.target
@@ -111,6 +135,14 @@ const WarehouseProvider = ({ children }) => {
             ...initLensesObj,
             dioptersRange: [1001, 1001],
             cylinderRange: [1001, 1001],
+        })
+    }
+
+    const resetContactLenses = () => {
+        setContactLensesParameters({
+            allowedCurves: [1001],
+            allowedDiameters: [1001],
+            dioptersRange: [1001, 1001]
         })
     }
 
@@ -256,11 +288,52 @@ const WarehouseProvider = ({ children }) => {
 
         const slug = diaConvert(productToAdd.name).replaceAll(" ", "-").toLowerCase().trim()
 
+        let modifiedProduct = {
+            ...productToAdd,
+            price: formatPrice(productToAdd.price.toString()),
+            link: slug,
+            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+        }
+
+        if (productToAdd.contactLenses) {
+            if (productToAdd.contactLenses.allowedCurves) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedCurves: productToAdd.contactLenses.allowedCurves.map(value => Number(value))
+                    }
+                }
+            }
+            if (productToAdd.contactLenses.allowedDiameters) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        allowedDiameters: productToAdd.contactLenses.allowedDiameters.map(value => Number(value))
+                    }
+                }
+            }
+            if (productToAdd.contactLenses.dioptersRange) {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    contactLenses: {
+                        ...modifiedProduct.contactLenses,
+                        dioptersRange: productToAdd.contactLenses.dioptersRange.map(value => Number(value))
+                    }
+                }
+            }
+        }
+
+        console.log("modifiedProduct")
+        console.log(modifiedProduct)
+
+
         const raw = JSON.stringify({
             ...productToAdd,
             price: formatPrice(productToAdd.price.toString()),
             link: slug,
-            available: productToAdd.available.map(value => value === 1001 ? 0 : value)
+            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
         })
 
         const requestOptions = {
@@ -399,6 +472,7 @@ const WarehouseProvider = ({ children }) => {
                 eanCode,
                 product,
                 lenses,
+                contactLensesParameters,
                 totalProducts,
                 totalLenses,
                 activePremisesTab,
@@ -420,7 +494,10 @@ const WarehouseProvider = ({ children }) => {
                 handleLensesParameterChange,
                 resetProduct,
                 resetLenses,
+                resetContactLenses,
                 getEanCode,
+                handleAddNewParameter,
+                handleContactLensesParameterChange,
             }}
         >
             {children}

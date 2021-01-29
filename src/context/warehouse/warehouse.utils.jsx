@@ -27,8 +27,8 @@ export const initGlassesObj = {
 }
 
 export const initContactLensesObj = {
-    allowedCurves: [1001, 1001, 1001],
-    allowedDiameters: [1001, 1001],
+    allowedCurves: [1001],
+    allowedDiameters: [1001],
     dioptersRange: [1001, 1001]
 }
 
@@ -62,11 +62,11 @@ export const productCategories = [
         value: 2
     },
     {
-        name: "Športové",
+        name: "Kontaktné Šošovky",
         value: 3
     },
     {
-        name: "Kontaktné Šošovky",
+        name: "Športové",
         value: 4
     },
     {
