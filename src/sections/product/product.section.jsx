@@ -52,6 +52,7 @@ const ProductSection = () => {
         resetContactLenses,
         resetGlassesParameters,
         createLenses,
+        updateLenses,
         handleProductChange,
         handleProductAvailableChange,
         getEanCode,
@@ -310,8 +311,6 @@ const ProductSection = () => {
         })
     }
 
-    console.log(hasChanged)
-
     console.log("PRODUCT OBJECT")
     console.log(productObj)
 
@@ -320,7 +319,11 @@ const ProductSection = () => {
 
         if (isUpdating) {
             if (productObj.type === 0) {
-
+                setHasChanged(false)
+                delete productObj['link']
+                delete productObj['type']
+                updateLenses(productObj)
+                return
             } else if (productObj.type === 3) {
                 setHasChanged(false)
                 delete productObj['type']
@@ -387,10 +390,19 @@ const ProductSection = () => {
                         value: product.type
                     }
                 })
-                setSelectedImage(product.image)
+
             }
         }
     }, [id, product.type])
+
+    useEffect(() => {
+        if (product.image) {
+            setSelectedImage(product.image)
+        }
+        if (lenses.image) {
+            setSelectedImage(lenses.image)
+        }
+    }, [product.image, lenses.image])
 
     useEffect(() => {
         return () => {

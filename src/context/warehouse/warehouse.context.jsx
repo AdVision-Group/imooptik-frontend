@@ -41,6 +41,7 @@ export const WarehouseContext = createContext({
     getSingleLenses: () => { },
     getLenses: () => { },
     createLenses: () => { },
+    updateLenses: () => { },
     handleLensesChange: () => { },
     handleLensesParameterChange: () => { },
     resetProduct: () => { },
@@ -321,6 +322,10 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
 
             console.log(data)
+
+            if (data.error === 'not-found') {
+                getSingleLenses(id)
+            }
 
             if (data.product) {
                 setProduct({
@@ -686,6 +691,55 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
+    const updateLenses = async (lensesToUpdate) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        let modifiedLenses = {
+            ...lensesToUpdate
+        }
+
+        if (modifiedLenses.price) {
+            modifiedLenses = {
+                ...modifiedLenses,
+                price: formatPrice(lensesToUpdate.price.toString()),
+            }
+        }
+
+        const raw = JSON.stringify({
+            ...modifiedLenses,
+        });
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${lenses._id}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.lenses) {
+                push('/dashboard/obchod')
+                getLenses()
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (products) {
             console.log(`GET ${productCategoryTypeTabs[activeCategoryTypeTab].name} DATA`)
@@ -756,6 +810,7 @@ const WarehouseProvider = ({ children }) => {
                 deleteProduct,
                 getSingleLenses,
                 createLenses,
+                updateLenses,
                 handleLensesChange,
                 handleLensesParameterChange,
                 resetProduct,
