@@ -29,6 +29,7 @@ export const WarehouseContext = createContext({
     retailPremisesTabs: [],
     productCategoryTypeTabs: [],
     products: null,
+    lensesProducts: null,
     handleChangeCategoryTypeTab: () => { },
     handleChangePremisesTab: () => { },
     getProductsByQuery: () => { },
@@ -72,6 +73,7 @@ const WarehouseProvider = ({ children }) => {
     const [glassesParameters, setGlassesParameters] = useState({ ...initGlassesObj })
 
     const [products, setProducts] = useState(null)
+    const [lensesProducts, setLensesProducts] = useState(null)
     const [activePremisesTab, setActivePremisesTab] = useState(0)
     const [retailPremisesTabs, setRetailPremisesTabs] = useState([])
 
@@ -300,6 +302,7 @@ const WarehouseProvider = ({ children }) => {
             console.log(data)
             if (data.lenses) {
                 setProducts(data.lenses)
+                setLensesProducts(data.lenses)
                 closeModal()
                 return
             }
@@ -830,6 +833,7 @@ const WarehouseProvider = ({ children }) => {
                 retailPremisesTabs,
                 productCategoryTypeTabs,
                 products,
+                lensesProducts,
                 handleChangeCategoryTypeTab,
                 handleChangePremisesTab,
                 getProductsByQuery,

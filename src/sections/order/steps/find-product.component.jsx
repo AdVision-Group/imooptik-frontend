@@ -14,7 +14,7 @@ import {
     TableCol
 } from '../order.styles'
 
-const FindProductComponent = ({ back, next, addToOrder }) => {
+const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
 
@@ -44,17 +44,18 @@ const FindProductComponent = ({ back, next, addToOrder }) => {
             name: "product",
             value: product
         })
-        if (product.type === 5) {
-            next("summary")
+        if (product.type === 5 || product.type === 3) {
+            showModal()
+            // next("summary")
         } else {
             next("selectLenses")
         }
     }
 
     useEffect(() => {
-        if (!products) {
+        if (!products || productItems.length < 1) {
             getProductsByQuery({
-                limit: 5
+                limit: 10
             })
         }
         if (products) {
@@ -66,11 +67,17 @@ const FindProductComponent = ({ back, next, addToOrder }) => {
         if (products) {
             if (searchQuery === '') {
                 getProductsByQuery({
-                    limit: 5
+                    limit: 10
                 })
             }
         }
     }, [searchQuery])
+
+    useEffect(() => {
+        return () => {
+            setProductItems([])
+        }
+    }, [])
 
     return (
         <div>
@@ -106,7 +113,7 @@ const FindProductComponent = ({ back, next, addToOrder }) => {
                         <TableCol>{product.name}</TableCol>
                         <TableCol>{product.brand}</TableCol>
                         <TableCol>{(product.price / 100).toFixed(2)}€</TableCol>
-                        <TableCol>{product.available.reduce((acc, currValue) => acc + currValue) > 0 ? "Na sklade" : "Nedostupné"}</TableCol>
+                        <TableCol>{product.available && product.available.reduce((acc, currValue) => acc + currValue) > 0 ? "Na sklade" : "Nedostupné"}</TableCol>
                     </ProductTableRow>
                 ))}
             </TableContainer>

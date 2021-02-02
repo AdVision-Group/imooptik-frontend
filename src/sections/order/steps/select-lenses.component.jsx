@@ -8,17 +8,19 @@ import {
     ParametersContainer,
     LensesContainer,
     LensesImg,
-    SelectLensesContainer
+    SelectLensesContainer,
+    LensesFlexContainer
 } from '../order.styles'
 
 const SelectLensesComponent = ({ back, next, addToOrder, order }) => {
     const [lensesItems, setLensesItems] = useState([])
     const {
-        lensesArr,
+        lensesProducts,
         getLenses
     } = useContext(WarehouseContext)
 
     const handleClick = (lenses) => {
+        if (!lenses) return next()
         addToOrder({
             name: "lenses",
             value: lenses
@@ -27,15 +29,17 @@ const SelectLensesComponent = ({ back, next, addToOrder, order }) => {
     }
 
     useEffect(() => {
-        if (!lensesArr) {
+        if (!lensesProducts) {
             getLenses()
         }
-        if (lensesArr) {
-            setLensesItems(lensesArr)
+        if (lensesProducts) {
+            setLensesItems(lensesProducts)
         }
-    }, [lensesArr])
+    }, [lensesProducts])
 
     console.log(order)
+
+    console.log(lensesItems)
 
     return (
         <div>
@@ -52,7 +56,7 @@ const SelectLensesComponent = ({ back, next, addToOrder, order }) => {
             </div>
             <SelectLensesContainer>
                 <h3>Výber Šošoviek</h3>
-                <div>
+                <LensesFlexContainer>
                     {lensesItems.map((lenses, idx) => (
                         <LensesContainer key={idx} onClick={() => handleClick(lenses)}>
                             <h4>{lenses.name}</h4>
@@ -60,14 +64,22 @@ const SelectLensesComponent = ({ back, next, addToOrder, order }) => {
                                 {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
                             </LensesImg>
                             <p>{lenses.description}</p>
-                            <p>{`Dioptrie od ${lenses.dioptersRange[0]} do ${lenses.dioptersRange[1]}`}</p>
-                            <p>{`Cylinder  od ${lenses.cylinderRange[0]} do ${lenses.cylinderRange[1]}`}</p>
+                            {lenses.dioptersRange && <p>{`Dioptrie od ${lenses.dioptersRange[0]} do ${lenses.dioptersRange[1]}`}</p>}
+                            {lenses.cylinderRange && <p>{`Cylinder  od ${lenses.cylinderRange[0]} do ${lenses.cylinderRange[1]}`}</p>}
                             <h5>{(lenses.price / 100).toFixed(2)}€</h5>
                         </LensesContainer>
                     ))}
-                </div>
+                    <LensesContainer onClick={() => handleClick()}>
+                        <h4>Žiadné sklá</h4>
+                        <LensesImg>
+                            {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
+                        </LensesImg>
+                        <h5>0€</h5>
+
+                    </LensesContainer>
+                </LensesFlexContainer>
             </SelectLensesContainer>
-        </div>
+        </div >
     )
 }
 

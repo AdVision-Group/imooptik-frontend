@@ -16,7 +16,7 @@ import {
     OptionButton
 } from '../order.styles'
 
-const SummaryComponent = ({ order }) => {
+const SummaryComponent = ({ order, combinedProducts, addNextProduct }) => {
     console.log(order)
 
     return (
@@ -32,30 +32,18 @@ const SummaryComponent = ({ order }) => {
                     <TableCol>Spolu</TableCol>
                 </SummaryTableHead>
 
-                <SummaryTableRow>
-                    <TableCol>#</TableCol>
-                    <TableCol>EAN</TableCol>
-                    <TableCol>Produkt</TableCol>
-                    <TableCol>Šosovky</TableCol>
-                    <TableCol>Zľava</TableCol>
-                    <TableCol>Spolu</TableCol>
-                </SummaryTableRow>
-                <SummaryTableRow>
-                    <TableCol>#</TableCol>
-                    <TableCol>EAN</TableCol>
-                    <TableCol>Produkt</TableCol>
-                    <TableCol>Šosovky</TableCol>
-                    <TableCol>Zľava</TableCol>
-                    <TableCol>Spolu</TableCol>
-                </SummaryTableRow>
-                <SummaryTableRow>
-                    <TableCol>#</TableCol>
-                    <TableCol>EAN</TableCol>
-                    <TableCol>Produkt</TableCol>
-                    <TableCol>Šosovky</TableCol>
-                    <TableCol>Zľava</TableCol>
-                    <TableCol>Spolu</TableCol>
-                </SummaryTableRow>
+                {combinedProducts.map((combinedProduct, idx) => (
+                    <SummaryTableRow key={idx}>
+                        <TableCol>{idx + 1}</TableCol>
+                        <TableCol>{combinedProduct.product ? combinedProduct.product.eanCode : "neuvedené"}</TableCol>
+                        <TableCol>{combinedProduct.product ? combinedProduct.product.name : combinedProduct.combinedProduct.product}</TableCol>
+                        <TableCol>{combinedProduct.lenses ? combinedProduct.lenses.name : ""}</TableCol>
+                        <TableCol>{0}</TableCol>
+                        <TableCol>{(combinedProduct.combinedProduct.discountedPrice / 100).toFixed(2)}€</TableCol>
+                    </SummaryTableRow>
+
+                ))}
+
                 <TotalContainer>
                     <p>Spolu: 999.99€</p>
                 </TotalContainer>
@@ -90,7 +78,7 @@ const SummaryComponent = ({ order }) => {
                 </UserOverviewContainer>
                 <OptionsContainer>
                     <h3>Možnosti</h3>
-                    <OptionButton>Pridať produkt</OptionButton>
+                    <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
                     <OptionButton>Vytvoriť objednavku</OptionButton>
                 </OptionsContainer>
             </SummaryGridLayout>

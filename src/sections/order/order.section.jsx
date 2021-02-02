@@ -12,6 +12,7 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 // import OrderAddressForm from '../../components/order-address-form/order-address-form.component'
 
 import Popup from "../../components/popup/pop-up.component"
+import CombinedProductModal from '../../components/modal-finish-combined-product/modal-finish-combined-product.component'
 
 import SelectUserComponent from './steps/select-user.component'
 import FindProductComponent from "./steps/find-product.component"
@@ -25,11 +26,22 @@ import {
 const OrderSection = () => {
     const { userId, orderId } = useParams()
     const [step, setStep] = useState('selectUser')
-    const [order, setOrder] = useState({
+    const [order, setOrder] = useState({})
 
-    })
+    const [hasChanged, setHasChanged] = useState(false)
+    const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
+
+    const [combinedProducts, setCombinedProducts] = useState([])
+
+    const handleAddCombineProduct = combinedProductToAdd => {
+        setCombinedProducts([
+            ...combinedProducts,
+            combinedProductToAdd
+        ])
+    }
 
     const handleOrderChange = valueToAdd => {
+        setHasChanged(true)
         const { name, value } = valueToAdd
         setOrder({
             ...order,
@@ -39,6 +51,7 @@ const OrderSection = () => {
 
     console.log("order")
     console.log(order)
+    console.log(combinedProducts)
     console.log("order")
 
     const {
@@ -48,6 +61,11 @@ const OrderSection = () => {
         message
     } = useContext(LoadingModalContext)
 
+    useEffect(() => {
+        if (order.user) {
+            setStep('findProduct')
+        }
+    }, [order.user])
 
     useEffect(() => {
         return () => {
@@ -59,10 +77,20 @@ const OrderSection = () => {
 
         <section>
             <Prompt
-                when={order.user}
+                when={hasChanged}
                 message={"Máte nedokončenú objednávku, skutočne chcete odísť?"}
             />
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {showCombinedProductModal && <CombinedProductModal
+                order={order}
+                close={() => setShowCombinedProductModal(false)}
+                addCombineProduct={handleAddCombineProduct}
+                next={() => {
+                    setStep("summary")
+                    setShowCombinedProductModal(false)
+                }}
+            />
+            }
             <Header>
                 <div>
                     <h1>Nová objednávka</h1>
@@ -81,6 +109,7 @@ const OrderSection = () => {
                             back={() => setStep("selectUser")}
                             next={setStep}
                             addToOrder={handleOrderChange}
+                            showModal={() => setShowCombinedProductModal(true)}
                         />
                     )}
                     {step === 'selectLenses' && (
@@ -93,8 +122,10 @@ const OrderSection = () => {
                     )}
                     {step === 'summary' && (
                         <SummaryComponent
-                            back={() => setStep("selectLenses")}
                             order={order}
+                            combinedProducts={combinedProducts}
+                            back={() => setStep("selectLenses")}
+                            addNextProduct={() => setStep('findProduct')}
                         />
                     )}
                 </div>

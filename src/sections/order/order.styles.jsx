@@ -135,8 +135,15 @@ export const SelectLensesContainer = styled.div`
         margin-bottom: 3rem;
     }
 `
+export const LensesFlexContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+`
+
 export const LensesContainer = styled.div`
     cursor: pointer;
+    width: 100%;
     max-width: 32rem;
     padding: 2rem;
     border-radius: .5rem;
@@ -144,6 +151,12 @@ export const LensesContainer = styled.div`
     text-align: center;
     transition: transform .3s ease-out,
                 box-shadow .3s ease-out;
+
+    &:last-child {
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
     h4 {
         font-size: 2.5rem;
