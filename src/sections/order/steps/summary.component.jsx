@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { OrdersContext } from '../../../context/orders/orders.context'
 
 import ParametersTable from '../../../components/parameters-table/parameters-table.component'
+import FinishOrderModal from '../../../components/modal-finish-order/modal-finish-order.component'
 
 import {
     TableCol,
@@ -19,25 +20,20 @@ import {
 
 const SummaryComponent = ({ order, combinedProducts, addNextProduct }) => {
     const { createOrder } = useContext(OrdersContext)
-    console.log(order)
-
     const priceTotal = combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.combinedProduct.discountedPrice, 0)
+    const [showModal, setShowModal] = useState(false)
 
-    const handleSubmit = e => {
-        e.preventDefault()
-
-        let orderObj = {
-            user: order.user._id,
-            combinedProducts: combinedProducts.map(product => product.combinedProduct._id),
-        }
-
-        console.log(orderObj)
-
-        createOrder(orderObj)
-    }
 
     return (
         <div>
+            {showModal && (
+                <FinishOrderModal
+                    close={() => setShowModal(false)}
+                    order={order}
+                    combinedProducts={combinedProducts}
+                    createOrder={createOrder}
+                />
+            )}
             <ProductsOverviewContainer>
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
@@ -96,7 +92,7 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct }) => {
                 <OptionsContainer>
                     <h3>Možnosti</h3>
                     <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
-                    <OptionButton onClick={handleSubmit}>Vytvoriť objednavku</OptionButton>
+                    <OptionButton onClick={() => setShowModal(true)}>Dokončiť objednavku</OptionButton>
                 </OptionsContainer>
             </SummaryGridLayout>
         </div>

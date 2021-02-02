@@ -118,6 +118,7 @@ const OrderSection = () => {
                             next={() => setStep('summary')}
                             addToOrder={handleOrderChange}
                             order={order}
+                            showModal={() => setShowCombinedProductModal(true)}
                         />
                     )}
                     {step === 'summary' && (

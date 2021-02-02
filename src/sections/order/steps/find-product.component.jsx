@@ -44,11 +44,11 @@ const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
             name: "product",
             value: product
         })
-        if (product.type === 5 || product.type === 3) {
-            showModal()
+        if (product.type === 1) {
+            next("selectLenses")
             // next("summary")
         } else {
-            next("selectLenses")
+            showModal()
         }
     }
 

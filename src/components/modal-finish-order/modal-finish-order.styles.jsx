@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -36,6 +38,9 @@ export const Modal = styled.div`
     h3{ 
         margin-bottom: 2rem;
     }
+    h4{ 
+        margin-top: 2rem;
+    }
 `
 
 export const CloseButton = styled.button`
@@ -53,5 +58,55 @@ export const CloseButton = styled.button`
 
     &:focus {
         outline: none
+    }
+`
+
+export const AddButton = styled(CustomButton)`
+    display: block;
+    margin: 2rem auto 0;
+`
+
+export const CustomSelect = styled.select`
+    margin-top: 1.5rem;
+    min-width: 16.5rem;
+    width: 100%;
+    background-color: #F5F5F5;
+    border: none;
+    padding: .5rem .5rem .5rem 1rem;
+    font-size: inherit;
+    font-family: inherit;
+    display: block;
+    outline: none;
+    margin-bottom: 2rem;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+export const OptionsCheckbox = styled(CustomCheckbox)`
+    margin-top: 2rem;
+    margin-right: 2rem;
+`
+
+export const OverwriteAddressCheckbox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+
+    label {
+        display: block;
+        outline: none;
+        margin-left: 1rem;
+
+        &:focus {
+            outline: none;
+
+        }
+    }
+
+    input: {
+        display: block;
     }
 `

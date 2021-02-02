@@ -98,6 +98,11 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                 }
             }
 
+            else {
+                combinedProduct = {
+                    product: order.product._id,
+                }
+            }
             if (includeDiscount) {
                 if (discountType === 'flat') {
                     combinedProduct = {
@@ -217,6 +222,9 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                     </div>
                 </ProductContainer>
 
+
+
+                {/* CONTACT LENSES FORM */}
                 {combinedProductDetails.contactLenses && product.type === 3 && (
                     <ContactLensesParameterContainer>
                         <div>
@@ -284,6 +292,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                     </ContactLensesParameterContainer>
                 )}
 
+                {/* DISCOUNT FORM */}
                 {isAdmin && <div>
                     <DiscountCheckboxContainer>
                         <input id="discount" name='discount' type='checkbox' value={includeDiscount} onChange={() => setIncludeDiscount(!includeDiscount)} />
