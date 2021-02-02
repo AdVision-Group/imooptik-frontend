@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
     TableContainer,
@@ -18,6 +18,23 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
 
         return parameter[idx]
     }
+
+    useEffect(() => {
+        if (parameters.diopters && parameters.addition) {
+            handleChange({
+                target: {
+                    name: "diopters",
+                    value: checkParameters(parameters.diopters, 0) + checkParameters(parameters.addition, 0)
+                }
+            }, 2)
+            handleChange({
+                target: {
+                    name: "diopters",
+                    value: checkParameters(parameters.diopters, 1) + checkParameters(parameters.addition, 1)
+                }
+            }, 3)
+        }
+    }, [parameters.diopters[0], parameters.addition[0], parameters.diopters[1], parameters.addition[1]])
 
     return (
         <TableContainer>
@@ -148,7 +165,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
             <Col>
                 <div>addicia</div>
 
-                {[...Array(4)].map((value, idx) => {
+                {[...Array(2)].map((value, idx) => {
                     return (
                         <div key={idx}>
                             <input
