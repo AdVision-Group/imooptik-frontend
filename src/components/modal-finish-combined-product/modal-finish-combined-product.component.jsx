@@ -12,13 +12,16 @@ import {
     ProductContainer,
     AddButton,
     DiscountCheckboxContainer,
-    DiscountCheckbox
+    DiscountCheckbox,
+    CustomSelect,
+    ContactLensesParameterContainer
 } from './modal-finish-combined-product.styles'
 
 const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) => {
     const { setIsLoading, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { isAdmin, token } = useContext(AuthContext)
     const { product } = order
+    const { contactLenses } = product
 
     const [combinedProductDetails, setCombinedProductDetails] = useState({})
     const [productDiscount, setProductDiscount] = useState({})
@@ -29,6 +32,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
 
     console.log(order)
     console.log(productDiscount)
+    console.log(combinedProductDetails)
 
     const handleChangeDiscount = (type) => {
         setProductDiscount({})
@@ -61,17 +65,36 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
         }
     }
 
+    const handleContactLensesParameterChange = (e, idx, originalArr) => {
+        const { name, value } = e.target
+        let arr = originalArr
+        arr[idx] = value === '' ? 1001 : Number(value)
+
+        setCombinedProductDetails({
+            ...combinedProductDetails,
+            contactLenses: {
+                ...combinedProductDetails.contactLenses,
+                [name]: arr
+            }
+        })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         let combinedProduct = {}
 
-        console.log("COMBINED PRODUCT BEFORE SEND")
         if (product.type) {
             if (product.type === 5) {
                 combinedProduct = {
                     product: order.product._id,
+                }
+            }
+
+            if (product.type === 3) {
+                combinedProduct = {
+                    product: order.product._id,
+                    contactLenses: combinedProductDetails.contactLenses
                 }
             }
 
@@ -99,6 +122,10 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                 }
             }
         }
+
+        console.log("COMBINED PRODUCT BEFORE SEND")
+        console.log(combinedProduct)
+
 
         const raw = JSON.stringify(combinedProduct)
 
@@ -139,6 +166,21 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
     }
 
     useEffect(() => {
+        if (product.type) {
+            if (product.type === 3) {
+                setCombinedProductDetails({
+                    contactLenses: {
+                        curve: [product.contactLenses.allowedCurves[0], product.contactLenses.allowedCurves[0]],
+                        diameter: [product.contactLenses.allowedDiameters[0], product.contactLenses.allowedDiameters[0]],
+                        diopters: [0, 0]
+                    }
+                })
+            }
+        }
+    }, [product])
+
+    // unmout reset
+    useEffect(() => {
         return () => {
             setCombinedProductDetails({})
             setProductDiscount({})
@@ -149,6 +191,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             setHasChanged(false)
         }
     }, [])
+
 
     return (
         <ModalContainer>
@@ -173,6 +216,73 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                         <p>{(product.price / 100).toFixed(2)}€</p>
                     </div>
                 </ProductContainer>
+
+                {combinedProductDetails.contactLenses && product.type === 3 && (
+                    <ContactLensesParameterContainer>
+                        <div>
+                            <h4>Ľave oko</h4>
+                            <CustomSelect
+                                name='curve'
+                                value={combinedProductDetails.contactLenses.curve[0]}
+                                onChange={(e) => handleContactLensesParameterChange(e, 0, combinedProductDetails.contactLenses.curve)}
+                            >
+                                {product.contactLenses.allowedCurves.map((value, idx) => (
+                                    <option key={idx} value={value}>{value}</option>
+                                ))}
+                            </CustomSelect>
+                            <CustomSelect
+                                name='diameter'
+                                value={combinedProductDetails.contactLenses.diameter[0]}
+                                onChange={(e) => handleContactLensesParameterChange(e, 0, combinedProductDetails.contactLenses.diameter)}
+                            >
+                                {product.contactLenses.allowedDiameters.map((value, idx) => (
+                                    <option key={idx} value={value}>{value}</option>
+                                ))}
+                            </CustomSelect>
+
+                            <CustomInput
+                                name='diopters'
+
+                                type='number'
+                                value={combinedProductDetails.contactLenses.diopters[0]}
+                                min={contactLenses.dioptersRange[0]}
+                                max={contactLenses.dioptersRange[1]}
+                                step={.25}
+                                onChange={(e) => handleContactLensesParameterChange(e, 0, combinedProductDetails.contactLenses.diopters)}
+                            />
+                        </div>
+                        <div>
+                            <h4>Pravé oko</h4>
+                            <CustomSelect
+                                name='curve'
+                                value={combinedProductDetails.contactLenses.curve[1]}
+                                onChange={(e) => handleContactLensesParameterChange(e, 1, combinedProductDetails.contactLenses.curve)}
+                            >
+                                {product.contactLenses.allowedCurves.map((value, idx) => (
+                                    <option key={idx} value={value}>{value}</option>
+                                ))}
+                            </CustomSelect>
+                            <CustomSelect
+                                name='diameter'
+                                value={combinedProductDetails.contactLenses.diameter[1]}
+                                onChange={(e) => handleContactLensesParameterChange(e, 1, combinedProductDetails.contactLenses.diameter)}
+                            >
+                                {product.contactLenses.allowedDiameters.map((value, idx) => (
+                                    <option key={idx} value={value}>{value}</option>
+                                ))}
+                            </CustomSelect>
+                            <CustomInput
+                                type='number'
+                                value={combinedProductDetails.contactLenses.diopters[1]}
+                                min={contactLenses.dioptersRange[0]}
+                                max={contactLenses.dioptersRange[1]}
+                                step={.25}
+                                name='diopters'
+                                onChange={(e) => handleContactLensesParameterChange(e, 1, combinedProductDetails.contactLenses.diopters)}
+                            />
+                        </div>
+                    </ContactLensesParameterContainer>
+                )}
 
                 {isAdmin && <div>
                     <DiscountCheckboxContainer>
