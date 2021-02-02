@@ -66,8 +66,6 @@ const OrdersProvider = ({ children }) => {
 
         const raw = JSON.stringify(orderObj)
 
-        console.log(raw)
-
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -78,6 +76,10 @@ const OrdersProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders`, requestOptions)
             const data = await response.json()
+
+            console.log(data)
+
+
 
             getMessage(data.message)
             setIsLoading(false)

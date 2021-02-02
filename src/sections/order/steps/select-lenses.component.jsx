@@ -37,10 +37,6 @@ const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => 
         }
     }, [lensesProducts])
 
-    console.log(order)
-
-    console.log(lensesItems)
-
     return (
         <div>
             <BackButton onClick={back} />

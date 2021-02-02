@@ -52,6 +52,16 @@ const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
         }
     }
 
+    const formatAvailable = (available) => {
+        if (!available) return "Nedostupné"
+        if (typeof available === "number") {
+            return available > 0 ? "Na sklade" : "Nedostupné"
+        } else {
+            return available.reduce((acc, currValue) => acc + currValue) > 0 ? "Na sklade" : "Nedostupné"
+        }
+
+    }
+
     useEffect(() => {
         if (!products || productItems.length < 1) {
             getProductsByQuery({
@@ -113,7 +123,7 @@ const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
                         <TableCol>{product.name}</TableCol>
                         <TableCol>{product.brand}</TableCol>
                         <TableCol>{(product.price / 100).toFixed(2)}€</TableCol>
-                        <TableCol>{product.available && product.available.reduce((acc, currValue) => acc + currValue) > 0 ? "Na sklade" : "Nedostupné"}</TableCol>
+                        <TableCol>{formatAvailable(product.available)}</TableCol>
                     </ProductTableRow>
                 ))}
             </TableContainer>

@@ -20,19 +20,21 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
     }
 
     useEffect(() => {
-        if (parameters.diopters && parameters.addition) {
-            handleChange({
-                target: {
-                    name: "diopters",
-                    value: checkParameters(parameters.diopters, 0) + checkParameters(parameters.addition, 0)
-                }
-            }, 2)
-            handleChange({
-                target: {
-                    name: "diopters",
-                    value: checkParameters(parameters.diopters, 1) + checkParameters(parameters.addition, 1)
-                }
-            }, 3)
+        if (handleChange) {
+            if (parameters.diopters && parameters.addition) {
+                handleChange({
+                    target: {
+                        name: "diopters",
+                        value: checkParameters(parameters.diopters, 0) + checkParameters(parameters.addition, 0)
+                    }
+                }, 2)
+                handleChange({
+                    target: {
+                        name: "diopters",
+                        value: checkParameters(parameters.diopters, 1) + checkParameters(parameters.addition, 1)
+                    }
+                }, 3)
+            }
         }
     }, [parameters.diopters[0], parameters.addition[0], parameters.diopters[1], parameters.addition[1]])
 

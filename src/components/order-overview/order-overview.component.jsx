@@ -30,6 +30,8 @@ const OrderOverview = ({ order }) => {
     useOutsideHandler(dropdownRef, () => setShowDropdownMenu(false))
     const [showOrderDeligateModal, setShowOrderDeligateModal] = useState(false)
 
+    console.log(order)
+
     return (
         <OrderOverviewRow>
             <TableCol>{order.customId}</TableCol>
@@ -65,7 +67,7 @@ const OrderOverview = ({ order }) => {
                                     Zobraz PDF
                                 </li>
                             </a>
-                            <Link to={`/dashboard/objednavky/${order.orderedBy._id}/${order._id}`}>
+                            <Link to={`/dashboard/objednavky/${order?.orderedBy?._id}/${order._id}`}>
                                 <li>
                                     <div>
                                         <AiOutlineFolderOpen />
