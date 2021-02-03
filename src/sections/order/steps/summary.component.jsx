@@ -28,10 +28,13 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
 
+    console.log(order)
+
+    console.log(combinedProducts)
 
     useEffect(() => {
-        if (combinedProducts.combinedProduct) {
-            setPriceTotal(combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.combinedProduct.discountedPrice, 0))
+        if (combinedProducts) {
+            setPriceTotal(combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.discountedPrice, 0))
 
         }
     }, [combinedProducts])
@@ -51,21 +54,29 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
                     <TableCol>#</TableCol>
-                    <TableCol>EAN</TableCol>
-                    <TableCol>Produkt</TableCol>
-                    <TableCol>Šosovky</TableCol>
-                    <TableCol>Zľava</TableCol>
-                    <TableCol>Spolu</TableCol>
+                    <TableCol>ProduktID</TableCol>
+                    <TableCol>Cena</TableCol>
+                    <TableCol>Po zlave</TableCol>
+                    <TableCol>ŠosovkyID</TableCol>
+                    <TableCol>Cena</TableCol>
+                    <TableCol>Po zlave</TableCol>
+                    <TableCol>Dohromady</TableCol>
+                    <TableCol>Po zlave</TableCol>
                 </SummaryTableHead>
 
                 {combinedProducts.map((combinedProduct, idx) => (
                     <SummaryTableRow key={idx}>
                         <TableCol>{idx + 1}</TableCol>
-                        <TableCol>{combinedProduct?.product ? combinedProduct?.product?.eanCode : "neuvedené"}</TableCol>
-                        <TableCol>{combinedProduct?.product ? combinedProduct?.product?.name : combinedProduct.combinedProduct.product}</TableCol>
-                        <TableCol>{combinedProduct?.lenses ? combinedProduct?.lenses?.name : ""}</TableCol>
-                        <TableCol>{0}</TableCol>
-                        <TableCol>{(combinedProduct?.combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol>
+                        <TableCol>{combinedProduct?.product ? combinedProduct?.product.slice(0, 8).concat("...") : ""}</TableCol>
+                        <TableCol>{combinedProduct?.productPrice ? `${(combinedProduct?.productPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
+                        <TableCol>{combinedProduct?.productPrice ? `${(combinedProduct?.productPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
+
+                        <TableCol>{combinedProduct?.lens ? combinedProduct?.lens.slice(0, 8).concat("...") : ""}</TableCol>
+                        <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
+                        <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
+
+                        <TableCol>{combinedProduct?.price ? `${(combinedProduct?.price / 100).toFixed(2)}€` : ""}</TableCol>
+                        <TableCol>{(combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol>
                     </SummaryTableRow>
 
                 ))}

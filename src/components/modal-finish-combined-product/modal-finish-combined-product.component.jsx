@@ -18,16 +18,19 @@ import {
 } from './modal-finish-combined-product.styles'
 
 const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) => {
-    const { setIsLoading, getMessage, setShowModal } = useContext(LoadingModalContext)
+    const { setIsLoading, getMessage, setShowModal, closeModal } = useContext(LoadingModalContext)
     const { isAdmin, token } = useContext(AuthContext)
     const { product, lenses } = order
     const { contactLenses } = product
 
     const [combinedProductDetails, setCombinedProductDetails] = useState({})
     const [productDiscount, setProductDiscount] = useState({})
+    const [lensesDiscount, setLensesDiscount] = useState({})
 
     const [discountType, setDiscountType] = useState("flat")
+    const [lensDiscountType, setLensDiscountType] = useState("flat")
     const [includeDiscount, setIncludeDiscount] = useState(false)
+    const [includeLensDiscount, setIncludeLensDiscount] = useState(false)
     const [hasChanged, setHasChanged] = useState(false)
 
     console.log(order)
@@ -38,8 +41,12 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
         setProductDiscount({})
         setDiscountType(type)
     }
+    const handleChangeLensesDiscount = (type) => {
+        setLensesDiscount({})
+        setLensDiscountType(type)
+    }
 
-    const handleDiscountChange = (e, type) => {
+    const handleDiscountChange = (e) => {
         const { name, value } = e.target
 
 
@@ -52,17 +59,29 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             return
         }
 
-        if (type) {
-            setProductDiscount({
-                ...productDiscount,
-                [name]: value
+        setProductDiscount({
+            ...productDiscount,
+            [name]: value
+        })
+    }
+
+    const handleLensesDiscountChange = (e) => {
+        const { name, value } = e.target
+
+
+        if (value === '') {
+            delete lensesDiscount[name]
+
+            setLensesDiscount({
+                ...lensesDiscount,
             })
-        } else {
-            setProductDiscount({
-                ...productDiscount,
-                [name]: value
-            })
+            return
         }
+
+        setLensesDiscount({
+            ...lensesDiscount,
+            [name]: value
+        })
     }
 
     const handleContactLensesParameterChange = (e, idx, originalArr) => {
@@ -81,6 +100,8 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
+        setShowModal(true)
 
         let combinedProduct = {}
 
@@ -111,23 +132,34 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                 }
             }
             if (includeDiscount) {
-                if (discountType === 'flat') {
+                combinedProduct = {
+                    ...combinedProduct,
+                    discount: {
+                        product: {
+                            ...productDiscount
+                        }
+                    }
+                }
+                if (includeLensDiscount) {
                     combinedProduct = {
                         ...combinedProduct,
                         discount: {
                             product: {
                                 ...productDiscount
+                            },
+                            lenses: {
+                                ...lensesDiscount
                             }
                         }
                     }
-                } else {
-                    if (discountType === 'percent') {
-                        combinedProduct = {
-                            ...combinedProduct,
-                            discount: {
-                                product: {
-                                    ...productDiscount
-                                }
+                }
+            } else {
+                if (includeLensDiscount) {
+                    combinedProduct = {
+                        ...combinedProduct,
+                        discount: {
+                            lenses: {
+                                ...lensesDiscount
                             }
                         }
                     }
@@ -159,10 +191,8 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
 
             console.log(data)
             if (data.combinedProduct) {
-                addCombineProduct({
-                    product: order.product,
-                    combinedProduct: data.combinedProduct
-                })
+                addCombineProduct(data.combinedProduct)
+                closeModal()
                 next()
             }
 
@@ -350,6 +380,45 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                                             value: e.target.value
                                         }
                                     }, product.type)
+                                }}
+                            />
+                        </div>
+                    </div>}
+                </div>}
+                {isAdmin && order?.lenses && <div>
+                    <DiscountCheckboxContainer>
+                        <input id="lensdiscount" name='lensdiscount' type='checkbox' value={includeLensDiscount} onChange={() => setIncludeLensDiscount(!includeLensDiscount)} />
+                        <label htmlFor='lensdiscount'>Pridať zlavu pre šošovky</label>
+                    </DiscountCheckboxContainer>
+                    {includeLensDiscount && <div>
+                        <h4>Zlava pre šošovky</h4>
+                        <div>
+                            <DiscountCheckbox
+                                label={"Fixná suma"}
+                                value={"flat"}
+                                name='flat'
+                                isActive={lensDiscountType === 'flat'}
+                                handleClick={() => handleChangeLensesDiscount('flat')}
+                            />
+                            <DiscountCheckbox
+                                label={"Percertá"}
+                                value={"percent"}
+                                name='percent'
+                                isActive={lensDiscountType === 'percent'}
+                                handleClick={() => handleChangeLensesDiscount('percent')}
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label='Hodnota'
+                                value={lensDiscountType === 'flat' ? lensesDiscount.flat ?? "" : lensesDiscount.percent ?? ""}
+                                onChange={(e) => {
+                                    handleLensesDiscountChange({
+                                        target: {
+                                            name: lensDiscountType,
+                                            value: e.target.value
+                                        }
+                                    })
                                 }}
                             />
                         </div>

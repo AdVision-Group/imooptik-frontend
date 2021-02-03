@@ -30,8 +30,6 @@ const OrderSection = () => {
     const [step, setStep] = useState('selectUser')
     const [order, setOrder] = useState({})
 
-
-
     const [hasChanged, setHasChanged] = useState(false)
     const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
 
@@ -53,11 +51,6 @@ const OrderSection = () => {
         })
     }
 
-    // console.log("order")
-    // console.log(order)
-    // console.log(combinedProducts)
-    // console.log("order")
-
     const {
         closeModal,
         isLoading,
@@ -68,10 +61,18 @@ const OrderSection = () => {
     // const userData = useFetchById("api/admin/users", userId)
     const orderData = useFetchById("api/admin/orders", orderId)
 
-    // console.log(userData)
-    console.log(orderData)
-    console.log(order)
-    console.log(combinedProducts)
+    const handleAddNextProduct = () => {
+        setStep('findProduct')
+        if (order?.product) {
+            if (order?.lenses) {
+                delete order["lenses"]
+                delete order["product"]
+            } else {
+                delete order["product"]
+            }
+            setOrder({ ...order })
+        }
+    }
 
     useEffect(() => {
         if (userId !== 'nova-objednavka' && orderId) {
@@ -82,7 +83,7 @@ const OrderSection = () => {
                     order: orderData.response.order,
                     user: orderData.response.order.orderedBy,
                 })
-                setCombinedProducts(orderData.response.order.combinedProducts.map(product => ({ combinedProduct: { ...product }, product: product.product })))
+                setCombinedProducts(orderData.response.order.combinedProducts)
             }
         }
 
@@ -155,7 +156,7 @@ const OrderSection = () => {
                             order={order}
                             combinedProducts={combinedProducts}
                             back={() => setStep("selectLenses")}
-                            addNextProduct={() => setStep('findProduct')}
+                            addNextProduct={handleAddNextProduct}
                             setHasChanged={setHasChanged}
                         />
                     )}

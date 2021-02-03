@@ -63,7 +63,7 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
         let orderObj = {
             ...orderDetail,
             user: order.user._id,
-            combinedProducts: combinedProducts.map(product => product.combinedProduct._id),
+            combinedProducts: combinedProducts.map(product => product._id),
             status: orderDetail.paymentType === 'coupon' ? "half-paid" : "paid"
         }
 

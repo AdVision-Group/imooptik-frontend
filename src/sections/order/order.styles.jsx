@@ -218,7 +218,7 @@ export const SummaryTableTitle = styled.h3`
 export const SummaryTableHead = styled.div`
     display: grid;
     align-content: center;
-    grid-template-columns: 5rem 1fr 2fr 2fr 10rem 15rem;
+    grid-template-columns: 5rem 1fr 10rem 10rem 1fr 10rem 10rem 10rem 10rem;
     font-weight: bolder;
     border-bottom: 1px solid #000;
 `
@@ -226,7 +226,7 @@ export const SummaryTableHead = styled.div`
 export const SummaryTableRow = styled.div`
     display: grid;
     align-content: center;
-    grid-template-columns: 5rem 1fr 2fr 2fr 10rem 15rem;
+    grid-template-columns: 5rem 1fr 10rem 10rem 1fr 10rem 10rem 10rem 10rem;
     /* box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
     /* margin-bottom: 1rem; */
 `
