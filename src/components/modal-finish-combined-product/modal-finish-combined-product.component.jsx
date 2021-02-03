@@ -20,7 +20,7 @@ import {
 const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) => {
     const { setIsLoading, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { isAdmin, token } = useContext(AuthContext)
-    const { product } = order
+    const { product, lenses } = order
     const { contactLenses } = product
 
     const [combinedProductDetails, setCombinedProductDetails] = useState({})
@@ -32,7 +32,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
 
     console.log(order)
     console.log(productDiscount)
-    console.log(combinedProductDetails)
+    console.log(lenses)
 
     const handleChangeDiscount = (type) => {
         setProductDiscount({})
@@ -101,6 +101,13 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             else {
                 combinedProduct = {
                     product: order.product._id,
+                    // lenses: 
+                }
+                if (order.lenses) {
+                    combinedProduct = {
+                        product: order.product._id,
+                        lens: order.lenses._id,
+                    }
                 }
             }
             if (includeDiscount) {
@@ -221,6 +228,22 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                         <p>{(product.price / 100).toFixed(2)}€</p>
                     </div>
                 </ProductContainer>
+                {lenses && <ProductContainer>
+                    <h2>Šošovky</h2>
+
+                    <div>
+                        {lenses.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={product.image.alt} />}
+                    </div>
+
+                    <div>
+                        <h4>{lenses.name}</h4>
+                        {/* <span>{lenses.eanCode}</span> */}
+                    </div>
+
+                    <div>
+                        <p>{(lenses.price / 100).toFixed(2)}€</p>
+                    </div>
+                </ProductContainer>}
 
 
 
