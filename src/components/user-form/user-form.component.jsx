@@ -269,7 +269,6 @@ const UserForm = ({
                     </Title>
                     <OrderButton onClick={e => handleAddOrderButtonClick(e)}>Pridať objednávku</OrderButton>
                 </OrderHeader>
-
                 <div>
                     {user.orders.length > 0 ? user.orders.map((order, idx) => (
                         <ProfileOrderOverview
@@ -280,8 +279,6 @@ const UserForm = ({
                     )) : (
                             <p>Žiadné objednávky</p>
                         )}
-
-
                 </div>
             </div>}
         </GridContainer>

@@ -15,11 +15,12 @@ import {
     DeleteProfileButton,
     // Name,
     SaveButton,
+    ExaminationButton,
 } from './customer-profile.styles'
 
 const CustomerProfile = () => {
     const { id } = useParams()
-    const { isAdmin } = useContext(AuthContext)
+    const { isAdmin, isOptometrist } = useContext(AuthContext)
     const {
         closeModal,
         isLoading,
@@ -82,7 +83,6 @@ const CustomerProfile = () => {
         })
     }
 
-    console.log(user.lenses)
 
     const handleCompanyAddressChange = (e) => {
         setHasChanges(true)
@@ -146,6 +146,7 @@ const CustomerProfile = () => {
         }
     }, [id])
 
+    //unmount
     useEffect(() => {
         return () => {
             console.log("UNMOUNT")
@@ -167,6 +168,8 @@ const CustomerProfile = () => {
         }
     }, [])
 
+    console.log(isOptometrist)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -178,6 +181,7 @@ const CustomerProfile = () => {
                 <Header>
                     <h1>Profil</h1>
                     <div>
+                        {isOptometrist && <ExaminationButton>Pridať prehliadku</ExaminationButton>}
                         {isUpdating && <DeleteProfileButton>Vymazať</DeleteProfileButton>}
                         <SaveButton type="submit">
                             {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}

@@ -15,6 +15,7 @@ export const Header = styled.div`
 export const DeleteProfileButton = styled(CustomButton)`
     background-color: #DD4C4C;
     font-size: 1.4rem;
+    margin-left: 2rem;
 `
 
 
@@ -23,4 +24,8 @@ export const SaveButton = styled(CustomButton)`
     font-size: 1.4rem;
     background-color: rgb(235, 172, 1);
     font-weight: bolder;
+`
+
+export const ExaminationButton = styled(CustomButton)`
+    font-size: 1.4rem;
 `

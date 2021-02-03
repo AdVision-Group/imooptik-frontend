@@ -5,6 +5,7 @@ import { getUser, createNewUser, resetPassword, setNewPassword, fetchUser } from
 export const AuthContext = createContext({
     currentUser: null,
     isAdmin: false,
+    isOptometrist: false,
     token: null,
     stats: null,
     logIn: () => { },
@@ -19,7 +20,16 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [token, setToken] = useState(null)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [isOptometrist, setIsOptometrist] = useState(false)
     const [stats, setStats] = useState(null)
+
+    const checkIfOptometrist = user => {
+        if (user.optometrist) {
+            setIsOptometrist(true)
+        } else {
+            setIsOptometrist(false)
+        }
+    }
 
     const checkIfAdmin = (user) => {
         if (user.admin > 1) {
@@ -218,6 +228,7 @@ const AuthProvider = ({ children }) => {
                 if (data.user) {
                     setCurrentUser(data.user)
                     checkIfAdmin(data.user)
+                    checkIfOptometrist(data.user)
                 }
             }
             getUserProfile()
@@ -231,6 +242,7 @@ const AuthProvider = ({ children }) => {
                 token,
                 currentUser,
                 isAdmin,
+                isOptometrist,
                 stats,
                 logIn,
                 logOut,
