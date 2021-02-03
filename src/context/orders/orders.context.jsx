@@ -11,6 +11,7 @@ export const OrdersContext = createContext({
 })
 
 const OrdersProvider = ({ children }) => {
+    const { push } = useHistory()
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
     const { token } = useContext(AuthContext)
     const [orders, setOrders] = useState(null)
@@ -79,7 +80,11 @@ const OrdersProvider = ({ children }) => {
 
             console.log(data)
 
-
+            if (data.order) {
+                getOrders()
+                closeModal()
+                push('/dashboard/objednavky')
+            }
 
             getMessage(data.message)
             setIsLoading(false)

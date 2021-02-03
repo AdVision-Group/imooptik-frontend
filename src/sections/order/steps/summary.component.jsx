@@ -18,7 +18,7 @@ import {
     OptionButton
 } from '../order.styles'
 
-const SummaryComponent = ({ order, combinedProducts, addNextProduct }) => {
+const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged }) => {
     const { createOrder } = useContext(OrdersContext)
     const priceTotal = combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.combinedProduct.discountedPrice, 0)
     const [showModal, setShowModal] = useState(false)
@@ -32,6 +32,7 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct }) => {
                     order={order}
                     combinedProducts={combinedProducts}
                     createOrder={createOrder}
+                    setHasChanged={setHasChanged}
                 />
             )}
             <ProductsOverviewContainer>

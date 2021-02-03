@@ -12,7 +12,7 @@ import {
     OverwriteAddressCheckbox
 } from './modal-finish-order.styles'
 
-const FinishOrderModal = ({ close, order, combinedProducts, createOrder }) => {
+const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasChanged }) => {
     const [orderDetail, setOrderDetails] = useState({
         paymentType: "cash"
     })
@@ -68,7 +68,7 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder }) => {
         }
 
         console.log(orderObj)
-
+        setHasChanged(false)
         createOrder(orderObj)
     }
 
@@ -153,28 +153,28 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder }) => {
                                             label="Adresa"
                                             name="address"
                                             type='text'
-                                            value={orderDetail?.overwrite.address ?? ""}
+                                            value={orderDetail?.overwrite?.address ?? ""}
                                             onChange={e => handleAddressOverwriteChange(e)}
                                         />
                                         <CustomInput
                                             label="PSČ"
                                             name="psc"
                                             type='text'
-                                            value={orderDetail?.overwrite.psc ?? ""}
+                                            value={orderDetail?.overwrite?.psc ?? ""}
                                             onChange={e => handleAddressOverwriteChange(e)}
                                         />
                                         <CustomInput
                                             label="Mesto"
                                             name="city"
                                             type='text'
-                                            value={orderDetail?.overwrite.city ?? ""}
+                                            value={orderDetail?.overwrite?.city ?? ""}
                                             onChange={e => handleAddressOverwriteChange(e)}
                                         />
                                         <CustomInput
                                             label="Štát"
                                             name="country"
                                             type='text'
-                                            value={orderDetail?.overwrite.country ?? ""}
+                                            value={orderDetail?.overwrite?.country ?? ""}
                                             onChange={e => handleAddressOverwriteChange(e)}
                                         />
 

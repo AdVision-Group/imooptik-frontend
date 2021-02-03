@@ -127,6 +127,7 @@ const OrderSection = () => {
                             combinedProducts={combinedProducts}
                             back={() => setStep("selectLenses")}
                             addNextProduct={() => setStep('findProduct')}
+                            setHasChanged={setHasChanged}
                         />
                     )}
                 </div>

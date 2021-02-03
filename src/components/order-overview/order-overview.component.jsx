@@ -30,7 +30,12 @@ const OrderOverview = ({ order }) => {
     useOutsideHandler(dropdownRef, () => setShowDropdownMenu(false))
     const [showOrderDeligateModal, setShowOrderDeligateModal] = useState(false)
 
-    console.log(order)
+    const translateStatus = status => {
+        if (status === 'finished') return "Dokončené"
+        if (status === 'fulfilled') return "Vybavené"
+        if (status === 'paid') return "Zaplatené"
+        if (status === 'half-paid') return "Zálohované"
+    }
 
     return (
         <OrderOverviewRow>
@@ -42,7 +47,7 @@ const OrderOverview = ({ order }) => {
                 </DeligateButton>
                 {showOrderDeligateModal && <OrderDeligateModal close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
             </DeligateCol>
-            <TableCol>{order.status}</TableCol>
+            <TableCol>{translateStatus(order.status)}</TableCol>
             <TableCol>
                 <IconContainer onClick={() => setShowDropdownMenu(!showDropdownMenu)}>
                     <AiFillCaretDown />

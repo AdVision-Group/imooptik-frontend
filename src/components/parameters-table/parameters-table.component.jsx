@@ -25,13 +25,13 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                 handleChange({
                     target: {
                         name: "diopters",
-                        value: checkParameters(parameters.diopters, 0) + checkParameters(parameters.addition, 0)
+                        value: (Number(checkParameters(parameters.diopters, 0)) + Number(checkParameters(parameters.addition, 0))).toFixed(2)
                     }
                 }, 2)
                 handleChange({
                     target: {
                         name: "diopters",
-                        value: checkParameters(parameters.diopters, 1) + checkParameters(parameters.addition, 1)
+                        value: (Number(checkParameters(parameters.diopters, 1)) + Number(checkParameters(parameters.addition, 1))).toFixed(2)
                     }
                 }, 3)
             }

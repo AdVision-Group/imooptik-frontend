@@ -69,7 +69,8 @@ const CustomerProfile = () => {
 
         const { name, value } = e.target
         let arr = user.lenses[name]
-        arr[idx] = Number(value)
+        arr[idx] = value
+
 
         handleParameterChange(e, idx)
         setUserObj({
@@ -80,6 +81,8 @@ const CustomerProfile = () => {
             }
         })
     }
+
+    console.log(user.lenses)
 
     const handleCompanyAddressChange = (e) => {
         setHasChanges(true)

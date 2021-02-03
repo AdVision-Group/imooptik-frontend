@@ -118,7 +118,7 @@ const UserProvider = ({ children }) => {
     const handleParameterChange = (e, idx) => {
         const { name, value } = e.target
         let arr = user.lenses[name]
-        arr[idx] = value === '' ? 1001 : Number(value)
+        arr[idx] = value === '' ? 1001 : value
         setUser({
             ...user,
             lenses: {
