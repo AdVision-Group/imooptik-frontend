@@ -281,6 +281,36 @@ export const StyledParagraph = styled.p`
     }
 `
 
+export const OrderDetailsContainer = styled.div`
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    margin-bottom: 3rem;
+
+    h3 {
+        margin-bottom: 1rem;
+    }
+
+    div {
+        p {
+            opacity: .83;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            background-color: #000;
+            color: #fff;
+            display: inline-block;
+            padding: .5rem 2.5rem;
+            margin-top: 1rem;
+        }
+    }
+
+`
+
 export const OptionsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;

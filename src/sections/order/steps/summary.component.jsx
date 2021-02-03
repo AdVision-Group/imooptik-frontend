@@ -4,7 +4,8 @@ import { OrdersContext } from '../../../context/orders/orders.context'
 import ParametersTable from '../../../components/parameters-table/parameters-table.component'
 import FinishOrderModal from '../../../components/modal-finish-order/modal-finish-order.component'
 
-import { useFetchById } from '../../../hooks/useFetch'
+import { retailNames } from '../../../context/warehouse/warehouse.utils'
+// import { useFetchById } from '../../../hooks/useFetch'
 
 import {
     TableCol,
@@ -17,13 +18,16 @@ import {
     UserOverviewContainer,
     OptionsContainer,
     StyledParagraph,
-    OptionButton
+    OptionButton,
+    OrderDetailsContainer
 } from '../order.styles'
 
 const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged }) => {
     const { createOrder } = useContext(OrdersContext)
     const [showModal, setShowModal] = useState(false)
     const [priceTotal, setPriceTotal] = useState(0)
+    const date = new Date(order?.order?.date)
+
 
     useEffect(() => {
         if (combinedProducts.combinedProduct) {
@@ -98,11 +102,43 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                         />}
                     </div>
                 </UserOverviewContainer>
-                <OptionsContainer>
-                    <h3>Možnosti</h3>
-                    <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
-                    <OptionButton onClick={() => setShowModal(true)}>Dokončiť objednavku</OptionButton>
-                </OptionsContainer>
+                <div>
+                    {order.order && <OrderDetailsContainer>
+                        <h3>Detaily objednávky</h3>
+                        <div>
+                            <h4>Dátum objednávky</h4>
+                            <p>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+                        </div>
+                        <div>
+                            <h4>Doručiť na adresu</h4>
+                            <p>{order.order.shouldDeliver ? "Áno" : "Nie"}</p>
+                        </div>
+                        <div>
+                            <h4>Nákup na firmu</h4>
+                            <p>{order.order.buyingAsCompany ? "Áno" : "Nie"}</p>
+                        </div>
+                        <div>
+                            <h4>Spôsob úhrady</h4>
+                            <p>{order.order.paymentType}</p>
+                        </div>
+                        <div>
+                            <h4>Vybavuje prevádzka</h4>
+                            <p>{retailNames[order.order.premises - 1]}</p>
+                        </div>
+                        <div>
+                            <h4>PDF</h4>
+                            <a href={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.order.pdfPath}`} target="_blank" rel="noreferrer noopener">
+                                Zobraz PDF
+                            </a>
+                        </div>
+                    </OrderDetailsContainer>}
+
+                    <OptionsContainer>
+                        <h3>Možnosti</h3>
+                        <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
+                        <OptionButton onClick={() => setShowModal(true)}>Dokončiť objednavku</OptionButton>
+                    </OptionsContainer>
+                </div>
             </SummaryGridLayout>
         </div>
     )
