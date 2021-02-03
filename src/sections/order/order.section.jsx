@@ -19,6 +19,8 @@ import FindProductComponent from "./steps/find-product.component"
 import SelectLensesComponent from './steps/select-lenses.component'
 import SummaryComponent from './steps/summary.component'
 
+import { useFetchById } from '../../hooks/useFetch'
+
 import {
     Header,
 } from './order.styles'
@@ -27,6 +29,8 @@ const OrderSection = () => {
     const { userId, orderId } = useParams()
     const [step, setStep] = useState('selectUser')
     const [order, setOrder] = useState({})
+
+
 
     const [hasChanged, setHasChanged] = useState(false)
     const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
@@ -49,10 +53,10 @@ const OrderSection = () => {
         })
     }
 
-    console.log("order")
-    console.log(order)
-    console.log(combinedProducts)
-    console.log("order")
+    // console.log("order")
+    // console.log(order)
+    // console.log(combinedProducts)
+    // console.log("order")
 
     const {
         closeModal,
@@ -61,9 +65,34 @@ const OrderSection = () => {
         message
     } = useContext(LoadingModalContext)
 
+    // const userData = useFetchById("api/admin/users", userId)
+    const orderData = useFetchById("api/admin/orders", orderId)
+
+    // console.log(userData)
+    console.log(orderData)
+    console.log(order)
+    console.log(combinedProducts)
+
     useEffect(() => {
-        if (order.user) {
-            setStep('findProduct')
+        if (userId !== 'nova-objednavka' && orderId) {
+            setStep('summary')
+            if (orderData.response) {
+                setOrder({
+                    ...order,
+                    order: orderData.response.order,
+                    user: orderData.response.order.orderedBy,
+                })
+                setCombinedProducts(orderData.response.order.combinedProducts.map(product => ({ combinedProduct: { ...product }, product: product.product })))
+            }
+        }
+
+    }, [userId, orderId, orderData.response])
+
+    useEffect(() => {
+        if (userId === 'nova-objednavka' && !orderId) {
+            if (order.user) {
+                setStep('findProduct')
+            }
         }
     }, [order.user])
 

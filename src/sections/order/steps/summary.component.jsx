@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { OrdersContext } from '../../../context/orders/orders.context'
 
 import ParametersTable from '../../../components/parameters-table/parameters-table.component'
 import FinishOrderModal from '../../../components/modal-finish-order/modal-finish-order.component'
+
+import { useFetchById } from '../../../hooks/useFetch'
 
 import {
     TableCol,
@@ -20,9 +22,15 @@ import {
 
 const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged }) => {
     const { createOrder } = useContext(OrdersContext)
-    const priceTotal = combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.combinedProduct.discountedPrice, 0)
     const [showModal, setShowModal] = useState(false)
+    const [priceTotal, setPriceTotal] = useState(0)
 
+    useEffect(() => {
+        if (combinedProducts.combinedProduct) {
+            setPriceTotal(combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.combinedProduct.discountedPrice, 0))
+
+        }
+    }, [combinedProducts])
 
     return (
         <div>
@@ -49,11 +57,11 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                 {combinedProducts.map((combinedProduct, idx) => (
                     <SummaryTableRow key={idx}>
                         <TableCol>{idx + 1}</TableCol>
-                        <TableCol>{combinedProduct.product ? combinedProduct.product.eanCode : "neuvedené"}</TableCol>
-                        <TableCol>{combinedProduct.product ? combinedProduct.product.name : combinedProduct.combinedProduct.product}</TableCol>
-                        <TableCol>{combinedProduct.lenses ? combinedProduct.lenses.name : ""}</TableCol>
+                        <TableCol>{combinedProduct?.product ? combinedProduct?.product?.eanCode : "neuvedené"}</TableCol>
+                        <TableCol>{combinedProduct?.product ? combinedProduct?.product?.name : combinedProduct.combinedProduct.product}</TableCol>
+                        <TableCol>{combinedProduct?.lenses ? combinedProduct?.lenses?.name : ""}</TableCol>
                         <TableCol>{0}</TableCol>
-                        <TableCol>{(combinedProduct.combinedProduct.discountedPrice / 100).toFixed(2)}€</TableCol>
+                        <TableCol>{(combinedProduct?.combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol>
                     </SummaryTableRow>
 
                 ))}
@@ -67,27 +75,27 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                     <h3>Zákaznik</h3>
                     <div>
                         <h4>Meno a prizvisko</h4>
-                        <StyledParagraph>{order.user.name}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.name}</StyledParagraph>
                     </div>
                     <div>
                         <h4>Adresa</h4>
-                        <StyledParagraph>{order.user.psc}</StyledParagraph>
-                        <StyledParagraph>{order.user.address}</StyledParagraph>
-                        <StyledParagraph>{order.user.city}</StyledParagraph>
-                        <StyledParagraph>{order.user.country}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.psc}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.address}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.city}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.country}</StyledParagraph>
                     </div>
                     <div>
                         <h4>Kontakt</h4>
-                        <StyledParagraph>{order.user.email}</StyledParagraph>
-                        <StyledParagraph>{order.user.phone}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.email}</StyledParagraph>
+                        <StyledParagraph>{order?.user?.phone}</StyledParagraph>
                     </div>
                     <div>
                         <h4>Parametre</h4>
-                        <ParametersTable
-                            parameters={order.user.lenses}
+                        {order && order.user && <ParametersTable
+                            parameters={order?.user?.lenses}
                             disabledInputs={true}
 
-                        />
+                        />}
                     </div>
                 </UserOverviewContainer>
                 <OptionsContainer>
