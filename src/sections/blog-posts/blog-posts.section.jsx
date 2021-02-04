@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/auth/auth.context'
 import { BlogContext } from '../../context/blog/blog.context'
 import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -7,6 +8,9 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from "../../components/scroll-container/scroll-container.component"
 import Popup from '../../components/popup/pop-up.component'
+import Pagination from '../../components/pagination/pagination.component'
+
+import { useFetchByQuery } from '../../hooks/useFetch'
 
 import {
     PostContainer,
@@ -18,15 +22,30 @@ import {
 } from './blog-posts.styles'
 
 const BlogPosts = () => {
+    const { stats } = useContext(AuthContext)
     const {
         closeModal,
         isLoading,
         message,
         showModal
     } = useContext(LoadingModalContext)
-    const { getPosts, posts, postsCount, handlePostDelete } = useContext(BlogContext)
+    const { postsCount, handlePostDelete } = useContext(BlogContext)
     const { push } = useHistory()
+
+    const [posts, setPosts] = useState([])
+
+    const [filterQuery, setFilterQuery] = useState({
+        limit: 10,
+        sortBy: {
+            date: -1
+        },
+        // query: ""
+    })
     const [searchQuery, setSearchQuery] = useState('')
+
+
+
+    const [activeIndex, setActiveIndex] = useState(0)
     const items = [
         {
             id: 0,
@@ -38,13 +57,77 @@ const BlogPosts = () => {
         },
     ]
 
-    const [activeIndex, setActiveIndex] = useState(0)
+    const blogsData = useFetchByQuery('api/blogs/filter', filterQuery)
+
+    const handleSearch = () => {
+        if (searchQuery !== '') {
+            setFilterQuery({
+                limit: 10,
+                sortBy: {
+                    date: -1
+                },
+                query: searchQuery
+            })
+            blogsData.refetch()
+        }
+    }
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productsPerPage] = useState(10)
+
+    const paginate = (pageNumber) => {
+        setFilterQuery({
+            limit: 10,
+            sortBy: {
+                date: -1
+            },
+            skip: (pageNumber - 1) * productsPerPage
+        })
+        setCurrentPage(pageNumber)
+    }
 
     useEffect(() => {
-        if (!posts) {
-            getPosts(items[activeIndex])
+        if (searchQuery === '') {
+            setFilterQuery({
+                limit: 10,
+                sortBy: {
+                    date: -1
+                },
+            })
+            blogsData.refetch()
         }
-    }, [posts])
+    }, [searchQuery])
+
+    useEffect(() => {
+        if (activeIndex === 0) {
+            setFilterQuery({
+                limit: 10,
+                sortBy: {
+                    date: -1
+                },
+                // query: ""
+            })
+            blogsData.refetch()
+        } else {
+            setFilterQuery({
+                limit: 10,
+                sortBy: {
+                    date: 1
+                },
+                // query: ""
+            })
+            blogsData.refetch()
+        }
+    }, [activeIndex])
+
+    useEffect(() => {
+        if (!blogsData.isLoading) {
+            setPosts(blogsData.response?.blogs)
+        }
+    }, [blogsData.isLoading])
+
+    console.log(blogsData)
+    console.log(stats)
 
     return (
         <section>
@@ -53,6 +136,7 @@ const BlogPosts = () => {
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
+                handleSearch={handleSearch}
                 handleAddButton={() => push('blog/novy-prispevok')}
                 count={postsCount}
                 title="Blog"
@@ -65,28 +149,32 @@ const BlogPosts = () => {
             />
 
             <ScrollContainer>
-                {
-                    posts && posts.length ? posts.map(post => (
-                        <PostContainer key={post._id}>
-                            <PostImage>
-                                {post.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />}
-                            </PostImage>
-                            <PostContent>
-                                <h2>{post.name}</h2>
-                                <p>{post.description}</p>
-                            </PostContent>
-                            <Options>
-                                <UpdateButton onClick={() => push(`blog/${post._id}`)}>Upraviť</UpdateButton>
-                                <DeleteButton onClick={() => handlePostDelete(post._id)}>Vymazať</DeleteButton>
-                            </Options>
-                        </PostContainer>
-                    )) : (
-                            <div>
-                                Žiadne príspevky
-                            </div>
-                        )
-                }
+                {posts && posts.length ? posts.map(post => (
+                    <PostContainer key={post._id}>
+                        <PostImage>
+                            {post.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${post.image.imagePath}`} alt={post.image.alt} />}
+                        </PostImage>
+                        <PostContent>
+                            <h2>{post.name}</h2>
+                            <p>{post.description}</p>
+                        </PostContent>
+                        <Options>
+                            <UpdateButton onClick={() => push(`blog/${post._id}`)}>Upraviť</UpdateButton>
+                            <DeleteButton onClick={() => handlePostDelete(post._id)}>Vymazať</DeleteButton>
+                        </Options>
+                    </PostContainer>
+                )) : (
+                        <div>
+                            Žiadne príspevky
+                        </div>
+                    )}
 
+                <Pagination
+                    productsPerPage={10}
+                    totalProducts={stats.blogs}
+                    paginate={paginate}
+                    activePage={currentPage}
+                />
             </ScrollContainer>
         </section>
     )

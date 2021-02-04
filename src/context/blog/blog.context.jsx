@@ -26,7 +26,6 @@ const BlogProvider = ({ children }) => {
     const { token } = useContext(AuthContext)
 
     const {
-        closeModal,
         getMessage,
         setIsLoading,
         setShowModal
