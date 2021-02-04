@@ -43,6 +43,9 @@ const UserForm = ({
         push(`/dashboard/objednavky/${user._id}`)
     }
 
+    console.log(user)
+
+
     return (
         <GridContainer>
             <Profile>
@@ -278,7 +281,7 @@ const UserForm = ({
                             id={order}
                             handleUpdateClick={() => push(`/dashboard/objednavky/${user._id}/${order}`)}
                         />
-                    )) : (
+                    )).reverse().slice(0, 5) : (
                             <p>Žiadné objednávky</p>
                         )}
                 </div>

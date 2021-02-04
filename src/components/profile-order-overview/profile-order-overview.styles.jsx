@@ -3,8 +3,8 @@ import CustomButton from '../custom-button/custom-button.component'
 
 export const OrderContainer = styled.div`
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 25rem;
+    /* display: grid;
+    grid-template-columns: 1fr 25rem; */
 
     box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
     padding: 2rem;
@@ -20,34 +20,43 @@ export const OrderContainer = styled.div`
 `
 
 export const OrderContent = styled.div`
-
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    margin-bottom: 2rem;
     h2 {
         font-size: 1.6rem;
     }
 `
 
 export const Options = styled.div`
-    align-self: end;
-    justify-self: end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    /* align-self: end;
+    justify-self: end; */
 `
 
 export const UpdateButton = styled(CustomButton)`
-    font-size: 1rem;
-    margin-left: auto;
+    font-size: 1.2rem;
+    /* margin-left: auto; */
     display:block;
 
 `
 
 export const DeleteButton = styled(CustomButton)`
-    font-size: 1rem;
-    background-color: rgb(235, 172, 1);
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    /* background-color: rgb(235, 172, 1); */
+    background-color: #DD4C4C;
+    /* margin-bottom: 1rem; */
+    margin-left: 1rem;
     display:block;
 
 `
 
 export const OrderId = styled.p`
-    font-size: 1.2rem;
-    color: gray;
+    opacity: .83;
+    /* font-size: 1.2rem; */
+    /* color: gray; */
     /* margin-bottom: 2rem; */
 `
