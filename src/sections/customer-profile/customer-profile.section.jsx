@@ -15,7 +15,6 @@ import {
     DeleteProfileButton,
     // Name,
     SaveButton,
-    ExaminationButton,
 } from './customer-profile.styles'
 
 const CustomerProfile = () => {
@@ -168,21 +167,18 @@ const CustomerProfile = () => {
         }
     }, [])
 
-    console.log(isOptometrist)
-
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Prompt
                 when={hasChanges}
-                message={"Máte neuložené zmeny, chcete aj tak odísť ?"}
+                message={"Chcete opustiť tuto stránku?"}
             />
             <form onSubmit={handleSubmit}>
                 <Header>
                     <h1>Profil</h1>
                     <div>
-                        {isOptometrist && <ExaminationButton>Pridať prehliadku</ExaminationButton>}
-                        {isUpdating && <DeleteProfileButton>Vymazať</DeleteProfileButton>}
+                        {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
                         <SaveButton type="submit">
                             {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
                         </SaveButton>
@@ -193,9 +189,10 @@ const CustomerProfile = () => {
                     {
                         isUpdating ? (
                             <UserForm
+                                user={user}
                                 isAdmin={isAdmin}
                                 isUpdating={isUpdating}
-                                user={user}
+                                isOptometrist={isOptometrist}
                                 handleChange={handleUserChange}
                                 handleParameterChange={handleLensesParameterChange}
                                 handleCompanyChange={handleCompanyAddressChange}

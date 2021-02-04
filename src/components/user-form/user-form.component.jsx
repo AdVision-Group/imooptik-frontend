@@ -6,6 +6,7 @@ import CustomInput from '../custom-input/custom-input.component'
 import ProfileOrderOverview from '../profile-order-overview/profile-order-overview.component'
 import ParametersTable from '../parameters-table/parameters-table.component'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
+import ExaminationsOverview from '../examinations-overview/examinations-overview.component'
 
 import {
     retailNames
@@ -32,7 +33,8 @@ const UserForm = ({
     user,
     handleChange,
     handleParameterChange,
-    handleCompanyChange
+    handleCompanyChange,
+    isOptometrist
 }) => {
     const { push } = useHistory()
 
@@ -280,6 +282,7 @@ const UserForm = ({
                             <p>Žiadné objednávky</p>
                         )}
                 </div>
+                {isOptometrist && <ExaminationsOverview />}
             </div>}
         </GridContainer>
     )

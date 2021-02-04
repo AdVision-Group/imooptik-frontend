@@ -26,6 +26,7 @@ const BookingProvider = lazy(() => import('../../context/booking/booking.context
 const OrdersProvider = lazy(() => import("../../context/orders/orders.context"))
 const CouponsProvider = lazy(() => import('../../context/coupons/coupons.context'))
 const AnalyticsProvider = lazy(() => import('../../context/analytics/analytics.context'))
+const ExaminationProvider = lazy(() => import('../../context/examination/examination.context'))
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
 const CustomersSection = lazy(() => import('../../sections/customers/customers.section'))
@@ -188,8 +189,10 @@ const Dashboard = () => {
                             )} />
 
                             <UserProvider>
-                                <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
-                                <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+                                <ExaminationProvider>
+                                    <Route exact path={`${match.path}/zakaznici`} component={CustomersSection} />
+                                    <Route path={`${match.path}/zakaznici/:id`} component={CustomerProfileSection} />
+                                </ExaminationProvider>
                             </UserProvider>
 
                         </Switch>

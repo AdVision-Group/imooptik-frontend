@@ -25,7 +25,3 @@ export const SaveButton = styled(CustomButton)`
     background-color: rgb(235, 172, 1);
     font-weight: bolder;
 `
-
-export const ExaminationButton = styled(CustomButton)`
-    font-size: 1.4rem;
-`

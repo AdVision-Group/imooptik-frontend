@@ -35,7 +35,7 @@ export const UserContext = createContext({
     toggleUserForm: () => { },
     createUser: () => { },
     getFilteredUsers: () => { },
-    getUserByQuery: () => { }
+    getUserByQuery: () => { },
 })
 
 const UserProvider = ({ children }) => {
@@ -350,6 +350,8 @@ const UserProvider = ({ children }) => {
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
+
+
     const getFilteredUsers = async (filter) => {
         setIsLoading(true)
         setShowModal(true)
@@ -442,7 +444,7 @@ const UserProvider = ({ children }) => {
                 toggleUserForm,
                 createUser,
                 getFilteredUsers,
-                getUserByQuery
+                getUserByQuery,
             }}
         >
             {children}
