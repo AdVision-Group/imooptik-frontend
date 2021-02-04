@@ -4,6 +4,10 @@ import { WarehouseContext } from '../../../../context/warehouse/warehouse.contex
 import CustomInput from '../../../../components/custom-input/custom-input.component'
 import BackButton from '../../../../components/custom-back-button/custom-back-button.component'
 
+import {
+    formatAvailable,
+    isAvailable
+} from '../../../../utils/orders.utils'
 
 import {
     SearchContainer,
@@ -14,7 +18,7 @@ import {
     TableCol
 } from './select-product.styles'
 
-const SelectProductComponent = ({ back, next, addToOrder, showModal }) => {
+const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMessage }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
 
@@ -50,16 +54,6 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal }) => {
         } else {
             showModal()
         }
-    }
-
-    const formatAvailable = (available) => {
-        if (!available) return "Nedostupné"
-        if (typeof available === "number") {
-            return available > 0 ? "Na sklade" : "Nedostupné"
-        } else {
-            return available.reduce((acc, currValue) => acc + currValue) > 0 ? "Na sklade" : "Nedostupné"
-        }
-
     }
 
     useEffect(() => {
@@ -115,7 +109,7 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal }) => {
                     <TableCol>Dostupnosť</TableCol>
                 </ProductTableHead>
                 {productItems.map((product, idx) => (
-                    <ProductTableRow key={idx} onClick={() => handleClick(product)}>
+                    <ProductTableRow key={idx} onClick={() => isAvailable(product.available) ? handleClick(product) : showErrorMessage("Produkt nieje na sklade.")}>
                         <TableCol>{product.eanCode}</TableCol>
                         <TableCol>
                             <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />

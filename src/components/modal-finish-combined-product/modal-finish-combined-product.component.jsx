@@ -14,7 +14,9 @@ import {
     DiscountCheckboxContainer,
     DiscountCheckbox,
     CustomSelect,
-    ContactLensesParameterContainer
+    ContactLensesParameterContainer,
+    LensesContainer,
+    LensesImg
 } from './modal-finish-combined-product.styles'
 
 const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) => {
@@ -258,22 +260,16 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                         <p>{(product.price / 100).toFixed(2)}€</p>
                     </div>
                 </ProductContainer>
-                {lenses && <ProductContainer>
-                    <h2>Šošovky</h2>
-
-                    <div>
-                        {lenses.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={product.image.alt} />}
-                    </div>
-
-                    <div>
-                        <h4>{lenses.name}</h4>
-                        {/* <span>{lenses.eanCode}</span> */}
-                    </div>
-
-                    <div>
-                        <p>{(lenses.price / 100).toFixed(2)}€</p>
-                    </div>
-                </ProductContainer>}
+                {lenses && <LensesContainer >
+                    <h4>{lenses.name}</h4>
+                    <LensesImg>
+                        {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
+                    </LensesImg>
+                    <p>{lenses.description}</p>
+                    {lenses.dioptersRange && <p>{`Dioptrie od ${lenses.dioptersRange[0]} do ${lenses.dioptersRange[1]}`}</p>}
+                    {lenses.cylinderRange && <p>{`Cylinder  od ${lenses.cylinderRange[0]} do ${lenses.cylinderRange[1]}`}</p>}
+                    <h5>{(lenses.price / 100).toFixed(2)}€</h5>
+                </LensesContainer>}
 
 
 

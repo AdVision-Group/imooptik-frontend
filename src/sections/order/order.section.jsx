@@ -45,11 +45,18 @@ const OrderSection = () => {
     }
 
     const {
+        getMessage,
+        setShowModal,
         closeModal,
         isLoading,
         showModal,
         message
     } = useContext(LoadingModalContext)
+
+    const showErrorMessage = (message) => {
+        getMessage(message)
+        setShowModal(true)
+    }
 
     // const userData = useFetchById("api/admin/users", userId)
     const orderData = useFetchById("api/admin/orders", orderId)
@@ -136,6 +143,7 @@ const OrderSection = () => {
                             back={() => setStep("selectUser")}
                             next={setStep}
                             addToOrder={handleOrderChange}
+                            showErrorMessage={showErrorMessage}
                             showModal={() => setShowCombinedProductModal(true)}
                         />
                     )}

@@ -24,7 +24,7 @@ import {
 const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpdate }) => {
     const examinationData = useFetchById('api/admin/exams', examinationToUpdate, !examinationToUpdate)
 
-    const { createExamination } = useContext(ExaminationContext)
+    const { createExamination, updateExamination } = useContext(ExaminationContext)
     const [examinationObj, setExaminationObj] = useState({})
     const [parameters, setParameters] = useState({})
 
@@ -80,12 +80,36 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         console.log("EXAMINATION OBJECT BEFORE SEND")
         console.log(examObj)
 
-        createExamination(examObj)
+        if (examinationToUpdate) {
+            console.log("UPDATE EXAMINATION")
+            delete examObj["doneTo"]
+            delete examObj["doneBy"]
+            delete examObj["date"]
+            delete examObj["_id"]
+            delete examObj["__v"]
+
+            console.log(examObj)
+            updateExamination(examObj, examinationToUpdate)
+
+        } else {
+            console.log("CREATE EXAMINATION")
+
+            createExamination(examObj)
+        }
         refetch()
         close()
     }
 
     console.log(examinationData)
+
+    useEffect(() => {
+        if (!examinationData.isLoading) {
+            if (examinationData.response) {
+                setParameters(examinationData.response?.exam?.parameters)
+                setExaminationObj(examinationData.response?.exam)
+            }
+        }
+    }, [examinationToUpdate, examinationData.isLoading])
 
     useEffect(() => {
         return () => {
@@ -347,7 +371,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                 </div>
 
 
-                <SubmitButton onClick={handleSubmit}>Odoslať prehliadku</SubmitButton>
+                <SubmitButton onClick={handleSubmit}>{examinationToUpdate ? "Uložiť" : "Odoslať prehliadku"}</SubmitButton>
             </Modal>
         </ModalContainer>
     )

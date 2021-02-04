@@ -6,8 +6,8 @@ const OrderSummaryProductName = ({ productId }) => {
     const { isLoading, response } = useFetchById('api/store/products', productId, !productId)
 
     return (
-        <span>
-            {isLoading ? "Hľadam..." : response.product.name.slice(0, 8).concat("...")}
+        <span style={{ whiteSpace: "nowrap" }}>
+            {isLoading ? "Hľadam..." : response.product.name.slice(0, 6).concat("...")}
         </span>
     )
 }

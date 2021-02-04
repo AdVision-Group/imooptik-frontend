@@ -54,7 +54,40 @@ const ExaminationProvider = ({ children }) => {
         }
     }
 
-    const updateExamination = async () => { }
+    const updateExamination = async (examToUpdate, examId) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify(examToUpdate)
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/${examId}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.exam) {
+                closeModal()
+                return
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     const deleteExamination = async (examId) => {
         setIsLoading(true)
         setShowModal(true)
