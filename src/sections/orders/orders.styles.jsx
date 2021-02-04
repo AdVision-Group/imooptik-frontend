@@ -22,9 +22,19 @@ export const OrderOverviewRow = styled.div`
 `
 
 export const TableCol = styled.div`
+    cursor:  ${({ clickable }) => clickable ? "pointer" : "default"};
     position: relative;
     padding: 2rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
+`
+
+export const IconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
 `
 
 export const DeligateCol = styled(TableCol)`
