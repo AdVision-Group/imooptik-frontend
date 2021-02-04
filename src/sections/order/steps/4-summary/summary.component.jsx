@@ -3,6 +3,9 @@ import { OrdersContext } from '../../../../context/orders/orders.context'
 
 import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
 import FinishOrderModal from '../../../../components/modal-finish-order/modal-finish-order.component'
+import OrderSummaryProductName from '../../../../components/order-summary-product-name/order-summary-product-name.component'
+import OrderSummaryLensesName from '../../../../components/order-summary-lenses-name/order-summary-lenses-name.component'
+
 
 import { retailNames } from '../../../../context/warehouse/warehouse.utils'
 // import { useFetchById } from '../../../hooks/useFetch'
@@ -67,11 +70,11 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                 {combinedProducts.map((combinedProduct, idx) => (
                     <SummaryTableRow key={idx}>
                         <TableCol>{idx + 1}</TableCol>
-                        <TableCol>{combinedProduct?.product ? combinedProduct?.product.slice(0, 8).concat("...") : ""}</TableCol>
+                        <TableCol>{combinedProduct?.product ? <OrderSummaryProductName productId={combinedProduct?.product} /> : ""}</TableCol>
                         <TableCol>{combinedProduct?.productPrice ? `${(combinedProduct?.productPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
                         <TableCol>{combinedProduct?.productPrice ? `${(combinedProduct?.productPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
 
-                        <TableCol>{combinedProduct?.lens ? combinedProduct?.lens.slice(0, 8).concat("...") : ""}</TableCol>
+                        <TableCol>{combinedProduct?.lens ? <OrderSummaryLensesName lensesId={combinedProduct?.lens} /> : ""}</TableCol>
                         <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
                         <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
 

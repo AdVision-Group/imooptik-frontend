@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import Fuse from 'fuse.js'
 
+import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { OrdersContext } from '../../context/orders/orders.context'
 
@@ -15,6 +15,13 @@ import Pagination from '../../components/pagination/pagination.component'
 import Popup from '../../components/popup/pop-up.component'
 
 import {
+    GoArrowSmallDown,
+    GoArrowSmallUp
+} from 'react-icons/go'
+
+import { useFetchByQuery } from '../../hooks/useFetch'
+
+import {
     tabItems
 } from '../../context/orders/orders.utils'
 
@@ -22,14 +29,34 @@ import {
     TableHead,
     OrdersTable,
     TableCol,
+    IconContainer
 } from './orders.styles'
 
 const OrdersSection = () => {
+    const { stats } = useContext(AuthContext)
     const { push } = useHistory()
     const [searchQuery, setSearchQuery] = useState('')
     const [activeIndex, setActiveIndex] = useState(1)
-    const [orderItems, setOrderItems] = useState([])
+    const [orders, setOrders] = useState([])
+    const [fetchQueryObj, setFetchQueryObj] = useState({
+        limit: 10,
+        skip: 0,
+        sortBy: {
+            date: -1
+        }
+    })
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const paginate = (currentPage) => {
+        setFetchQueryObj({
+            ...fetchQueryObj,
+            skip: (currentPage - 1) * 10
+        })
+        setCurrentPage(currentPage)
+        refetch()
+    }
+
+    const { isLoading: isFetching, response, refetch } = useFetchByQuery('api/admin/orders/filter', fetchQueryObj)
 
     const {
         closeModal,
@@ -38,76 +65,59 @@ const OrdersSection = () => {
         showModal
     } = useContext(LoadingModalContext)
 
-    const {
-        getOrders,
-        orders
-    } = useContext(OrdersContext)
-
-    const handleSearch = () => {
-        if (orders) {
-            const fuse = new Fuse(orders, {
-                keys: [
-                    'customId',
-                    'status',
-                    'date'
-                ]
-            })
-            if (searchQuery !== '') {
-                const results = fuse.search(searchQuery)
-                setOrderItems(results.map(result => result.item))
-            }
-
-        }
-    }
-
     useEffect(() => {
-        if (!orders) {
-            getOrders()
-        }
-        if (orders) {
-            if (activeIndex === 2) {
-                setOrderItems(orders.filter(order => order.status === 'finished'))
-            } else {
-                setOrderItems(orders.filter(order => order.status !== 'finished'))
+        if (!isFetching) {
+            if (response) {
+                setOrders(response?.orders)
             }
         }
-    }, [orders])
+    }, [isFetching, response])
 
     useEffect(() => {
-        if (orders) {
-            if (activeIndex === 2) {
-                setOrderItems(orders.filter(order => order.status === 'finished'))
+        if (orders.length > 0) {
+            if (activeIndex === 1) {
+                delete fetchQueryObj["filters"]
+                setFetchQueryObj(() => ({
+                    ...fetchQueryObj,
+                }))
+                refetch()
             } else {
-                setOrderItems(orders.filter(order => order.status !== 'finished'))
+                setFetchQueryObj(() => ({
+                    ...fetchQueryObj,
+                    filters: {
+                        status: "finished"
+                    }
+                }))
+                refetch()
+
             }
         }
     }, [activeIndex])
 
     useEffect(() => {
-        if (orders) {
-            if (!searchQuery) {
-                if (activeIndex === 2) {
-                    setOrderItems(orders.filter(order => order.status === 'finished'))
-                } else {
-                    setOrderItems(orders.filter(order => order.status !== 'finished'))
+        return () => {
+            setActiveIndex(1)
+            setSearchQuery('')
+            setOrders([])
+            setFetchQueryObj({
+                limit: 10,
+                skip: 0,
+                sortBy: {
+                    date: -1
                 }
-            }
+            })
         }
-    }, [searchQuery])
+    }, [])
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [ordersPerPage] = useState(10)
-    const indexOfLastOrder = currentPage * ordersPerPage
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage
-    const currentOrders = orderItems.slice(indexOfFirstOrder, indexOfLastOrder)
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    console.log(activeIndex)
+    console.log(response)
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
-                handleSearch={handleSearch}
+                // handleSearch={handleSearch}
 
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
@@ -124,19 +134,34 @@ const OrdersSection = () => {
                 <OrdersTable>
                     <TableHead>
                         <TableCol>ID</TableCol>
-                        <TableCol>Dátum</TableCol>
+                        <TableCol clickable onClick={() => {
+                            setFetchQueryObj((prevObj) => ({
+                                ...fetchQueryObj,
+                                sortBy: {
+                                    date: prevObj.sortBy.date === 1 ? -1 : 1
+                                }
+                            }))
+                            return refetch()
+                        }}>
+                            Dátum {fetchQueryObj.sortBy.date === 1 ? <IconContainer>
+                                <GoArrowSmallDown />
+                            </IconContainer> : <IconContainer>
+                                    <GoArrowSmallUp />
+                                </IconContainer>
+                            }
+                        </TableCol>
                         <TableCol>Prevádzka</TableCol>
                         <TableCol>Status</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
-                    {currentOrders.map((order, idx) => (
+                    {orders.map((order, idx) => (
                         <OrderOverview key={idx} order={order} />
                     ))}
                 </OrdersTable>
 
                 <Pagination
-                    productsPerPage={ordersPerPage}
-                    totalProducts={orderItems.length}
+                    productsPerPage={10}
+                    totalProducts={stats.orders}
                     paginate={paginate}
                     activePage={currentPage}
                 />
