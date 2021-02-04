@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { OrdersContext } from '../../../context/orders/orders.context'
+import { OrdersContext } from '../../../../context/orders/orders.context'
 
-import ParametersTable from '../../../components/parameters-table/parameters-table.component'
-import FinishOrderModal from '../../../components/modal-finish-order/modal-finish-order.component'
+import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
+import FinishOrderModal from '../../../../components/modal-finish-order/modal-finish-order.component'
 
-import { retailNames } from '../../../context/warehouse/warehouse.utils'
+import { retailNames } from '../../../../context/warehouse/warehouse.utils'
 // import { useFetchById } from '../../../hooks/useFetch'
 
 import {
@@ -20,7 +20,7 @@ import {
     StyledParagraph,
     OptionButton,
     OrderDetailsContainer
-} from '../order.styles'
+} from './summary.styles'
 
 const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged }) => {
     const { createOrder } = useContext(OrdersContext)

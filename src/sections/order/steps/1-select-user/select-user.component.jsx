@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { UserContext } from '../../../context/user/user.context'
+import { UserContext } from '../../../../context/user/user.context'
 
-import CustomInput from '../../../components/custom-input/custom-input.component'
+import CustomInput from '../../../../components/custom-input/custom-input.component'
 
 import {
     SearchContainer,
@@ -10,7 +10,7 @@ import {
     UserTableRow,
     TableCol,
     SearchButton
-} from '../order.styles'
+} from './select-user.styles'
 
 const SelectUserComponent = ({ next, addToOrder }) => {
     const [searchQuery, setSearchQuery] = useState('')

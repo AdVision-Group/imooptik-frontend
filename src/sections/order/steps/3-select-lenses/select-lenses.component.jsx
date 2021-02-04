@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { WarehouseContext } from '../../../context/warehouse/warehouse.context'
+import { WarehouseContext } from '../../../../context/warehouse/warehouse.context'
 
-import BackButton from '../../../components/custom-back-button/custom-back-button.component'
-import ParametersTable from '../../../components/parameters-table/parameters-table.component'
+import BackButton from '../../../../components/custom-back-button/custom-back-button.component'
+import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
 
 import {
     ParametersContainer,
@@ -10,7 +10,7 @@ import {
     LensesImg,
     SelectLensesContainer,
     LensesFlexContainer
-} from '../order.styles'
+} from './select-lenses.styles'
 
 const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => {
     const [lensesItems, setLensesItems] = useState([])

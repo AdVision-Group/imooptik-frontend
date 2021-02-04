@@ -2,22 +2,15 @@ import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useParams, Prompt } from 'react-router-dom'
 
-// import InputRow from '../../components/product-input-row/product-input-row.component'
-// import CustomInput from '../../components/custom-input/custom-input.component'
-// import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-// import OrderProductOverview from '../../components/order-product-overview/order-product-overview.component'
-// import CustomCheckBox from '../../components/custom-checkbox/custom-checkbox.component'
-// import CombinedProductOverview from '../../components/combined-product-overview/combined-product-overview.component'
-// import OrderAddressForm from '../../components/order-address-form/order-address-form.component'
 
 import Popup from "../../components/popup/pop-up.component"
 import CombinedProductModal from '../../components/modal-finish-combined-product/modal-finish-combined-product.component'
 
-import SelectUserComponent from './steps/select-user.component'
-import FindProductComponent from "./steps/find-product.component"
-import SelectLensesComponent from './steps/select-lenses.component'
-import SummaryComponent from './steps/summary.component'
+import SelectUserComponent from './steps/1-select-user/select-user.component'
+import SelectProductComponent from "./steps/2-select-product/select-product.component"
+import SelectLensesComponent from './steps/3-select-lenses/select-lenses.component'
+import SummaryComponent from './steps/4-summary/summary.component'
 
 import { useFetchById } from '../../hooks/useFetch'
 
@@ -100,6 +93,10 @@ const OrderSection = () => {
     useEffect(() => {
         return () => {
             setStep('selectUser')
+            setOrder({})
+            setHasChanged(false)
+            setShowCombinedProductModal(false)
+            setCombinedProducts([])
         }
     }, [])
 
@@ -135,7 +132,7 @@ const OrderSection = () => {
                         />
                     )}
                     {step === 'findProduct' && (
-                        <FindProductComponent
+                        <SelectProductComponent
                             back={() => setStep("selectUser")}
                             next={setStep}
                             addToOrder={handleOrderChange}

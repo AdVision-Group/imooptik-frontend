@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { WarehouseContext } from '../../../context/warehouse/warehouse.context'
+import { WarehouseContext } from '../../../../context/warehouse/warehouse.context'
 
-import CustomInput from '../../../components/custom-input/custom-input.component'
-import BackButton from '../../../components/custom-back-button/custom-back-button.component'
+import CustomInput from '../../../../components/custom-input/custom-input.component'
+import BackButton from '../../../../components/custom-back-button/custom-back-button.component'
 
 
 import {
@@ -12,9 +12,9 @@ import {
     ProductTableHead,
     ProductTableRow,
     TableCol
-} from '../order.styles'
+} from './select-product.styles'
 
-const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
+const SelectProductComponent = ({ back, next, addToOrder, showModal }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
 
@@ -131,4 +131,4 @@ const FindProductComponent = ({ back, next, addToOrder, showModal }) => {
     )
 }
 
-export default FindProductComponent
+export default SelectProductComponent
