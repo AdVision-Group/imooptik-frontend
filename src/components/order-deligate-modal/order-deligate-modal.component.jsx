@@ -17,7 +17,7 @@ import {
 } from './order-deligate-modal.styles'
 
 
-const OrderDeligateModal = ({ close, premise, id }) => {
+const OrderDeligateModal = ({ close, premise, id, refetch }) => {
     const [value, setValue] = useState(premise)
     const { token } = useContext(AuthContext)
     const { getOrders } = useContext(OrdersContext)
@@ -58,7 +58,7 @@ const OrderDeligateModal = ({ close, premise, id }) => {
             const data = await response.json()
 
             if (data.order) {
-                getOrders()
+                refetch()
                 setIsLoading(false)
                 close()
                 return

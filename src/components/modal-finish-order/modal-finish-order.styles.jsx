@@ -35,8 +35,9 @@ export const Modal = styled.div`
     position: relative;
     z-index: 999999;
 
-    h3{ 
+    h2{ 
         margin-bottom: 2rem;
+        text-align: center;
     }
     h4{ 
         margin-top: 2rem;
@@ -90,6 +91,29 @@ export const OptionsCheckbox = styled(CustomCheckbox)`
 `
 
 export const OverwriteAddressCheckbox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+
+    label {
+        display: block;
+        outline: none;
+        margin-left: 1rem;
+
+        &:focus {
+            outline: none;
+
+        }
+    }
+
+    input: {
+        display: block;
+    }
+`
+
+
+export const DiscountCheckboxContainer = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 2rem;

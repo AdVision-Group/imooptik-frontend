@@ -35,8 +35,9 @@ export const Modal = styled.div`
     position: relative;
     z-index: 999999;
 
-    h3{ 
+    h2{ 
         margin-bottom: 2rem;
+        text-align: center;
     }
 `
 
@@ -68,7 +69,8 @@ export const ProductContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
 
     img {
         width: 20rem;
@@ -149,6 +151,7 @@ export const LensesContainer = styled.div`
     text-align: center;
     transition: transform .3s ease-out,
                 box-shadow .3s ease-out;
+    margin: 2rem auto;
 
     &:last-child {
         display:flex;
@@ -179,11 +182,6 @@ export const LensesContainer = styled.div`
 
     h5 {
         font-size: 2.5rem;
-    }
-
-    &:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 2.5rem 0 rgba(0,0,0, 0.08);
     }
 `
 

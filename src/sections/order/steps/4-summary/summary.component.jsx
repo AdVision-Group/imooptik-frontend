@@ -25,7 +25,7 @@ import {
     OrderDetailsContainer
 } from './summary.styles'
 
-const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged }) => {
+const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged, isUpdating }) => {
     const { createOrder } = useContext(OrdersContext)
     const [showModal, setShowModal] = useState(false)
     const [priceTotal, setPriceTotal] = useState(0)
@@ -38,9 +38,15 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
     useEffect(() => {
         if (combinedProducts) {
             setPriceTotal(combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.discountedPrice, 0))
-
         }
     }, [combinedProducts])
+
+    const translatePaymentMethod = value => {
+        if (value === 'cash') return "Hotovosť"
+        if (value === 'card') return "Karta"
+        if (value === 'coupon') return "Kupón"
+        return value
+    }
 
     return (
         <div>
@@ -133,11 +139,15 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                         </div>
                         <div>
                             <h4>Spôsob úhrady</h4>
-                            <p>{order.order.paymentType}</p>
+                            <p>{translatePaymentMethod(order.order.paymentType)}</p>
+                        </div>
+                        <div>
+                            <h4>Stav objednávky</h4>
+                            <p>{order.order.status === 'half-paid' ? `Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€` : "Zaplatené"}</p>
                         </div>
                         <div>
                             <h4>Vybavuje prevádzka</h4>
-                            <p>{retailNames[order.order.premises - 1]}</p>
+                            <p>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises - 1]}</p>
                         </div>
                         <div>
                             <h4>PDF</h4>
@@ -147,11 +157,11 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                         </div>
                     </OrderDetailsContainer>}
 
-                    <OptionsContainer>
+                    {!isUpdating && <OptionsContainer>
                         <h3>Možnosti</h3>
                         <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
                         <OptionButton onClick={() => setShowModal(true)}>Dokončiť objednavku</OptionButton>
-                    </OptionsContainer>
+                    </OptionsContainer>}
                 </div>
             </SummaryGridLayout>
         </div>

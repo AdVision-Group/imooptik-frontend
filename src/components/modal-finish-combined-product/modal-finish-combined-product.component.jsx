@@ -245,7 +245,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             />
             <CloseButton onClick={close} />
             <Modal>
-                <h3>Produkt ktory chcete pridať</h3>
+                <h2>Produkt ktory chcete pridať</h2>
                 <ProductContainer>
                     <div>
                         {product.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />}
@@ -345,7 +345,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                 {isAdmin && <div>
                     <DiscountCheckboxContainer>
                         <input id="discount" name='discount' type='checkbox' value={includeDiscount} onChange={() => setIncludeDiscount(!includeDiscount)} />
-                        <label htmlFor='discount'>Pridať zlavu</label>
+                        <label htmlFor='discount'>Pridať zlavu pre produkt</label>
                     </DiscountCheckboxContainer>
                     {includeDiscount && <div>
                         <h4>Zlava pre produkt</h4>

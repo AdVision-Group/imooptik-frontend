@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
+import { OrdersContext } from '../../context/orders/orders.context'
 import { Link } from 'react-router-dom'
 import OrderDeligateModal from '../order-deligate-modal/order-deligate-modal.component'
 // import OrderPayModal from '../order-pay-modal/order-pay-modal.component'
@@ -23,7 +24,8 @@ import {
     TableCol
 } from './order-overview.styles'
 
-const OrderOverview = ({ order }) => {
+const OrderOverview = ({ order, refetch }) => {
+    const { finishOrder } = useContext(OrdersContext)
     const [showDropdownMenu, setShowDropdownMenu] = useState(false)
     const date = new Date(order.date)
     const dropdownRef = useRef(null)
@@ -37,6 +39,11 @@ const OrderOverview = ({ order }) => {
         if (status === 'half-paid') return "Zálohované"
     }
 
+    const handleFinishOrder = (id) => {
+        finishOrder(id)
+        setShowDropdownMenu(false)
+        refetch()
+    }
     return (
         <OrderOverviewRow>
             <TableCol>{order.customId}</TableCol>
@@ -45,7 +52,7 @@ const OrderOverview = ({ order }) => {
                 <DeligateButton onClick={() => setShowOrderDeligateModal(true)} >
                     {order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}
                 </DeligateButton>
-                {showOrderDeligateModal && <OrderDeligateModal close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
+                {showOrderDeligateModal && <OrderDeligateModal refetch={refetch} close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
             </DeligateCol>
             <TableCol>{translateStatus(order.status)}</TableCol>
             <TableCol>
@@ -55,7 +62,7 @@ const OrderOverview = ({ order }) => {
                 {showDropdownMenu && (
                     <DropdownMenu ref={dropdownRef} >
                         <ul>
-                            <li>
+                            <li onClick={() => handleFinishOrder(order._id)}>
                                 <div>
                                     <AiOutlineCheck />
                                 </div>

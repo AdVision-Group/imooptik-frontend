@@ -3,8 +3,6 @@ import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { OrdersContext } from '../../context/orders/orders.context'
-
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
@@ -35,6 +33,13 @@ import {
 const OrdersSection = () => {
     const { stats } = useContext(AuthContext)
     const { push } = useHistory()
+    const {
+        closeModal,
+        isLoading,
+        message,
+        showModal
+    } = useContext(LoadingModalContext)
+
     const [searchQuery, setSearchQuery] = useState('')
     const [activeIndex, setActiveIndex] = useState(1)
     const [orders, setOrders] = useState([])
@@ -43,6 +48,9 @@ const OrdersSection = () => {
         skip: 0,
         sortBy: {
             date: -1
+        },
+        filters: {
+            status: "paid"
         }
     })
 
@@ -54,16 +62,25 @@ const OrdersSection = () => {
         })
         setCurrentPage(currentPage)
         refetch()
+        ordersHalfPaidData.refetch()
     }
 
     const { isLoading: isFetching, response, refetch } = useFetchByQuery('api/admin/orders/filter', fetchQueryObj)
+    const ordersHalfPaidData = useFetchByQuery('api/admin/orders/filter', {
+        limit: 10,
+        skip: 0,
+        sortBy: {
+            date: -1
+        },
+        filters: {
+            status: "half-paid"
+        }
+    })
 
-    const {
-        closeModal,
-        isLoading,
-        message,
-        showModal
-    } = useContext(LoadingModalContext)
+    const handleRefetch = () => {
+        refetch()
+        ordersHalfPaidData.refetch()
+    }
 
     useEffect(() => {
         if (!isFetching) {
@@ -74,22 +91,34 @@ const OrdersSection = () => {
     }, [isFetching, response])
 
     useEffect(() => {
+        if (!ordersHalfPaidData.isLoading) {
+            if (ordersHalfPaidData.response) {
+                setOrders([
+                    ...ordersHalfPaidData.response.orders,
+                    ...orders,
+                ])
+            }
+        }
+    }, [ordersHalfPaidData.isLoading])
+
+    useEffect(() => {
         if (orders.length > 0) {
             if (activeIndex === 1) {
-                delete fetchQueryObj["filters"]
                 setFetchQueryObj(() => ({
                     ...fetchQueryObj,
+                    filters: {
+                        status: "paid"
+                    }
                 }))
-                refetch()
+                handleRefetch()
             } else {
                 setFetchQueryObj(() => ({
                     ...fetchQueryObj,
                     filters: {
-                        status: "finished"
+                        status: "fulfilled"
                     }
                 }))
                 refetch()
-
             }
         }
     }, [activeIndex])
@@ -108,9 +137,6 @@ const OrdersSection = () => {
             })
         }
     }, [])
-
-    console.log(activeIndex)
-    console.log(response)
 
     return (
         <section>
@@ -141,7 +167,7 @@ const OrdersSection = () => {
                                     date: prevObj.sortBy.date === 1 ? -1 : 1
                                 }
                             }))
-                            return refetch()
+                            handleRefetch()
                         }}>
                             Dátum {fetchQueryObj.sortBy.date === 1 ? <IconContainer>
                                 <GoArrowSmallDown />
@@ -155,7 +181,7 @@ const OrdersSection = () => {
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
                     {orders.map((order, idx) => (
-                        <OrderOverview key={idx} order={order} />
+                        <OrderOverview key={idx} order={order} refetch={handleRefetch} />
                     ))}
                 </OrdersTable>
 

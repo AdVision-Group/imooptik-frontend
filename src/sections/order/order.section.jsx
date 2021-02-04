@@ -25,6 +25,7 @@ const OrderSection = () => {
 
     const [hasChanged, setHasChanged] = useState(false)
     const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const [combinedProducts, setCombinedProducts] = useState([])
 
@@ -76,6 +77,7 @@ const OrderSection = () => {
 
     useEffect(() => {
         if (userId !== 'nova-objednavka' && orderId) {
+            setIsUpdating(true)
             setStep('summary')
             if (orderData.response) {
                 setOrder({
@@ -104,6 +106,7 @@ const OrderSection = () => {
             setHasChanged(false)
             setShowCombinedProductModal(false)
             setCombinedProducts([])
+            setIsUpdating(false)
         }
     }, [])
 
@@ -159,6 +162,7 @@ const OrderSection = () => {
                     {step === 'summary' && (
                         <SummaryComponent
                             order={order}
+                            isUpdating={isUpdating}
                             combinedProducts={combinedProducts}
                             back={() => setStep("selectLenses")}
                             addNextProduct={handleAddNextProduct}

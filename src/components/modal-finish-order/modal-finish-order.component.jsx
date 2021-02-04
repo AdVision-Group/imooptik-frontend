@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 
@@ -9,14 +9,44 @@ import {
     AddButton,
     CustomSelect,
     OptionsCheckbox,
-    OverwriteAddressCheckbox
+    OverwriteAddressCheckbox,
+    DiscountCheckboxContainer
 } from './modal-finish-order.styles'
 
 const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasChanged }) => {
     const [orderDetail, setOrderDetails] = useState({
         paymentType: "cash"
     })
+    const [hasDeposit, setHasDeposit] = useState(false)
     const [overwrite, setOverwrite] = useState(false)
+
+    const toggleDeposit = prevValue => {
+        if (prevValue) {
+            setHasDeposit(false)
+            if (orderDetail.paidAlready) {
+                delete orderDetail["paidAlready"]
+                setOrderDetails({
+                    ...orderDetail
+                })
+            }
+        } else {
+            setHasDeposit(true)
+        }
+    }
+
+    const toggleOverwriteAddress = prevValue => {
+        if (prevValue) {
+            setOverwrite(false)
+            if (orderDetail.overwrite) {
+                delete orderDetail["overwrite"]
+                setOrderDetails({
+                    ...orderDetail
+                })
+            }
+        } else {
+            setOverwrite(true)
+        }
+    }
 
     const handleOrderDetailChange = e => {
         const { name, value } = e.target
@@ -55,7 +85,11 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
         })
     }
 
-    console.log(orderDetail)
+    useEffect(() => {
+        return () => {
+
+        }
+    }, [])
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -64,7 +98,7 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
             ...orderDetail,
             user: order.user._id,
             combinedProducts: combinedProducts.map(product => product._id),
-            status: orderDetail.paymentType === 'coupon' ? "half-paid" : "paid"
+            status: hasDeposit ? "half-paid" : "paid"
         }
 
         console.log(orderObj)
@@ -76,17 +110,9 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
-                <h3>Dokončenie objednávky</h3>
+                <h2>Dokončenie objednávky</h2>
 
                 <div>
-                    <CustomInput
-                        label="Zľavový kupón"
-                        name="coupon"
-                        type='text'
-                        value={orderDetail?.coupon ?? ""}
-                        onChange={e => handleOrderDetailChange(e)}
-                    />
-
                     <h4>Spôsob platby</h4>
 
                     <CustomSelect
@@ -96,10 +122,15 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
                     >
                         <option value={"cash"}>Hotovosť</option>
                         <option value={"card"}>Karta</option>
-                        <option value={"coupon"}>Záloha</option>
+                        <option value={"coupon"}>Kupón</option>
                     </CustomSelect>
 
-                    {orderDetail?.paymentType === 'coupon' && (
+                    <DiscountCheckboxContainer>
+                        <input id="hasDeposit" name='hasDeposit' type='checkbox' value={hasDeposit} onChange={() => toggleDeposit(hasDeposit)} />
+                        <label htmlFor='hasDeposit'>Pridať zálohu</label>
+                    </DiscountCheckboxContainer>
+
+                    {hasDeposit && (
                         <CustomInput
                             label="Zaplatená záloha"
                             name="paidAlready"
@@ -143,7 +174,7 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
 
                             <div>
                                 <OverwriteAddressCheckbox>
-                                    <input id="overwrite" name='overwrite' type='checkbox' value={overwrite} onChange={() => setOverwrite(!overwrite)} />
+                                    <input id="overwrite" name='overwrite' type='checkbox' value={overwrite} onChange={() => toggleOverwriteAddress(overwrite)} />
                                     <label htmlFor='overwrite'>Iná adresa</label>
                                 </OverwriteAddressCheckbox>
 

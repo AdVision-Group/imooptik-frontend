@@ -8,6 +8,7 @@ export const OrdersContext = createContext({
     orders: null,
     getOrders: () => { },
     createOrder: () => { },
+    finishOrder: () => { },
 })
 
 const OrdersProvider = ({ children }) => {
@@ -95,14 +96,48 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+    const finishOrder = async (orderId) => {
+        setIsLoading(true)
+        setShowModal(true)
 
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/fulfill`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.error === 'undelegated-order') {
+                setIsLoading(false)
+                getMessage("Objednávka nemôže byť dokončená ak nieje priradená k prevádzke")
+                return
+            }
+
+            if (data.order) {
+                closeModal()
+                return
+            }
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     return (
         <OrdersContext.Provider
             value={{
                 orders,
                 getOrders,
-                createOrder
+                createOrder,
+                finishOrder
             }}
         >
             {children}
