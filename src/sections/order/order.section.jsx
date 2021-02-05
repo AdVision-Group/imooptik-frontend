@@ -59,7 +59,6 @@ const OrderSection = () => {
         setShowModal(true)
     }
 
-    // const userData = useFetchById("api/admin/users", userId)
     const orderData = useFetchById("api/admin/orders", orderId)
 
     const handleAddNextProduct = () => {
@@ -130,7 +129,7 @@ const OrderSection = () => {
             }
             <Header>
                 <div>
-                    <h1>Nová objednávka</h1>
+                    <h1>{isUpdating ? `Objednavka číslo ${order?.order?.customId}` : "Nová objednávka"}</h1>
                 </div>
             </Header>
             <ScrollContainer>

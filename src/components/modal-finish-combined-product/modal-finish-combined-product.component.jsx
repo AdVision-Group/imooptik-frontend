@@ -5,6 +5,8 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 
 import CustomInput from '../custom-input/custom-input.component'
 
+import { formatPrice } from '../../utils/warehouse.utils'
+
 import {
     ModalContainer,
     Modal,
@@ -133,35 +135,72 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                     }
                 }
             }
+
             if (includeDiscount) {
-                combinedProduct = {
-                    ...combinedProduct,
-                    discount: {
-                        product: {
-                            ...productDiscount
+                if (discountType === "flat") {
+                    combinedProduct = {
+                        ...combinedProduct,
+                        discount: {
+                            product: {
+                                flat: formatPrice(productDiscount.flat)
+                            }
                         }
                     }
-                }
-                if (includeLensDiscount) {
+                } else {
                     combinedProduct = {
                         ...combinedProduct,
                         discount: {
                             product: {
                                 ...productDiscount
-                            },
-                            lenses: {
-                                ...lensesDiscount
+                            }
+                        }
+                    }
+                }
+                if (includeLensDiscount) {
+                    if (lensDiscountType === "flat") {
+                        combinedProduct = {
+                            ...combinedProduct,
+                            discount: {
+                                product: {
+                                    flat: formatPrice(productDiscount.flat)
+                                },
+                                lenses: {
+                                    flat: formatPrice(lensesDiscount.flat)
+                                }
+                            }
+                        }
+                    } else {
+                        combinedProduct = {
+                            ...combinedProduct,
+                            discount: {
+                                product: {
+                                    ...productDiscount
+                                },
+                                lenses: {
+                                    ...lensesDiscount
+                                }
                             }
                         }
                     }
                 }
             } else {
                 if (includeLensDiscount) {
-                    combinedProduct = {
-                        ...combinedProduct,
-                        discount: {
-                            lenses: {
-                                ...lensesDiscount
+                    if (lensDiscountType === "flat") {
+                        combinedProduct = {
+                            ...combinedProduct,
+                            discount: {
+                                lenses: {
+                                    flat: formatPrice(lensesDiscount.flat)
+                                }
+                            }
+                        }
+                    } else {
+                        combinedProduct = {
+                            ...combinedProduct,
+                            discount: {
+                                lenses: {
+                                    ...lensesDiscount
+                                }
                             }
                         }
                     }

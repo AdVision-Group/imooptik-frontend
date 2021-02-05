@@ -20,31 +20,32 @@ const ProfileOrderOverview = ({ id, handleUpdateClick }) => {
         <h3>Načítavam</h3>
     </OrderContainer>
 
-    const { customId, date } = orderData.response.order
+    const { order } = orderData.response
 
-    const dateData = new Date(date)
+    const dateData = new Date(order?.date)
 
     return (
         <OrderContainer>
-            <OrderContent>
-                <div>
-                    <h2>ID Objednávky</h2>
-                    <OrderId>{customId}</OrderId>
-                </div>
-                <div>
-                    <p>{dateData.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric', year: "numeric" })}</p>
-                </div>
-            </OrderContent>
+            {orderData.response?.error === 'invalid-branch' ? <OrderContent>
+                <h2>Táto objednávka patri inej prevadzke</h2>
+            </OrderContent> : <OrderContent>
+                    <div>
+                        <h2>ID Objednávky</h2>
+                        <OrderId>{order?.customId}</OrderId>
+                    </div>
+                    <div>
+                        <p>{dateData.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric', year: "numeric" })}</p>
+                    </div>
+                </OrderContent>}
 
-            <Options>
+            {!orderData.response?.error && <Options>
                 <UpdateButton onClick={handleUpdateClick}>
                     Zobraziť
                 </UpdateButton>
                 <DeleteButton>
                     Vymazať
                 </DeleteButton>
-
-            </Options>
+            </Options>}
 
         </OrderContainer>
     )

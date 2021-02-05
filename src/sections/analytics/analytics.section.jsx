@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AnalyticsContext } from '../../context/analytics/analytics.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { AuthContext } from '../../context/auth/auth.context'
 
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -8,7 +9,9 @@ import Popup from '../../components/popup/pop-up.component'
 
 import {
     Header,
-    GridContainer
+    GridContainer,
+    StatsContainer,
+    StatsGrid
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -18,8 +21,8 @@ const AnalyticsSection = () => {
         message,
         showModal
     } = useContext(LoadingModalContext)
+    const { stats: storeData } = useContext(AuthContext)
     const { stats, getAnalytics } = useContext(AnalyticsContext)
-
 
     const items = [
         {
@@ -55,6 +58,8 @@ const AnalyticsSection = () => {
         getAnalytics(items[activeIndex - 1].value)
     }, [activeIndex])
 
+    console.log(stats)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -70,12 +75,68 @@ const AnalyticsSection = () => {
 
             <ScrollContainer>
                 <GridContainer>
-                    <div className='first' />
-                    <div className='second' />
-                    <div className='third' />
-                    <div className='fourth' />
+                    <div>
+                        <h3>Uživatelia</h3>
+                        <p>{storeData?.users}</p>
+                    </div>
+                    <div>
+                        <h3>Produkty</h3>
+                        <p>{storeData?.products}</p>
+                    </div>
+                    <div>
+                        <h3>Šošovky</h3>
+                        <p>{storeData?.lenses}</p>
+                    </div>
+                    <div>
+                        <h3>Objednávky</h3>
+                        <p>{storeData?.orders}</p>
+                    </div>
+                    <div>
+                        <h3>Prehliadky</h3>
+                        <p>{storeData?.bookings}</p>
+                    </div>
                 </GridContainer>
 
+                {stats && (
+                    <StatsGrid>
+                        <StatsContainer>
+                            <div>
+                                <h3>Hotovosť</h3>
+                                <p>{(stats[0]?.cash / 100).toFixed(2)}€</p>
+                            </div>
+                            <div>
+                                <h3>Karta</h3>
+                                <p>{(stats[0]?.card / 100).toFixed(2)}€</p>
+                            </div>
+                            <div>
+                                <h3>Kupóny</h3>
+                                <p>{stats[0]?.coupons}</p>
+                            </div>
+                            <div>
+                                <h3>Objednávky</h3>
+                                <p>{stats[0]?.orders}</p>
+                            </div>
+                        </StatsContainer>
+                        <StatsContainer>
+                            <div>
+                                <h3>Hotovosť</h3>
+                                <p>{(stats[1]?.cash / 100).toFixed(2)}€</p>
+                            </div>
+                            <div>
+                                <h3>Karta</h3>
+                                <p>{(stats[1]?.card / 100).toFixed(2)}€</p>
+                            </div>
+                            <div>
+                                <h3>Kupóny</h3>
+                                <p>{stats[1]?.coupons}</p>
+                            </div>
+                            <div>
+                                <h3>Objednávky</h3>
+                                <p>{stats[1]?.orders}</p>
+                            </div>
+                        </StatsContainer>
+                    </StatsGrid>
+                )}
             </ScrollContainer>
         </section>
     )
