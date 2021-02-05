@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { BookingContext } from '../../context/booking/booking.context'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import SectionHeader from '../../components/section-header/section-header.component'
@@ -9,141 +7,72 @@ import Popup from '../../components/popup/pop-up.component'
 import BookingCalendarOverview from "../../components/booking-calendar-overview/booking-calendar-overview.component"
 
 import Calendar from '../../components/calendar/calendar.component'
+import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
+
+import { useFetch } from '../../hooks/useFetch'
+import { calendarFormat } from '../../utils/calendar.utils'
 
 import {
     Title,
     GridRow,
     CalendarGridContainer,
-    AppoimentOverview,
-    Time,
-    Line,
-    // TwoRowGrid,
-    Name,
-    Desc,
-    Options,
-    ConfirmButton,
-    DeclineButton,
-    AppoimentContainer,
-    AppoimentCol,
-    NoteContainer
+    CalendarHeader,
+    CalendarFormat
 } from './booking.styles'
 
 const BookingSection = () => {
     const { push } = useHistory()
-    const {
-        closeModal,
-        isLoading,
-        message,
-        showModal
-    } = useContext(LoadingModalContext)
-
-    const bookingData = useContext(BookingContext)
-
-    const {
-        calendar,
-        calendars,
-        bookings,
-        // bookingRows,
-        getCalendars,
-        getCalendar,
-        userBookings,
-        getUserBookings,
-        getBookings,
-        // getBookingRows
-        activeCalendar,
-        selectedDate,
-        setSelectedDate,
-        resetBooking
-    } = bookingData
-
+    const [showModal, setShowModal] = useState(true)
+    const [activeCalendarFormat, setActiveCalendarFormat] = useState(0)
     const [searchQuery, setSearchQuery] = useState('')
+    const [calendars, setCalendars] = useState([])
+
+    const { isLoading, response, message, refetch } = useFetch('api/booking/calendars')
 
     useEffect(() => {
-        if (!calendars) {
-            getCalendars()
-            getUserBookings()
+        if (!isLoading) {
+            if (response) {
+                setCalendars(response.calendars)
+                setShowModal(false)
+            }
         }
-    }, [calendars])
-
-    useEffect(() => {
-        if (!bookings) {
-            getBookings()
-        }
-    }, [calendars])
-
-    useEffect(() => {
-        return () => {
-            resetBooking()
-        }
-    }, [])
-
-    if (!calendars) return <Popup loading={isLoading} title={message} close={closeModal} />
+    }, [isLoading])
 
     return (
         <section>
-            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}
             <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('rezervacie/novy-kalendar')}
-                title="Kalendar objednávok"
+                title="Kalendar s objednávkami"
             />
 
             <ScrollContainer>
                 <Title>Pobočky</Title>
                 <GridRow>
-                    {calendars.map((calendar, idx) => (
-                        <BookingCalendarOverview key={idx} calendar={calendar} handleClick={() => getCalendar(calendar._id, idx + 1)} handleUpdateClick={() => push(`rezervacie/${calendar._id}`)} isActive={activeCalendar === idx + 1} />
+                    {calendars && calendars.map((calendar, idx) => (
+                        <BookingCalendarOverview key={idx} calendar={calendar} />
                     ))}
                 </GridRow>
 
-                {calendar.name && (
-                    <React.Fragment>
+                <CalendarHeader>
+                    <div>
                         <Title>Kalendár</Title>
-                        <CalendarGridContainer>
-                            <Calendar calendar={calendar} setSelectedDate={setSelectedDate} />
-
-                            {calendar.name && selectedDate.name && <AppoimentOverview>
-                                <Title>{selectedDate.name.charAt(0).toUpperCase() + selectedDate.name.slice(1)}</Title>
-
-                                {
-                                    calendar.booked[selectedDate.value].map((date, idx) => {
-                                        const filteredUserBookings = userBookings.filter(booking => booking.dueDate === selectedDate.value && booking.dueTime.split(":")[0] === date)
-                                        const time = date.split('/')[0] + ":" + date.split('/')[1]
-
-                                        return (
-                                            <AppoimentContainer key={idx}>
-                                                <Time>{time}</Time>
-                                                <Line />
-                                                {
-                                                    filteredUserBookings.map((user, idx) => {
-                                                        const bookingType = bookings.find(booking => booking._id === user.booking)
-
-                                                        return (
-                                                            <AppoimentCol key={idx}>
-                                                                <div>
-                                                                    <Name>{user.name}</Name>
-                                                                    <Desc>{bookingType.name}</Desc>
-                                                                </div>
-                                                                <Options>
-                                                                    <ConfirmButton>Vybavený</ConfirmButton>
-                                                                    <DeclineButton>Neprišiel</DeclineButton>
-                                                                </Options>
-                                                                <NoteContainer>
-                                                                    <p>{user.note}</p>
-                                                                </NoteContainer>
-                                                            </AppoimentCol>
-                                                        )
-                                                    })
-                                                }
-                                            </AppoimentContainer>
-                                        )
-                                    })
-                                }
-                            </AppoimentOverview>}
-                        </CalendarGridContainer>
-                    </React.Fragment>
-                )}
+                    </div>
+                    <ul>
+                        {calendarFormat.map((name, idx) => (
+                            <CalendarFormat key={idx} isActive={activeCalendarFormat === idx} onClick={() => setActiveCalendarFormat(idx)}>{name}</CalendarFormat>
+                        ))}
+                    </ul>
+                </CalendarHeader>
+                <CalendarGridContainer>
+                    {activeCalendarFormat === 0 ? (
+                        <Calendar />
+                    ) : (
+                            <WeekDays />
+                        )}
+                </CalendarGridContainer>
             </ScrollContainer>
         </section>
     )

@@ -15,7 +15,11 @@ export const ContainerOverview = styled.div`
 
     p {
         font-size: 1.4rem;
-        color: gray;
+        opacity: .83;
+
+        span {
+            font-weight: bolder;
+        }
     }
 `
 

@@ -7,16 +7,18 @@ import {
     ShowButton
 } from './booking-calendar-overview.styles'
 
-const BookingCalendarOverview = ({ calendar, handleClick, isActive, handleUpdateClick }) => {
+const BookingCalendarOverview = ({ calendar }) => {
+    console.log(calendar)
+
     return (
         <ContainerOverview>
-            <h3>{calendar.name}</h3>
-            <p>Obchodná 59, 84105 Bratislava</p>
-            <p>+421 902 688 952</p>
-            <p>obchodna@imooptik.sk</p>
+            <h3>{calendar?.name}</h3>
+            <p>Interval medzi vyšetreniami: <span>{calendar?.interval}min</span></p>
+            <p>Počet minút pred rezerváciou: <span>{calendar?.allowMinutesBefore}min</span></p>
+            <p>Koľko dní dopredu sa da objednať: <span>{calendar?.daysIntoFuture}</span></p>
             <Options>
-                <ShowButton onClick={handleClick} isActive={isActive}>Zobraziť</ShowButton>
-                <UpdateButton onClick={handleUpdateClick}>Upraviť</UpdateButton>
+                <ShowButton >Zobraziť</ShowButton>
+                <UpdateButton >Upraviť</UpdateButton>
             </Options>
         </ContainerOverview>
     )

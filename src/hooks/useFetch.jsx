@@ -1,28 +1,34 @@
 import { useEffect, useState } from 'react'
 
-export const useFetch = (path, options, skip = false) => {
+export const useFetch = (path, skip = false) => {
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
+    const [message, setMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [refetchIndex, setRefetchIndex] = useState(0)
+
+    const refetch = () => setRefetchIndex(prevRefetchIndex => prevRefetchIndex + 1)
 
     useEffect(() => {
         const fetchData = async () => {
             if (skip) return
             try {
-                const res = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/${path}`, options)
+                const res = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/${path}`)
                 const data = await res.json()
 
+                setMessage(data.message)
                 setResponse(data)
                 setIsLoading(false)
             } catch (err) {
                 setError(err)
                 setIsLoading(false)
+                setMessage("Niečo sa pokazilo")
             }
         }
         fetchData()
-    }, [])
+    }, [refetchIndex])
 
-    return { response, isLoading, error }
+    return { response, isLoading, error, message, refetch }
 }
 
 export const useFetchByQuery = (path, queryObj, skip = false) => {

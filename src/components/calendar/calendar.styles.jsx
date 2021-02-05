@@ -9,6 +9,7 @@ export const Container = styled.div`
 `
 
 export const HeaderBlock = styled.div`
+    cursor: default;
     height: 8rem;
     background-color: #000;
     color: #fff;
@@ -19,8 +20,7 @@ export const HeaderBlock = styled.div`
 `
 
 export const Dayblock = styled.div`
-    cursor: pointer;
-    height: 7rem;
+    height: 10rem;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -29,9 +29,14 @@ export const Dayblock = styled.div`
 
     transition: all .15s;
 
-    &:hover {
+    ${({ faded }) => faded ? "opacity: .6" : (`    
+        cursor: pointer;
+        &:hover {
         background-color: rgba(0,0,0,.1);
-    }
+        }
+    `)};
+
+
 
 `
 
