@@ -4,8 +4,10 @@ import CustomButton from '../../../../components/custom-button/custom-button.com
 export const ProductsOverviewContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: var(--container-shaow);
+    box-shadow: var(--container-shadow);
     margin-bottom: 3rem;
+    background-color: var(--container-background-color);
+
 `
 
 export const SummaryTableTitle = styled.h3`
@@ -65,6 +67,8 @@ export const UserOverviewContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 
     h3 {
         margin-bottom: .5rem;
@@ -91,6 +95,7 @@ export const OrderDetailsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     margin-bottom: 3rem;
 
     h3 {
@@ -120,7 +125,9 @@ export const OrderDetailsContainer = styled.div`
 export const OptionsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 
     h3 {
         margin-bottom: 1rem;

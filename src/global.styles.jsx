@@ -16,7 +16,10 @@ export const DefaultThemeColors = createGlobalStyle`
         --body-background-primary-color: #f5f5f5;
         --background-primary-color: #fff;
 
+        --navlink-color: #ffffff;
+
         --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.08);
+        --container-background-color: #fff;
 
         --backbutton-color: #ebac01;
         --dropdownbutton-background-color: #f5f5f5;
@@ -40,23 +43,26 @@ export const DefaultThemeColors = createGlobalStyle`
 
 export const DarkThemeColors = createGlobalStyle`
     :root {
-        --primary-color: #a57f16;
+        --primary-color: #c28e01;
         --secondary-color: #000;
-        --primary-text-color: #eee;
-        --secondary-text-color: #ddd;
+        --primary-text-color: #c7c6c6;
+        --secondary-text-color: #a0a0a0;
         --body-background-primary-color: #252525;
         --background-primary-color: #2c2c2c;
 
-        --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.15);
+        --navlink-color: #c7c6c6;
 
-        --backbutton-color: #a57f16;
+        --container-shadow: none;
+        --container-background-color: #252525;
+
+        --backbutton-color: #c28e01;
         --dropdownbutton-background-color: #121212;
-        --dropdownbutton-color: #a57f116;
+        --dropdownbutton-color: #c28e01;
         --dropdown-background-color: #121212;
         --dropdown-hover-background-color: #181818;
 
         --input-background-color: #121212;
-        --input-color: #eee;
+        --input-color: #c5c4c4;
 
         --image-background-color: #252525;
 

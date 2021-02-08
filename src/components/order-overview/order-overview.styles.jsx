@@ -6,7 +6,9 @@ export const OrderOverviewRow = styled.div`
     grid-template-columns: 10rem 2fr 2fr 1fr 10rem;
     align-content: center;
     margin-bottom: 1rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 `
 
 export const TableCol = styled.div`

@@ -118,7 +118,12 @@ export const getBooking = (days, calendar, month, year) => {
                 }
             }
         })
-        return dayObj
+
+        if (dayObj.bookings) return dayObj
+
+        return {
+            dayNumber: day.dayNumber,
+        }
 
     });
     return daysWithBookingsArr

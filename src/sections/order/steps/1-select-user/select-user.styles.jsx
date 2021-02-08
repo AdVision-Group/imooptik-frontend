@@ -5,7 +5,7 @@ export const UserTableHead = styled.div`
     display: grid;
     align-content: center;
     grid-template-columns: 1fr 2fr 25rem;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--secondary-text-colo);
     font-weight: bolder;
 `
 export const UserTableRow = styled.div`
@@ -14,13 +14,15 @@ export const UserTableRow = styled.div`
     align-content: center;
     grid-template-columns: 1fr 2fr 25rem;
     margin-bottom: 1rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     transition: all .3s ease-out;
 
     &:hover {
-        background-color: rgb(235, 172, 1); 
+        background-color: var(--color-primary); 
         font-weight: bolder;
-        color: #fff;
+        color: var(--button-font-color);
     }
 `
 
@@ -44,7 +46,8 @@ export const TableCol = styled.div`
 export const SearchContainer = styled.div`
     max-width: 40rem;
     padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     margin: 0 auto;
     border-radius: .5rem;
 

@@ -104,7 +104,7 @@ export const IconContainer = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 2.5rem;
-    color: ${({ isActive }) => isActive ? 'var(--primary-color)' : "#fff"};
+    color: ${({ isActive }) => isActive ? 'var(--primary-color)' : "var(--navlink-color)"};
     transition: color .3s ease-out;
 
 
@@ -133,7 +133,7 @@ export const NavLinksButton = styled.button`
     border: none;
     display: flex;
     align-items: center;
-    color: #fff;
+    color: var(--navlink-color);
     font-family: inherit;
     font-weight: 700;
     font-size: 1.8rem;

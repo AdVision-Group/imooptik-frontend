@@ -5,6 +5,7 @@ import CustomButton from '../custom-button/custom-button.component'
 export const Profile = styled.div`
     padding: 2rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     margin-right: 2rem;
 
 `
@@ -81,6 +82,7 @@ export const Title = styled.h2`
 
 export const Container = styled.div`
     margin-top: 2rem;
+    
 `
 
 export const OrderHeader = styled.div`

@@ -26,7 +26,8 @@ export const LensesContainer = styled.div`
     max-width: 32rem;
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     text-align: center;
     transition: transform .3s ease-out,
                 box-shadow .3s ease-out;
@@ -69,7 +70,7 @@ export const LensesContainer = styled.div`
 `
 
 export const LensesImg = styled.div`
-    background-color: var(--body-background-primary-color);
+    background-color: var(--background-primary-color);
     border-radius: 50%;
     width: 10rem;
     height: 10rem;

@@ -24,6 +24,8 @@ export const TableRow = styled.div`
     align-content: center;
     margin-bottom: 1rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 `
 
 

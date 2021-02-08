@@ -36,12 +36,16 @@ export const GlassesContainerForm = styled.div`
 export const GlassesContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     border-radius: .5rem;
 `
 
 export const GlassesParameterContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     border-radius: .5rem;
     margin-bottom: 3rem;
 
@@ -53,6 +57,8 @@ export const GlassesParameterContainer = styled.div`
 export const StockContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     border-radius: .5rem;
 `
 

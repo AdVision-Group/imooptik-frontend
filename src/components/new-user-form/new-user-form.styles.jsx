@@ -24,6 +24,8 @@ export const CustomerForm = styled.div`
 export const ColContainer = styled.div`
     padding: 2rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 
 `
 

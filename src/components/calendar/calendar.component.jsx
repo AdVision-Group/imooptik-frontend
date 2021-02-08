@@ -55,7 +55,6 @@ const Calendar = ({ calendar, month, year }) => {
                 const prevDaysArr = getPreviousMonthDays(firstDayIndex)
                 const arr = getCurrentMonthDays(lastDay)
                 const nextDaysArr = getNextMonthDays(nextDays)
-
                 const checkedArr = getBooking(arr, response.calendar, month, year)
 
                 setPrevDays(prevDaysArr)

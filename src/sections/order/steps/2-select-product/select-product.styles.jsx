@@ -6,6 +6,7 @@ export const SearchContainer = styled.div`
     max-width: 40rem;
     padding: 2rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     margin: 0 auto;
     border-radius: .5rem;
 
@@ -54,6 +55,8 @@ export const ProductTableRow = styled.div`
     grid-template-columns: 10rem 15rem 1fr 1fr 10rem 1fr;
     margin-bottom: 1rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     transition: all .3s ease-out;
 
     &:hover {
