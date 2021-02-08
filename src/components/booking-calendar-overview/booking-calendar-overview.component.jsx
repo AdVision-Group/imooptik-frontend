@@ -7,9 +7,11 @@ import {
     ShowButton
 } from './booking-calendar-overview.styles'
 
-const BookingCalendarOverview = ({ calendar }) => {
-    console.log(calendar)
-
+const BookingCalendarOverview = ({
+    calendar = {},
+    selectedCalendar = null,
+    handleShowUpClick = () => { }
+}) => {
     return (
         <ContainerOverview>
             <h3>{calendar?.name}</h3>
@@ -17,7 +19,7 @@ const BookingCalendarOverview = ({ calendar }) => {
             <p>Počet minút pred rezerváciou: <span>{calendar?.allowMinutesBefore}min</span></p>
             <p>Koľko dní dopredu sa da objednať: <span>{calendar?.daysIntoFuture}</span></p>
             <Options>
-                <ShowButton >Zobraziť</ShowButton>
+                <ShowButton isActive={selectedCalendar === calendar?._id} onClick={handleShowUpClick}>Zobraziť</ShowButton>
                 <UpdateButton >Upraviť</UpdateButton>
             </Options>
         </ContainerOverview>

@@ -22,17 +22,32 @@ export const HeaderBlock = styled.div`
 export const Dayblock = styled.div`
     height: 10rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     border: 1px solid rgba(0,0,0,.1);
     padding: .6rem 1rem;
 
     transition: all .15s;
 
+    p {
+        span {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: var(--body-background-primary-color);
+            color: var(--primary-color);
+            font-weight: bolder;
+            font-size: 1.5rem;
+        }
+    }
+
     ${({ faded }) => faded ? "opacity: .6" : (`    
         cursor: pointer;
         &:hover {
-        background-color: rgba(0,0,0,.1);
+        background-color: var(--body-background-primary-color);
         }
     `)};
 

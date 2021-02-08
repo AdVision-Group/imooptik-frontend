@@ -29,6 +29,26 @@ export const CalendarHeader = styled.div`
 
     }
 `
+export const CalendarMonthContainer = styled.div`
+    display: flex;
+    align-items: center;
+
+    button {
+        cursor: pointer;
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--primary-color);
+
+    }
+
+    p {
+        text-transform: capitalize;
+        margin: 0 1rem;
+    }
+`
+
 
 export const CalendarFormat = styled.li`
     background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "none"};

@@ -10,14 +10,20 @@ import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
 
 import { useFetch } from '../../hooks/useFetch'
-import { calendarFormat } from '../../utils/calendar.utils'
+import { calendarFormat, months } from '../../utils/calendar.utils'
+
+import {
+    AiOutlineLeft,
+    AiOutlineRight
+} from 'react-icons/ai'
 
 import {
     Title,
     GridRow,
     CalendarGridContainer,
     CalendarHeader,
-    CalendarFormat
+    CalendarFormat,
+    CalendarMonthContainer
 } from './booking.styles'
 
 const BookingSection = () => {
@@ -26,8 +32,34 @@ const BookingSection = () => {
     const [activeCalendarFormat, setActiveCalendarFormat] = useState(0)
     const [searchQuery, setSearchQuery] = useState('')
     const [calendars, setCalendars] = useState([])
+    const [selectedCalendar, setSelectedCalendar] = useState(null)
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
 
     const { isLoading, response, message, refetch } = useFetch('api/booking/calendars')
+
+    const handleShowCalendarClick = (calendarId) => {
+        setSelectedCalendar(calendarId)
+    }
+
+    const getPrevMonth = () => {
+        if (selectedMonth === 0) {
+            setSelectedYear(prevValue => prevValue - 1)
+            setSelectedMonth(10)
+        } else {
+            setSelectedMonth(prevValue => prevValue - 1)
+        }
+    }
+
+    const getNextMonth = () => {
+        if (selectedMonth === 10) {
+            setSelectedYear(prevValue => prevValue + 1)
+            setSelectedMonth(0)
+        } else {
+            setSelectedMonth(prevValue => prevValue + 1)
+        }
+
+    }
 
     useEffect(() => {
         if (!isLoading) {
@@ -52,27 +84,46 @@ const BookingSection = () => {
                 <Title>Pobočky</Title>
                 <GridRow>
                     {calendars && calendars.map((calendar, idx) => (
-                        <BookingCalendarOverview key={idx} calendar={calendar} />
+                        <BookingCalendarOverview
+                            key={idx}
+                            calendar={calendar}
+                            selectedCalendar={selectedCalendar}
+                            handleShowUpClick={() => handleShowCalendarClick(calendar._id)}
+                        />
                     ))}
                 </GridRow>
 
-                <CalendarHeader>
-                    <div>
-                        <Title>Kalendár</Title>
-                    </div>
-                    <ul>
-                        {calendarFormat.map((name, idx) => (
-                            <CalendarFormat key={idx} isActive={activeCalendarFormat === idx} onClick={() => setActiveCalendarFormat(idx)}>{name}</CalendarFormat>
-                        ))}
-                    </ul>
-                </CalendarHeader>
-                <CalendarGridContainer>
-                    {activeCalendarFormat === 0 ? (
-                        <Calendar />
-                    ) : (
-                            <WeekDays />
-                        )}
-                </CalendarGridContainer>
+                {selectedCalendar && (
+                    <React.Fragment>
+                        <CalendarHeader>
+                            <div>
+                                <Title>Kalendár</Title>
+                            </div>
+
+                            <CalendarMonthContainer>
+                                <button onClick={getPrevMonth}><AiOutlineLeft /></button>
+                                <p>{months[selectedMonth]}</p>
+                                <button onClick={getNextMonth}><AiOutlineRight /></button>
+                            </CalendarMonthContainer>
+                            <ul>
+                                {calendarFormat.map((name, idx) => (
+                                    <CalendarFormat key={idx} isActive={activeCalendarFormat === idx} onClick={() => setActiveCalendarFormat(idx)}>{name}</CalendarFormat>
+                                ))}
+                            </ul>
+                        </CalendarHeader>
+                        <CalendarGridContainer>
+                            {activeCalendarFormat === 0 ? (
+                                <Calendar
+                                    calendar={selectedCalendar}
+                                    month={selectedMonth}
+                                    year={selectedYear}
+                                />
+                            ) : (
+                                    <WeekDays calendar={selectedCalendar} />
+                                )}
+                        </CalendarGridContainer>
+                    </React.Fragment>
+                )}
             </ScrollContainer>
         </section>
     )

@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { dayNames } from '../../utils/calendar.utils'
+import {
+    dayNames,
+    getPreviousMonthDays,
+    getNextMonthDays,
+    getCurrentMonthDays,
+    getBooking
+} from '../../utils/calendar.utils'
+
+import { useFetchById } from '../../hooks/useFetch'
 
 import {
     Container,
@@ -11,37 +19,97 @@ import {
     DayNumber
 } from './calendar.styles'
 
-const Calendar = ({ calendar, setSelectedDate }) => {
+const Calendar = ({ calendar, month, year }) => {
     const date = new Date()
+
     date.setDate(1)
-    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-    const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate()
+    const lastDay = new Date(year, month + 1, 0).getDate()
+    const prevLastDay = new Date(year, month, 0).getDate()
 
-    const firstDayIndex = date.getDate()
-    const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay()
+    const firstDayIndex = new Date(year, month, 0).getDay();
+    const lastDayIndex = new Date(year, month + 1, 0).getDay()
 
-    const nextDays = 7 - lastDayIndex - 1
+    const nextDays = 7 - lastDayIndex
+
+    const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
+    const [calendarData, setCalendarData] = useState(null)
+    const [prevDays, setPrevDays] = useState([])
+    const [currentMonthDays, setCurrentMonthDays] = useState([])
+    const [nextMonthDays, setMonthNextDays] = useState([])
+
+    useEffect(() => {
+        refetch()
+    }, [month])
+
+    useEffect(() => {
+        if (calendar) {
+            refetch()
+        }
+
+    }, [calendar])
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (response.calendar) {
+                setCalendarData(response.calendar)
+                const prevDaysArr = getPreviousMonthDays(firstDayIndex)
+                const arr = getCurrentMonthDays(lastDay)
+                const nextDaysArr = getNextMonthDays(nextDays)
+
+                const checkedArr = getBooking(arr, response.calendar, month, year)
+
+                setPrevDays(prevDaysArr)
+                setCurrentMonthDays(checkedArr)
+                setMonthNextDays(nextDaysArr)
+            }
+        }
+    }, [isLoading])
+    // console.log(calendarData)
 
     return (
         <Container>
+
             {dayNames.map((name, idx) => (
                 <HeaderBlock key={idx}>
                     {name}
                 </HeaderBlock>
             ))}
-            {[...Array(firstDayIndex).map((value, idx) => (
+
+            {prevDays.map((value, idx) => (
                 <Dayblock faded={true} key={idx}>
-                    {prevLastDay - idx}
-                </Dayblock>
-            ))]}
-            {[...Array(lastDay)].map((value, idx) => (
-                <Dayblock key={idx}>
-                    {idx + 1}
+                    <p>
+                    </p>
+                    <p>
+                        {prevLastDay - idx}
+                    </p>
                 </Dayblock>
             ))}
-            {[...Array(nextDays + 1)].map((value, idx) => (
+
+            {currentMonthDays.map((data, idx) => {
+                console.log(data)
+                const { dayNumber, bookings } = data
+
+
+                return (
+                    <Dayblock key={idx}>
+                        <p>
+                            {bookings && <span>
+                                {bookings.length}
+                            </span>}
+                        </p>
+                        <p>
+                            {dayNumber}
+                        </p>
+                    </Dayblock>
+                )
+            })}
+            {nextMonthDays.map((value, idx) => (
                 <Dayblock faded={true} key={idx}>
-                    {idx + 1}
+                    <p>
+                    </p>
+                    <p>
+                        {idx + 1}
+                    </p>
                 </Dayblock>
             ))}
         </Container>
