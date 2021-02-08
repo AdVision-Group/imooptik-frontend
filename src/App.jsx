@@ -1,9 +1,10 @@
-import React, { useContext, Suspense, lazy } from 'react'
+import React, { useContext, Suspense, lazy, useState } from 'react'
 import { AuthContext } from './context/auth/auth.context'
-import { GlobalStyles, DarkThemeColors, DefaultThemeColors } from './global.styles'
+import { GlobalStyles, DarkThemeColors, DefaultThemeColors, SwitchButton } from './global.styles'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import Popup from './components/popup/pop-up.component'
+import { CgDarkMode } from 'react-icons/cg'
 
 const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up'))
 const DashboardPage = lazy(() => import('./pages/dashboard/dashboard'))
@@ -12,7 +13,7 @@ const ResetPasswordPage = lazy(() => import('./pages/reset-password/reset-passwo
 const App = () => {
   console.log("RENDER APP")
   const { currentUser } = useContext(AuthContext)
-  const currentTheme = 'light'
+  const [currentTheme, setCurrentTheme] = useState('dark')
 
   return (
     <React.Fragment>
@@ -28,6 +29,7 @@ const App = () => {
           </Switch>
         </HashRouter>
       </Suspense>
+      <SwitchButton onClick={() => setCurrentTheme(prevValue => prevValue === "dark" ? "light" : "dark")}><CgDarkMode /></SwitchButton>
     </React.Fragment>
   );
 }

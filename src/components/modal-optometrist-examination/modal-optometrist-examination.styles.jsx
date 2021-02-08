@@ -30,7 +30,7 @@ export const Modal = styled.div`
 
     padding: 2rem;
     border-radius: .5rem;
-    background-color: white;
+    background-color: var(--background-primary-color);
 
     position: relative;
     z-index: 999999;
@@ -92,7 +92,8 @@ export const TableBlock = styled.div`
         text-align: center;
         font-family: inherit;
         font-size: inherit;
-        background-color: #F5F5F5;
+        background-color: var(--input-background-color);
+        color: var(--input-color);
         border-radius: .5rem;
         outline: none;
 

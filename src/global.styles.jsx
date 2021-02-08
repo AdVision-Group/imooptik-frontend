@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 
 /* --primary-color: #ebac01;
 --secondary-color: #000;
@@ -126,4 +126,23 @@ export const paddingStyles = css`
             padding: 0 1.5rem;
         }
     }
+`
+
+export const SwitchButton = styled.button`
+    cursor: pointer;
+    position: absolute;
+    z-index: 9999;
+    bottom: 3rem;
+    right: 3rem; 
+    width: 5rem;
+    height: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--primary-color);
+    font-size: 3rem;
+    color: var(--button-font-color);
+    border-radius: 50%;
 `

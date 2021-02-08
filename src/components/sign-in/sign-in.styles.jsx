@@ -8,7 +8,9 @@ export const FormContainer = styled.form`
     max-width: 35rem;
     padding: 3rem 4rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--background-primary-color);
+    color: var(--primary-text-color);
     margin: 0 1rem 3rem;
 
 
@@ -33,7 +35,7 @@ export const SubmitButton = styled(CustomButton)`
 export const ForgotPasswordButton = styled.button`
     cursor: pointer;
     background-color: transparent;
-    color: #DD4C4C;
+    color: var(--color-red);
     font-family: inherit;
     border: none;
     outline: none;

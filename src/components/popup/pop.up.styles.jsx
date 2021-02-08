@@ -27,11 +27,11 @@ export const Panel = styled.div`
 
     border-radius: .5rem;
 
-    background-color: white;
+    background-color: var(--background-primary-color);
 `
 
 export const Message = styled.div`
-    color: #383838;
+    color: var(--primary-text-color);
     font-size: 2.1rem;
     font-weight: 700;
     text-align: center;
