@@ -9,8 +9,8 @@ import SectionNavbar from '../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import OrderOverview from '../../components/order-overview/order-overview.component'
 // import OrderDeligateModal from '../../components/order-deligate-modal/order-deligate-modal.component'
-import Pagination from '../../components/pagination/pagination.component'
 import Popup from '../../components/popup/pop-up.component'
+import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
     GoArrowSmallDown,
@@ -49,9 +49,9 @@ const OrdersSection = () => {
         sortBy: {
             date: -1
         },
-        filters: {
-            status: "paid"
-        }
+        // filters: {
+        //     status: "paid"
+        // }
     })
 
     const [currentPage, setCurrentPage] = useState(1)
@@ -62,24 +62,24 @@ const OrdersSection = () => {
         })
         setCurrentPage(currentPage)
         refetch()
-        ordersHalfPaidData.refetch()
+        // ordersHalfPaidData.refetch()
     }
 
     const { isLoading: isFetching, response, refetch } = useFetchByQuery('api/admin/orders/filter', fetchQueryObj)
-    const ordersHalfPaidData = useFetchByQuery('api/admin/orders/filter', {
-        limit: 10,
-        skip: 0,
-        sortBy: {
-            date: -1
-        },
-        filters: {
-            status: "half-paid"
-        }
-    })
+    // const ordersHalfPaidData = useFetchByQuery('api/admin/orders/filter', {
+    //     limit: 10,
+    //     skip: 0,
+    //     sortBy: {
+    //         date: -1
+    //     },
+    //     filters: {
+    //         status: "half-paid"
+    //     }
+    // })
 
     const handleRefetch = () => {
         refetch()
-        ordersHalfPaidData.refetch()
+        // ordersHalfPaidData.refetch()
     }
 
     useEffect(() => {
@@ -90,33 +90,34 @@ const OrdersSection = () => {
         }
     }, [isFetching, response])
 
-    useEffect(() => {
-        if (!ordersHalfPaidData.isLoading) {
-            if (ordersHalfPaidData.response) {
-                setOrders([
-                    ...ordersHalfPaidData.response.orders,
-                    ...orders,
-                ])
-            }
-        }
-    }, [ordersHalfPaidData.isLoading])
+    console.log(response)
+    // useEffect(() => {
+    //     if (!ordersHalfPaidData.isLoading) {
+    //         if (ordersHalfPaidData.response) {
+    //             setOrders([
+    //                 ...ordersHalfPaidData.response.orders,
+    //                 ...orders,
+    //             ])
+    //         }
+    //     }
+    // }, [ordersHalfPaidData.isLoading])
 
     useEffect(() => {
         if (orders.length > 0) {
             if (activeIndex === 1) {
                 setFetchQueryObj(() => ({
                     ...fetchQueryObj,
-                    filters: {
-                        status: "paid"
-                    }
+                    // filters: {
+                    //     status: "paid"
+                    // }
                 }))
                 handleRefetch()
             } else {
                 setFetchQueryObj(() => ({
                     ...fetchQueryObj,
-                    filters: {
-                        status: "fulfilled"
-                    }
+                    // filters: {
+                    //     status: "fulfilled"
+                    // }
                 }))
                 refetch()
             }
@@ -185,11 +186,8 @@ const OrdersSection = () => {
                     ))}
                 </OrdersTable>
 
-                <Pagination
-                    productsPerPage={10}
-                    totalProducts={stats.orders}
-                    paginate={paginate}
-                    activePage={currentPage}
+                <ListArrows
+                    listItems={orders}
                 />
             </ScrollContainer>
         </section>

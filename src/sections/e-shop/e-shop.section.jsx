@@ -11,8 +11,7 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ProductOverview from '../../components/product-overview/product-overview.component'
 import Popup from '../../components/popup/pop-up.component'
 
-import Pagination from '../../components/pagination/pagination.component'
-
+import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 
 const EshopSection = () => {
@@ -20,10 +19,12 @@ const EshopSection = () => {
     const { closeModal, showModal, isLoading, message } = useContext(LoadingModalContext)
     const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
+    const [queryFilter, setQueryFilter] = useState({
+        limit: 10,
+        skip: 0,
+    })
 
     const {
-        totalProducts,
-        // totalLenses,
         activePremisesTab,
         products,
         retailPremisesTabs,
@@ -44,6 +45,10 @@ const EshopSection = () => {
                 })
             }
         }
+    }
+
+    const handleDeleteProduct = (id) => {
+        deleteProduct(id)
     }
 
     useEffect(() => {
@@ -67,22 +72,30 @@ const EshopSection = () => {
         }
     }, [searchQuery])
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [productsPerPage] = useState(10)
 
-    const paginate = (pageNumber) => {
+    const getNextPage = () => {
+        if (productItems.length < 10) return
         getProductsByQuery({
-            limit: 10,
-            skip: (pageNumber - 1) * productsPerPage
+            ...queryFilter,
+            skip: queryFilter.skip + 10
         })
-        setCurrentPage(pageNumber)
+        setQueryFilter({
+            ...queryFilter,
+            skip: queryFilter.skip + 10
+        })
     }
 
-    const handleDeleteProduct = (id) => {
-        setCurrentPage(1)
-        deleteProduct(id)
+    const getPrevPage = () => {
+        // if (productItems.length < 10) return
+        getProductsByQuery({
+            ...queryFilter,
+            skip: queryFilter.skip - 10
+        })
+        setQueryFilter({
+            ...queryFilter,
+            skip: queryFilter.skip - 10
+        })
     }
-
 
     return (
         <section>
@@ -120,12 +133,11 @@ const EshopSection = () => {
                     />
                 ))}
 
-                {activeCategoryTypeTab === 0 && <Pagination
-                    productsPerPage={10}
-                    totalProducts={totalProducts}
-                    paginate={paginate}
-                    activePage={currentPage}
-                />}
+                <ListArrows
+                    listItems={productItems}
+                    handleClickPrev={getPrevPage}
+                    handleClickNext={getNextPage}
+                />
             </ScrollContainer>
         </section >
     )

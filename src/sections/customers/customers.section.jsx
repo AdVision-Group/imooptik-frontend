@@ -8,7 +8,7 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import SectionNavbar from "../../components/section-navbar/section-navbar.component"
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
-import Pagination from '../../components/pagination/pagination.component'
+import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
     TableCol,
@@ -33,7 +33,6 @@ const CustomersSection = () => {
     } = useContext(LoadingModalContext)
 
     const {
-        user,
         activeIndex,
         handleChangeFilterItem,
         filterItems,
@@ -88,12 +87,11 @@ const CustomersSection = () => {
         }
     }, [searchQuery])
 
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage] = useState(1)
     const [usersPerPage] = useState(10)
     const indexOfLastUser = currentPage * usersPerPage
     const indexOfFirstUser = indexOfLastUser - usersPerPage
     const currentUsers = userItems.slice(indexOfFirstUser, indexOfLastUser)
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <section>
@@ -137,11 +135,8 @@ const CustomersSection = () => {
                     ))}
                 </TableContainer>
 
-                <Pagination
-                    productsPerPage={usersPerPage}
-                    totalProducts={userItems.length}
-                    paginate={paginate}
-                    activePage={currentPage}
+                <ListArrows
+                    listItems={currentUsers}
                 />
             </ScrollContainer>
 

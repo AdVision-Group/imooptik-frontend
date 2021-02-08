@@ -8,6 +8,13 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Titillium Web', sans-serif;
     }
 
+    :root {
+        --primary-color: #ebac01;
+        --secondary-color: #000;
+        --primary-text-color: #000;
+        --secondary-text-color: #fff;
+    }
+
     html {
         font-size: 62.5%;
     }
@@ -35,6 +42,13 @@ export const GlobalStyles = createGlobalStyle`
         text-decoration: none;
         color: #000;
         display:block;
+    }
+
+    button {
+        font-size: inherit;
+        font-family: inherit;
+        border: none;
+        background-color: none;
     }
 
 `

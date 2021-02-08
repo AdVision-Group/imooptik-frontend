@@ -102,5 +102,5 @@ export const UpdateButton = styled(CustomButton)`
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1.2rem;
-    background-color: #ebac01;
+    background-color: var(--primary-color);
 `

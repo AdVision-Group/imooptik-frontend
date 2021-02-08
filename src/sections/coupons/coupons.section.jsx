@@ -7,6 +7,7 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
 import Popup from '../../components/popup/pop-up.component'
+import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
     CouponOverviewContainer,
@@ -76,6 +77,9 @@ const CouponsSection = () => {
                         </TableRow>
                     ))}
                 </TableContainer>
+                <ListArrows
+                    listItems={coupons}
+                />
             </ScrollContainer>
         </section>
     )

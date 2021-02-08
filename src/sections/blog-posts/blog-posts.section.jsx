@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../../context/auth/auth.context'
 import { BlogContext } from '../../context/blog/blog.context'
 import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -8,7 +7,7 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from "../../components/scroll-container/scroll-container.component"
 import Popup from '../../components/popup/pop-up.component'
-import Pagination from '../../components/pagination/pagination.component'
+import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import { useFetchByQuery } from '../../hooks/useFetch'
 
@@ -22,7 +21,6 @@ import {
 } from './blog-posts.styles'
 
 const BlogPosts = () => {
-    const { stats } = useContext(AuthContext)
     const {
         closeModal,
         isLoading,
@@ -72,20 +70,6 @@ const BlogPosts = () => {
         }
     }
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [productsPerPage] = useState(10)
-
-    const paginate = (pageNumber) => {
-        setFilterQuery({
-            limit: 10,
-            sortBy: {
-                date: -1
-            },
-            skip: (pageNumber - 1) * productsPerPage
-        })
-        setCurrentPage(pageNumber)
-    }
-
     useEffect(() => {
         if (searchQuery === '') {
             setFilterQuery({
@@ -125,9 +109,6 @@ const BlogPosts = () => {
             setPosts(blogsData.response?.blogs)
         }
     }, [blogsData.isLoading])
-
-    console.log(blogsData)
-    console.log(stats)
 
     return (
         <section>
@@ -169,11 +150,8 @@ const BlogPosts = () => {
                         </div>
                     )}
 
-                <Pagination
-                    productsPerPage={10}
-                    totalProducts={stats.blogs}
-                    paginate={paginate}
-                    activePage={currentPage}
+                <ListArrows
+                    listItems={posts}
                 />
             </ScrollContainer>
         </section>
