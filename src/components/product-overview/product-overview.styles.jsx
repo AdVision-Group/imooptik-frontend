@@ -10,7 +10,7 @@ export const ProductContainer = styled.div`
                             "i c o";
 
 
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     padding: 2rem;
 
     &:not(:last-child) {
@@ -31,7 +31,9 @@ export const ProductContainer = styled.div`
 export const ProductImage = styled.div`
     /* width: 100%; */
     /* height: 100%; */
-    /* background-color: #eee; */
+    background-color: var(--image-background-color);
+    border-radius: .5rem;
+    padding: 1rem;
     margin-right: 2rem;
     grid-area: i;
 
@@ -65,14 +67,14 @@ export const ProductContent = styled.div`
 
 export const ProductId = styled.p`
     font-size: 1.2rem;
-    color: gray;
+    color: var(--secondary-text-color);
     margin-bottom: 2rem;
 `
 
 export const StockInfo = styled.p`
     font-size: 1.4rem;
     font-weight: 700;
-    color: #32AA5F;
+    color: var(--color-green);
     margin-bottom: 1rem;
 `
 

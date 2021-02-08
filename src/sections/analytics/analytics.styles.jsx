@@ -6,6 +6,7 @@ export const Header = styled.div`
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;
+    color: var(--primary-text-color);
 `
 
 export const GridContainer = styled.div`
@@ -15,7 +16,7 @@ export const GridContainer = styled.div`
     margin-bottom: 4rem;
 
     div {
-        background-color: #f5f5f5;
+        background-color: var(--body-background-primary-color);
         padding: 2rem;
         border-radius: .5rem;
         text-align: center;
@@ -40,7 +41,7 @@ export const StatsGrid = styled.div`
 export const StatsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
 
     div {
         display: flex;

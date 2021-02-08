@@ -1,6 +1,6 @@
 import React, { useContext, Suspense, lazy } from 'react'
 import { AuthContext } from './context/auth/auth.context'
-import { GlobalStyles } from './global.styles'
+import { GlobalStyles, DarkThemeColors, DefaultThemeColors } from './global.styles'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import Popup from './components/popup/pop-up.component'
@@ -12,9 +12,11 @@ const ResetPasswordPage = lazy(() => import('./pages/reset-password/reset-passwo
 const App = () => {
   console.log("RENDER APP")
   const { currentUser } = useContext(AuthContext)
+  const currentTheme = 'light'
 
   return (
     <React.Fragment>
+      {currentTheme === 'dark' ? <DarkThemeColors /> : <DefaultThemeColors />}
       <GlobalStyles />
       <Suspense fallback={<Popup loading={true} />}>
         <HashRouter basename='/'>

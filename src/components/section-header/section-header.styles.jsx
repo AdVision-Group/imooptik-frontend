@@ -4,6 +4,7 @@ import { paddingStyles } from '../../global.styles'
 
 export const HeaderContainer = styled.div`
     display: flex;
+    color: var(--primary-text-color);
     justify-content: space-between;
     margin-bottom: 3rem;
     ${paddingStyles};    
@@ -27,9 +28,9 @@ export const Right = styled.div`
 `
 
 export const Notification = styled.div`
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
     margin-left: 1.5rem;
-    color: #fff;
+    color: var(--primary-text-color);
     padding: .5rem 1rem;
     border-radius: 1.5rem;
     font-size: 1.4rem;
@@ -45,6 +46,6 @@ export const SearchButton = styled(CustomButton)`
 export const AddButton = styled(CustomButton)`
     margin-top: 2rem;
     margin-left: 1rem;
-    background-color: rgb(235, 172, 1);
+    background-color: var(--primary-color);
     font-weight: bolder;
 `

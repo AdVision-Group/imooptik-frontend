@@ -4,7 +4,7 @@ import CustomButton from '../../../../components/custom-button/custom-button.com
 export const ProductsOverviewContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shaow);
     margin-bottom: 3rem;
 `
 
@@ -17,7 +17,7 @@ export const SummaryTableHead = styled.div`
     align-content: center;
     grid-template-columns: 5rem 1fr 10rem 10rem 1fr 10rem 10rem 10rem 10rem;
     font-weight: bolder;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--secondary-text-color);
 `
 
 export const SummaryTableRow = styled.div`
@@ -64,7 +64,7 @@ export const SummaryGridLayout = styled.div`
 export const UserOverviewContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
 
     h3 {
         margin-bottom: .5rem;
@@ -90,7 +90,7 @@ export const StyledParagraph = styled.p`
 export const OrderDetailsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     margin-bottom: 3rem;
 
     h3 {
@@ -133,7 +133,7 @@ export const OptionButton = styled(CustomButton)`
     }
 
     &:last-child {
-        background-color: rgb(235, 172, 1);
+        background-color: var(--primary-color);
         font-weight: bolder;
     }
 `

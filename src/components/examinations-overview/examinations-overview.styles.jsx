@@ -19,7 +19,9 @@ export const Header = styled.div`
 export const ExaminationContainer = styled.div`
     border-radius: .5rem;
     padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    /* box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
+    box-shadow: var(--container-shadow);
+
     margin-bottom: 2rem;
 `
 
@@ -55,7 +57,7 @@ export const TableCol = styled.div`
         margin-left: .5rem;
 
         &:not(:first-child) {
-            background-color: #f5f5f5;
+            background-color: var(--input-background-color);
             padding: .5rem;
             border-radius: .5rem;
             min-height: 2.5rem;
@@ -78,7 +80,7 @@ export const UpdateButton = styled(CustomButton)`
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1.2rem;
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
     margin-left: 1rem;
 
 `

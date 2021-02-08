@@ -30,7 +30,8 @@ export const Modal = styled.div`
 
     padding: 2rem;
     border-radius: .5rem;
-    background-color: white;
+    background-color: var(--background-primary-color);
+    color: var(--primary-text-color);
 
     position: relative;
     z-index: 999999;
@@ -121,7 +122,8 @@ export const CustomSelect = styled.select`
     margin-top: 1.5rem;
     min-width: 16.5rem;
     width: 100%;
-    background-color: #F5F5F5;
+    background-color: var(--input-background-color);
+    color: var(--input-color);
     border: none;
     padding: .5rem .5rem .5rem 1rem;
     font-size: inherit;
@@ -147,7 +149,7 @@ export const LensesContainer = styled.div`
     max-width: 32rem;
     padding: 2rem;
     border-radius: .5rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     text-align: center;
     transition: transform .3s ease-out,
                 box-shadow .3s ease-out;
@@ -186,7 +188,7 @@ export const LensesContainer = styled.div`
 `
 
 export const LensesImg = styled.div`
-    background-color: lightgray;
+    background-color: var(--body-background-primary-color);
     border-radius: 50%;
     width: 10rem;
     height: 10rem;

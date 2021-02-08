@@ -29,7 +29,8 @@ export const Modal = styled.div`
 
     padding: 2rem;
     border-radius: .5rem;
-    background-color: white;
+    background-color: var(--body-background-primary-color);
+    color: var(--primary-text-color);
 
     position: relative;
     z-index: 999999;
@@ -123,7 +124,8 @@ export const DeleteButton = styled.button`
     border-radius:50%;
     position: absolute;
     border: none;
-    background-color: rgb(235, 172, 1);
+    background-color: var(--color-red);
+    color: #fff;
     padding: .5rem .75rem;
     font-size: 1rem;
     right: .5rem;
@@ -158,7 +160,7 @@ export const TabButton = styled.button`
     cursor: pointer;
     outline:none;
     border: none;
-    background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#000"};
+    background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--body-background-primary-color)"};
     color: #fff;
     font-weight: ${({ isActive }) => isActive ? "700" : "400"};
     font-family: inherit;
@@ -194,8 +196,8 @@ export const FetchButtons = styled.button`
     border: none;
     padding: .4rem 1rem;
     border-radius: 50%;
-    color: #fff;
-    background-color: #000;
+    color: var(--primary-text-color);
+    background-color: var(--body-background-primary-color);
     font-size: 1.2rem;
     font-family: inherit;
     margin: 0 .5rem;

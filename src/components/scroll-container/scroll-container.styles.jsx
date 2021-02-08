@@ -11,6 +11,8 @@ export const Container = styled.div`
     ${paddingStyles};
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    color: var(--primary-text-color);
+
 
     @media all and (max-width: 1150px) {
         margin-bottom: 8rem;

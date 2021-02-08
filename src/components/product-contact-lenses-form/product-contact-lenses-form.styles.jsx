@@ -11,7 +11,7 @@ export const ProductImage = styled.div`
     display:flex;
     align-items: center;
     justify-content:center;
-    background-color: ${({ hasImage }) => hasImage ? "transparent" : "#eee"};
+    background-color: ${({ hasImage }) => hasImage ? "transparent" : "var(--input-background-color)"};
     margin: 3rem 0 2rem;
     min-height: 20rem;
     position: relative;
@@ -35,13 +35,13 @@ export const ContactLensesFormContainer = styled.div`
 
 export const ContactLensesContainer = styled.div`
     padding: 2rem; 
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     border-radius: .5rem;
 `
 
 export const ContactLensesParametersContainer = styled.div`
     padding: 2rem; 
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     border-radius: .5rem;
     margin-bottom: 3rem;
 

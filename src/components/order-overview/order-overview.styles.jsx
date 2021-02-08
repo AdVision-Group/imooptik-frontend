@@ -25,7 +25,7 @@ export const DeligateButton = styled.div`
     padding: 1rem;
 
     &:hover {
-        background-color: #f5f5f5;
+        background-color: var(--body-background-primary-color);
     }
 `
 
@@ -36,13 +36,13 @@ export const IconContainer = styled.div`
     justify-content: center;
     padding: .5rem;
     border-radius: 50%;
-    background-color: #000;
+    background-color: var(--dropdownbutton-background-color);
 
     svg {
         font-size: 1.2rem;
         margin-top: .1rem;
         display: block;
-        color: #fff;
+        color: var(--dropdownbutton-color);
     }
 `
 
@@ -51,7 +51,7 @@ export const DropdownMenu = styled.div`
     padding: 2rem;
     box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
     border-radius: .5rem;
-    background-color: #fff;
+    background-color: var(--dropdown-background-color);
     z-index: 99;
     right: 3rem;
     top: 6rem;
@@ -67,6 +67,8 @@ export const DropdownMenu = styled.div`
             align-items: center;
             transition: background-color .3s ease-out;
             border-radius: 9999rem .5rem .5rem 9999rem;
+            color: var(--primary-text-color);
+
 
 
             div {
@@ -74,7 +76,7 @@ export const DropdownMenu = styled.div`
                 align-items: center;
                 justify-content: center;
                 padding: 1rem;
-                background-color: #f5f5f5;
+                background-color: var(--dropdown-hover-background-color);
                 border-radius: 50%;
                 margin-right: 1rem;
 
@@ -84,11 +86,11 @@ export const DropdownMenu = styled.div`
             }
 
             &:hover {
-                background-color: #f5f5f5;
+                background-color: var(--dropdown-hover-background-color);
 
                 div {
                     svg {
-                        color: rgb(235, 172, 1);
+                        color: var(--primary-color);
                     }
                 }
             }
@@ -103,7 +105,7 @@ export const DropdownMenu = styled.div`
 export const Line = styled.div`
     width: 75%;
     height: .1rem;
-    background-color: #000;
+    background-color: var(--secondary-text-color);
     margin: 1rem auto;
     opacity: .1;
 `

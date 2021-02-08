@@ -64,12 +64,12 @@ export const LensesContainer = styled.div`
 
     &:hover {
         transform: scale(1.03);
-        box-shadow: 0 0 2.5rem 0 rgba(0,0,0, 0.08);
+        box-shadow: var(--container-shadow);
     }
 `
 
 export const LensesImg = styled.div`
-    background-color: lightgray;
+    background-color: var(--body-background-primary-color);
     border-radius: 50%;
     width: 10rem;
     height: 10rem;

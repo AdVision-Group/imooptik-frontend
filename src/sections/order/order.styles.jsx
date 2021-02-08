@@ -9,6 +9,10 @@ export const Header = styled.div`
     padding-top: 3rem;
     padding-bottom: 3rem;
 
+    h1 {
+        color: var(--primary-text-color);
+    }
+
     @media all and (max-width: 800px) {
         flex-wrap: wrap;
 

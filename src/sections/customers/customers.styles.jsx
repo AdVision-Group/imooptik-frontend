@@ -9,7 +9,7 @@ export const TableHead = styled.div`
     display: grid;
     align-content: center;
     grid-template-columns: 1fr 2fr 25rem;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--secondary-text-color);
     font-weight: bolder;
 `
 
@@ -23,7 +23,7 @@ export const TableRow = styled.div`
     grid-template-columns: 1fr 2fr 25rem;
     align-content: center;
     margin-bottom: 1rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
 `
 
 

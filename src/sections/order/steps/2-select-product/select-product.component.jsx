@@ -112,7 +112,7 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMe
                     <ProductTableRow key={idx} onClick={() => isAvailable(product.available) ? handleClick(product) : showErrorMessage("Produkt nieje na sklade.")}>
                         <TableCol>{product.eanCode}</TableCol>
                         <TableCol>
-                            <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />
+                            {product?.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />}
                         </TableCol>
                         <TableCol>{product.name}</TableCol>
                         <TableCol>{product.brand}</TableCol>

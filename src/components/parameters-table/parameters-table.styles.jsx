@@ -37,7 +37,8 @@ export const Col = styled.div`
             text-align: center;
             font-family: inherit;
             font-size: inherit;
-            background-color: #F5F5F5;
+            background-color: var(--input-background-color);
+            color: var(--input-color);
             border-radius: .5rem;
             outline: none;
 
@@ -76,7 +77,8 @@ export const OsContainer = styled.div`
             text-align: center;
             font-family: inherit;
             font-size: inherit;
-            background-color: #F5F5F5;
+            background-color: var(--input-background-color);
+            color: var(--input-color);
             border-radius: .5rem;
             outline: none;
 

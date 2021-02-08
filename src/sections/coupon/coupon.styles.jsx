@@ -8,13 +8,15 @@ export const Header = styled.div`
     padding-bottom: 3rem;
     display: flex;
     justify-content: space-between;
+    color: var(--primary-text-color);
 `
 
 export const CustomSelect = styled.select`
     margin-top: 1.5rem;
     min-width: 16.5rem;
     width: 100%;
-    background-color: #F5F5F5;
+    background-color: var(--input-background-color);
+    color: var(--input-color);
     border: none;
     padding: .5rem .5rem .5rem 1rem;
     font-size: inherit;
@@ -26,7 +28,7 @@ export const SubmitButton = styled(CustomButton)`
 
 `
 export const DeleteButton = styled(CustomButton)`
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
 
 `
 
@@ -39,6 +41,6 @@ export const GridRow = styled.div`
 `
 export const GridCol = styled.div`
     padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
     
 `

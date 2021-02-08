@@ -87,7 +87,7 @@ export const NavLinksContainer = styled.ul`
 
             &:hover {
                 div {
-                    color: rgb(235, 172, 1);
+                    color: var(--primary-color);
 
                 }
     }
@@ -104,7 +104,7 @@ export const IconContainer = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 2.5rem;
-    color: ${({ isActive }) => isActive ? 'rgb(235, 172, 1)' : "#fff"};
+    color: ${({ isActive }) => isActive ? 'var(--primary-color)' : "#fff"};
     transition: color .3s ease-out;
 
 
@@ -121,7 +121,7 @@ export const ActiveBorder = styled.span`
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgb(235, 172, 1);
+    background-color: var(--primary-color);
     transition: opacity .3s ease-out;
 `
 
@@ -145,7 +145,7 @@ export const NavLinksButton = styled.button`
     }
 
     &:hover {
-        color: #eee;
+        color: var(--primary-color);
     }
 
 
@@ -189,7 +189,7 @@ export const ToggleButton = styled.button`
             position: absolute;
             width: 3.5rem;
             height: 2.5px;
-            background-color: #000000;
+            background-color: var(--primary-color);
             transition: all 0.3s ease-in-out;
             ${props => props.isOpen ? (css`
                 &:nth-child(1) {

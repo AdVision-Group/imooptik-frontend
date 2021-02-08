@@ -10,10 +10,12 @@ export const Header = styled.div`
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;
+
+    color: var(--primary-text-color);
 `
 
 export const DeleteProfileButton = styled(CustomButton)`
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
     font-size: 1.4rem;
     margin-left: 2rem;
 `
@@ -22,6 +24,6 @@ export const DeleteProfileButton = styled(CustomButton)`
 export const SaveButton = styled(CustomButton)`
     margin-left: 2rem;
     font-size: 1.4rem;
-    background-color: rgb(235, 172, 1);
+    background-color: var(--primary-color);
     font-weight: bolder;
 `

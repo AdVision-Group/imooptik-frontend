@@ -4,7 +4,7 @@ const shrinkLabel = css`
     left: .5rem;
     top: -14px;
     font-size: 12px;
-    color: #000;
+    color: var(--input-color);
 `
 export const InputGroup = styled.div`
     position: relative;
@@ -12,8 +12,9 @@ export const InputGroup = styled.div`
 
     .form-input {
         background: none;
-        background-color: #F5F5F5;
-        color: #000;
+        background-color: var(--input-background-color);
+        color: var(--input-color);
+
         font-size: 1.5rem;
         padding: .5rem .5rem .5rem 2rem;
         display: block;
@@ -35,7 +36,7 @@ export const InputGroup = styled.div`
     }
 
     .form-input-label {
-        color: #B1B1B1;
+        color: var(--input-color);
         font-size: 1.4rem;
         font-weight: normal;
         position: absolute;

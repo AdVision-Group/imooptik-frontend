@@ -3,7 +3,7 @@ import CustomButton from '../custom-button/custom-button.component'
 
 export const ContainerOverview = styled.div`
     padding: 2rem;
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
 
     &:not(:last-child) {
         /* margin-right: 2rem; */
@@ -31,9 +31,9 @@ export const ShowButton = styled(CustomButton)`
     margin-top: 2rem;
     font-size: 1.4rem;
     display: block;
-    background-color: ${({ isActive }) => isActive ? "rgb(235, 172, 1)" : "#eee"};
+    background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--body-background-primary-color)"};
     font-weight: bolder;
-    color: ${({ isActive }) => isActive ? "#fff" : "#000"};
+    color: ${({ isActive }) => isActive ? "var(--primary-text-color)" : "var(--secondary-button-font-color)"};
 `
 export const UpdateButton = styled(CustomButton)`
     margin-top: 2rem;

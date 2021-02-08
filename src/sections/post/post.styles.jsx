@@ -11,6 +11,8 @@ export const Header = styled.div`
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;
+    color: var(--primary-text-color);
+
 
     @media all and (max-width: 500px) {
         flex-direction: column;
@@ -36,7 +38,7 @@ export const PostImage = styled.div`
     align-items: center;
     justify-content:center;
     width: 100%;
-    background-color: ${({ hasImage }) => hasImage ? "transparent" : "#eee"};
+    background-color: ${({ hasImage }) => hasImage ? "transparent" : "var(--input-background-color)"};
     margin-top: 3rem;
     padding: 6rem;
 
@@ -58,7 +60,7 @@ export const PostImage = styled.div`
 export const DeleteButton = styled(CustomButtom)`
     font-size: 1.4rem;
     margin: 0 2rem;
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
 
     @media all and (max-width: 500px) {
         margin: 0 .8rem;
@@ -74,7 +76,9 @@ export const Title = styled.h2`
 
 export const ContentTextare = styled(ReactQuill)`
     height: 100%;
-    background-color: #F5F5F5;
+    background-color: var(--input-background-color);
+    color: var(--input-color);
+    
     .ql-container, .ql-toolbar {
         border: none;
     }

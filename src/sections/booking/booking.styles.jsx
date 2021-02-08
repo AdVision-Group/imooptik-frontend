@@ -31,8 +31,8 @@ export const CalendarHeader = styled.div`
 `
 
 export const CalendarFormat = styled.li`
-    background-color: ${({ isActive }) => isActive ? "#000" : "none"};
-    color: ${({ isActive }) => isActive ? "#fff" : "#000"};
+    background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "none"};
+    color: ${({ isActive }) => isActive ? "var(--button-font-color)" : "var(--primary-color)"};
     cursor: pointer;
     padding: 0.5rem 2rem;
 
