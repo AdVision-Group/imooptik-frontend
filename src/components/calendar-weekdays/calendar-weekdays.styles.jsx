@@ -11,8 +11,8 @@ export const Container = styled.div`
 export const HeaderBlock = styled.div`
     cursor: default;
     height: 8rem;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--color-black);
+    color: var(--primary-color-text);
     display: flex;
     flex-direction: column;
     align-items:center;

@@ -12,6 +12,7 @@ export const LensesContainer = styled.div`
     /* width: 45rem; */
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     border-radius: .5rem;
     /* display: inline-block; */
     /* padding-bottom: 4rem;  */
@@ -20,7 +21,8 @@ export const LensesContainer = styled.div`
 
 export const LensesParametersContainer = styled.div`
     padding: 2rem; 
-        box-shadow: var(--container-shadow);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
 
 
     h3 {

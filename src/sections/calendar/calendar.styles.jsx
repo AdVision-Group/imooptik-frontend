@@ -8,13 +8,14 @@ export const Header = styled.div`
     padding-bottom: 3rem;
     display: flex;
     justify-content: space-between;
+    color: var(--primary-text-color);
 `
 
 export const CreateCalendarButton = styled(CustomButton)`
     margin-left: 1rem;
 `
 export const DeleteCalendarButton = styled(CustomButton)`
-    background-color: #DD4C4C;
+    background-color: var(--color-red);
 
 `
 

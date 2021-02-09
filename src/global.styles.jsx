@@ -37,7 +37,7 @@ export const DefaultThemeColors = createGlobalStyle`
 
         --color-red: #DD4C4C;
         --color-green: #32AA5F;
-
+        --color-black: #000;
     }
 `
 
@@ -72,6 +72,8 @@ export const DarkThemeColors = createGlobalStyle`
 
         --color-red: #DD4C4C;
         --color-green: #32AA5F;
+        --color-black: #000;
+
     }
 `
 

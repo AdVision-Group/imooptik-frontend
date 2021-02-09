@@ -35,11 +35,13 @@ export const AccessoriesFormContainer = styled.div`
 export const AccessoriesContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     border-radius: .5rem;
 `
 
 export const StockContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     border-radius: .5rem;
 `

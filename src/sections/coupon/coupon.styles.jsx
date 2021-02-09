@@ -42,5 +42,6 @@ export const GridRow = styled.div`
 export const GridCol = styled.div`
     padding: 2rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     
 `

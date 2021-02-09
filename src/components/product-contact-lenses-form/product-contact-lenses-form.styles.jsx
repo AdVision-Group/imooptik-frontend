@@ -36,12 +36,15 @@ export const ContactLensesFormContainer = styled.div`
 export const ContactLensesContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     border-radius: .5rem;
 `
 
 export const ContactLensesParametersContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     border-radius: .5rem;
     margin-bottom: 3rem;
 
@@ -58,6 +61,8 @@ export const IncreaseButton = styled(CustomButton)`
 
 export const StockContainer = styled.div`
     padding: 2rem; 
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
     border-radius: .5rem;
 `
