@@ -2,7 +2,6 @@ import React from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
-import ProductInputRow from '../product-input-row/product-input-row.component'
 
 import {
     ImageContainer,
@@ -164,10 +163,10 @@ const ProductGlassesForm = ({
                         ))}
                     </div>
                 </GlassesParameterContainer>
-                <StockContainer>
-                    <h3>Skladové zásoby</h3>
-                    {
-                        product.available.map((value, idx) => {
+                {currentUser.admin >= 2 ? (
+                    <StockContainer>
+                        <h3>Skladové zásoby</h3>
+                        {product.available.map((value, idx) => {
                             if (idx === 4) return
                             return (
                                 <CustomInput
@@ -179,10 +178,20 @@ const ProductGlassesForm = ({
                                     handleChange={e => handleAvailableChange(e, idx)}
                                 />
                             )
-                        })
-                    }
-                </StockContainer>
-
+                        })}
+                    </StockContainer>
+                ) : (
+                        <StockContainer>
+                            <h3>Skladové zásoby</h3>
+                            <CustomInput
+                                label={currentUser.admin === 1 ? retailNames[currentUser.premises - 1] : retailNames[currentUser.premises]}
+                                type='number'
+                                name={"available"}
+                                value={checkParameter(product.available, currentUser.premises)}
+                                handleChange={e => handleAvailableChange(e, currentUser.premises)}
+                            />
+                        </StockContainer>
+                    )}
             </div>
         </GlassesContainerForm>
     )

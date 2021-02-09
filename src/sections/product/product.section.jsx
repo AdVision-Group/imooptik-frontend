@@ -311,50 +311,67 @@ const ProductSection = () => {
         })
     }
 
-    console.log("PRODUCT OBJECT")
-    console.log(productObj)
-
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        let newProductObj = {
+            ...productObj
+        }
+
+        if (currentUser.admin < 2) {
+            if (newProductObj.available) {
+                newProductObj = {
+                    ...productObj,
+                    available: productObj.available[currentUser.premises]
+                }
+            }
+        } else {
+            if (newProductObj.available) {
+                newProductObj = {
+                    ...productObj,
+                    available: newProductObj.available ? newProductObj.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+                }
+            }
+        }
+
         if (isUpdating) {
-            if (productObj.type === 0) {
+            if (newProductObj.type === 0) {
                 setHasChanged(false)
-                delete productObj['link']
-                delete productObj['type']
-                updateLenses(productObj)
+                delete newProductObj['link']
+                delete newProductObj['type']
+                updateLenses(newProductObj)
                 return
-            } else if (productObj.type === 3) {
+            } else if (newProductObj.type === 3) {
                 setHasChanged(false)
-                delete productObj['type']
-                updateProduct({ ...productObj, contactLenses: {} })
+                delete newProductObj['type']
+                updateProduct({ ...newProductObj, contactLenses: {} })
                 return
             } else {
                 setHasChanged(false)
-                delete productObj['type']
-                updateProduct(productObj)
+                delete newProductObj['type']
+                updateProduct(newProductObj)
                 return
             }
         } else {
-            if (productObj.type === 0) {
-                if (!productObj.name || !productObj.brand || !productObj.description || !productObj.price || !productObj.image || !productObj.dioptersRange || !productObj.cylinderRange) {
+            if (newProductObj.type === 0) {
+                if (!newProductObj.name || !newProductObj.brand || !newProductObj.description || !newProductObj.price || !newProductObj.image || !newProductObj.dioptersRange || !newProductObj.cylinderRange) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
                     return
                 } else {
                     setHasChanged(false)
-                    delete productObj['type']
-                    createLenses(productObj)
+                    delete newProductObj['type']
+                    createLenses(newProductObj)
                 }
             }
-            if (productObj.type === 5 || productObj.type === 4 || productObj.type === 3 || productObj.type === 2 || productObj.type === 1) {
-                if (!productObj.name || !productObj.price || !productObj.image) {
+            if (newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
+                if (!newProductObj.name || !newProductObj.price || !newProductObj.image) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
                     return
                 } else {
                     setHasChanged(false)
-                    createProduct(productObj)
+                    createProduct(newProductObj)
                 }
             }
         }

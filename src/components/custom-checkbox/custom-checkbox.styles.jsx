@@ -7,7 +7,8 @@ export const CheckboxContainer = styled.div`
     font-weight: 700;
     /* margin-right: 2rem; */
     background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--body-background-primary-color)"};
-    color: ${({ isActive }) => isActive ? "var(--primary-text-color)" : "var(--secondary-text-color)"};
+    color: ${({ isActive }) => isActive ? "var(--button-font-color)" : "var(--secondary-text-color)"};
+    /* font-weight: ${({ isActive }) => isActive ? "border" : "normal"}; */
     padding: .8rem 3rem;
     border-radius: .2rem;
     transition: all .2s ease-out;

@@ -62,6 +62,6 @@ export const ProductTableRow = styled.div`
     &:hover {
         background-color: var(--primary-color); 
         font-weight: bolder;
-        color: var(--primary-text-color);
+        color: var(--button-font-color);
     }
 `

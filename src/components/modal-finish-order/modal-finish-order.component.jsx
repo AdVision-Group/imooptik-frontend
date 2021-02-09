@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
+import {
+    formatPrice
+} from '../../utils/warehouse.utils'
+
 import CustomInput from '../custom-input/custom-input.component'
 
 import {
@@ -100,10 +104,6 @@ const FinishOrderModal = ({
             let orderObj = {
                 ...orderDetail,
             }
-            console.log("orderDetail")
-            console.log(orderDetail)
-            console.log(order)
-
             delete orderObj['paymentType']
             delete orderObj['shouldDeliver']
 
@@ -118,11 +118,37 @@ const FinishOrderModal = ({
                 status: hasDeposit ? "half-paid" : "paid"
             }
 
+            if (orderDetail.paidAlready) {
+                orderObj = {
+                    ...orderObj,
+                    paidAlready: formatPrice(orderDetail.paidAlready)
+                }
+            }
+
             console.log(orderObj)
             setHasChanged(false)
             createOrder(orderObj)
         }
     }
+
+    useEffect(() => {
+        if (isUpdating) {
+            if (order?.order) {
+                handleOrderDetailChange({
+                    target: {
+                        name: 'shouldDeliver',
+                        value: order?.order?.shouldDeliver
+                    }
+                })
+                handleOrderDetailChange({
+                    target: {
+                        name: 'buyingAsCompany',
+                        value: order?.order?.buyingAsCompany
+                    }
+                })
+            }
+        }
+    }, [isUpdating, order])
 
     useEffect(() => {
         return () => {

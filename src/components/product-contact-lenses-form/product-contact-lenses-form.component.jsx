@@ -158,10 +158,10 @@ const ProductContactLensesForm = ({
                     </div>
                 </ContactLensesParametersContainer>
 
-                <StockContainer>
-                    <h3>Skladové zásoby</h3>
-                    {
-                        product.available.map((value, idx) => {
+                {currentUser.admin >= 2 ? (
+                    <StockContainer>
+                        <h3>Skladové zásoby</h3>
+                        {product.available.map((value, idx) => {
                             if (idx === 4) return
                             return (
                                 <CustomInput
@@ -173,9 +173,20 @@ const ProductContactLensesForm = ({
                                     handleChange={e => handleAvailableChange(e, idx)}
                                 />
                             )
-                        })
-                    }
-                </StockContainer>
+                        })}
+                    </StockContainer>
+                ) : (
+                        <StockContainer>
+                            <h3>Skladové zásoby</h3>
+                            <CustomInput
+                                label={currentUser.admin === 1 ? retailNames[currentUser.premises - 1] : retailNames[currentUser.premises]}
+                                type='number'
+                                name={"available"}
+                                value={checkParameter(product.available, currentUser.premises)}
+                                handleChange={e => handleAvailableChange(e, currentUser.premises)}
+                            />
+                        </StockContainer>
+                    )}
             </div>
         </ContactLensesFormContainer>
     )

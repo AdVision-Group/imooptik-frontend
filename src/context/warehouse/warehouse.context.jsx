@@ -372,7 +372,6 @@ const WarehouseProvider = ({ children }) => {
             ...productToAdd,
             price: formatPrice(productToAdd.price.toString()),
             link: slug,
-            available: productToAdd.available ? productToAdd.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
         }
 
         if (productToAdd.specs) {
