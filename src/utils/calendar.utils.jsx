@@ -67,8 +67,8 @@ export const getCurrentMonthDays = (lastDay) => {
 }
 
 export const getBooking = (days, calendar, month, year) => {
-    let daysWithBookings = []
-    const bookingsArr = Object.keys(calendar.booked)
+    if (!calendar.booked) return days;
+    const bookingsArr = Object.keys(calendar?.booked)
 
     const bookingDates = bookingsArr.filter((booking) => {
         const spliteBookingString = booking.split('/')
@@ -87,19 +87,6 @@ export const getBooking = (days, calendar, month, year) => {
             // return
         }
     })
-
-    console.log("bookingDate")
-    console.log(bookingDates)
-    console.log("bookingDate")
-
-    // const bookings = calendar?.booked.map(data => {
-    //     console.log(data)
-    // })
-
-    console.log("caledar")
-    console.log(bookingsArr)
-    console.log(calendar.booked)
-    console.log("caledar")
 
     const daysWithBookingsArr = days.map(day => {
         let dayObj = {}

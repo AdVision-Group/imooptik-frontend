@@ -17,6 +17,8 @@ export const DefaultThemeColors = createGlobalStyle`
         --background-primary-color: #fff;
 
         --navlink-color: #ffffff;
+        --table-head-color: #ffffff;
+
 
         --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.08);
         --container-background-color: #fff;
@@ -51,6 +53,7 @@ export const DarkThemeColors = createGlobalStyle`
         --background-primary-color: #2c2c2c;
 
         --navlink-color: #c7c6c6;
+        --table-head-color: #c7c6c6;
 
         --container-shadow: none;
         --container-background-color: #252525;

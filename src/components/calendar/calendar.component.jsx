@@ -50,7 +50,7 @@ const Calendar = ({ calendar, month, year }) => {
 
     useEffect(() => {
         if (!isLoading) {
-            if (response.calendar) {
+            if (response?.calendar) {
                 setCalendarData(response.calendar)
                 const prevDaysArr = getPreviousMonthDays(firstDayIndex)
                 const arr = getCurrentMonthDays(lastDay)

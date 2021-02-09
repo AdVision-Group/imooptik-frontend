@@ -12,7 +12,7 @@ export const HeaderBlock = styled.div`
     cursor: default;
     height: 8rem;
     background-color: var(--color-black);
-    color: var(--primary-color-text);
+    color: var(--table-head-color);
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -21,5 +21,28 @@ export const HeaderBlock = styled.div`
 
     p:first-child {
         font-weight: lighter;
+    }
+`
+
+export const HourBlock = styled.div`
+
+    div {
+        height: 10rem;
+        padding: .5rem;
+        border: 1px solid rgba(0,0,0,0.1);
+
+        span {
+            opacity: .6;
+        }
+    }
+
+    :not(:nth-child(8n)) {
+        div {
+            padding: 2rem;
+
+            span {
+                display: none;
+            }
+        }
     }
 `
