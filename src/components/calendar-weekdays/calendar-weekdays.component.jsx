@@ -5,23 +5,27 @@ import {
     dayNames,
     getPreviousMonthDays,
     getNextMonthDays,
-    getCurrentMonthDays
+    getCurrentMonthDays,
+    getBooking,
+    checkIfHasAppoinment
 } from '../../utils/calendar.utils'
 
 import {
     Container,
     HeaderBlock,
-    HourBlock
+    HourBlock,
+    AppointmentContainer,
+    HourGrid,
+    TableHead
 } from './calendar-weekdays.styles'
 
 const WeekDays = ({
     calendar,
     year,
     month,
-    monday,
     weekIndex
 }) => {
-    const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
+    const { response, isLoading } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
     const firstDayIndex = new Date(year, month, 0).getDay();
     const lastDayIndex = new Date(year, month + 1, 0).getDay()
@@ -31,8 +35,6 @@ const WeekDays = ({
     const nextDays = 7 - lastDayIndex
 
     const [calendarDays, setCalendarDays] = useState([])
-    // const [startIndex, setStartIndex] = useState(0)
-
 
     useEffect(() => {
         if (isLoading) return
@@ -41,51 +43,60 @@ const WeekDays = ({
             const prevMonthDays = getPreviousMonthDays(firstDayIndex)
             const monthDays = getCurrentMonthDays(lastDay)
             const nextMonthDays = getNextMonthDays(nextDays)
+            const monthDaysWithBookings = getBooking(monthDays, response.calendar, month, year)
 
             setCalendarDays([
                 ...prevMonthDays,
-                ...monthDays,
+                ...monthDaysWithBookings,
                 ...nextMonthDays
             ])
         }
     }, [isLoading])
 
-    console.log(calendarDays)
-
     return (
         <div>
             <Container>
-                {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
-                    <HeaderBlock isDisabled={isDisable} key={idx}>
-                        {isPrevDay ? (
-                            <React.Fragment>
-                                <p>{dayNames[new Date(year, month - 1, prevLastDay - (dayNumber - 1)).getDay()]}</p>
-                                <p>{prevLastDay - (dayNumber - 1)}</p>
-                            </React.Fragment>
-                        ) : isNextDay ? (
-                            <React.Fragment>
-                                <p>{dayNames[new Date(year, month + 1, dayNumber).getDay()]}</p>
-                                <p>{dayNumber} </p>
-                            </React.Fragment>
-                        ) : (
-                                    <React.Fragment>
-                                        <p>{dayNames[new Date(year, month, dayNumber).getDay()]}</p>
-                                        <p>{dayNumber} </p>
-                                    </React.Fragment>
-                                )}
-                    </HeaderBlock>
-                ))}
+                <TableHead>
+                    {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
+                        <HeaderBlock isDisabled={isDisable} key={idx}>
+                            {isPrevDay ? (
+                                <React.Fragment>
+                                    <p>{dayNames[new Date(year, month - 1, prevLastDay - (dayNumber - 1)).getDay()]}</p>
+                                    <p>{prevLastDay - (dayNumber - 1)}</p>
+                                </React.Fragment>
+                            ) : isNextDay ? (
+                                <React.Fragment>
+                                    <p>{dayNames[new Date(year, month + 1, dayNumber).getDay()]}</p>
+                                    <p>{dayNumber} </p>
+                                </React.Fragment>
+                            ) : (
+                                        <React.Fragment>
+                                            <p>{dayNames[new Date(year, month, dayNumber).getDay()]}</p>
+                                            <p>{dayNumber} </p>
+                                        </React.Fragment>
+                                    )}
+                        </HeaderBlock>
+                    ))}
+                </TableHead>
 
-                {[...Array(7)].map((value, idx) => {
-                    return <HourBlock key={idx}>
-                        {[...Array(24)].map((value, index) => (
-                            <div key={index}>
-                                <span>{index + 1}:00</span>
-                            </div>
-                        ))}
-                    </HourBlock>
+                <HourGrid>
+                    {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
 
-                })}
+                        return <HourBlock key={idx}>
+                            {[...Array(24)].map((value, index) => (
+                                <div key={index}>
+                                    {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
+                                        <AppointmentContainer>
+                                            <p>{dayData?.bookings.find(booking => Number(booking.split('/')[0]) === index + 1).replace("/", ":")}</p>
+                                        </AppointmentContainer>
+                                    )}
+                                    <span>{index + 1}:00</span>
+                                </div>
+                            ))}
+                        </HourBlock>
+
+                    })}
+                </HourGrid>
             </Container>
         </div>
     )

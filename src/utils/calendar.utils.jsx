@@ -119,3 +119,17 @@ export const getBooking = (days, calendar, month, year) => {
     });
     return daysWithBookingsArr
 }
+
+export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
+    let result = false;
+    if (bookingsArr) {
+        bookingsArr.forEach(booking => {
+            const formatBookingTime = booking.split('/')
+            if (Number(formatBookingTime[0]) === hourIndex + 1) {
+                return result = true
+            }
+        })
+    }
+    return result
+}
+

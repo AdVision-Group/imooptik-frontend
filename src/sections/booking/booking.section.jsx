@@ -33,7 +33,7 @@ const BookingSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [calendars, setCalendars] = useState([])
     const [selectedCalendar, setSelectedCalendar] = useState(null)
-    const [selectedDay, setSelectedDay] = useState(new Date().getDay())
+    const [selectedDay] = useState(new Date().getDay())
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
     const [selectedMondayOfWeek, setSelectedMondayOWeek] = useState(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
@@ -43,6 +43,7 @@ const BookingSection = () => {
 
     const handleShowCalendarClick = (calendarId) => {
         setSelectedCalendar(calendarId)
+        resetCalendarToDefault()
     }
 
     const getPrevWeek = () => {
@@ -83,6 +84,13 @@ const BookingSection = () => {
             setSelectedMonth(prevValue => prevValue + 1)
         }
 
+    }
+
+    const resetCalendarToDefault = () => {
+        setSelectedMonth(new Date().getMonth())
+        setSelectedYear(new Date().getFullYear())
+        setSelectedMondayOWeek(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
+        setCalendarWeekIndex(0)
     }
 
     useEffect(() => {

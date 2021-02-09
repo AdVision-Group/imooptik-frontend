@@ -2,9 +2,41 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     width: 100%;
+`
+
+export const HourGrid = styled.div`
+    overflow-y: scroll;
+    /* overflow-x: auto; */
+    height: 60rem;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: 1px solid rgba(0,0,0,.1);
+    border: var(--table-border);
+    min-width: 55rem;
+
+   ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
+`
+
+export const TableHead = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: var(--table-border);
     min-width: 55rem;
 `
 
@@ -30,30 +62,51 @@ export const HeaderBlock = styled.div`
 `
 
 export const HourBlock = styled.div`
-
+ 
     div {
         position: relative;
         height: 10rem;
-        padding: .5rem;
-        border: 1px solid rgba(0,0,0,0.1);
+        /* padding: .5rem; */
+        border: var(--table-border);
 
         span {
-            opacity: .6;
-            position: absolute;
-            bottom: .5rem;
-            left: -2rem;
-            /* transform:translateY(-50%); */
-            background-color: var(--background-primary-color);
+            display: none;
+
+                /* display: block;
+                opacity: .6;
+                position: absolute;
+                bottom: .5rem;
+                left: .5rem;
+                background-color: var(--background-primary-color);
+                z-index: 999;
+                padding: .5rem 1rem;
+                border-radius: 9999rem; */
+
         }
+
     }
 
-    :not(:nth-child(8n)) {
+    &:nth-child(1) {
         div {
-            padding: 2rem;
-
             span {
-                display: none;
+                display: block;
+                opacity: .6;
+                position: absolute;
+                top: .5rem;
+                left: .5rem;
+                /* transform:translateY(-50%); */
+                background-color: var(--background-primary-color);
+                z-index: 999;
+                padding: .5rem 1rem;
+                border-radius: 9999rem;
             }
         }
     }
+`
+
+export const AppointmentContainer = styled.div`
+    border: var(--appointment-container-border);
+    background-color: var(--appointment-container-background-color);
+    color: var(--appointment-container-text-color);
+
 `

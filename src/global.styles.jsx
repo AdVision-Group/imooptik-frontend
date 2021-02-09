@@ -18,7 +18,11 @@ export const DefaultThemeColors = createGlobalStyle`
 
         --navlink-color: #ffffff;
         --table-head-color: #ffffff;
+        --table-border: 1px solid rgba(0,0,0,0.1);
 
+        --appointment-container-border: none;
+        --appointment-container-background-color: #ebac01;
+        --appointment-container-text-color: #fff;
 
         --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.08);
         --container-background-color: #fff;
@@ -54,6 +58,12 @@ export const DarkThemeColors = createGlobalStyle`
 
         --navlink-color: #c7c6c6;
         --table-head-color: #c7c6c6;
+        --table-border: 1px solid rgba(0,0,0,0.1);
+
+        --appointment-container-border: none;
+        --appointment-container-background-color: #252525;
+        --appointment-container-text-color: #a0a0a0;
+
 
         --container-shadow: none;
         --container-background-color: #252525;
