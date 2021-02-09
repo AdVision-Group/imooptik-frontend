@@ -32,6 +32,12 @@ export const GridContainer = styled.div`
 
 `
 
+export const Container = styled.div`
+    padding: 2rem;
+    background-color: var(--container-background-color);
+    box-shadow: var(--container-shadow);
+`
+
 export const PostImage = styled.div`
     cursor: pointer;
     display:flex;

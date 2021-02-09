@@ -6,7 +6,8 @@ export const PostContainer = styled.div`
     display: grid;
     grid-template-columns: 25rem 1fr 25rem;
 
-    box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08);
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     padding: 2rem;
 
     &:not(:last-child) {

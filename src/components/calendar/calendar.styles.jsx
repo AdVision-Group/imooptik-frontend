@@ -12,7 +12,7 @@ export const HeaderBlock = styled.div`
     cursor: default;
     height: 8rem;
     background-color: var(--color-black);
-    color: var(--primary-text-color);
+    color: var(--table-head-color);
     display: flex;
     align-items:center;
     justify-content:center;

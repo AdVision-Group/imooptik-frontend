@@ -19,6 +19,7 @@ import {
     AddButton,
     Title,
     ContentTextare,
+    Container,
 } from './post.styles'
 
 const PostSection = () => {
@@ -120,7 +121,7 @@ const PostSection = () => {
             <ScrollContainer>
 
                 <GridContainer>
-                    <div>
+                    <Container>
                         <h2>Informácia</h2>
                         <CustomInput
                             label="Nadpis"
@@ -143,8 +144,8 @@ const PostSection = () => {
                             {!selectedImage && "Vybrať obrázok"}
                             {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                         </PostImage>
-                    </div>
-                    <div>
+                    </Container>
+                    <Container>
                         <Title>Obsah</Title>
                         <QuillToolbar />
                         <ContentTextare
@@ -153,7 +154,7 @@ const PostSection = () => {
                             modules={modules}
                             formats={formats}
                         />
-                    </div>
+                    </Container>
 
                 </GridContainer>
 
