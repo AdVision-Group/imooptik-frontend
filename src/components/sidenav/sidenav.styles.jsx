@@ -57,24 +57,24 @@ export const NavLinksContainer = styled.ul`
     @media all and (max-height: 725px) {
         overflow-y: scroll;
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
+    ::-webkit-scrollbar {
+        width: 2px;
+    }
 
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background:  #3E3E3E;
-        }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--body-background-primary-color);
+    }
 
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-        }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
 
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
     }
 
     li {

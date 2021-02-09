@@ -14,11 +14,32 @@ export const Container = styled.div`
     color: var(--primary-text-color);
 
 
+
+
     @media all and (max-width: 1150px) {
         margin-bottom: 8rem;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
     }
 `
 
 export const FixedContainer = styled.div`
-    max-width: 115rem;
+    /* max-width: 115rem; */
 `
