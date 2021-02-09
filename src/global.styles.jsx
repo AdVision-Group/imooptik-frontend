@@ -83,7 +83,7 @@ export const DarkThemeColors = createGlobalStyle`
         --button-font-color: #fff;
         --secondary-button-font-color: #a57f116;
 
-        --color-red: #DD4C4C;
+        --color-red: #d63636;
         --color-green: #32AA5F;
         --color-black: #000;
 

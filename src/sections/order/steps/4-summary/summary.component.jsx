@@ -8,7 +8,6 @@ import OrderSummaryLensesName from '../../../../components/order-summary-lenses-
 
 
 import { retailNames } from '../../../../context/warehouse/warehouse.utils'
-// import { useFetchById } from '../../../hooks/useFetch'
 
 import {
     TableCol,
@@ -26,13 +25,12 @@ import {
 } from './summary.styles'
 
 const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged, isUpdating }) => {
-    const { createOrder } = useContext(OrdersContext)
+    const { createOrder, updateOrder } = useContext(OrdersContext)
     const [showModal, setShowModal] = useState(false)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
 
     console.log(order)
-
     console.log(combinedProducts)
 
     useEffect(() => {
@@ -57,6 +55,8 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                     combinedProducts={combinedProducts}
                     createOrder={createOrder}
                     setHasChanged={setHasChanged}
+                    isUpdating={isUpdating}
+                    updateOrder={updateOrder}
                 />
             )}
             <ProductsOverviewContainer>
@@ -123,31 +123,58 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                     </div>
                 </UserOverviewContainer>
                 <div>
+                    {!isUpdating && <OptionsContainer>
+                        <h3>Možnosti</h3>
+                        <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
+                        <OptionButton onClick={() => setShowModal(true)}>Vytvoriť objednavku</OptionButton>
+                    </OptionsContainer>}
+
+                    {isUpdating && (
+                        <OptionsContainer>
+                            <h3>Možnosti</h3>
+                            {/* <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton> */}
+                            <OptionButton onClick={() => setShowModal(true)}>Upraviť objednavku</OptionButton>
+                        </OptionsContainer>
+                    )}
+
+                    {isUpdating && order?.order?.overwrite && (
+                        <OrderDetailsContainer>
+                            <h3>Doručovacia adresa</h3>
+                            <div>
+                                <h4>Adresa</h4>
+                                <StyledParagraph>{order?.order?.overwrite?.psc}</StyledParagraph>
+                                <StyledParagraph>{order?.order?.overwrite?.address}</StyledParagraph>
+                                <StyledParagraph>{order?.order?.overwrite?.city}</StyledParagraph>
+                                <StyledParagraph>{order?.order?.overwrite?.country}</StyledParagraph>
+                            </div>
+                        </OrderDetailsContainer>
+                    )}
+
                     {order.order && <OrderDetailsContainer>
                         <h3>Detaily objednávky</h3>
                         <div>
                             <h4>Dátum objednávky</h4>
-                            <p>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+                            <StyledParagraph>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</StyledParagraph>
                         </div>
                         <div>
                             <h4>Doručiť na adresu</h4>
-                            <p>{order.order.shouldDeliver ? "Áno" : "Nie"}</p>
+                            <StyledParagraph>{order.order.shouldDeliver ? "Áno" : "Nie"}</StyledParagraph>
                         </div>
                         <div>
                             <h4>Nákup na firmu</h4>
-                            <p>{order.order.buyingAsCompany ? "Áno" : "Nie"}</p>
+                            <StyledParagraph>{order.order.buyingAsCompany ? "Áno" : "Nie"}</StyledParagraph>
                         </div>
                         <div>
                             <h4>Spôsob úhrady</h4>
-                            <p>{translatePaymentMethod(order.order.paymentType)}</p>
+                            <StyledParagraph>{translatePaymentMethod(order.order.paymentType)}</StyledParagraph>
                         </div>
                         <div>
                             <h4>Stav objednávky</h4>
-                            <p>{order.order.status === 'half-paid' ? `Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€` : "Zaplatené"}</p>
+                            <StyledParagraph>{order.order.status === 'half-paid' ? `Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€` : "Zaplatené"}</StyledParagraph>
                         </div>
                         <div>
                             <h4>Vybavuje prevádzka</h4>
-                            <p>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises - 1]}</p>
+                            <StyledParagraph>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises - 1]}</StyledParagraph>
                         </div>
                         <div>
                             <h4>PDF</h4>
@@ -156,12 +183,6 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                             </a>
                         </div>
                     </OrderDetailsContainer>}
-
-                    {!isUpdating && <OptionsContainer>
-                        <h3>Možnosti</h3>
-                        <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
-                        <OptionButton onClick={() => setShowModal(true)}>Dokončiť objednavku</OptionButton>
-                    </OptionsContainer>}
                 </div>
             </SummaryGridLayout>
         </div>

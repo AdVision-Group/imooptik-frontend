@@ -5,7 +5,7 @@ export const UserTableHead = styled.div`
     display: grid;
     align-content: center;
     grid-template-columns: 1fr 2fr 25rem;
-    border-bottom: 1px solid var(--secondary-text-colo);
+    border-bottom: 1px solid var(--secondary-text-color);
     font-weight: bolder;
 `
 export const UserTableRow = styled.div`
@@ -20,7 +20,7 @@ export const UserTableRow = styled.div`
     transition: all .3s ease-out;
 
     &:hover {
-        background-color: var(--color-primary); 
+        background-color: var(--primary-color); 
         font-weight: bolder;
         color: var(--button-font-color);
     }

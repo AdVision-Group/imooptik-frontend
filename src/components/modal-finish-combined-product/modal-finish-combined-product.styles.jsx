@@ -40,6 +40,25 @@ export const Modal = styled.div`
         margin-bottom: 2rem;
         text-align: center;
     }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
 `
 
 export const CloseButton = styled.button`

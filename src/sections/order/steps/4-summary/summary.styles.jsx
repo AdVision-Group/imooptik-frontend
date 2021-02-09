@@ -76,7 +76,7 @@ export const UserOverviewContainer = styled.div`
 
     h4 {
         margin-top: 1rem;
-
+        margin-bottom: .5rem;
     }
 
 `
@@ -100,6 +100,11 @@ export const OrderDetailsContainer = styled.div`
 
     h3 {
         margin-bottom: 1rem;
+    }
+
+    h4 {
+        margin-top: 1rem;
+        margin-bottom: .5rem;
     }
 
     div {
@@ -127,6 +132,7 @@ export const OptionsContainer = styled.div`
     border-radius: .5rem;
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
+    margin-bottom: 3rem;
 
 
     h3 {

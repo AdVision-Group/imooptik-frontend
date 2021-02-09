@@ -13,7 +13,15 @@ import {
     DiscountCheckboxContainer
 } from './modal-finish-order.styles'
 
-const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasChanged }) => {
+const FinishOrderModal = ({
+    close,
+    order,
+    combinedProducts,
+    createOrder,
+    setHasChanged,
+    isUpdating,
+    updateOrder
+}) => {
     const [orderDetail, setOrderDetails] = useState({
         paymentType: "cash"
     })
@@ -85,34 +93,54 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
         })
     }
 
-    useEffect(() => {
-        return () => {
-
-        }
-    }, [])
-
     const handleSubmit = e => {
         e.preventDefault()
 
-        let orderObj = {
-            ...orderDetail,
-            user: order.user._id,
-            combinedProducts: combinedProducts.map(product => product._id),
-            status: hasDeposit ? "half-paid" : "paid"
-        }
+        if (isUpdating) {
+            let orderObj = {
+                ...orderDetail,
+            }
+            console.log("orderDetail")
+            console.log(orderDetail)
+            console.log(order)
 
-        console.log(orderObj)
-        setHasChanged(false)
-        createOrder(orderObj)
+            delete orderObj['paymentType']
+            delete orderObj['shouldDeliver']
+
+            setHasChanged(false)
+            updateOrder(orderObj, order.order._id)
+
+        } else {
+            let orderObj = {
+                ...orderDetail,
+                user: order.user._id,
+                combinedProducts: combinedProducts.map(product => product._id),
+                status: hasDeposit ? "half-paid" : "paid"
+            }
+
+            console.log(orderObj)
+            setHasChanged(false)
+            createOrder(orderObj)
+        }
     }
+
+    useEffect(() => {
+        return () => {
+            setOrderDetails({
+                paymentType: "cash"
+            })
+            setHasDeposit(false)
+            setOverwrite(false)
+        }
+    }, [])
 
     return (
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
-                <h2>Dokončenie objednávky</h2>
+                <h2>{isUpdating ? "Upraviť objednávku" : 'Dokončeniť objednávky'}</h2>
 
-                <div>
+                {!isUpdating && <div>
                     <h4>Spôsob platby</h4>
 
                     <CustomSelect
@@ -140,9 +168,9 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
                         />
                     )}
                 </div>
-
+                }
                 <div>
-                    <h4>Ďalšie informácie</h4>
+                    <h4>Informácie o doručení</h4>
                     <OptionsCheckbox
                         label={"Doručiť na adresu"}
                         isActive={orderDetail?.shouldDeliver}
@@ -208,11 +236,8 @@ const FinishOrderModal = ({ close, order, combinedProducts, createOrder, setHasC
                                             value={orderDetail?.overwrite?.country ?? ""}
                                             onChange={e => handleAddressOverwriteChange(e)}
                                         />
-
                                     </div>
-                                )
-
-                                }
+                                )}
                             </div>
                         </div>
                     )}

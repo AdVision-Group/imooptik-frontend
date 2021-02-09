@@ -8,6 +8,7 @@ export const OrdersContext = createContext({
     orders: null,
     getOrders: () => { },
     createOrder: () => { },
+    updateOrder: () => { },
     finishOrder: () => { },
 })
 
@@ -96,6 +97,49 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+    const updateOrder = async (orderToUpdate, orderId) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        let orderObj = {
+            ...orderToUpdate
+        }
+
+
+        console.log("ORDER BEFORE SEND")
+        console.log(orderObj)
+
+        const raw = JSON.stringify(orderObj)
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.order) {
+                getOrders()
+                closeModal()
+                push('/dashboard/objednavky')
+            }
+
+            getMessage(data.message)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     const finishOrder = async (orderId) => {
         setIsLoading(true)
         setShowModal(true)
@@ -137,6 +181,7 @@ const OrdersProvider = ({ children }) => {
                 orders,
                 getOrders,
                 createOrder,
+                updateOrder,
                 finishOrder
             }}
         >
