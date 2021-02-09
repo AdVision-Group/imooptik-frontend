@@ -63,7 +63,6 @@ const Calendar = ({ calendar, month, year }) => {
             }
         }
     }, [isLoading])
-    // console.log(calendarData)
 
     return (
         <Container>
@@ -85,10 +84,7 @@ const Calendar = ({ calendar, month, year }) => {
             ))}
 
             {currentMonthDays.map((data, idx) => {
-                console.log(data)
                 const { dayNumber, bookings } = data
-
-
                 return (
                     <Dayblock key={idx}>
                         <p>

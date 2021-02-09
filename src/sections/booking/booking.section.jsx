@@ -10,7 +10,7 @@ import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
 
 import { useFetch } from '../../hooks/useFetch'
-import { calendarFormat, months } from '../../utils/calendar.utils'
+import { calendarFormat, months, getMonday } from '../../utils/calendar.utils'
 
 import {
     AiOutlineLeft,
@@ -33,13 +33,32 @@ const BookingSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [calendars, setCalendars] = useState([])
     const [selectedCalendar, setSelectedCalendar] = useState(null)
+    const [selectedDay, setSelectedDay] = useState(new Date().getDay())
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
+    const [selectedMondayOfWeek, setSelectedMondayOWeek] = useState(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
 
     const { isLoading, response, message, refetch } = useFetch('api/booking/calendars')
 
     const handleShowCalendarClick = (calendarId) => {
         setSelectedCalendar(calendarId)
+    }
+
+    const getPrevWeek = () => {
+        console.log(selectedDay)
+        if (selectedDay < 0) {
+            setSelectedDay(new Date(selectedYear, selectedMonth, 0).getDate())
+        }
+        setSelectedDay(prevValue => prevValue - 7)
+    }
+
+    const getNextWeek = () => {
+        console.log(selectedDay)
+        const lastDayIndex = new Date(selectedYear, selectedMonth, 0).getDate()
+        if (selectedDay > lastDayIndex) {
+            setSelectedDay(0)
+        }
+        setSelectedDay(prevValue => prevValue + 7)
     }
 
     const getPrevMonth = () => {
@@ -52,6 +71,7 @@ const BookingSection = () => {
     }
 
     const getNextMonth = () => {
+        console.log('click')
         if (selectedMonth === 10) {
             setSelectedYear(prevValue => prevValue + 1)
             setSelectedMonth(0)
@@ -60,6 +80,10 @@ const BookingSection = () => {
         }
 
     }
+
+    useEffect(() => {
+        setSelectedMondayOWeek(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
+    }, [selectedDay])
 
     useEffect(() => {
         if (!isLoading) {
@@ -100,11 +124,20 @@ const BookingSection = () => {
                                 <Title>Kalendár</Title>
                             </div>
 
-                            <CalendarMonthContainer>
-                                <button onClick={getPrevMonth}><AiOutlineLeft /></button>
-                                <p>{months[selectedMonth]}</p>
-                                <button onClick={getNextMonth}><AiOutlineRight /></button>
-                            </CalendarMonthContainer>
+                            {activeCalendarFormat === 0 ? (
+                                <CalendarMonthContainer>
+                                    <button onClick={getPrevMonth}><AiOutlineLeft /></button>
+                                    <p>{months[selectedMonth]}</p>
+                                    <button onClick={getNextMonth}><AiOutlineRight /></button>
+                                </CalendarMonthContainer>
+                            ) : (
+                                    <CalendarMonthContainer>
+                                        <button onClick={getPrevWeek}><AiOutlineLeft /></button>
+                                        <p>{Math.ceil(selectedMondayOfWeek.getDate() / 7)}</p>
+                                        <button onClick={getNextWeek}><AiOutlineRight /></button>
+                                    </CalendarMonthContainer>
+                                )}
+
                             <ul>
                                 {calendarFormat.map((name, idx) => (
                                     <CalendarFormat key={idx} isActive={activeCalendarFormat === idx} onClick={() => setActiveCalendarFormat(idx)}>{name}</CalendarFormat>
@@ -119,7 +152,10 @@ const BookingSection = () => {
                                     year={selectedYear}
                                 />
                             ) : (
-                                    <WeekDays calendar={selectedCalendar} />
+                                    <WeekDays
+                                        calendar={selectedCalendar}
+                                        monday={selectedMondayOfWeek}
+                                    />
                                 )}
                         </CalendarGridContainer>
                     </React.Fragment>

@@ -27,12 +27,18 @@ export const HeaderBlock = styled.div`
 export const HourBlock = styled.div`
 
     div {
+        position: relative;
         height: 10rem;
         padding: .5rem;
         border: 1px solid rgba(0,0,0,0.1);
 
         span {
             opacity: .6;
+            position: absolute;
+            bottom: .5rem;
+            left: -2rem;
+            /* transform:translateY(-50%); */
+            background-color: var(--background-primary-color);
         }
     }
 
