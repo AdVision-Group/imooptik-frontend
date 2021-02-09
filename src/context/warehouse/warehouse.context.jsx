@@ -77,7 +77,7 @@ const WarehouseProvider = ({ children }) => {
     const [activePremisesTab, setActivePremisesTab] = useState(0)
     const [retailPremisesTabs, setRetailPremisesTabs] = useState([])
 
-    const [productCategoryTypeTabs, setProductCategoryTypeTabs] = useState(categoryTabs)
+    const [productCategoryTypeTabs] = useState(categoryTabs)
     const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
 
     const handleGlassesParameterChange = e => {

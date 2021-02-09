@@ -105,6 +105,7 @@ export const HourBlock = styled.div`
 `
 
 export const AppointmentContainer = styled.div`
+    cursor: pointer;
     border: var(--appointment-container-border);
     background-color: var(--appointment-container-background-color);
     color: var(--appointment-container-text-color);

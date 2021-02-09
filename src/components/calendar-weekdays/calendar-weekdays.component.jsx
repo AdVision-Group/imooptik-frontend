@@ -23,7 +23,8 @@ const WeekDays = ({
     calendar,
     year,
     month,
-    weekIndex
+    weekIndex,
+    handleCalendarBlockClick
 }) => {
     const { response, isLoading } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
@@ -86,7 +87,7 @@ const WeekDays = ({
                             {[...Array(24)].map((value, index) => (
                                 <div key={index}>
                                     {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
-                                        <AppointmentContainer>
+                                        <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
                                             <p>{dayData?.bookings.find(booking => Number(booking.split('/')[0]) === index + 1).replace("/", ":")}</p>
                                         </AppointmentContainer>
                                     )}

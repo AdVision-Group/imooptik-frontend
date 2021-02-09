@@ -42,6 +42,8 @@ export const StatsContainer = styled.div`
     padding: 2rem;
     border-radius: .5rem;
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
 
     div {
         display: flex;

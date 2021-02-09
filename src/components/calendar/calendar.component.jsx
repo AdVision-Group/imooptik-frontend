@@ -17,7 +17,12 @@ import {
 
 } from './calendar.styles'
 
-const Calendar = ({ calendar, month, year }) => {
+const Calendar = ({
+    calendar,
+    month,
+    year,
+    handleCalendarBlockClick
+}) => {
     const date = new Date()
 
     date.setDate(1)
@@ -42,7 +47,6 @@ const Calendar = ({ calendar, month, year }) => {
         if (calendar) {
             refetch()
         }
-
     }, [calendar])
 
     useEffect(() => {
@@ -82,7 +86,7 @@ const Calendar = ({ calendar, month, year }) => {
             {currentMonthDays.map((data, idx) => {
                 const { dayNumber, bookings } = data
                 return (
-                    <Dayblock key={idx}>
+                    <Dayblock key={idx} onClick={() => handleCalendarBlockClick(data)}>
                         <p>
                             {bookings && <span>
                                 {bookings.length}

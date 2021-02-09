@@ -8,6 +8,7 @@ import BookingCalendarOverview from "../../components/booking-calendar-overview/
 
 import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
+import BookingAppoinments from '../../components/booking-appoinments/booking-appoinment.component'
 
 import { useFetch } from '../../hooks/useFetch'
 import { calendarFormat, months, getMonday } from '../../utils/calendar.utils'
@@ -33,13 +34,13 @@ const BookingSection = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [calendars, setCalendars] = useState([])
     const [selectedCalendar, setSelectedCalendar] = useState(null)
-    const [selectedDay] = useState(new Date().getDay())
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
-    const [selectedMondayOfWeek, setSelectedMondayOWeek] = useState(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
     const [calendarWeekIndex, setCalendarWeekIndex] = useState(0)
 
-    const { isLoading, response, message, refetch } = useFetch('api/booking/calendars')
+    const [selectedDay, setSelectedDay] = useState(null)
+
+    const { isLoading, response, message } = useFetch('api/booking/calendars')
 
     const handleShowCalendarClick = (calendarId) => {
         setSelectedCalendar(calendarId)
@@ -89,13 +90,18 @@ const BookingSection = () => {
     const resetCalendarToDefault = () => {
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
-        setSelectedMondayOWeek(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
         setCalendarWeekIndex(0)
+        setSelectedDay(null)
     }
 
-    useEffect(() => {
-        setSelectedMondayOWeek(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
-    }, [selectedDay])
+    const handleCalendarBlockClick = (dayData) => {
+        if (!dayData.bookings) return
+        if (!dayData.bookingDate) return
+        // setActiveCalendarFormat(1)
+        setSelectedCalendar(null)
+        setSelectedDay(dayData)
+        console.log(dayData)
+    }
 
     useEffect(() => {
         if (!isLoading) {
@@ -162,18 +168,26 @@ const BookingSection = () => {
                                     calendar={selectedCalendar}
                                     month={selectedMonth}
                                     year={selectedYear}
+                                    handleCalendarBlockClick={handleCalendarBlockClick}
                                 />
                             ) : (
                                     <WeekDays
                                         calendar={selectedCalendar}
                                         month={selectedMonth}
                                         year={selectedYear}
-                                        monday={selectedMondayOfWeek}
                                         weekIndex={calendarWeekIndex}
+                                        handleCalendarBlockClick={handleCalendarBlockClick}
+
                                     />
                                 )}
                         </CalendarGridContainer>
                     </React.Fragment>
+                )}
+
+                {selectedDay && (
+                    <BookingAppoinments
+                        day={selectedDay}
+                    />
                 )}
             </ScrollContainer>
         </section>

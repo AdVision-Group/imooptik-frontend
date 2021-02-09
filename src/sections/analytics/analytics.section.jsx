@@ -7,6 +7,9 @@ import SectionNavbar from '../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 
+import { retailNamesTabs } from '../../utils/warehouse.utils'
+import { analyticsTabItems } from '../../utils/analytics.utils'
+
 import {
     Header,
     GridContainer,
@@ -21,41 +24,15 @@ const AnalyticsSection = () => {
         message,
         showModal
     } = useContext(LoadingModalContext)
-    const { stats: storeData } = useContext(AuthContext)
+    const { stats: storeData, isAdmin, currentUser } = useContext(AuthContext)
     const { stats, getAnalytics } = useContext(AnalyticsContext)
+    const premisesTabs = isAdmin ? retailNamesTabs : retailNamesTabs.filter(tab => tab.id === currentUser.premises || tab.id === 0)
 
-    const items = [
-        {
-            id: 1,
-            name: "Všetko",
-            value: "all"
-        },
-        {
-            id: 2,
-            name: "Deň",
-            value: "day"
-        },
-        {
-            id: 3,
-            name: "Týžden",
-            value: "week"
-        },
-        {
-            id: 4,
-            name: "Mesiac",
-            value: "month"
-        },
-        {
-            id: 5,
-            name: "Rok",
-            value: "year"
-        },
-    ]
-
+    const [activePremiseIndex, setActivePremiseIndex] = useState(0)
     const [activeIndex, setActiveIndex] = useState(2)
 
     useEffect(() => {
-        getAnalytics(items[activeIndex - 1].value)
+        getAnalytics(analyticsTabItems[activeIndex - 1].value)
     }, [activeIndex])
 
     console.log(stats)
@@ -68,7 +45,12 @@ const AnalyticsSection = () => {
             </Header>
 
             <SectionNavbar
-                items={items}
+                items={premisesTabs}
+                activeIndex={activePremiseIndex}
+                setActiveIndex={setActivePremiseIndex}
+            />
+            <SectionNavbar
+                items={analyticsTabItems}
                 activeIndex={activeIndex}
                 setActiveIndex={setActiveIndex}
             />

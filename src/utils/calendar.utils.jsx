@@ -81,14 +81,11 @@ export const getBooking = (days, calendar, month, year) => {
         spliteBookingString.forEach(value => {
             if (month + 1 === Number(spliteBookingString[1]) && year === Number(spliteBookingString[2])) {
                 return isBelongHere = true
-            } else {
-                return isBelongHere = false
             }
         })
+
         if (isBelongHere) {
             return booking
-        } else {
-            // return
         }
     })
 
@@ -100,7 +97,8 @@ export const getBooking = (days, calendar, month, year) => {
             if (Number(splitedDate[0]) === day.dayNumber) {
                 return dayObj = {
                     dayNumber: day.dayNumber,
-                    bookings: calendar.booked[date]
+                    bookings: calendar.booked[date],
+                    bookingDate: bookingDates.find(bookDate => bookDate === date)
                 }
             } else {
                 if (dayObj.bookings) return
