@@ -22,6 +22,11 @@ export const HeaderBlock = styled.div`
     p:first-child {
         font-weight: lighter;
     }
+
+    /* background-color: red; */
+    ${({ isDisabled }) => isDisabled ? (`
+        opacity: .6;
+    `) : ''}
 `
 
 export const HourBlock = styled.div`

@@ -37,6 +37,7 @@ const BookingSection = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
     const [selectedMondayOfWeek, setSelectedMondayOWeek] = useState(getMonday(new Date(selectedYear, selectedMonth, selectedDay)))
+    const [calendarWeekIndex, setCalendarWeekIndex] = useState(0)
 
     const { isLoading, response, message, refetch } = useFetch('api/booking/calendars')
 
@@ -45,20 +46,23 @@ const BookingSection = () => {
     }
 
     const getPrevWeek = () => {
-        console.log(selectedDay)
-        if (selectedDay < 0) {
-            setSelectedDay(new Date(selectedYear, selectedMonth, 0).getDate())
+        if (calendarWeekIndex - 1 < 0) {
+            setCalendarWeekIndex(0)
+
+        } else {
+            setCalendarWeekIndex(prevValue => prevValue - 1)
         }
-        setSelectedDay(prevValue => prevValue - 7)
     }
 
     const getNextWeek = () => {
-        console.log(selectedDay)
         const lastDayIndex = new Date(selectedYear, selectedMonth, 0).getDate()
-        if (selectedDay > lastDayIndex) {
-            setSelectedDay(0)
+        console.log(calendarWeekIndex * 7)
+        console.log(lastDayIndex)
+        if (((calendarWeekIndex + 1) * 7) >= lastDayIndex) {
+            setCalendarWeekIndex(0)
+        } else {
+            setCalendarWeekIndex(prevValue => prevValue + 1)
         }
-        setSelectedDay(prevValue => prevValue + 7)
     }
 
     const getPrevMonth = () => {
@@ -133,7 +137,7 @@ const BookingSection = () => {
                             ) : (
                                     <CalendarMonthContainer>
                                         <button onClick={getPrevWeek}><AiOutlineLeft /></button>
-                                        <p>{Math.ceil(selectedMondayOfWeek.getDate() / 7)}</p>
+                                        <p>{calendarWeekIndex + 1}</p>
                                         <button onClick={getNextWeek}><AiOutlineRight /></button>
                                     </CalendarMonthContainer>
                                 )}
@@ -154,7 +158,10 @@ const BookingSection = () => {
                             ) : (
                                     <WeekDays
                                         calendar={selectedCalendar}
+                                        month={selectedMonth}
+                                        year={selectedYear}
                                         monday={selectedMondayOfWeek}
+                                        weekIndex={calendarWeekIndex}
                                     />
                                 )}
                         </CalendarGridContainer>

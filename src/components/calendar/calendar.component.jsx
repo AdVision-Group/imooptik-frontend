@@ -14,9 +14,7 @@ import {
     Container,
     HeaderBlock,
     Dayblock,
-    BookingContainer,
-    DayRowContainer,
-    DayNumber
+
 } from './calendar.styles'
 
 const Calendar = ({ calendar, month, year }) => {
@@ -32,7 +30,6 @@ const Calendar = ({ calendar, month, year }) => {
     const nextDays = 7 - lastDayIndex
 
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
-    const [calendarData, setCalendarData] = useState(null)
     const [prevDays, setPrevDays] = useState([])
     const [currentMonthDays, setCurrentMonthDays] = useState([])
     const [nextMonthDays, setMonthNextDays] = useState([])
@@ -51,7 +48,6 @@ const Calendar = ({ calendar, month, year }) => {
     useEffect(() => {
         if (!isLoading) {
             if (response?.calendar) {
-                setCalendarData(response.calendar)
                 const prevDaysArr = getPreviousMonthDays(firstDayIndex)
                 const arr = getCurrentMonthDays(lastDay)
                 const nextDaysArr = getNextMonthDays(nextDays)

@@ -40,6 +40,8 @@ export const getPreviousMonthDays = (firstDayIndex) => {
     for (let x = firstDayIndex; x > 0; x--) {
         arr.push({
             dayNumber: x,
+            isDisable: true,
+            isPrevDay: true,
         })
     }
     return arr
@@ -51,6 +53,8 @@ export const getNextMonthDays = (nextDays) => {
     for (let x = 1; x <= nextDays; x++) {
         arr.push({
             dayNumber: x,
+            isDisable: true,
+            isNextDay: true
         })
     }
     return arr
