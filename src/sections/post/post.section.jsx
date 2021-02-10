@@ -71,16 +71,18 @@ const PostSection = () => {
     }, [id])
 
     useEffect(() => {
-        console.log(post)
-        if (post) {
+        if (id !== 'novy-prispevok') {
             console.log(post)
-            setTitle(post.name)
-            setDescription(post.description)
-            setContent(post.html)
-            toggleDraft(post.draft)
-            if (post.image) {
-                setImage(post.image._id)
-                setSelectedImage(post.image)
+            if (post) {
+                console.log(post)
+                setTitle(post.name)
+                setDescription(post.description)
+                setContent(post.html)
+                toggleDraft(post.draft)
+                if (post.image) {
+                    setImage(post.image._id)
+                    setSelectedImage(post.image)
+                }
             }
         }
     }, [post])
@@ -110,8 +112,8 @@ const PostSection = () => {
                 <div>
                     <CustomCheckbox
                         label='Draft'
-                        checked={draft}
-                        onChange={() => toggleDraft(!draft)}
+                        isActive={draft}
+                        handleClick={() => toggleDraft(prevValue => !prevValue)}
                     />
                     <DeleteButton>Vymazať</DeleteButton>
                     <AddButton type='submit'>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>

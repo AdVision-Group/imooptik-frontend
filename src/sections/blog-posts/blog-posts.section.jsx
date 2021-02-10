@@ -47,11 +47,11 @@ const BlogPosts = () => {
     const items = [
         {
             id: 0,
-            name: "Dátum pridania"
+            name: "Zostupne"
         },
         {
             id: 1,
-            name: "Abecedne"
+            name: "Vzostupne"
         },
     ]
 
@@ -68,6 +68,11 @@ const BlogPosts = () => {
             })
             blogsData.refetch()
         }
+    }
+
+    const handlePostDeleteClick = (postID) => {
+        handlePostDelete(postID)
+        blogsData.refetch()
     }
 
     useEffect(() => {
@@ -141,7 +146,7 @@ const BlogPosts = () => {
                         </PostContent>
                         <Options>
                             <UpdateButton onClick={() => push(`blog/${post._id}`)}>Upraviť</UpdateButton>
-                            <DeleteButton onClick={() => handlePostDelete(post._id)}>Vymazať</DeleteButton>
+                            <DeleteButton onClick={() => handlePostDeleteClick(post._id)}>Vymazať</DeleteButton>
                         </Options>
                     </PostContainer>
                 )) : (

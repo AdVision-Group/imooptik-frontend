@@ -34,7 +34,7 @@ export const ShowButton = styled(CustomButton)`
     display: block;
     background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--body-background-primary-color)"};
     font-weight: bolder;
-    color: ${({ isActive }) => isActive ? "var(--primary-text-color)" : "var(--primary-color)"};
+    color: ${({ isActive }) => isActive ? "var(--button-font-color)" : "var(--primary-color)"};
 `
 export const UpdateButton = styled(CustomButton)`
     margin-top: 2rem;

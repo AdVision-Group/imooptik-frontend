@@ -21,6 +21,7 @@ export const Header = styled.div`
 
 export const GridContainer = styled.div`
     display: grid;
+    align-items: start;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem;
     height: inherit;
@@ -81,7 +82,7 @@ export const Title = styled.h2`
 `
 
 export const ContentTextare = styled(ReactQuill)`
-    height: 100%;
+    height: 50rem;
     background-color: var(--input-background-color);
     color: var(--input-color);
     
