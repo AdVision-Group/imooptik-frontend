@@ -1,12 +1,5 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-/* --primary-color: #ebac01;
---secondary-color: #000;
---primary-text-color: #251919;
---secondary-text-color: #fff;
---body-background-primary-color: #f5f5f5;
---background-primary-color: #fff; */
-
 export const DefaultThemeColors = createGlobalStyle`
     :root {
         --primary-color: #ebac01;
@@ -44,6 +37,9 @@ export const DefaultThemeColors = createGlobalStyle`
         --color-red: #DD4C4C;
         --color-green: #32AA5F;
         --color-black: #000;
+
+        --calendar-indicator: invert(-1);
+
     }
 `
 
@@ -81,12 +77,13 @@ export const DarkThemeColors = createGlobalStyle`
 
 
         --button-font-color: #fff;
-        --secondary-button-font-color: #a57f116;
+        --secondary-button-font-color: #c28e01;
 
         --color-red: #d63636;
         --color-green: #32AA5F;
         --color-black: #000;
 
+        --calendar-indicator: invert(1);
     }
 `
 
@@ -121,6 +118,10 @@ export const GlobalStyles = createGlobalStyle`
 
         &:focus {
             outline: none;
+        }
+
+        ::-webkit-calendar-picker-indicator {
+            filter: var(--calendar-indicator);
         }
     }
 

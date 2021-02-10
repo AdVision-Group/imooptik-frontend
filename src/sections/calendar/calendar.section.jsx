@@ -4,191 +4,253 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 import { useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import InputRow from '../../components/product-input-row/product-input-row.component'
+import CustomRetailSelect from '../../components/custom-select/custom-select.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import Popup from '../../components/popup/pop-up.component'
 
+import { useFetchById } from '../../hooks/useFetch'
+
+import { retailNames } from '../../utils/warehouse.utils'
+import { dayNames, calendarTimes } from '../../utils/calendar.utils'
+
 import {
     Header,
-    DayTimesContainer,
     CreateCalendarButton,
-    DayNames,
-    DeleteCalendarButton
+    Container,
+    GridContainer,
+    ContainerRow,
+    TableHead,
+    TableCol,
+    TableRow,
+    AddDayButton
 } from './calendar.styles'
 
 const CalendarSection = () => {
-    const { calendarId } = useParams()
-    const {
-        isUpdatingCalendar,
-        handleCalendarChange,
-        handleDayTimeChange,
-        getCalendar,
-        createCalendar,
-        updateCalendar,
-        delCalendar,
-        calendar,
-        resetBooking
-    } = useContext(BookingContext)
-
     const {
         closeModal,
+        getMessage,
+        setShowModal,
         isLoading,
         message,
-        showModal
+        showModal,
     } = useContext(LoadingModalContext)
+    const { calendarId } = useParams()
+    const { response } = useFetchById("api/booking/calendars", calendarId, calendarId)
+    const [calendar, setCalendar] = useState({})
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (calendarId === 'novy-kalendar') {
-            createCalendar(calendar)
-        } else {
-            console.log('update calendar')
-            updateCalendar(calendar)
+    const handleCalendarValueChange = (e) => {
+        const { name, value } = e.target
+
+        if (value === '') {
+            delete calendar[name]
+            setCalendar({
+                ...calendar
+            })
+            return
         }
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: value
+        }))
     }
 
-    useEffect(() => {
-        if (calendarId !== 'novy-kalendar') {
-            getCalendar(calendarId)
+    const handleCalendarTimeChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = calendar[name] ? calendar[name] : ['x', 'x', 'x', 'x', 'x', 'x', 'x']
+        arr[idx] = value
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: arr
+        }))
+    }
+
+    const handleCalendarExceptDaysChange = (e, idx) => {
+        const { name, value } = e.target
+        let arr = calendar[name]
+        arr[idx] = value
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: arr
+        }))
+    }
+
+    const handleAddNewDay = () => {
+        setCalendar(prevValue => ({
+            ...prevValue,
+            exceptDays: prevValue.exceptDays ? [...prevValue.exceptDays, ""] : [""]
+        }))
+    }
+
+    const handleSubmit = () => {
+        if (!calendar.name) {
+            getMessage("Meno Kalendára je povinné")
+            setShowModal(true)
+            return
         }
-    }, [calendarId])
-
-    useEffect(() => {
-        return () => {
-            resetBooking()
+        if (!calendar.premises) {
+            getMessage("Nie je zvolená prevádzka ku ktorej patrí kalendár")
+            setShowModal(true)
+            return
         }
-    }, [])
+        if (!calendar.endTimes && !calendar.startTimes) {
+            getMessage("Nie sú vyplnené časy na prehliadky")
+            setShowModal(true)
+            return
+        }
+        if (!calendar.interval) {
+            getMessage("Nie je zvolený interval")
+            setShowModal(true)
+            return
+        }
 
-    if (!calendar || showModal) return <Popup loading={isLoading} title={message} close={closeModal} />
+        console.log("RAW CALENDAR")
+        console.log(calendar)
+    }
 
-
-    console.log(isUpdatingCalendar)
+    console.log(response)
     console.log(calendar)
 
     return (
         <section>
-            <form onSubmit={handleSubmit}>
-                <Header>
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            <Header>
+                <div>
+                    <h1>Nový kalendár</h1>
+                </div>
+                <div>
+                    <CreateCalendarButton onClick={handleSubmit}>Vytvoriť</CreateCalendarButton>
+                </div>
+            </Header>
+            <ScrollContainer>
+                <GridContainer>
                     <div>
-                        <h1>{isUpdatingCalendar ? `Kalendár: ${calendar.name}` : "Nový kalendár"}</h1>
+                        <Container>
+                            <h3>Základné informácie</h3>
+                            <div>
+                                <h4>Kalendar je pre prevádzku</h4>
+                                <CustomRetailSelect
+                                    name='premises'
+                                    value={calendar?.premises || "0"}
+                                    listItems={retailNames}
+                                    defaultOption
+                                    defaultValue={0}
+                                    defaultLabel="Nezadané"
+                                    handleChange={handleCalendarValueChange}
+                                />
+                            </div>
+                            <div>
+                                <h4>Meno kalendára</h4>
+                                <CustomInput
+                                    type="text"
+                                    label='Meno*'
+                                    name="name"
+                                    value={calendar?.name || ""}
+                                    handleChange={handleCalendarValueChange}
+                                />
+                            </div>
+                        </Container>
+                        <Container>
+                            <h3>Nastavenie dní kedy sa nerobia prehliadky</h3>
+                            {calendar?.exceptDays && calendar?.exceptDays?.map((value, idx) => (
+                                <div key={idx}>
+                                    <CustomInput
+                                        type="date"
+                                        // label='Dátum'
+                                        name="exceptDays"
+                                        value={value || ""}
+                                        handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
+                                    />
+                                </div>
+                            ))}
+                            <AddDayButton onClick={handleAddNewDay}>Pridať</AddDayButton>
+                        </Container>
                     </div>
-                    <div>
-                        {isUpdatingCalendar && <DeleteCalendarButton onClick={() => delCalendar(calendarId)}>Odstrániť</DeleteCalendarButton>}
-                        <CreateCalendarButton>{isUpdatingCalendar ? "Upraviť kalendár" : "Vytvoriť kalendár"}</CreateCalendarButton>
-                    </div>
-                </Header>
-                <ScrollContainer>
-                    <InputRow
-                        label="Meno kalendáru"
-                        example=''
-                    >
-                        <CustomInput
-                            label="Pobočka*"
-                            type='text'
-                            name='name'
-                            value={calendar.name}
-                            handleChange={(e) => handleCalendarChange(e)}
-                            required
-                        />
-                    </InputRow>
-                    <InputRow
-                        label="Koľko dní dopredu sa da objednať"
-                        example=''
-                    >
-                        <CustomInput
-                            label="Počet dní"
-                            type='number'
-                            name='daysIntoFuture'
-                            value={calendar.daysIntoFuture.toString()}
-                            handleChange={(e) => handleCalendarChange(e)}
-                            required
-                        />
-                    </InputRow>
-                    <InputRow
-                        label="Minimalný čas k odoslaní rezervácie"
-                        example=''
-                    >
-                        <CustomInput
-                            label="Min"
-                            type='number'
-                            name='allowMinutesBefore'
-                            value={calendar.allowMinutesBefore.toString()}
-                            handleChange={(e) => handleCalendarChange(e)}
-                            required
-                        />
-                    </InputRow>
-                    <InputRow
-                        label="Čas medzi rezerváciami"
-                        example=''
-                    >
-                        <CustomInput
-                            label="Min*"
-                            type='number'
-                            name='interval'
-                            value={calendar.interval.toString()}
-                            handleChange={(e) => handleCalendarChange(e)}
-                            required
-                        />
-                    </InputRow>
 
-                    <DayTimesContainer>
-                        <DayNames>
-                            <h3>Den</h3>
-                            <div>
-                                <h4>Pondelok</h4>
-                            </div>
-                            <div>
-                                <h4>Utorok</h4>
-                            </div>
-                            <div>
-                                <h4>Streda</h4>
-                            </div>
-                            <div>
-                                <h4>Štvrtok</h4>
-                            </div>
-                            <div>
-                                <h4>Piatok</h4>
-                            </div>
-                            <div>
-                                <h4>Sobota</h4>
-                            </div>
-                            <div>
-                                <h4>Nedeľa</h4>
-                            </div>
-                        </DayNames>
+                    <Container>
+                        <h3>Nastavenie kalendára</h3>
+
                         <div>
-                            <h3>Začiatok prehliadok</h3>
-                            {calendar.startTimes.map((value, idx) => (
-                                <div key={idx}>
-                                    <CustomInput
-                                        label="Čas: HH/MM*"
-                                        type='text'
-                                        name='startTimes'
-                                        value={value}
-                                        handleChange={(e) => handleDayTimeChange(e, idx)}
-                                        required
-                                    />
-                                </div>
-                            ))}
+                            <h4>Interval medzi prehliadkami</h4>
+                            <select
+                                name='interval'
+                                value={calendar?.interval || ""}
+                                onChange={handleCalendarValueChange}
+                            >
+                                <option value={""}>Nezadané</option>
+                                <option value={30}>30min</option>
+                                <option value={60}>60min</option>
+                            </select>
                         </div>
                         <div>
-                            <h3>Koniec prehliadok</h3>
-                            {calendar.endTimes.map((value, idx) => (
-                                <div key={idx}>
-                                    <CustomInput
-                                        label="Čas: HH/MM*"
-                                        type='text'
-                                        name='endTimes'
-                                        value={value}
-                                        handleChange={(e) => handleDayTimeChange(e, idx)}
-                                        required
-                                    />
-                                </div>
-                            ))}
+                            <h4>Čas pred objednaním</h4>
+                            <CustomInput
+                                type="text"
+                                label='Počet minút'
+                                name="allowMinutesBefore"
+                                value={calendar?.allowMinutesBefore || ""}
+                                handleChange={handleCalendarValueChange}
+                            />
                         </div>
-                    </DayTimesContainer>
-                </ScrollContainer>
-            </form>
+                        <div>
+                            <h4>Koľko dní dopredu sa dá objednať</h4>
+                            <CustomInput
+                                type="text"
+                                label='Počet dní'
+                                name="daysIntoFuture"
+                                value={calendar?.daysIntoFuture || ""}
+                                handleChange={handleCalendarValueChange}
+                            />
+                        </div>
+                    </Container>
+
+                    <ContainerRow>
+                        <h3>Ordinačné hodiny</h3>
+                        <TableHead>
+                            <TableCol isFirst>
+                                Čas \ Den
+                            </TableCol>
+                            {dayNames.map((name, idx) => (
+                                <TableCol key={idx}>
+                                    {name}
+                                </TableCol>
+                            ))}
+                        </TableHead>
+                        <TableRow>
+                            <TableCol isFirst>
+                                Začiatok
+                            </TableCol>
+                            {[...Array(7)].map((value, idx) => (
+                                <TableCol key={idx}>
+                                    <select name='startTimes' onChange={(e) => handleCalendarTimeChange(e, idx)}>
+                                        <option value={"x"}>Žiadný</option>
+                                        {calendarTimes.map(({ name, value }, idx) => (
+                                            <option key={idx} value={value}>{name}</option>
+                                        ))}
+                                    </select>
+                                </TableCol>
+                            ))}
+                        </TableRow>
+                        <TableRow>
+                            <TableCol isFirst>
+                                Koniec
+                            </TableCol>
+                            {[...Array(7)].map((value, idx) => (
+                                <TableCol key={idx}>
+                                    <select name='endTimes' onChange={(e) => handleCalendarTimeChange(e, idx)}>
+                                        <option value={"x"}>Žiadný</option>
+                                        {calendarTimes.map(({ name, value }, idx) => (
+                                            <option key={idx} value={value}>{name}</option>
+                                        ))}
+                                    </select>
+                                </TableCol>
+                            ))}
+                        </TableRow>
+                    </ContainerRow>
+                </GridContainer>
+            </ScrollContainer>
         </section>
     )
 }
