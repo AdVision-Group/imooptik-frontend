@@ -11,7 +11,13 @@ import Popup from '../../components/popup/pop-up.component'
 import { useFetchById } from '../../hooks/useFetch'
 
 import { retailNames } from '../../utils/warehouse.utils'
-import { dayNames, calendarTimes } from '../../utils/calendar.utils'
+import {
+    dayNames,
+    calendarTimes,
+    formatCalendarObj,
+    formatExceptDays,
+    formatExceptDaysToObj
+} from '../../utils/calendar.utils'
 
 import {
     Header,
@@ -22,7 +28,8 @@ import {
     TableHead,
     TableCol,
     TableRow,
-    AddDayButton
+    AddDayButton,
+    DeleteCalendarButton
 } from './calendar.styles'
 
 const CalendarSection = () => {
@@ -34,9 +41,11 @@ const CalendarSection = () => {
         message,
         showModal,
     } = useContext(LoadingModalContext)
+    const { createCalendar, updateCalendar, deleteCalendar } = useContext(BookingContext)
     const { calendarId } = useParams()
-    const { response } = useFetchById("api/booking/calendars", calendarId, calendarId)
+    const { response, isLoading: isFetching } = useFetchById("api/booking/calendars", calendarId, calendarId === 'novy-kalendar')
     const [calendar, setCalendar] = useState({})
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const handleCalendarValueChange = (e) => {
         const { name, value } = e.target
@@ -57,7 +66,7 @@ const CalendarSection = () => {
 
     const handleCalendarTimeChange = (e, idx) => {
         const { name, value } = e.target
-        let arr = calendar[name] ? calendar[name] : ['x', 'x', 'x', 'x', 'x', 'x', 'x']
+        let arr = calendar[name] ? calendar[name] : ['X', 'X', 'X', 'X', 'X', 'X', 'X']
         arr[idx] = value
 
         setCalendar(prevValue => ({
@@ -106,22 +115,71 @@ const CalendarSection = () => {
             return
         }
 
-        console.log("RAW CALENDAR")
-        console.log(calendar)
+        if (isUpdating) {
+            const calendarToUpdate = formatCalendarObj(calendar)
+
+            console.log("CALENDAR BEFORE UPDATE")
+            console.log(calendarToUpdate)
+
+
+            updateCalendar(calendarToUpdate, calendar._id)
+        } else {
+            let calendarToCreate = {}
+            if (calendar.exceptDays) {
+                calendarToCreate = {
+                    ...calendar,
+                    exceptDays: formatExceptDaysToObj(calendar.exceptDays)
+                }
+            } else {
+                calendarToCreate = { ...calendar }
+            }
+
+
+            console.log("CALENDAR BEFORE CREATE")
+            console.log(calendarToCreate)
+            createCalendar(calendarToCreate)
+        }
     }
 
-    console.log(response)
-    console.log(calendar)
+    useEffect(() => {
+        if (isFetching) return
+        if (response.calendar) {
+            setIsUpdating(true)
+            if (response.calendar.exceptDays) {
+                const exceptDaysArr = formatExceptDays(response.calendar.exceptDays)
+
+                setCalendar({
+                    ...response.calendar,
+                    exceptDays: exceptDaysArr
+                })
+
+            } else {
+                setCalendar(response.calendar)
+            }
+        }
+    }, [isFetching])
+
+    useEffect(() => {
+        return () => {
+            setIsUpdating(false)
+            setCalendar({})
+        }
+    }, [])
 
     return (
         <section>
-            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {(showModal) && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Header>
                 <div>
-                    <h1>Nový kalendár</h1>
+                    {isUpdating ? (
+                        <h1>Kalendár: {calendar?.name}</h1>
+                    ) : (
+                            <h1>Nový kalendár</h1>
+                        )}
                 </div>
                 <div>
-                    <CreateCalendarButton onClick={handleSubmit}>Vytvoriť</CreateCalendarButton>
+                    {isUpdating && <DeleteCalendarButton onClick={() => deleteCalendar(calendar?._id)}>Vymazať</DeleteCalendarButton>}
+                    <CreateCalendarButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</CreateCalendarButton>
                 </div>
             </Header>
             <ScrollContainer>
@@ -153,7 +211,7 @@ const CalendarSection = () => {
                             </div>
                         </Container>
                         <Container>
-                            <h3>Nastavenie dní kedy sa nerobia prehliadky</h3>
+                            <h3>Dni kedy sa nerobia prehliadky</h3>
                             {calendar?.exceptDays && calendar?.exceptDays?.map((value, idx) => (
                                 <div key={idx}>
                                     <CustomInput
@@ -190,7 +248,7 @@ const CalendarSection = () => {
                                 type="text"
                                 label='Počet minút'
                                 name="allowMinutesBefore"
-                                value={calendar?.allowMinutesBefore || ""}
+                                value={calendar?.allowMinutesBefore?.toString() || ""}
                                 handleChange={handleCalendarValueChange}
                             />
                         </div>
@@ -200,7 +258,7 @@ const CalendarSection = () => {
                                 type="text"
                                 label='Počet dní'
                                 name="daysIntoFuture"
-                                value={calendar?.daysIntoFuture || ""}
+                                value={calendar?.daysIntoFuture?.toString() || ""}
                                 handleChange={handleCalendarValueChange}
                             />
                         </div>
@@ -224,8 +282,8 @@ const CalendarSection = () => {
                             </TableCol>
                             {[...Array(7)].map((value, idx) => (
                                 <TableCol key={idx}>
-                                    <select name='startTimes' onChange={(e) => handleCalendarTimeChange(e, idx)}>
-                                        <option value={"x"}>Žiadný</option>
+                                    <select name='startTimes' value={calendar?.startTimes ? calendar?.startTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
+                                        <option value={"X"}>Žiadný</option>
                                         {calendarTimes.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}
@@ -239,8 +297,8 @@ const CalendarSection = () => {
                             </TableCol>
                             {[...Array(7)].map((value, idx) => (
                                 <TableCol key={idx}>
-                                    <select name='endTimes' onChange={(e) => handleCalendarTimeChange(e, idx)}>
-                                        <option value={"x"}>Žiadný</option>
+                                    <select name='endTimes' value={calendar?.endTimes ? calendar?.endTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
+                                        <option value={"X"}>Žiadný</option>
                                         {calendarTimes.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}

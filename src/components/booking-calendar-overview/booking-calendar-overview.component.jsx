@@ -10,7 +10,8 @@ import {
 const BookingCalendarOverview = ({
     calendar = {},
     selectedCalendar = null,
-    handleShowUpClick = () => { }
+    handleShowUpClick = () => { },
+    handleUpdateClick = () => { }
 }) => {
     return (
         <ContainerOverview>
@@ -20,7 +21,7 @@ const BookingCalendarOverview = ({
             <p>Koľko dní dopredu sa da objednať: <span>{calendar?.daysIntoFuture}</span></p>
             <Options>
                 <ShowButton isActive={selectedCalendar === calendar?._id} onClick={handleShowUpClick}>Zobraziť</ShowButton>
-                <UpdateButton >Upraviť</UpdateButton>
+                <UpdateButton onClick={handleUpdateClick}>Upraviť</UpdateButton>
             </Options>
         </ContainerOverview>
     )

@@ -317,3 +317,37 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
     return result
 }
 
+export const formatCalendarObj = calendarObj => {
+    let obj = { ...calendarObj }
+    if (obj.bookings) delete obj["bookings"]
+    if (obj.__v !== undefined) delete obj["__v"]
+    if (obj._id) delete obj["_id"]
+    if (obj.dateCreated) delete obj["dateCreated"]
+    if (obj.exceptDays) {
+        obj = {
+            ...obj,
+            exceptDays: formatExceptDaysToObj(obj.exceptDays)
+        }
+    }
+
+    return obj
+}
+
+export const formatExceptDays = exceptDaysObj => {
+    const arr = Object.keys(exceptDaysObj)
+    const formatedArr = arr.map(value => value.split('/').reverse().join('-'))
+    return formatedArr
+}
+
+export const formatExceptDaysToObj = exceptDaysArr => {
+    let obj = {}
+    const formatedArr = exceptDaysArr.map(value => value.split('-').reverse().join('/'))
+
+    formatedArr.forEach(day => {
+        obj = {
+            ...obj,
+            [day]: "00/00-23/59"
+        }
+    })
+    return obj
+}

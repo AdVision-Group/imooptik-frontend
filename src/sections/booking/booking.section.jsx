@@ -97,7 +97,7 @@ const BookingSection = () => {
     const handleCalendarBlockClick = (dayData) => {
         if (!dayData.bookings) return
         if (!dayData.bookingDate) return
-        // setActiveCalendarFormat(1)
+
         setSelectedCalendar(null)
         setSelectedDay(dayData)
         console.log(dayData)
@@ -131,6 +131,7 @@ const BookingSection = () => {
                             calendar={calendar}
                             selectedCalendar={selectedCalendar}
                             handleShowUpClick={() => handleShowCalendarClick(calendar._id)}
+                            handleUpdateClick={() => push(`rezervacie/${calendar._id}`)}
                         />
                     ))}
                 </GridRow>
