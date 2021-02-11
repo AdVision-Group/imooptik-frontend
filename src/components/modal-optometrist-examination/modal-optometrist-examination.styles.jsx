@@ -21,6 +21,7 @@ export const Modal = styled.div`
     width:100%;
     max-width: 65rem;
     max-height: 60rem;
+    color: var(--primary-text-color);
 
     overflow-y: scroll;
 
@@ -37,6 +38,25 @@ export const Modal = styled.div`
 
     h3{ 
         margin-bottom: 2rem;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
     }
 `
 
@@ -116,6 +136,8 @@ export const TwoCols = styled.div`
 `
 
 export const SubmitButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-weight: bolder;
     display: block;
     margin: 2rem auto 0;
 `

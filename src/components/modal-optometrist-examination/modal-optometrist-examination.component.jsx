@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+
 import { ExaminationContext } from '../../context/examination/examination.context'
 import { useFetchById } from '../../hooks/useFetch'
 import CustomInput from '../custom-input/custom-input.component'
@@ -118,7 +120,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         }
     }, [])
 
-    return (
+    return ReactDOM.createPortal((
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
@@ -374,7 +376,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                 <SubmitButton onClick={handleSubmit}>{examinationToUpdate ? "Uložiť" : "Odoslať prehliadku"}</SubmitButton>
             </Modal>
         </ModalContainer>
-    )
+    ), document.getElementById('portal'))
 }
 
 export default OptometristExaminationModal

@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useFetchById } from '../../hooks/useFetch'
+import { BookingContext } from '../../context/booking/booking.context'
+
+import UserBookingModal from '../modal-user-bookings/modal-user-booking.component'
 
 import {
     dayNames,
@@ -27,7 +30,8 @@ const WeekDays = ({
     weekIndex,
     handleCalendarBlockClick
 }) => {
-    const { response, isLoading } = useFetchById('api/booking/calendars', calendar, !calendar)
+    const { createUserBooking } = useContext(BookingContext)
+    const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
     const firstDayIndex = new Date(year, month, 0).getDay();
     const lastDayIndex = new Date(year, month + 1, 0).getDay()
@@ -37,6 +41,17 @@ const WeekDays = ({
     const nextDays = 7 - lastDayIndex
 
     const [calendarDays, setCalendarDays] = useState([])
+    const [selectedDay, setSelectedDay] = useState(null)
+    const [showUserBooking, setShowUserBooking] = useState(false)
+
+    const handleOpenUserBookingModal = (dayData) => {
+        setSelectedDay({
+            ...dayData,
+            year,
+            month,
+        })
+        setShowUserBooking(true)
+    }
 
     useEffect(() => {
         if (isLoading) return
@@ -55,10 +70,9 @@ const WeekDays = ({
         }
     }, [isLoading])
 
-    console.log(response?.calendar)
-
     return (
         <div>
+            {showUserBooking && <UserBookingModal createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
@@ -92,12 +106,13 @@ const WeekDays = ({
                                 if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index + 1) return
                                 if (response?.calendar?.endTimes[idx] === "X") return
                                 return (
-                                    <HourBlockContainer key={index}>
+                                    <HourBlockContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index + 1}:00` })} key={index}>
                                         {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
                                             <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
                                                 <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
                                             </AppointmentContainer>
                                         )}
+
                                         <span>{index + 1}:00</span>
                                     </HourBlockContainer>
                                 )

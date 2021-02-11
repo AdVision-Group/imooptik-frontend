@@ -98,6 +98,7 @@ export const HourBlock = styled.div`
 `
 
 export const HourBlockContainer = styled.div`
+    cursor: pointer;
     position: relative;
     height: 10rem;
     border-bottom: var(--table-border);
@@ -114,5 +115,10 @@ export const AppointmentContainer = styled.div`
     border: var(--appointment-container-border);
     background-color: var(--appointment-container-background-color);
     color: var(--appointment-container-text-color);
+    font-weight: bolder;
+    width: 100%;
+    height: 50%;
+    padding: .5rem;
+    /* position: absolute; */
 
 `

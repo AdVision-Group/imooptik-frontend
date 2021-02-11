@@ -20,7 +20,7 @@ export const HeaderBlock = styled.div`
 `
 
 export const Dayblock = styled.div`
-    height: 10rem;
+    height: 8rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;

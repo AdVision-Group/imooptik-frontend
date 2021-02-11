@@ -16,21 +16,26 @@ import { calendarFormat, months } from '../../utils/calendar.utils'
 
 import {
     AiOutlineLeft,
-    AiOutlineRight
+    AiOutlineRight,
+    AiOutlineDownCircle,
+    AiOutlineUpCircle
 } from 'react-icons/ai'
 
 import {
     Title,
     GridRow,
     CalendarGridContainer,
+    CalendarHeading,
     CalendarHeader,
     CalendarFormat,
-    CalendarMonthContainer
+    CalendarMonthContainer,
+    IconContainer
 } from './booking.styles'
 
 const BookingSection = () => {
     const { push } = useHistory()
     const [showModal, setShowModal] = useState(true)
+    const [showPremisesSection, setShowPremisesSection] = useState(true)
     const [activeCalendarFormat, setActiveCalendarFormat] = useState(0)
     const [searchQuery, setSearchQuery] = useState('')
     const [calendars, setCalendars] = useState([])
@@ -45,6 +50,7 @@ const BookingSection = () => {
 
     const handleShowCalendarClick = (calendarId) => {
         setSelectedCalendar(calendarId)
+        setShowPremisesSection(false)
         resetCalendarToDefault()
     }
 
@@ -128,8 +134,19 @@ const BookingSection = () => {
             />
 
             <ScrollContainer>
-                <Title>Pobočky</Title>
-                <GridRow>
+                <CalendarHeading>
+                    <Title>Pobočky</Title>
+                    <div onClick={() => setShowPremisesSection(prevValue => !prevValue)}>
+                        <p>
+                            {calendars.find(calendar => calendar._id === selectedCalendar)?.name}
+                        </p>
+                        <IconContainer>
+                            {showPremisesSection ? <AiOutlineUpCircle /> : <AiOutlineDownCircle />}
+                        </IconContainer>
+                    </div>
+                </CalendarHeading>
+
+                {showPremisesSection && <GridRow>
                     {calendars && calendars.map((calendar, idx) => (
                         <BookingCalendarOverview
                             key={idx}
@@ -139,7 +156,7 @@ const BookingSection = () => {
                             handleUpdateClick={() => push(`rezervacie/${calendar._id}`)}
                         />
                     ))}
-                </GridRow>
+                </GridRow>}
 
                 {selectedCalendar && (
                     <React.Fragment>

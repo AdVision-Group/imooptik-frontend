@@ -5,10 +5,10 @@ import {
     NavButton
 } from './section-navbar.styles'
 
-const SectionNavbar = ({ items, activeIndex, setActiveIndex }) => {
+const SectionNavbar = ({ items, activeIndex, setActiveIndex, ...otherProps }) => {
 
     return (
-        <NavbarContainer>
+        <NavbarContainer {...otherProps}>
             <ul>
                 {
                     items.map(item => (

@@ -10,6 +10,7 @@ export const BookingContext = createContext({
     createBooking: () => { },
     updateBooking: () => { },
     deleteBooking: () => { },
+    createUserBooking: () => { },
 })
 
 const BookingProvider = ({ children }) => {
@@ -213,6 +214,37 @@ const BookingProvider = ({ children }) => {
         }
     }
 
+    const createUserBooking = async (userBookingToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify(userBookingToAdd);
+
+        const requestOptions = {
+            method: 'POST',
+            // headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/booking/userBookings`, requestOptions)
+            const data = await response.json()
+
+            console.log("USERBOOKING RESPONSE")
+            console.log(data)
+
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+
     return (
         <BookingContext.Provider
             value={{
@@ -221,7 +253,8 @@ const BookingProvider = ({ children }) => {
                 deleteCalendar,
                 createBooking,
                 updateBooking,
-                deleteBooking
+                deleteBooking,
+                createUserBooking
             }}
         >
             {children}

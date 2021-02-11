@@ -16,6 +16,27 @@ export const CalendarGridContainer = styled.div`
     margin-bottom: 3rem;
 `
 
+export const CalendarHeading = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+`
+
+export const IconContainer = styled.div`
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    color: var(--primary-color);
+    font-size: 3rem;
+    margin-left: 1rem;
+`
+
 export const CalendarHeader = styled.div`
     display: flex; 
     justify-content: space-between;
