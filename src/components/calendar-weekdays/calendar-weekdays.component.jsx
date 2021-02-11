@@ -16,7 +16,8 @@ import {
     HourBlock,
     AppointmentContainer,
     HourGrid,
-    TableHead
+    TableHead,
+    HourBlockContainer
 } from './calendar-weekdays.styles'
 
 const WeekDays = ({
@@ -54,6 +55,8 @@ const WeekDays = ({
         }
     }, [isLoading])
 
+    console.log(response?.calendar)
+
     return (
         <div>
             <Container>
@@ -84,16 +87,21 @@ const WeekDays = ({
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
 
                         return <HourBlock key={idx}>
-                            {[...Array(24)].map((value, index) => (
-                                <div key={index}>
-                                    {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
-                                        <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
-                                            <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
-                                        </AppointmentContainer>
-                                    )}
-                                    <span>{index + 1}:00</span>
-                                </div>
-                            ))}
+                            {[...Array(24)].map((value, index) => {
+                                if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index + 1) return
+                                if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index + 1) return
+                                if (response?.calendar?.endTimes[idx] === "X") return
+                                return (
+                                    <HourBlockContainer key={index}>
+                                        {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
+                                            <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
+                                                <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
+                                            </AppointmentContainer>
+                                        )}
+                                        <span>{index + 1}:00</span>
+                                    </HourBlockContainer>
+                                )
+                            })}
                         </HourBlock>
 
                     })}

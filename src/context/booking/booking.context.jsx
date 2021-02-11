@@ -80,6 +80,15 @@ const BookingProvider = ({ children }) => {
 
             console.log(data)
 
+
+            if (data.calendar) {
+                setIsLoading(false)
+                closeModal()
+                push('/dashboard/rezervacie')
+                return
+            }
+
+
             setIsLoading(false)
             getMessage(data.message)
         } catch (err) {

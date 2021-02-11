@@ -16,7 +16,7 @@ export const HourGrid = styled.div`
 
 
    ::-webkit-scrollbar {
-        width: 10px;
+        width: 1rem;
     }
 
     /* Track */
@@ -38,9 +38,13 @@ export const HourGrid = styled.div`
 export const TableHead = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    background-color: var(--color-black);
+
     /* border: var(--table-border); */
     min-width: 55rem;
     padding-left: 5rem;
+    padding-right: 1rem;
+
 `
 
 export const HeaderBlock = styled.div`
@@ -65,29 +69,10 @@ export const HeaderBlock = styled.div`
 `
 
 export const HourBlock = styled.div`
+    background-color: var(--body-background-primary-color);
+    border: var(--table-border);
  
-    div {
-        position: relative;
-        height: 10rem;
-        /* padding: .5rem; */
-        border: var(--table-border);
-
-        span {
-            display: none;
-
-                /* display: block;
-                opacity: .6;
-                position: absolute;
-                bottom: .5rem;
-                left: .5rem;
-                background-color: var(--background-primary-color);
-                z-index: 999;
-                padding: .5rem 1rem;
-                border-radius: 9999rem; */
-
-        }
-
-    }
+    
 
     &:nth-child(1) {
         div {
@@ -109,6 +94,18 @@ export const HourBlock = styled.div`
                 letter-spacing: .05rem;
             }
         }
+    }
+`
+
+export const HourBlockContainer = styled.div`
+    position: relative;
+    height: 10rem;
+    border-bottom: var(--table-border);
+    background-color: var(--background-primary-color);
+
+
+    span {
+        display: none;
     }
 `
 

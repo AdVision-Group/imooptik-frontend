@@ -321,6 +321,7 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
 export const formatCalendarObj = calendarObj => {
     let obj = { ...calendarObj }
     if (obj.bookings) delete obj["bookings"]
+    if (obj.booked !== undefined) delete obj["booked"]
     if (obj.__v !== undefined) delete obj["__v"]
     if (obj._id) delete obj["_id"]
     if (obj.dateCreated) delete obj["dateCreated"]

@@ -46,6 +46,9 @@ const OrdersSection = () => {
         skip: 0,
         sortBy: {
             date: -1
+        },
+        filters: {
+            finished: false
         }
     })
 
@@ -63,6 +66,9 @@ const OrdersSection = () => {
                 skip: 0,
                 sortBy: {
                     date: -1
+                },
+                filters: {
+                    finished: false
                 }
             })
         } else {
@@ -73,7 +79,7 @@ const OrdersSection = () => {
                     date: -1
                 },
                 filters: {
-                    status: "fulfilled"
+                    finished: true
                 }
             })
         }
@@ -84,7 +90,7 @@ const OrdersSection = () => {
         if (!isFetching) {
             if (response) {
                 if (activeIndex === 1) {
-                    setOrders(response?.orders.filter(order => order.status !== 'fulfilled'))
+                    setOrders(response?.orders)
                 } else {
                     setOrders(response?.orders)
                 }
@@ -92,10 +98,8 @@ const OrdersSection = () => {
         }
     }, [isFetching, response, activeIndex])
 
-
-
-    console.log(activeIndex)
     console.log(response)
+
 
     useEffect(() => {
         return () => {
@@ -107,6 +111,9 @@ const OrdersSection = () => {
                 skip: 0,
                 sortBy: {
                     date: -1
+                },
+                filters: {
+                    finished: false
                 }
             })
         }
