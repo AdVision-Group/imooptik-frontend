@@ -62,17 +62,17 @@ const WeekDays = ({
                         <HeaderBlock isDisabled={isDisable} key={idx}>
                             {isPrevDay ? (
                                 <React.Fragment>
-                                    <p>{dayNames[new Date(year, month - 1, prevLastDay - (dayNumber - 1)).getDay()]}</p>
+                                    <p>{dayNames[new Date(year, month - 1, prevLastDay - (dayNumber)).getDay()]}</p>
                                     <p>{prevLastDay - (dayNumber - 1)}</p>
                                 </React.Fragment>
                             ) : isNextDay ? (
                                 <React.Fragment>
-                                    <p>{dayNames[new Date(year, month + 1, dayNumber).getDay()]}</p>
+                                    <p>{dayNames[new Date(year, month + 1, dayNumber - 1).getDay()]}</p>
                                     <p>{dayNumber} </p>
                                 </React.Fragment>
                             ) : (
                                         <React.Fragment>
-                                            <p>{dayNames[new Date(year, month, dayNumber).getDay()]}</p>
+                                            <p>{dayNames[new Date(year, month, dayNumber - 1).getDay()]}</p>
                                             <p>{dayNumber} </p>
                                         </React.Fragment>
                                     )}
@@ -88,7 +88,7 @@ const WeekDays = ({
                                 <div key={index}>
                                     {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
                                         <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
-                                            <p>{dayData?.bookings.find(booking => Number(booking.split('/')[0]) === index + 1).replace("/", ":")}</p>
+                                            <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
                                         </AppointmentContainer>
                                     )}
                                     <span>{index + 1}:00</span>

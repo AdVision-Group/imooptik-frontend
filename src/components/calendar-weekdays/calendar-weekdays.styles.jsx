@@ -10,8 +10,10 @@ export const HourGrid = styled.div`
     height: 60rem;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: var(--table-border);
+    /* border: var(--table-border); */
     min-width: 55rem;
+    padding-left: 5rem;
+
 
    ::-webkit-scrollbar {
         width: 10px;
@@ -36,8 +38,9 @@ export const HourGrid = styled.div`
 export const TableHead = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: var(--table-border);
+    /* border: var(--table-border); */
     min-width: 55rem;
+    padding-left: 5rem;
 `
 
 export const HeaderBlock = styled.div`
@@ -89,16 +92,21 @@ export const HourBlock = styled.div`
     &:nth-child(1) {
         div {
             span {
+                width: 6rem;
                 display: block;
                 opacity: .6;
                 position: absolute;
-                top: .5rem;
-                left: .5rem;
+                bottom: -1.5rem;
+                left: -5.8rem;
                 /* transform:translateY(-50%); */
-                background-color: var(--background-primary-color);
-                z-index: 999;
-                padding: .5rem 1rem;
+                /* background-color: var(--background-primary-color); */
+                /* background-color: gray; */
+                /* z-index: 999; */
+                font-size: 1.4rem;
+                padding: .5rem 1rem .5rem .2rem;
                 border-radius: 9999rem;
+                text-align: end;
+                letter-spacing: .05rem;
             }
         }
     }

@@ -310,7 +310,7 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
     if (bookingsArr) {
         bookingsArr.forEach(booking => {
             const formatBookingTime = booking.split('/')
-            if (Number(formatBookingTime[0]) === hourIndex + 1) {
+            if (Number(formatBookingTime[0]) === hourIndex) {
                 return result = true
             }
         })
