@@ -12,4 +12,12 @@ export const Filterbutton = styled.button`
     color: var(--primary-color);
     font-weight: bolder;
     padding: .5rem 2rem;
+    margin-left: 1rem;
+`
+
+export const ResetButton = styled.button`
+    cursor: pointer;
+    color: var(--color-red);
+    /* font-weight: bolder; */
+    padding: .5rem 2rem;
 `

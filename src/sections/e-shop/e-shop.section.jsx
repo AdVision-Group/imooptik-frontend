@@ -10,12 +10,14 @@ import SectionNavbar from '../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import ProductOverview from '../../components/product-overview/product-overview.component'
 import Popup from '../../components/popup/pop-up.component'
+import EshopFilterModal from '../../components/modal-eshop-filter/modal-eshop-filter.component'
 
 import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
     FlexContainer,
-    Filterbutton
+    Filterbutton,
+    ResetButton
 } from './e-shop.styles'
 
 const EshopSection = () => {
@@ -27,6 +29,10 @@ const EshopSection = () => {
         limit: 10,
         skip: 0,
     })
+
+    const [showFilterModal, setShowFilterModal] = useState(false)
+    const [hasFilter, setHasFilter] = useState(false)
+
 
     const {
         activePremisesTab,
@@ -40,6 +46,21 @@ const EshopSection = () => {
         deleteProduct,
         deleteLenses,
     } = useContext(WarehouseContext)
+
+    const applyFilter = filter => {
+        getProductsByQuery(filter)
+        setShowFilterModal(false)
+        setHasFilter(true)
+    }
+
+    const resetFilter = () => {
+        getProductsByQuery({
+            limit: 10,
+            skip: 0,
+        })
+        setShowFilterModal(false)
+        setHasFilter(false)
+    }
 
     const handleSearch = () => {
         if (searchQuery !== '') {
@@ -104,6 +125,7 @@ const EshopSection = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {showFilterModal && <EshopFilterModal applyFilter={applyFilter} resetFilter={resetFilter} close={() => setShowFilterModal(false)} />}
 
             <SectionHeader
                 title="Sklad"
@@ -126,9 +148,10 @@ const EshopSection = () => {
                     activeIndex={activeCategoryTypeTab}
                     setActiveIndex={handleChangeCategoryTypeTab}
                 />
-                <div>
-                    <Filterbutton>Filter</Filterbutton>
-                </div>
+                {activeCategoryTypeTab === 0 && <div>
+                    {hasFilter && <ResetButton onClick={resetFilter}>reset</ResetButton>}
+                    <Filterbutton onClick={() => setShowFilterModal(true)}>Filter</Filterbutton>
+                </div>}
             </FlexContainer>
 
             <ScrollContainer>
