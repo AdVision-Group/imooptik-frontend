@@ -13,7 +13,7 @@ export const GridRow = styled.div`
 
 export const CalendarGridContainer = styled.div`
     margin-top: 3rem;
-    margin-bottom: 10rem;
+    margin-bottom: 3rem;
 `
 
 export const CalendarHeader = styled.div`

@@ -7,6 +7,9 @@ export const BookingContext = createContext({
     createCalendar: () => { },
     updateCalendar: () => { },
     deleteCalendar: () => { },
+    createBooking: () => { },
+    updateBooking: () => { },
+    deleteBooking: () => { },
 })
 
 const BookingProvider = ({ children }) => {
@@ -52,7 +55,7 @@ const BookingProvider = ({ children }) => {
 
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -81,7 +84,7 @@ const BookingProvider = ({ children }) => {
             getMessage(data.message)
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -108,7 +111,95 @@ const BookingProvider = ({ children }) => {
             getMessage(data.message)
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const createBooking = async (bookingToAdd) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify(bookingToAdd);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+            if (data.booking) {
+                setIsLoading(false)
+                closeModal()
+                return
+            }
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const updateBooking = async (bookingToUpdate, bookingId) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify(bookingToUpdate);
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings/${bookingId}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const deleteBooking = async (bookingId) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings/${bookingId}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            setIsLoading(false)
+            getMessage(data.message)
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -119,6 +210,9 @@ const BookingProvider = ({ children }) => {
                 createCalendar,
                 updateCalendar,
                 deleteCalendar,
+                createBooking,
+                updateBooking,
+                deleteBooking
             }}
         >
             {children}

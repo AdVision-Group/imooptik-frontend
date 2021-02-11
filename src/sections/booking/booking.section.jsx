@@ -9,9 +9,10 @@ import BookingCalendarOverview from "../../components/booking-calendar-overview/
 import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
 import BookingAppoinments from '../../components/booking-appoinments/booking-appoinment.component'
+import BookingCalendarBookings from '../../components/booking-calendar-bookings/booking-calendar-bookings.component'
 
 import { useFetch } from '../../hooks/useFetch'
-import { calendarFormat, months, getMonday } from '../../utils/calendar.utils'
+import { calendarFormat, months } from '../../utils/calendar.utils'
 
 import {
     AiOutlineLeft,
@@ -70,7 +71,7 @@ const BookingSection = () => {
     const getPrevMonth = () => {
         if (selectedMonth === 0) {
             setSelectedYear(prevValue => prevValue - 1)
-            setSelectedMonth(10)
+            setSelectedMonth(11)
         } else {
             setSelectedMonth(prevValue => prevValue - 1)
         }
@@ -112,6 +113,10 @@ const BookingSection = () => {
         }
     }, [isLoading])
 
+    console.log(calendars)
+    console.log(selectedYear)
+
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}
@@ -119,7 +124,7 @@ const BookingSection = () => {
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('rezervacie/novy-kalendar')}
-                title="Kalendar s objednávkami"
+                title="Rezervácie"
             />
 
             <ScrollContainer>
@@ -182,6 +187,8 @@ const BookingSection = () => {
                                     />
                                 )}
                         </CalendarGridContainer>
+
+                        <BookingCalendarBookings calendarId={selectedCalendar} />
                     </React.Fragment>
                 )}
 

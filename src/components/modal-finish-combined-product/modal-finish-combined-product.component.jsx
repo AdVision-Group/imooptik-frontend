@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+
 import { Prompt } from 'react-router-dom'
 import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -276,7 +278,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
     }, [])
 
 
-    return (
+    return ReactDOM.createPortal((
         <ModalContainer>
             <Prompt
                 when={hasChanged}
@@ -463,7 +465,7 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
                 <AddButton onClick={handleSubmit}>Pridať do objednávky</AddButton>
             </Modal>
         </ModalContainer>
-    )
+    ), document.getElementById("portal"))
 }
 
 export default FinishCombinedProductModal

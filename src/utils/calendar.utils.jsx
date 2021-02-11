@@ -203,6 +203,7 @@ export const months = [
     'máj',
     'jún',
     'júl',
+    'august',
     'september',
     'október',
     'november',
@@ -265,7 +266,7 @@ export const getBooking = (days, calendar, month, year) => {
         let isBelongHere = false;
 
         spliteBookingString.forEach(value => {
-            if (month + 1 === Number(spliteBookingString[1]) && year === Number(spliteBookingString[2])) {
+            if (month === Number(spliteBookingString[1]) - 1 && year === Number(spliteBookingString[2])) {
                 return isBelongHere = true
             }
         })
@@ -349,5 +350,18 @@ export const formatExceptDaysToObj = exceptDaysArr => {
             [day]: "00/00-23/59"
         }
     })
+    return obj
+}
+
+export const formatBookingObj = bookingObj => {
+    let obj = { ...bookingObj }
+    if (obj.rows) delete obj["rows"]
+    if (obj.__v !== undefined) delete obj["__v"]
+    if (obj._id) delete obj["_id"]
+    if (obj.dateCreated) delete obj["dateCreated"]
+    if (obj.timesBooked !== undefined) delete obj["timesBooked"]
+    if (obj.premises) delete obj["premises"]
+    if (obj.calendar) delete obj["calendar"]
+
     return obj
 }
