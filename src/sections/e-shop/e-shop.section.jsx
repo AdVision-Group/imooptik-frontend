@@ -13,6 +13,10 @@ import Popup from '../../components/popup/pop-up.component'
 
 import ListArrows from '../../components/list-arrows/list-arrows.component'
 
+import {
+    FlexContainer,
+    Filterbutton
+} from './e-shop.styles'
 
 const EshopSection = () => {
     const { push } = useHistory()
@@ -116,11 +120,16 @@ const EshopSection = () => {
                 setActiveIndex={handleChangePremisesTab}
             />
 
-            <SectionNavbar
-                items={productCategoryTypeTabs}
-                activeIndex={activeCategoryTypeTab}
-                setActiveIndex={handleChangeCategoryTypeTab}
-            />
+            <FlexContainer>
+                <SectionNavbar
+                    items={productCategoryTypeTabs}
+                    activeIndex={activeCategoryTypeTab}
+                    setActiveIndex={handleChangeCategoryTypeTab}
+                />
+                <div>
+                    <Filterbutton>Filter</Filterbutton>
+                </div>
+            </FlexContainer>
 
             <ScrollContainer>
                 {productItems.map((product, idx) => (

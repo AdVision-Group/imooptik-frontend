@@ -62,15 +62,17 @@ export const UploadButton = styled.label`
         left: -999999999rem;
     }
     cursor: pointer;
-    background-color: #000;
-    color: #fff;
+        background-color: transparent;
+
     max-width: 18rem;
     font-size: 1.4rem;
     font-family: inherit;
+    font-weight: bolder;
     padding: .8rem 1rem;
     text-align: center;
     display: block;
-    border: 1px solid #000;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
     transition: background-color .1s ease-out,
                 color .2s ease-out;
     outline: none;
@@ -81,8 +83,8 @@ export const UploadButton = styled.label`
     }
 
     &:hover {
-        background-color: transparent;
-        color: #000;
+        background-color: var(--primary-color);
+        color: var(--button-font-color);
     }
 `
 
@@ -180,7 +182,7 @@ export const TabButton = styled.button`
     outline:none;
     border: none;
     background-color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--body-background-primary-color)"};
-    color: #fff;
+    color: ${({ isActive }) => isActive ? "var(--button-font-color)" : "var(--primary-text-color)"} ;
     font-weight: ${({ isActive }) => isActive ? "700" : "400"};
     font-family: inherit;
     font-size: 1.2rem;
@@ -215,8 +217,8 @@ export const FetchButtons = styled.button`
     border: none;
     padding: .4rem 1rem;
     border-radius: 50%;
-    color: var(--primary-text-color);
-    background-color: var(--body-background-primary-color);
+    color: var(--button-font-color);
+    background-color: var(--color-black);
     font-size: 1.2rem;
     font-family: inherit;
     margin: 0 .5rem;
