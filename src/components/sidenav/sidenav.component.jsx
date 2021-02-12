@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import logo from '../../images/logo.png'
 
@@ -18,7 +18,6 @@ import {
 
 const Sidenav = ({ routes, match }) => {
     const { logOut } = useContext(AuthContext)
-    const { push } = useHistory()
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -29,7 +28,7 @@ const Sidenav = ({ routes, match }) => {
             setIsOpen(false)
         }
         setActiveLink(idx)
-        push(path)
+        // push(path)
     }
 
     return (
@@ -46,14 +45,16 @@ const Sidenav = ({ routes, match }) => {
                 </LogoContainer>
                 <NavLinksContainer>
                     {routes.map((route, idx) => (
-                        <li key={idx} onClick={() => handleClick(match.url + route.path, idx)} >
-                            <NavLinksButton>
-                                <IconContainer isActive={activeLink === idx}>
-                                    <route.icon />
-                                </IconContainer> {route.name}
-                            </NavLinksButton>
-                            <ActiveBorder isActive={activeLink === idx} />
-                        </li>
+                        <Link key={idx} to={match.url + route.path} onClick={() => handleClick(match.url + route.path, idx)}>
+                            <li  >
+                                <NavLinksButton>
+                                    <IconContainer isActive={activeLink === idx}>
+                                        <route.icon />
+                                    </IconContainer> {route.name}
+                                </NavLinksButton>
+                                <ActiveBorder isActive={activeLink === idx} />
+                            </li>
+                        </Link>
                     ))}
                     <li onClick={logOut}>
                         <NavLinksButton>

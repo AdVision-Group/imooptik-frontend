@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Title = styled.h2`
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 `
 
 export const GridRow = styled.div`

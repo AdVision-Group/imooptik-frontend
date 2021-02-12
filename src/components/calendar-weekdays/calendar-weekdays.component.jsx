@@ -37,7 +37,6 @@ const WeekDays = ({
     const lastDayIndex = new Date(year, month + 1, 0).getDay()
     const prevLastDay = new Date(year, month, 0).getDate()
 
-
     const nextDays = 7 - lastDayIndex
 
     const [calendarDays, setCalendarDays] = useState([])

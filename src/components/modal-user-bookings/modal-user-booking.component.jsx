@@ -73,9 +73,12 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
 
         console.log("USER BOOKING BEFORE SEND")
         console.log(userBooking)
+        let bookingToAdd = {
+            ...userBooking,
+            values: {}
+        }
 
-
-        createUserBooking(userBooking)
+        createUserBooking(bookingToAdd)
         refetchCalendar()
         close()
     }
@@ -85,9 +88,7 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
             const { time, dayNumber, month, year } = day
             setUserBooking(prevValue => ({
                 ...prevValue,
-                dueTime: {
-                    [time.replace(":", "/")]: `${dayNumber < 10 ? `0${dayNumber}` : dayNumber}/${month < 9 ? `0${month + 1}` : (month + 1)}/${year}`
-                }
+                dueTime: `${time.replace(":", "/")}:${dayNumber < 10 ? `0${dayNumber}` : dayNumber}/${month < 9 ? `0${month + 1}` : (month + 1)}/${year}`
             }))
         }
     }, [day])

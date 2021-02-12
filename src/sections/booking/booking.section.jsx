@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../../context/auth/auth.context'
 
 import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -33,6 +34,7 @@ import {
 } from './booking.styles'
 
 const BookingSection = () => {
+    const { isAdmin, currentUser } = useContext(AuthContext)
     const { push } = useHistory()
     const [showModal, setShowModal] = useState(true)
     const [showPremisesSection, setShowPremisesSection] = useState(true)
@@ -43,7 +45,6 @@ const BookingSection = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
     const [calendarWeekIndex, setCalendarWeekIndex] = useState(0)
-
     const [selectedDay, setSelectedDay] = useState(null)
 
     const { isLoading, response, message } = useFetch('api/booking/calendars')
@@ -107,34 +108,51 @@ const BookingSection = () => {
 
         setSelectedCalendar(null)
         setSelectedDay(dayData)
-        console.log(dayData)
     }
 
     useEffect(() => {
         if (!isLoading) {
             if (response) {
-                setCalendars(response.calendars)
-                setShowModal(false)
+                if (isAdmin) {
+                    setCalendars(response.calendars)
+                    setShowModal(false)
+                } else {
+                    setCalendars(response.calendars.filter(calendar => calendar.premises === currentUser.premises))
+                    const userCalendar = response.calendars.find(calendar => calendar.premises === currentUser.premises)
+                    handleShowCalendarClick(userCalendar._id)
+                    setShowModal(false)
+                }
             }
         }
     }, [isLoading])
 
-    console.log(calendars)
-    console.log(selectedYear)
-
+    useEffect(() => {
+        return () => {
+            setShowModal(true)
+            setShowPremisesSection(true)
+            setActiveCalendarFormat(0)
+            setSearchQuery('')
+            setCalendars([])
+            setSelectedCalendar(null)
+            setSelectedMonth(new Date().getMonth())
+            setSelectedYear(new Date().getFullYear())
+            setCalendarWeekIndex(0)
+            setSelectedDay(null)
+        }
+    }, [])
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}
-            <SectionHeader
+            {isAdmin && <SectionHeader
                 searchQuery={searchQuery}
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push('rezervacie/novy-kalendar')}
                 title="Rezervácie"
-            />
+            />}
 
             <ScrollContainer>
-                <CalendarHeading>
+                {isAdmin && <CalendarHeading>
                     <Title>Pobočky</Title>
                     <div onClick={() => setShowPremisesSection(prevValue => !prevValue)}>
                         <p>
@@ -144,7 +162,7 @@ const BookingSection = () => {
                             {showPremisesSection ? <AiOutlineUpCircle /> : <AiOutlineDownCircle />}
                         </IconContainer>
                     </div>
-                </CalendarHeading>
+                </CalendarHeading>}
 
                 {showPremisesSection && <GridRow>
                     {calendars && calendars.map((calendar, idx) => (
@@ -161,9 +179,7 @@ const BookingSection = () => {
                 {selectedCalendar && (
                     <React.Fragment>
                         <CalendarHeader>
-                            <div>
-                                <Title>Kalendár</Title>
-                            </div>
+                            <Title>Kalendár</Title>
 
                             {activeCalendarFormat === 0 ? (
                                 <CalendarMonthContainer>

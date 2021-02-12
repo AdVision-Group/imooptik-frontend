@@ -86,6 +86,15 @@ const OrdersSection = () => {
         handleRefetch()
     }
 
+    // const handleSearch = () => {
+    //     if (searchQuery !== '') {
+    //         setFetchQueryObj(prevValue => ({
+    //             ...prevValue,
+    //             eanCo
+    //         }))
+    //     }
+    // }
+
     useEffect(() => {
         if (!isFetching) {
             if (response) {

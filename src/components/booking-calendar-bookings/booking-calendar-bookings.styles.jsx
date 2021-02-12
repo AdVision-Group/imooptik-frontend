@@ -6,6 +6,17 @@ export const GridContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-gap: 3rem;
     margin-bottom: 10rem;
+
+    @media all and (max-width: 1150px) {
+        grid-template-columns: 2fr 1fr;
+        @media all and (max-width: 800px) {
+            grid-template-columns: 3fr 1fr;
+            @media all and (max-width: 500px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    }
 `
 
 export const Header = styled.div`

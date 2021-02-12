@@ -11,6 +11,8 @@ import {
 } from './booking-appoinment.styles'
 
 const BookingAppoinments = ({ day }) => {
+    console.log(day)
+
     const { response, isLoading, refetch } = useFetchByQuery('api/admin/booking/userBookings/filter', {
         filters: {
             dueDate: day.bookingDate

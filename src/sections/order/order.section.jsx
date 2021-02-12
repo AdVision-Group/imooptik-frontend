@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { UserContext } from '../../context/user/user.context'
 import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -53,13 +54,15 @@ const OrderSection = () => {
         showModal,
         message
     } = useContext(LoadingModalContext)
+    const { getUser, user } = useContext(UserContext)
 
     const showErrorMessage = (message) => {
         getMessage(message)
         setShowModal(true)
     }
 
-    const orderData = useFetchById("api/admin/orders", orderId)
+    const userData = useFetchById("api/admin/users", userId, !userId)
+    const orderData = useFetchById("api/admin/orders", orderId, !orderId)
 
     const handleAddNextProduct = () => {
         setStep('findProduct')
@@ -88,7 +91,17 @@ const OrderSection = () => {
             }
         }
 
-    }, [userId, orderId, orderData.response])
+        if (userId !== 'nova-objednavka' && orderId === undefined) {
+            setStep('findProduct')
+            if (userData.response) {
+                setOrder(prevValue => ({
+                    ...prevValue,
+                    user: userData.response.user
+                }))
+            }
+        }
+
+    }, [userId, orderId, userData.response])
 
     useEffect(() => {
         if (userId === 'nova-objednavka' && !orderId) {
@@ -108,6 +121,9 @@ const OrderSection = () => {
             setIsUpdating(false)
         }
     }, [])
+
+    console.log(order)
+    console.log(orderId)
 
     return (
 

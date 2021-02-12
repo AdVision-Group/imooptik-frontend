@@ -3,6 +3,8 @@ import React from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
+import { brands } from '../../utils/warehouse.utils'
+
 import {
     ImageContainer,
     ProductImage,
@@ -54,7 +56,13 @@ const ProductGlassesForm = ({
                     name='brand'
                     value={product.brand ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="brands"
                 />
+                <datalist id="brands">
+                    {brands.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 <CustomInput
                     label="Kategória"

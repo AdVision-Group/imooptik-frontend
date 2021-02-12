@@ -88,33 +88,6 @@ const BookingCalendarBookings = ({
                     )}
                 </div>
             </div>
-            <div>
-                <Header>
-                    <h3>Všetky objednávky</h3>
-                    {/* <AddButton>Pridať</AddButton> */}
-                </Header>
-                <div>
-                    {response?.calendar?.booked && Object.keys(response?.calendar?.booked).map((booking, idx) => (
-                        <Container key={idx}>
-                            <ContainerHeader>
-                                <h4>Dátum</h4>
-                                <p>{booking}</p>
-                            </ContainerHeader>
-                            <ContainerHeader>
-                                <h4>Čas</h4>
-                                <div>
-                                    {response?.calendar?.booked[booking].map((time, index) => (
-                                        <p key={index}>{time}</p>
-                                    ))}
-                                </div>
-                            </ContainerHeader>
-                        </Container>
-                    ))}
-                    {!response?.calendar?.booked && (
-                        <InfoParagraph>Žiadné objednávky</InfoParagraph>
-                    )}
-                </div>
-            </div>
         </GridContainer>
     )
 }
