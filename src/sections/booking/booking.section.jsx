@@ -102,11 +102,14 @@ const BookingSection = () => {
     }
 
     const handleCalendarBlockClick = (dayData) => {
-        if (!dayData.bookings) return
-        if (!dayData.bookingDate) return
+        // if (!dayData.bookings) return
+        // if (!dayData.bookingDate) return
 
-        setSelectedCalendar(null)
-        setSelectedDay(dayData)
+        // setSelectedCalendar(null)
+        // setSelectedDay(dayData)
+        console.log(dayData)
+        setCalendarWeekIndex(Math.ceil(dayData.dayNumber / 7) - 1)
+        setActiveCalendarFormat(1)
     }
 
     useEffect(() => {
@@ -140,8 +143,6 @@ const BookingSection = () => {
             setSelectedDay(null)
         }
     }, [])
-
-    console.log(calendars)
 
     return (
         <section>

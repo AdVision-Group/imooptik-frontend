@@ -213,7 +213,7 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
                                             onChange={handleChangeDate}
                                         >
                                             <option value={0}>00</option>
-                                            <option value={30}>30</option>
+                                            {calendar?.interval === 30 && <option value={30}>30</option>}
                                         </CustomSelect>
                                     </div>
                                 </DateContainer>
