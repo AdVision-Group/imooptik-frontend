@@ -235,7 +235,6 @@ export const getPreviousMonthDays = (firstDayIndex) => {
 }
 
 export const getNextMonthDays = (nextDays) => {
-    console.log(nextDays)
     let arr = [];
     for (let x = 1; x <= nextDays; x++) {
         arr.push({

@@ -170,10 +170,10 @@ const CustomerProfile = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-            <Prompt
+            {/* <Prompt
                 when={hasChanges}
                 message={"Chcete opustiť tuto stránku?"}
-            />
+            /> */}
             <form onSubmit={handleSubmit}>
                 <Header>
                     <h1>Profil</h1>

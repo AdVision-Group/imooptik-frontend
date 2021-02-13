@@ -85,8 +85,7 @@ const BookingSection = () => {
     }
 
     const getNextMonth = () => {
-        console.log('click')
-        if (selectedMonth === 10) {
+        if (selectedMonth === 11) {
             setSelectedYear(prevValue => prevValue + 1)
             setSelectedMonth(0)
         } else {
@@ -98,7 +97,7 @@ const BookingSection = () => {
     const resetCalendarToDefault = () => {
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
-        setCalendarWeekIndex(0)
+        setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
         setSelectedDay(null)
     }
 
@@ -127,6 +126,7 @@ const BookingSection = () => {
     }, [isLoading])
 
     useEffect(() => {
+        console.log("unmount")
         return () => {
             setShowModal(true)
             setShowPremisesSection(true)

@@ -111,7 +111,7 @@ const EshopSection = () => {
     }
 
     const getPrevPage = () => {
-        // if (productItems.length < 10) return
+        if (queryFilter.skip === 0) return
         getProductsByQuery({
             ...queryFilter,
             skip: queryFilter.skip - 10

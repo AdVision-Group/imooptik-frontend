@@ -20,6 +20,7 @@ export const CalendarHeading = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 3rem;
 
     div {
         display: flex;

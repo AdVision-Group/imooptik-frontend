@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { UserContext } from '../../context/user/user.context'
 import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -54,14 +53,13 @@ const OrderSection = () => {
         showModal,
         message
     } = useContext(LoadingModalContext)
-    const { getUser, user } = useContext(UserContext)
 
     const showErrorMessage = (message) => {
         getMessage(message)
         setShowModal(true)
     }
 
-    const userData = useFetchById("api/admin/users", userId, !userId)
+    const userData = useFetchById("api/admin/users", userId, !(userId && orderId))
     const orderData = useFetchById("api/admin/orders", orderId, !orderId)
 
     const handleAddNextProduct = () => {
@@ -89,9 +87,7 @@ const OrderSection = () => {
                 })
                 setCombinedProducts(orderData.response.order.combinedProducts)
             }
-        }
-
-        if (userId !== 'nova-objednavka' && orderId === undefined) {
+        } else if (userId !== 'nova-objednavka' && orderId === undefined) {
             setStep('findProduct')
             if (userData.response) {
                 setOrder(prevValue => ({
@@ -101,15 +97,15 @@ const OrderSection = () => {
             }
         }
 
-    }, [userId, orderId, userData.response])
+    }, [userId, orderId, userData.response, orderData.response])
 
-    useEffect(() => {
-        if (userId === 'nova-objednavka' && !orderId) {
-            if (order.user) {
-                setStep('findProduct')
-            }
-        }
-    }, [order.user])
+    // useEffect(() => {
+    //     if (userId === 'nova-objednavka' && !orderId) {
+    //         if (order.user) {
+    //             setStep('findProduct')
+    //         }
+    //     }
+    // }, [order.user])
 
     useEffect(() => {
         return () => {
@@ -123,7 +119,7 @@ const OrderSection = () => {
     }, [])
 
     console.log(order)
-    console.log(orderId)
+    console.log(orderData)
 
     return (
 

@@ -78,6 +78,11 @@ const UserProvider = ({ children }) => {
         //     id: 3,
         //     name: "Velký brat",
         //     filter: 3,
+        // },
+        // {
+        //     id: 4,
+        //     name: "Odstránené",
+        //     filter: 3
         // }
     ]
 

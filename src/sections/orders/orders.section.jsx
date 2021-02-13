@@ -95,6 +95,24 @@ const OrdersSection = () => {
     //     }
     // }
 
+    const getNextPage = () => {
+        if (orders.length < 10) return
+        setFetchQueryObj(prevValue => ({
+            ...prevValue,
+            skip: prevValue.skip + 10,
+        }))
+        refetch()
+    }
+
+    const getPrevPage = () => {
+        if (fetchQueryObj.skip === 0) return
+        setFetchQueryObj(prevValue => ({
+            ...prevValue,
+            skip: prevValue.skip - 10,
+        }))
+        refetch()
+    }
+
     useEffect(() => {
         if (!isFetching) {
             if (response) {
@@ -177,6 +195,8 @@ const OrdersSection = () => {
 
                 <ListArrows
                     listItems={orders}
+                    handleClickNext={getNextPage}
+                    handleClickPrev={getPrevPage}
                 />
             </ScrollContainer>
         </section>
