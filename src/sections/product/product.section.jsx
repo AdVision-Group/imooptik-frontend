@@ -18,7 +18,8 @@ import ProductContactLensesForm from '../../components/product-contact-lenses-fo
 
 // import { useFetch } from '../../hooks/useFetch'
 
-import { productCategories, checkParameter, retailNames, formatLink } from '../../context/warehouse/warehouse.utils'
+import { productCategories, checkParameter, formatLink } from '../../context/warehouse/warehouse.utils'
+import { retailNames } from '../../utils/warehouse.utils'
 
 import {
     Header,

@@ -97,14 +97,15 @@ export const premisesTabs = [
     },
     {
         id: 3,
-        name: "Senica, OC Branč",
+        name: "Vajnory, Bratislava",
         premises: 3,
     },
     {
         id: 4,
-        name: "Vajnory, Bratislava",
+        name: "Senica, OC Branč",
         premises: 4,
     },
+
     // {
     //     id: 5,
     //     name: "Trnava, City Aréna",
@@ -227,14 +228,15 @@ export const formatfloatNumber = number => {
 
 export const formatAvailable = (available, activePremisesTab) => {
     if (available === undefined) return "Šosovka"
-
+    console.log(activePremisesTab)
+    console.log(available)
     if (typeof available === "number") {
         return `Na sklade ${available} kusov`
     } else {
         if (activePremisesTab === 0) {
             return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} kusov`
         } else {
-            return `Na sklade ${available[activePremisesTab]} kusov`
+            return `Na sklade ${available[activePremisesTab - 1]} kusov`
         }
     }
 }

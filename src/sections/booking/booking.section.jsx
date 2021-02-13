@@ -141,6 +141,8 @@ const BookingSection = () => {
         }
     }, [])
 
+    console.log(calendars)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}

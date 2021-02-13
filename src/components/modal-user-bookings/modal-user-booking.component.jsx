@@ -7,6 +7,12 @@ import CustomTextarea from '../custom-textarea/custom-textarea.component'
 import { useFetchByQuery } from '../../hooks/useFetch'
 
 import {
+    formatDate,
+    formatCalendarStartTime,
+    formatCalendarEndTime
+} from '../../utils/calendar.utils'
+
+import {
     ModalContainer,
     Modal,
     CloseButton,
@@ -17,7 +23,8 @@ import {
     Tablebody,
     TableCol,
     SearchTab,
-    CustomSelect
+    CustomSelect,
+    DateContainer
 } from './modal-user-booking.styles'
 
 const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBooking }) => {
@@ -25,6 +32,14 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
     const [query, setQuery] = useState(null)
     const [activeTab, setActiveTab] = useState(0)
     const [userBooking, setUserBooking] = useState({})
+    const [bookingDate, setBookingDate] = useState({
+        date: "",
+        hour: "",
+        min: 0
+    })
+
+    const startTime = formatCalendarStartTime(calendar, day)
+    const endTime = formatCalendarEndTime(calendar, day)
 
     const { refetch, response } = useFetchByQuery('api/admin/users/filter', query, !query)
 
@@ -65,18 +80,30 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
         setQuery(null)
     }
 
+    const handleChangeDate = e => {
+        const { name, value } = e.target
+
+        setBookingDate(prevValue => ({
+            ...prevValue,
+            [name]: value
+        }))
+    }
+
     const handleSubmit = () => {
         if (!userBooking?.name) return
         if (!userBooking?.email) return
         if (!userBooking?.phone) return
         if (!userBooking?.booking) return
 
-        console.log("USER BOOKING BEFORE SEND")
-        console.log(userBooking)
         let bookingToAdd = {
             ...userBooking,
+            dueTime: formatDate(bookingDate),
             values: {}
         }
+
+        console.log("USER BOOKING BEFORE SEND")
+        console.log(bookingToAdd)
+
 
         createUserBooking(bookingToAdd)
         refetchCalendar()
@@ -86,10 +113,15 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
     useEffect(() => {
         if (day) {
             const { time, dayNumber, month, year } = day
-            setUserBooking(prevValue => ({
-                ...prevValue,
-                dueTime: `${time.replace(":", "/")}:${dayNumber < 10 ? `0${dayNumber}` : dayNumber}/${month < 9 ? `0${month + 1}` : (month + 1)}/${year}`
-            }))
+            console.log("DAY DATA")
+            console.log(day)
+
+            // const formatedDate = formatDate(`${dayNumber}-${month}-${year}`, time)
+            setBookingDate({
+                date: `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${dayNumber < 10 ? `0${dayNumber}` : dayNumber}`,
+                hour: Number(time?.split(":")[0]),
+                min: Number(time?.split(":")[1])
+            })
         }
     }, [day])
 
@@ -150,6 +182,42 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
                     </SearchTab>
                 ) : (
                         <React.Fragment>
+                            <div>
+                                <h3>Dátum vyšetrenia</h3>
+                                <DateContainer>
+                                    <CustomInput
+                                        label=''
+                                        type='date'
+                                        name='date'
+                                        handleChange={handleChangeDate}
+                                        value={bookingDate?.date}
+
+                                    />
+                                    <div>
+                                        <CustomInput
+                                            label='Čas'
+                                            type='number'
+                                            name='hour'
+                                            value={bookingDate?.hour?.toString()}
+                                            min={startTime?.split(":")[0]}
+                                            max={endTime?.split(":")[0]}
+                                            handleChange={handleChangeDate}
+                                            step="1"
+                                        />
+                                    </div>
+                                    <p>:</p>
+                                    <div>
+                                        <CustomSelect
+                                            name='min'
+                                            value={bookingDate?.min?.toString()}
+                                            onChange={handleChangeDate}
+                                        >
+                                            <option value={0}>00</option>
+                                            <option value={30}>30</option>
+                                        </CustomSelect>
+                                    </div>
+                                </DateContainer>
+                            </div>
                             <div>
                                 <CustomInput
                                     label='Meno*'

@@ -365,3 +365,24 @@ export const formatBookingObj = bookingObj => {
 
     return obj
 }
+
+export const formatDate = (bookingDate) => {
+    const splitedDate = bookingDate?.date.split('-')
+    const formatedDate = `${splitedDate[2]}/${splitedDate[1]}/${splitedDate[0]}`
+    const formatedHour = `${bookingDate?.hour < 10 ? `0${bookingDate?.hour}` : bookingDate?.hour}/${bookingDate?.min === 0 ? `0${bookingDate?.min}` : bookingDate?.min}`
+
+    return `${formatedHour}:${formatedDate}`
+}
+
+export const formatCalendarStartTime = (calendar, day) => {
+    let dayIndex = new Date(day.year, day.month, day.dayNumber).getDay()
+    if (dayIndex === 0) dayIndex = 7
+    if (calendar.startTimes[dayIndex - 1] === "X") return
+    return calendar.startTimes[dayIndex - 1].replace("/", ":")
+}
+export const formatCalendarEndTime = (calendar, day) => {
+    let dayIndex = new Date(day.year, day.month, day.dayNumber).getDay()
+    if (dayIndex === 0) dayIndex = 7
+    if (calendar.endTimes[dayIndex - 1] === "X") return
+    return calendar.endTimes[dayIndex - 1].replace("/", ":")
+}

@@ -147,3 +147,13 @@ export const CustomSelect = styled.select`
 
     margin-bottom: 2rem;
 `
+
+export const DateContainer = styled.div`
+    display: grid;
+    grid-template-columns: 2fr 1fr .4rem 1fr;
+    grid-gap: 1rem;
+
+    p {
+        align-self: center;
+    }
+`

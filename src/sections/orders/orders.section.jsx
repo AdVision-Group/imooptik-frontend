@@ -121,6 +121,7 @@ const OrdersSection = () => {
                 } else {
                     setOrders(response?.orders)
                 }
+                closeModal()
             }
         }
     }, [isFetching, response, activeIndex])

@@ -118,9 +118,6 @@ const OrderSection = () => {
         }
     }, [])
 
-    console.log(order)
-    console.log(orderData)
-
     return (
 
         <section>

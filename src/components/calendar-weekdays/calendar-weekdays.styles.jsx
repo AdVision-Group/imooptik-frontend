@@ -81,12 +81,8 @@ export const HourBlock = styled.div`
                 display: block;
                 opacity: .6;
                 position: absolute;
-                bottom: -1.5rem;
+                top: 0rem;
                 left: -5.8rem;
-                /* transform:translateY(-50%); */
-                /* background-color: var(--background-primary-color); */
-                /* background-color: gray; */
-                /* z-index: 999; */
                 font-size: 1.4rem;
                 padding: .5rem 1rem .5rem .2rem;
                 border-radius: 9999rem;

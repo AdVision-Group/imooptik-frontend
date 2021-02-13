@@ -91,6 +91,7 @@ const CustomersSection = () => {
         if (isLoading) return
         if (response) {
             setUserItems(response.users)
+            closeModal()
         }
     }, [isLoading])
 
@@ -107,7 +108,7 @@ const CustomersSection = () => {
 
     return (
         <section>
-            {isLoading && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
                 handleSearch={handleSearch}
