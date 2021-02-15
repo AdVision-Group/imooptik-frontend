@@ -23,4 +23,5 @@ export const NavButton = styled(CustomButton)`
     color: ${({ active }) => active ? '#fff' : 'var(--primary-text-color)'};
     font-weight: ${({ active }) => active ? 400 : 700};
     padding: ${({ active }) => active ? ".5rem 2.5rem" : ".5rem 1rem .5rem 0"};
+    font-weight: ${({ active }) => active ? "bolder" : "normal"};
 `

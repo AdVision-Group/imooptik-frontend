@@ -20,7 +20,8 @@ import {
     AppointmentContainer,
     HourGrid,
     TableHead,
-    HourBlockContainer
+    HourBlockContainer,
+    EmptyContainer
 } from './calendar-weekdays.styles'
 
 const WeekDays = ({
@@ -101,18 +102,26 @@ const WeekDays = ({
 
                         return <HourBlock key={idx}>
                             {[...Array(24)].map((value, index) => {
-                                if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index + 1) return
-                                if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index + 1) return
+                                if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index) return
+                                if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index) return
                                 if (response?.calendar?.endTimes[idx] === "X") return
                                 return (
-                                    <HourBlockContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index + 1}:00` })} key={index}>
-                                        {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) && (
-                                            <AppointmentContainer onClick={() => handleCalendarBlockClick(dayData)}>
-                                                <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
-                                            </AppointmentContainer>
-                                        )}
+                                    <HourBlockContainer key={index}>
+                                        {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) ? (
+                                            <React.Fragment>
+                                                {dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 0 && Number(booking?.split('/')[0]) === index) && <AppointmentContainer onClick={() => console.log("Click")}>
+                                                    <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 0 && Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
+                                                </AppointmentContainer>}
+                                                {dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 30 && Number(booking?.split('/')[0]) === index) && <AppointmentContainer onClick={() => console.log("Click")}>
+                                                    <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 30 && Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
+                                                </AppointmentContainer>}
+                                                <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
+                                            </React.Fragment>
+                                        ) : (
+                                                <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
+                                            )}
+                                        <span>{index}:00</span>
 
-                                        <span>{index + 1}:00</span>
                                     </HourBlockContainer>
                                 )
                             })}

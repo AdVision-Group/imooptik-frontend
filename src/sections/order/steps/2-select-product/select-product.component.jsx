@@ -15,12 +15,21 @@ import {
     TableContainer,
     ProductTableHead,
     ProductTableRow,
-    TableCol
+    TableCol,
+    HeaderContainer,
+    CartContainer,
+    CartTable,
+    CartTableHead,
+    CartTableRow,
+    CartTableCol,
+    CartParagraph,
+    SubmitButton
 } from './select-product.styles'
 
 const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMessage }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
+    const [cartItems, setCartItems] = useState([])
 
     const {
         products,
@@ -44,16 +53,17 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMe
     }
 
     const handleClick = (product) => {
-        addToOrder({
-            name: "product",
-            value: product
-        })
-        if (product.type === 1) {
-            next("selectLenses")
-            // next("summary")
-        } else {
-            showModal()
-        }
+        setCartItems(prevValue => ([...prevValue, { product }]))
+        // addToOrder({
+        //     name: "product",
+        //     value: product
+        // })
+        // if (product.type === 1) {
+        //     next("selectLenses")
+        //     // next("summary")
+        // } else {
+        //     showModal()
+        // }
     }
 
     useEffect(() => {
@@ -86,18 +96,46 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMe
     return (
         <div>
             <BackButton onClick={back} />
-            <SearchContainer>
-                <h3>Vyhľadať produkt</h3>
-                <div>
-                    <CustomInput
-                        label='Názov produktu, eanCode alebo popis'
-                        value={searchQuery}
-                        handleChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyPress={handleSearchOnEnter}
-                    />
-                </div>
-                <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
-            </SearchContainer>
+            <HeaderContainer>
+                <SearchContainer>
+                    <h3>Vyhľadať produkt</h3>
+                    <div>
+                        <CustomInput
+                            label='Názov produktu, eanCode alebo popis'
+                            value={searchQuery}
+                            handleChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyPress={handleSearchOnEnter}
+                        />
+                    </div>
+                    <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
+                </SearchContainer>
+                <CartContainer>
+                    <h3>Vybraté položky</h3>
+                    <CartTableHead>
+                        <TableCol>#</TableCol>
+                        <TableCol>Produkt</TableCol>
+                        <TableCol>Cena</TableCol>
+                        <TableCol>Šosovky</TableCol>
+                        <TableCol>Cena</TableCol>
+                    </CartTableHead>
+                    <CartTable>
+                        {cartItems.map((item, idx) => (
+                            <CartTableRow key={idx}>
+                                <TableCol>{idx + 1}</TableCol>
+                                <TableCol>{item.product.name}</TableCol>
+                                <TableCol>{(item.product.price / 100).toFixed(2)}€</TableCol>
+                                <TableCol>{item?.lenses ? item.lenses : "Žiadné"}</TableCol>
+                                <TableCol>{item?.lenses ? `${(item?.lenses?.price / 100).toFixed(2)}€` : ""}</TableCol>
+                            </CartTableRow>
+                        ))}
+
+                        {cartItems.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
+                    </CartTable>
+                    <SubmitButton>
+                        Pridať
+                    </SubmitButton>
+                </CartContainer>
+            </HeaderContainer>
 
             <TableContainer>
                 <ProductTableHead>

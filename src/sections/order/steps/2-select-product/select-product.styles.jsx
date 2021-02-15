@@ -1,17 +1,94 @@
 import styled from 'styled-components'
 import CustomButton from '../../../../components/custom-button/custom-button.component'
 
+export const HeaderContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 3rem;
+    align-items: start;
+
+`
+
+export const CartContainer = styled.div`
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+    /* padding-right: 2rem; */
+    
+
+    h3 {
+        padding: 2rem;
+    }
+`
+
+export const CartTable = styled.div`
+    max-height: 30rem;
+    overflow-y: scroll;
+    padding: 2rem;
+    padding-top: 0;
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
+`
+
+export const CartTableHead = styled.div`
+    display:grid; 
+    grid-template-columns: 5rem 3fr 2fr 3fr 2fr;
+
+    border-bottom: 1px solid var(--secondary-text-color);
+    margin: 2rem;
+    margin-right: calc(2rem + 10px);
+    margin-bottom: 0;
+`
+
+export const CartTableRow = styled.div`
+    display:grid; 
+    grid-template-columns: 5rem 3fr 2fr 3fr 2fr;
+`
+
+export const CartTableCol = styled.div`
+
+`
+
+export const CartParagraph = styled.p`
+    padding-top: 2rem;
+    padding-left: 2rem;
+    opacity: .6;
+`
+
+export const SubmitButton = styled(CustomButton)`
+    font-size: 1.4rem;
+    background-color: var(--primary-color);
+    font-weight: bolder;
+    display: block;
+    margin: 2rem 2rem 2rem auto;
+`
 
 export const SearchContainer = styled.div`
-    max-width: 40rem;
+    /* max-width: 40rem; */
     padding: 2rem;
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
-    margin: 0 auto;
+    /* margin: 0 auto; */
     border-radius: .5rem;
 
     h3 {
-        text-align: center;
+        /* text-align: center; */
         font-size: 3rem;
     }
 
@@ -26,12 +103,13 @@ export const SearchContainer = styled.div`
 
 export const SearchButton = styled(CustomButton)`
     display: block;
-    margin: 0 auto;
+    margin-left: auto;
 `
 
 export const TableContainer = styled.div`
     margin: 5rem 0;
 `
+
 export const TableCol = styled.div`
     padding: 2rem;
     text-align: center;

@@ -220,7 +220,7 @@ const UserProvider = ({ children }) => {
     }
 
     // Update user
-    const updateUser = async (user, id) => {
+    const updateUser = async (user, id, path) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -254,7 +254,13 @@ const UserProvider = ({ children }) => {
 
             setIsLoading(false)
             closeModal()
-            push('/dashboard/zakaznici')
+
+            if (path === 'order') {
+                push(`/dashboard/objednavky/${id}`)
+            } else {
+                push("/dashboard/zakaznici")
+            }
+
             getFilteredUsers({
                 filters: {
                     admin: activeIndex
@@ -270,7 +276,7 @@ const UserProvider = ({ children }) => {
         }
     }
 
-    const createUser = async (user) => {
+    const createUser = async (user, path) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -305,7 +311,7 @@ const UserProvider = ({ children }) => {
 
                 updateUser({
                     ...user
-                }, userId)
+                }, userId, path)
 
                 // setIsLoading(false)
                 // getUsers()
@@ -336,7 +342,8 @@ const UserProvider = ({ children }) => {
                         admin: activeIndex
                     }
                 })
-                push('/dashboard/zakaznici')
+
+                push("/dashboard/zakaznici")
                 closeModal()
             }
 

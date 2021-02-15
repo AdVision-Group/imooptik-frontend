@@ -106,6 +106,19 @@ export const HourBlockContainer = styled.div`
     }
 `
 
+export const EmptyContainer = styled.div`
+    content: "";
+    position: relative;
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    /* top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; */
+    /* background-color: red; */
+`
+
 export const AppointmentContainer = styled.div`
     cursor: pointer;
     border: var(--appointment-container-border);

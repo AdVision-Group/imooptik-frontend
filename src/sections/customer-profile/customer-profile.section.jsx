@@ -109,7 +109,7 @@ const CustomerProfile = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, path) => {
         e.preventDefault()
         setHasChanges(false)
 
@@ -119,7 +119,7 @@ const CustomerProfile = () => {
                 delete userObj["fName"]
                 delete userObj["lName"]
             }
-            createUser(userObj)
+            createUser(userObj, path)
         } else {
             console.log("Update existing user")
             if (userObj.fName || userObj.lName) {
@@ -174,12 +174,13 @@ const CustomerProfile = () => {
                 when={hasChanges}
                 message={"Chcete opustiť tuto stránku?"}
             /> */}
-            <form onSubmit={handleSubmit}>
+            <form>
                 <Header>
                     <h1>Profil</h1>
                     <div>
                         {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
-                        <SaveButton type="submit">
+                        {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a preisť na objednávku</SaveButton>}
+                        <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
                             {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
                         </SaveButton>
                     </div>

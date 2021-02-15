@@ -58,7 +58,7 @@ const AnalyticsSection = () => {
             <ScrollContainer>
                 <GridContainer>
                     <div>
-                        <h3>Uživatelia</h3>
+                        <h3>Zákazníci</h3>
                         <p>{storeData?.users}</p>
                     </div>
                     <div>
@@ -70,11 +70,11 @@ const AnalyticsSection = () => {
                         <p>{storeData?.lenses}</p>
                     </div>
                     <div>
-                        <h3>Objednávky</h3>
+                        <h3>Zákazky</h3>
                         <p>{storeData?.orders}</p>
                     </div>
                     <div>
-                        <h3>Prehliadky</h3>
+                        <h3>Vyšetrenia</h3>
                         <p>{storeData?.bookings}</p>
                     </div>
                 </GridContainer>
