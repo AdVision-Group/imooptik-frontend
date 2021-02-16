@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../../context/auth/auth.context'
-import { OrdersContext } from '../../context/orders/orders.context'
 import ReactDOM from 'react-dom'
 
 import Popup from '../popup/pop-up.component'
@@ -20,7 +19,6 @@ import {
 const OrderDeligateModal = ({ close, premise, id, refetch }) => {
     const [value, setValue] = useState(premise)
     const { token } = useContext(AuthContext)
-    const { getOrders } = useContext(OrdersContext)
     const {
         getMessage,
         message,

@@ -2,14 +2,21 @@ import React, { useState, useEffect, useContext } from 'react'
 import { WarehouseContext } from '../../../../context/warehouse/warehouse.context'
 
 import BackButton from '../../../../components/custom-back-button/custom-back-button.component'
-import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
+import CartLensesRow from '../../../../components/order-cart-lenses-row/order-cart-lenses-row.component'
 
 import {
-    ParametersContainer,
     LensesContainer,
     LensesImg,
     SelectLensesContainer,
-    LensesFlexContainer
+    LensesFlexContainer,
+    CartContainer,
+    CartParagraph,
+    CartTable,
+    CartTableHead,
+    NextButton,
+    TableCol,
+    ButtonOptions,
+    HeaderContainer
 } from './select-lenses.styles'
 
 const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => {
@@ -19,13 +26,16 @@ const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => 
         getLenses
     } = useContext(WarehouseContext)
 
+    const [cartItems, setCartItems] = useState([])
+
     const handleClick = (lenses) => {
+        setCartItems(prevValue => [...prevValue, { lens: { ...lenses } }])
         // if (!lenses) return showModal()
-        addToOrder({
-            name: "lenses",
-            value: lenses
-        })
-        showModal()
+        // addToOrder({
+        //     name: "lenses",
+        //     value: lenses
+        // })
+        // showModal()
     }
 
     useEffect(() => {
@@ -37,19 +47,40 @@ const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => 
         }
     }, [lensesProducts])
 
+    console.log(cartItems)
+
     return (
         <div>
             <BackButton onClick={back} />
-            <div>
-                <ParametersContainer>
-                    <h3>Parametre zákaznika</h3>
-                    <ParametersTable
-                        parameters={order.user.lenses}
-                        disabledInputs={true}
-                    />
-                </ParametersContainer>
+            <HeaderContainer>
 
-            </div>
+                <CartContainer>
+                    <h3>Vybraté položky</h3>
+                    <CartTableHead>
+                        <TableCol>#</TableCol>
+                        <TableCol>Produkt</TableCol>
+                        <TableCol>Cena</TableCol>
+                        <TableCol>Možnosti</TableCol>
+                    </CartTableHead>
+                    <CartTable>
+                        {cartItems.map((item, idx) => (
+                            <CartLensesRow
+                                key={idx}
+                                idx={idx}
+                                item={item}
+                            />
+                        ))}
+
+                        {cartItems.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
+                    </CartTable>
+                    <ButtonOptions>
+                        <NextButton >
+                            Dokončiť objednávku
+                        </NextButton>
+                    </ButtonOptions>
+                </CartContainer>
+            </HeaderContainer>
+
             <SelectLensesContainer>
                 <h3>Výber Šošoviek</h3>
                 <LensesFlexContainer>

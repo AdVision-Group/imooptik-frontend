@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { OrdersContext } from '../../context/orders/orders.context'
 
 import Popup from '../popup/pop-up.component'
 
@@ -26,7 +25,6 @@ const OrderPayModal = ({ order, close }) => {
         setIsLoading,
         closeModal
     } = useContext(LoadingModalContext)
-    const { getOrders } = useContext(OrdersContext)
 
     const handleClick = async () => {
         setIsLoading(true)

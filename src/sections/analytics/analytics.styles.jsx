@@ -24,6 +24,8 @@ export const GridContainer = styled.div`
         h3 {
             font-weight: lighter;
             margin-bottom: 1rem;
+            opacity: .6;
+
         }
 
         p {

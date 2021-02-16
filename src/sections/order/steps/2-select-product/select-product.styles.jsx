@@ -12,18 +12,18 @@ export const HeaderContainer = styled.div`
 export const CartContainer = styled.div`
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
-    /* padding-right: 2rem; */
-    
 
     h3 {
         padding: 2rem;
+        font-size: 2.5rem;
+
     }
 `
 
 export const CartTable = styled.div`
     max-height: 30rem;
     overflow-y: scroll;
-    padding: 2rem;
+    padding: 2rem 2rem 0 2rem;
     padding-top: 0;
 
     ::-webkit-scrollbar {
@@ -48,21 +48,12 @@ export const CartTable = styled.div`
 
 export const CartTableHead = styled.div`
     display:grid; 
-    grid-template-columns: 5rem 3fr 2fr 3fr 2fr;
-
+    grid-template-columns: 5rem 3fr 2fr 1fr;
+    background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
     margin: 2rem;
     margin-right: calc(2rem + 10px);
     margin-bottom: 0;
-`
-
-export const CartTableRow = styled.div`
-    display:grid; 
-    grid-template-columns: 5rem 3fr 2fr 3fr 2fr;
-`
-
-export const CartTableCol = styled.div`
-
 `
 
 export const CartParagraph = styled.p`
@@ -71,12 +62,25 @@ export const CartParagraph = styled.p`
     opacity: .6;
 `
 
-export const SubmitButton = styled(CustomButton)`
+export const ButtonOptions = styled.div`
+    margin: 2rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+`
+
+export const NextLensesButton = styled(CustomButton)`
+    font-size: 1.4rem;
+    display: block;
+
+`
+
+export const NextButton = styled(CustomButton)`
     font-size: 1.4rem;
     background-color: var(--primary-color);
     font-weight: bolder;
     display: block;
-    margin: 2rem 2rem 2rem auto;
+    margin-left: 1rem;
+    /* margin: 2rem 2rem 2rem auto; */
 `
 
 export const SearchContainer = styled.div`
@@ -89,7 +93,7 @@ export const SearchContainer = styled.div`
 
     h3 {
         /* text-align: center; */
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     div {
@@ -108,6 +112,7 @@ export const SearchButton = styled(CustomButton)`
 
 export const TableContainer = styled.div`
     margin: 5rem 0;
+
 `
 
 export const TableCol = styled.div`
@@ -125,6 +130,8 @@ export const ProductTableHead = styled.div`
     grid-template-columns: 10rem 15rem 1fr 1fr 10rem 1fr;
     border-bottom: 1px solid var(--secondary-text-color);
     font-weight: bolder;
+
+
 `
 export const ProductTableRow = styled.div`
     cursor: pointer;

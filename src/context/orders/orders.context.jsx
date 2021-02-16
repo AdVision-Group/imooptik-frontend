@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
@@ -17,6 +17,14 @@ const OrdersProvider = ({ children }) => {
     const { setIsLoading, setShowModal, getMessage, closeModal } = useContext(LoadingModalContext)
     const { token } = useContext(AuthContext)
     const [orders, setOrders] = useState(null)
+
+
+
+
+
+
+
+    // REQUESTS
 
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
@@ -44,7 +52,7 @@ const OrdersProvider = ({ children }) => {
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
 
         } catch (err) {
@@ -88,7 +96,7 @@ const OrdersProvider = ({ children }) => {
                 push('/dashboard/objednavky')
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -131,7 +139,7 @@ const OrdersProvider = ({ children }) => {
                 push('/dashboard/objednavky')
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -156,17 +164,12 @@ const OrdersProvider = ({ children }) => {
 
             console.log(data)
 
-            if (data.error === 'undelegated-order') {
-                setIsLoading(false)
-                getMessage("Objednávka nemôže byť dokončená ak nieje priradená k prevádzke")
-                return
-            }
-
             if (data.order) {
                 closeModal()
                 return
             }
-            getMessage(data.message)
+
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)

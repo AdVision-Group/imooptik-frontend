@@ -98,6 +98,8 @@ const CustomersSection = () => {
     useEffect(() => {
         if (searchQuery === '') {
             setFilterQuery({
+                limit: 10,
+                skip: 0,
                 filters: {
                     admin: activeIndex
                 }
@@ -135,7 +137,7 @@ const CustomersSection = () => {
                         <TableCol>Email</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
-                    {userItems.map((user, idx) => (
+                    {userItems && userItems.map((user, idx) => (
                         <TableRow key={idx}>
                             <TableCol>{user.name}</TableCol>
                             <TableCol>{user.email}</TableCol>

@@ -1,11 +1,14 @@
 import styled from 'styled-components'
+import CustomButton from '../../../../components/custom-button/custom-button.component'
 
-export const ParametersContainer = styled.div`
-    h3 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
+export const HeaderContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 3rem;
+    align-items: start;
+
 `
+
 export const SelectLensesContainer = styled.div`
     margin: 5rem 0;
 
@@ -76,4 +79,85 @@ export const LensesImg = styled.div`
     height: 10rem;
     margin: 0 auto;
     margin-bottom: 1.5rem;
+`
+
+export const CartContainer = styled.div`
+    grid-column: 2/3;
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
+    h3 {
+        padding: 2rem;
+        font-size: 2.5rem;
+
+    }
+`
+
+export const CartTable = styled.div`
+    max-height: 30rem;
+    overflow-y: scroll;
+    padding: 2rem 2rem 0 2rem;
+    padding-top: 0;
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background:  var(--background-primary-color);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
+`
+export const TableCol = styled.div`
+    padding: 2rem;
+    text-align: center;
+
+`
+
+export const CartTableHead = styled.div`
+    display:grid; 
+    grid-template-columns: 5rem 3fr 2fr 1fr;
+    background-color: var(--background-primary-color);
+    border-bottom: 1px solid var(--secondary-text-color);
+    margin: 2rem;
+    margin-right: calc(2rem + 10px);
+    margin-bottom: 0;
+`
+export const CartParagraph = styled.p`
+    padding-top: 2rem;
+    padding-left: 2rem;
+    opacity: .6;
+`
+
+export const ButtonOptions = styled.div`
+    background-color: var(--container-background-color);
+
+    margin: 2rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+`
+
+export const NextLensesButton = styled(CustomButton)`
+    font-size: 1.4rem;
+    display: block;
+
+`
+
+export const NextButton = styled(CustomButton)`
+    font-size: 1.4rem;
+    background-color: var(--primary-color);
+    font-weight: bolder;
+    display: block;
+    margin-left: 1rem;
+    /* margin: 2rem 2rem 2rem auto; */
 `

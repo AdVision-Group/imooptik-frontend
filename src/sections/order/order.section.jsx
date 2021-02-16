@@ -5,7 +5,6 @@ import { useParams, Prompt } from 'react-router-dom'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 
 import Popup from "../../components/popup/pop-up.component"
-import CombinedProductModal from '../../components/modal-finish-combined-product/modal-finish-combined-product.component'
 
 import SelectUserComponent from './steps/1-select-user/select-user.component'
 import SelectProductComponent from "./steps/2-select-product/select-product.component"
@@ -99,14 +98,6 @@ const OrderSection = () => {
 
     }, [userId, orderId, userData.response, orderData.response])
 
-    // useEffect(() => {
-    //     if (userId === 'nova-objednavka' && !orderId) {
-    //         if (order.user) {
-    //             setStep('findProduct')
-    //         }
-    //     }
-    // }, [order.user])
-
     useEffect(() => {
         return () => {
             setStep('selectUser')
@@ -118,6 +109,9 @@ const OrderSection = () => {
         }
     }, [])
 
+    console.log("ORDER OBJECT")
+    console.log(order)
+
     return (
 
         <section>
@@ -126,16 +120,6 @@ const OrderSection = () => {
                 message={"Máte nedokončenú objednávku, skutočne chcete odísť?"}
             />
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-            {showCombinedProductModal && <CombinedProductModal
-                order={order}
-                close={() => setShowCombinedProductModal(false)}
-                addCombineProduct={handleAddCombineProduct}
-                next={() => {
-                    setStep("summary")
-                    setShowCombinedProductModal(false)
-                }}
-            />
-            }
             <Header>
                 <div>
                     <h1>{isUpdating ? `Objednavka číslo ${order?.order?.customId}` : "Nová objednávka"}</h1>
@@ -151,6 +135,7 @@ const OrderSection = () => {
                     )}
                     {step === 'findProduct' && (
                         <SelectProductComponent
+                            order={order}
                             back={() => setStep("selectUser")}
                             next={setStep}
                             addToOrder={handleOrderChange}
