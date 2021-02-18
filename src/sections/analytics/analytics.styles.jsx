@@ -35,22 +35,47 @@ export const GridContainer = styled.div`
 `
 
 export const StatsGrid = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 4rem;
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* grid-gap: 4rem; */
 `
 
 export const StatsContainer = styled.div`
-    padding: 2rem;
-    border-radius: .5rem;
-    box-shadow: var(--container-shadow);
-    background-color: var(--container-background-color);
-
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    margin-bottom: 4rem;
 
     div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        background-color: var(--body-background-primary-color);
+        padding: 2rem;
+        border-radius: .5rem;
+        text-align: center;
+
+        h3 {
+            font-weight: lighter;
+            margin-bottom: 1rem;
+            opacity: .6;
+
+        }
+
+        p {
+            font-size: 4rem;
+        }
     }
 
 `
+// export const StatsContainer = styled.div`
+//     padding: 2rem;
+//     border-radius: .5rem;
+//     box-shadow: var(--container-shadow);
+//     background-color: var(--container-background-color);
+
+
+//     div {
+//         display: flex;
+//         justify-content: space-between;
+//         align-items: center;
+//     }
+
+// `

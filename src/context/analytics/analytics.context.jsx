@@ -29,7 +29,7 @@ const AnalyticsProvider = ({ children }) => {
         };
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats/${time}`, requestOptions)
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats?timespan=${time}`, requestOptions)
             console.log(response)
             const data = await response.json()
 

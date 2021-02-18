@@ -31,11 +31,22 @@ const AnalyticsSection = () => {
     const [activePremiseIndex, setActivePremiseIndex] = useState(0)
     const [activeIndex, setActiveIndex] = useState(2)
 
+    const [activeTabStats, setActiveTabStats] = useState(null)
+
     useEffect(() => {
         getAnalytics(analyticsTabItems[activeIndex - 1].value)
     }, [activeIndex])
 
     console.log(stats)
+
+    useEffect(() => {
+        if (stats) {
+            setActiveTabStats(stats?.find(tab => tab._id.premises === activePremiseIndex))
+        }
+    }, [stats, activePremiseIndex])
+
+    console.log("ACTIVE TAB")
+    console.log(activeTabStats)
 
     return (
         <section>
@@ -81,42 +92,32 @@ const AnalyticsSection = () => {
 
                 {stats && (
                     <StatsGrid>
-                        <StatsContainer>
-                            <div>
-                                <h3>Hotovosť</h3>
-                                <p>{(stats[0]?.cash / 100).toFixed(2)}€</p>
-                            </div>
-                            <div>
-                                <h3>Karta</h3>
-                                <p>{(stats[0]?.card / 100).toFixed(2)}€</p>
-                            </div>
-                            <div>
-                                <h3>Kupóny</h3>
-                                <p>{stats[0]?.coupons}</p>
-                            </div>
-                            <div>
-                                <h3>Objednávky</h3>
-                                <p>{stats[0]?.orders}</p>
-                            </div>
-                        </StatsContainer>
-                        <StatsContainer>
-                            <div>
-                                <h3>Hotovosť</h3>
-                                <p>{(stats[1]?.cash / 100).toFixed(2)}€</p>
-                            </div>
-                            <div>
-                                <h3>Karta</h3>
-                                <p>{(stats[1]?.card / 100).toFixed(2)}€</p>
-                            </div>
-                            <div>
-                                <h3>Kupóny</h3>
-                                <p>{stats[1]?.coupons}</p>
-                            </div>
-                            <div>
-                                <h3>Objednávky</h3>
-                                <p>{stats[1]?.orders}</p>
-                            </div>
-                        </StatsContainer>
+                        {
+                            activeTabStats ? (
+                                <StatsContainer>
+                                    <div>
+                                        <h3>Hotovosť</h3>
+                                        <p>{(activeTabStats?.cash / 100).toFixed(2)}€</p>
+                                    </div>
+                                    <div>
+                                        <h3>Karta</h3>
+                                        <p>{(activeTabStats?.card / 100).toFixed(2)}€</p>
+                                    </div>
+                                    <div>
+                                        <h3>Kupóny</h3>
+                                        <p>{activeTabStats?.coupons}</p>
+                                    </div>
+                                    <div>
+                                        <h3>Objednávky</h3>
+                                        <p>{activeTabStats?.orders}</p>
+                                    </div>
+                                </StatsContainer>
+                            ) : (
+                                    <div>
+                                        <p>Žiadné štatistiky</p>
+                                    </div>
+                                )
+                        }
                     </StatsGrid>
                 )}
             </ScrollContainer>
