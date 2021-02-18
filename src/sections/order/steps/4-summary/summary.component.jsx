@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { OrdersContext } from '../../../../context/orders/orders.context'
+import { OrderContext } from '../../../../context/order/order.context'
 
 import ParametersTable from '../../../../components/parameters-table/parameters-table.component'
 import FinishOrderModal from '../../../../components/modal-finish-order/modal-finish-order.component'
@@ -24,20 +25,20 @@ import {
     OrderDetailsContainer
 } from './summary.styles'
 
-const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChanged, isUpdating }) => {
+const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
+    const { order, changeStep } = useContext(OrderContext)
     const { createOrder, updateOrder } = useContext(OrdersContext)
-    const [showModal, setShowModal] = useState(false)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
 
     console.log(order)
-    console.log(combinedProducts)
+    console.log(order?.combinedProducts)
 
     useEffect(() => {
-        if (combinedProducts) {
-            setPriceTotal(combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.discountedPrice, 0))
+        if (order.combinedProducts) {
+            setPriceTotal(order.combinedProducts.reduce((accumalatedQuantity, combinedProduct) => accumalatedQuantity + combinedProduct.discountedPrice, 0))
         }
-    }, [combinedProducts])
+    }, [order.combinedProducts])
 
     const translatePaymentMethod = value => {
         if (value === 'cash') return "Hotovosť"
@@ -62,7 +63,7 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                     <TableCol>Po zlave</TableCol>
                 </SummaryTableHead>
 
-                {combinedProducts.map((combinedProduct, idx) => (
+                {order.combinedProducts && order.combinedProducts.map((combinedProduct, idx) => (
                     <SummaryTableRow key={idx}>
                         <TableCol>{idx + 1}</TableCol>
                         <TableCol>{combinedProduct?.product ? <OrderSummaryProductName productId={combinedProduct?.product} /> : ""}</TableCol>
@@ -114,15 +115,22 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
                 <div>
                     {!isUpdating && <OptionsContainer>
                         <h3>Možnosti</h3>
-                        <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton>
-                        <OptionButton onClick={() => setShowModal(true)}>Vytvoriť objednavku</OptionButton>
+                        <OptionButton onClick={() => changeStep('select-product')}>Pridať produkt</OptionButton>
+                        <FinishOrderModal
+                            order={order}
+                            combinedProducts={order.combinedProducts}
+                            createOrder={createOrder}
+                            setHasChanged={setHasChanged}
+                            isUpdating={isUpdating}
+                            updateOrder={updateOrder}
+                        />
                     </OptionsContainer>}
 
                     {isUpdating && (
                         <OptionsContainer>
                             <FinishOrderModal
                                 order={order}
-                                combinedProducts={combinedProducts}
+                                combinedProducts={order.combinedProducts}
                                 createOrder={createOrder}
                                 setHasChanged={setHasChanged}
                                 isUpdating={isUpdating}

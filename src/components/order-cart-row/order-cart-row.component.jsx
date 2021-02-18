@@ -67,7 +67,7 @@ const CartRow = ({ item, idx }) => {
             <TableCol>
                 <div>
                     <input
-                        value={item?.discount?.product ? item?.discount.product : ''}
+                        value={item?.discount?.product ? item?.discount.product.percent : ''}
                         onChange={(e) => addProductDiscount(idx, e.target.value)}
                     />
                 </div>

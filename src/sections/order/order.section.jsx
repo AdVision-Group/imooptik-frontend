@@ -147,9 +147,7 @@ const OrderSection = () => {
                     )}
                     {step === 'summary' && (
                         <SummaryComponent
-                            order={order}
                             isUpdating={isUpdating}
-                            combinedProducts={combinedProducts}
                             back={() => changeStep("select-lenses")}
                             addNextProduct={handleAddNextProduct}
                             setHasChanged={setHasChanged}

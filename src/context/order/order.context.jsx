@@ -36,6 +36,20 @@ const OrderProvider = ({ children }) => {
         })
     }
 
+    const addCombinedProducts = (combinedProductsArr) => {
+
+        console.log("combinedProductsArr")
+        console.log(combinedProductsArr)
+        console.log("combinedProductsArr")
+        setOrder({
+            ...order,
+            combinedProducts: [
+                // ...(order?.combinedProducts) && { ...order?.combinedProducts },
+                ...combinedProductsArr
+            ]
+        })
+    }
+
     const selectProduct = productIdx => {
         setSelectedProduct(productIdx)
     }
@@ -69,7 +83,9 @@ const OrderProvider = ({ children }) => {
                     return {
                         ...item,
                         discount: {
-                            product: value
+                            product: {
+                                percent: value
+                            }
                         }
                     }
                 } else {
@@ -158,7 +174,9 @@ const OrderProvider = ({ children }) => {
                         ...item,
                         discount: {
                             ...item.discount,
-                            lenses: value
+                            lenses: {
+                                percent: value
+                            }
                         }
                     }
                 } else {
@@ -178,6 +196,7 @@ const OrderProvider = ({ children }) => {
     }
 
     const createCombinedProducts = async () => {
+        if (cart.length === 0) return
         setIsLoading(true)
         setShowModal(true)
         console.log("ORIGINAL CART")
@@ -188,7 +207,7 @@ const OrderProvider = ({ children }) => {
             ...(item.discount) && { discount: { ...item.discount } },
             ...(item.lens) && { lens: item.lens._id },
             ...(item.lens) && { lensesQuant: 1 },
-            ...(item.lens) && { lenses: order.user.lenses },
+            // ...(item.lens && order.user) && { lenses: order.user.lenses },
             ...(item.lenses) && { contactLenses: item.lenses }
         }))
 
@@ -197,8 +216,12 @@ const OrderProvider = ({ children }) => {
 
         const myHeaders = new Headers();
         myHeaders.append("auth-token", token);
+        myHeaders.append("Content-Type", "application/json");
 
-        const raw = JSON.stringify(combinedProductsArr)
+
+        const raw = JSON.stringify({
+            combinedProducts: combinedProductsArr
+        })
 
         const requestOptions = {
             method: 'POST',
@@ -213,6 +236,13 @@ const OrderProvider = ({ children }) => {
             const data = await response.json()
 
             console.log(data)
+
+            if (data.combinedProducts) {
+                addCombinedProducts(data.combinedProducts)
+                closeModal()
+                changeStep("summary")
+                return
+            }
 
             setIsLoading(false)
             getMessage(data.messageSK)

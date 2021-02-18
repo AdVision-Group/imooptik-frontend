@@ -18,7 +18,6 @@ const CartLensesRow = ({ idx, item }) => {
         addLensesDiscount
     } = useContext(OrderContext)
 
-    const [discountType] = useState('percent')
     const [productDiscount, setProductDiscount] = useState(null)
 
     const handleDiscountChange = (e) => {
@@ -59,7 +58,7 @@ const CartLensesRow = ({ idx, item }) => {
             <TableCol>
                 <input
                     // placeholder='%'
-                    value={item?.discount?.lenses ? item?.discount.lenses : ''}
+                    value={item?.discount?.lenses ? item?.discount.lenses.percent : ''}
                     onChange={(e) => addLensesDiscount(idx, e.target.value)}
                 />
             </TableCol>
