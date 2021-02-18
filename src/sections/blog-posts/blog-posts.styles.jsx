@@ -26,6 +26,7 @@ export const PostContainer = styled.div`
 `
 
 export const PostImage = styled.div`
+    height: 15rem;
     /* width: 100%; */
     /* height: 100%; */
     margin-right: 2rem;
@@ -33,8 +34,8 @@ export const PostImage = styled.div`
     img {
         width: 100%;
         height: 100%;
-        object-position: top;
-        object-fit: contain;
+        object-position: center;
+        object-fit: cover;
     }
 
         @media all and (max-width: 800px) {
