@@ -11,6 +11,8 @@ export const CustomSelect = styled.select`
     font-size: inherit;
     font-family: inherit;
     display: block;
+
+        margin-bottom: 2rem;
 `
 
 
@@ -26,7 +28,10 @@ export const ColContainer = styled.div`
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
 
+`
 
+export const SectionTitle = styled.h2`
+    margin-bottom: 2rem;
 `
 
 export const ZeroMargin = styled.div`

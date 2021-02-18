@@ -16,7 +16,8 @@ import {
     GridRow,
     ZeroMargin,
     ColContainer,
-    CustomerForm
+    CustomerForm,
+    SectionTitle
 } from './new-user-form.styles'
 
 
@@ -46,54 +47,34 @@ const NewUserForm = ({
                     <CustomerForm>
                         <ColContainer>
                             <h2>Informácie</h2>
-                            <InputRow
-                                label=""
-                                example='napr: John'
-                            >
-                                <CustomInput
-                                    label="Meno*"
-                                    type='text'
-                                    name='fName'
-                                    value={user.fName ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                            </InputRow>
-                            <InputRow
-                                label=""
-                                example='napr: Doe'
-                            >
-                                <CustomInput
-                                    label="Priezvisko*"
-                                    type='text'
-                                    name='lName'
-                                    value={user.lName ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                            </InputRow>
-                            <InputRow
-                                label=""
-                                example='napr: priklad@email.com'
-                            >
-                                <CustomInput
-                                    label="E-mail*"
-                                    type='email'
-                                    name='email'
-                                    value={user.email ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                            </InputRow>
-                            <InputRow
-                                label=""
-                                example='napr: 091234567'
-                            >
-                                <CustomInput
-                                    label="Telefónne číslo"
-                                    type='text'
-                                    name='phone'
-                                    value={user.phone ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                            </InputRow>
+                            <CustomInput
+                                label="Meno*"
+                                type='text'
+                                name='fName'
+                                value={user.fName ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="Priezvisko*"
+                                type='text'
+                                name='lName'
+                                value={user.lName ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="E-mail*"
+                                type='email'
+                                name='email'
+                                value={user.email ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="Telefónne číslo"
+                                type='text'
+                                name='phone'
+                                value={user.phone ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
                             <InputRow
                                 label="Dátum narodenia"
                                 example=''
@@ -233,77 +214,47 @@ const NewUserForm = ({
 
                             <ColContainer>
                                 <h2>Informácie</h2>
-                                <InputRow
-                                    label=""
-                                    example='napr: John'
-                                >
-                                    <CustomInput
-                                        label="Meno*"
-                                        type='text'
-                                        name='fName'
-                                        value={user.fName ?? ""}
-                                        handleChange={(e) => handleChange(e)}
-                                    />
-                                </InputRow>
-                                <InputRow
-                                    label=""
-                                    example='napr: Doe'
-                                >
-                                    <CustomInput
-                                        label="Priezvisko*"
-                                        type='text'
-                                        name='lName'
-                                        value={user.lName ?? ""}
-                                        handleChange={(e) => handleChange(e)}
-                                    />
-                                </InputRow>
-                                <InputRow
-                                    label=""
-                                    example='napr: priklad@email.com'
-                                >
-                                    <CustomInput
-                                        label="E-mail*"
-                                        type='email'
-                                        name='email'
-                                        value={user.email ?? ""}
-                                        handleChange={(e) => handleChange(e)}
-                                    />
-                                </InputRow>
-                                <InputRow
-                                    label="Aspoň 1 velké pismeno, 1 malé pismeno a 1 číslo*"
-                                    example=''
-                                >
-                                    <CustomInput
-                                        label="Heslo*"
-                                        type='password'
-                                        name='password'
-                                        value={user.password ?? ""}
-                                        handleChange={(e) => handleChange(e)}
-                                    />
-                                </InputRow>
-                                <InputRow
-                                    label=""
-                                    example=''
-                                >
-                                    <CustomInput
-                                        label="Potvrď heslo*"
-                                        type='password'
-                                        name='confirmPassword'
-                                        value={user.confirmPassword ?? ""}
-                                        handleChange={(e) => handleChange(e)}
-                                    />
-                                </InputRow>
-
-
+                                <CustomInput
+                                    label="Meno*"
+                                    type='text'
+                                    name='fName'
+                                    value={user.fName ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                                <CustomInput
+                                    label="Priezvisko*"
+                                    type='text'
+                                    name='lName'
+                                    value={user.lName ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                                <CustomInput
+                                    label="E-mail*"
+                                    type='email'
+                                    name='email'
+                                    value={user.email ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                                <CustomInput
+                                    label="Heslo*"
+                                    type='password'
+                                    name='password'
+                                    value={user.password ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
+                                <CustomInput
+                                    label="Potvrď heslo*"
+                                    type='password'
+                                    name='confirmPassword'
+                                    value={user.confirmPassword ?? ""}
+                                    handleChange={(e) => handleChange(e)}
+                                />
                             </ColContainer>
 
                             <ColContainer>
-                                <h2>Admin privilégia</h2>
-                                <InputRow
-                                    label="Predajňa na ktorej uživatel pracuje"
-                                    example=''
-                                >
-
+                                <SectionTitle>Admin privilégia</SectionTitle>
+                                <div>
+                                    <h4>Predajňa na ktorej uživatel pracuje</h4>
                                     <CustomSelect name='premises' value={user.premises} onChange={(e) => handleChange(e)}>
                                         <option value={0}>Nezadané</option>
 
@@ -318,18 +269,16 @@ const NewUserForm = ({
                                         }
                                     </CustomSelect>
 
-                                </InputRow>
-                                <InputRow
-                                    label="Výška administrativných práv"
-                                    example=""
-                                >
+                                </div>
+                                <div>
+                                    <h4>Výška administrativných práv</h4>
                                     <CustomSelect name='admin' value={user.admin} onChange={(e) => handleChange(e)}>
                                         <option value={0}>Zákaznik</option>
                                         <option value={1}>Predavač</option>
                                         <option value={2}>Vedúci</option>
                                     </CustomSelect>
 
-                                </InputRow>
+                                </div>
                                 <Container>
                                     <CustomCheckbox
                                         label='Optometrista'

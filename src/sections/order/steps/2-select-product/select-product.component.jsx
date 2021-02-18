@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { WarehouseContext } from '../../../../context/warehouse/warehouse.context'
+import { OrderContext } from '../../../../context/order/order.context'
 
 import CartDiscountRow from '../../../../components/order-cart-row/order-cart-row.component'
 import CustomInput from '../../../../components/custom-input/custom-input.component'
@@ -9,6 +9,8 @@ import {
     formatAvailable,
     isAvailable
 } from '../../../../utils/orders.utils'
+
+import { useFetchByQuery } from '../../../../hooks/useFetch'
 
 import {
     SearchContainer,
@@ -27,120 +29,49 @@ import {
     NextLensesButton,
 } from './select-product.styles'
 
-const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMessage, order }) => {
-    const [searchQuery, setSearchQuery] = useState('')
-    const [productItems, setProductItems] = useState([])
-    const [cartItems, setCartItems] = useState([])
-
+const SelectProductComponent = ({ back, next, showErrorMessage }) => {
     const {
-        products,
-        getProductsByQuery
-    } = useContext(WarehouseContext)
+        addProduct,
+        cart,
+        createCombinedProducts
+    } = useContext(OrderContext)
+
+    const [searchQuery, setSearchQuery] = useState("")
+
+    const [productItems, setProductItems] = useState([])
+    const [query, setQuery] = useState({
+        limit: 10,
+        skip: 0,
+    })
+    const { response, isLoading, refetch } = useFetchByQuery("api/admin/products/filter", query)
 
     const handleSearch = () => {
         if (searchQuery === '') return
-        getProductsByQuery({
+        setQuery({
+            ...query,
             query: searchQuery
         })
+        refetch()
     }
     const handleSearchOnEnter = (e) => {
         if (searchQuery !== "") {
             if (e.key === 'Enter') {
-                getProductsByQuery({
+                setQuery({
+                    ...query,
                     query: searchQuery
                 })
+                refetch()
             }
         }
     }
 
-    const handleNextButtonClick = () => {
-        const productIdArr = cartItems.map(item => ({
-            product: item.product._id,
-            ...(item.discount) && { discount: item.discount },
-            ...(item.contactLenses) && { contactLenses: item.contactLenses }
-        }))
-        console.log('PRODUCT IDs')
-        console.log(productIdArr)
-
-    }
-
-    const handleClick = (product) => {
-        setCartItems(prevValue => ([...prevValue, { product }]))
-        // addToOrder({
-        //     name: "product",
-        //     value: product
-        // })
-        // if (product.type === 1) {
-        //     next("selectLenses")
-        //     // next("summary")
-        // } else {
-        //     showModal()
-        // }
-    }
-
-    const handleAddProperties = (idx, data) => {
-        console.log(`INDEX: ${idx}`)
-        console.log(`OBJ TO ADD:`)
-        console.log(data)
-        const arr = cartItems
-
-        if (Object.keys(data).length > 0) {
-            arr[idx] = {
-                ...cartItems[idx],
-                ...data
-            }
-        } else {
-            arr[idx] = {
-                product: cartItems[idx].product
-            }
-        }
-
-        setCartItems(arr)
-
-        addToOrder({
-            name: "products",
-            value: arr
-        })
-        console.log("NEW CART ITEMS")
-        console.log(arr)
-    }
-
     useEffect(() => {
-        if (order.products && cartItems.length === 0) {
-            setCartItems(order.products)
-        }
-    }, [order.products])
+        if (isLoading) return
 
-    useEffect(() => {
-        if (!products || productItems.length < 1) {
-            getProductsByQuery({
-                limit: 10
-            })
-        }
-        if (products) {
-            setProductItems(products)
-        }
-    }, [products])
+        setProductItems(response.products)
+    }, [isLoading])
 
-    useEffect(() => {
-        if (products) {
-            if (searchQuery === '') {
-                getProductsByQuery({
-                    limit: 10
-                })
-            }
-        }
-    }, [searchQuery])
-
-    useEffect(() => {
-        return () => {
-            setProductItems([])
-            setCartItems([])
-        }
-    }, [])
-
-    console.log("CART ITEMS")
-    console.log(cartItems)
+    console.log(cart)
 
     return (
         <div>
@@ -164,25 +95,25 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMe
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
                         <TableCol>Cena</TableCol>
-                        <TableCol>Možnosti</TableCol>
+                        <TableCol>Zlava v %</TableCol>
+                        <TableCol>Viac</TableCol>
                     </CartTableHead>
                     <CartTable>
-                        {cartItems.map((item, idx) => (
+                        {cart.map((item, idx) => (
                             <CartDiscountRow
                                 key={idx}
                                 item={item}
                                 idx={idx}
-                                addProperties={handleAddProperties}
                             />
                         ))}
 
-                        {cartItems.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
+                        {cart.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
                     </CartTable>
                     <ButtonOptions>
-                        <NextLensesButton onClick={() => next("selectLenses")}>
+                        <NextLensesButton onClick={() => next("select-lenses")}>
                             Preisť na šosovky
                         </NextLensesButton>
-                        <NextButton onClick={handleNextButtonClick}>
+                        <NextButton onClick={createCombinedProducts}>
                             Dokončiť objednávku
                         </NextButton>
                     </ButtonOptions>
@@ -199,7 +130,7 @@ const SelectProductComponent = ({ back, next, addToOrder, showModal, showErrorMe
                     <TableCol>Dostupnosť</TableCol>
                 </ProductTableHead>
                 {productItems.map((product, idx) => (
-                    <ProductTableRow key={idx} onClick={() => isAvailable(product.available) ? handleClick(product) : showErrorMessage("Produkt nieje na sklade.")}>
+                    <ProductTableRow key={idx} onClick={() => isAvailable(product.available) ? addProduct(product) : showErrorMessage("Produkt nieje na sklade.")}>
                         <TableCol>{product.eanCode}</TableCol>
                         <TableCol>
                             {product?.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />}

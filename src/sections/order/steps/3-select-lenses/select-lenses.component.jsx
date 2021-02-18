@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { WarehouseContext } from '../../../../context/warehouse/warehouse.context'
+import { OrderContext } from '../../../../context/order/order.context'
+
+import { useFetchByQuery } from '../../../../hooks/useFetch'
 
 import BackButton from '../../../../components/custom-back-button/custom-back-button.component'
 import CartLensesRow from '../../../../components/order-cart-lenses-row/order-cart-lenses-row.component'
+import CustomInput from '../../../../components/custom-input/custom-input.component'
 
 import {
     LensesContainer,
@@ -16,65 +19,95 @@ import {
     NextButton,
     TableCol,
     ButtonOptions,
-    HeaderContainer
+    HeaderContainer,
+    SearchButton,
+    SearchContainer
 } from './select-lenses.styles'
 
-const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => {
-    const [lensesItems, setLensesItems] = useState([])
+const SelectLensesComponent = ({ back, next }) => {
     const {
-        lensesProducts,
-        getLenses
-    } = useContext(WarehouseContext)
+        cart,
+        addLenses,
+        createCombinedProducts
+    } = useContext(OrderContext)
 
-    const [cartItems, setCartItems] = useState([])
+    const [searchQuery, setSearchQuery] = useState("")
 
-    const handleClick = (lenses) => {
-        setCartItems(prevValue => [...prevValue, { lens: { ...lenses } }])
-        // if (!lenses) return showModal()
-        // addToOrder({
-        //     name: "lenses",
-        //     value: lenses
-        // })
-        // showModal()
+    const [lensesItems, setLensesItems] = useState([])
+    const [query, setQuery] = useState({
+        limit: 10,
+        skip: 0
+    })
+    const { response, isLoading, refetch } = useFetchByQuery("api/admin/lenses/filter", query)
+
+    const handleSearch = () => {
+        if (searchQuery === '') return
+        setQuery({
+            ...query,
+            query: searchQuery
+        })
+        refetch()
+    }
+    const handleSearchOnEnter = (e) => {
+        if (searchQuery !== "") {
+            if (e.key === 'Enter') {
+                setQuery({
+                    ...query,
+                    query: searchQuery
+                })
+                refetch()
+            }
+        }
     }
 
     useEffect(() => {
-        if (!lensesProducts) {
-            getLenses()
-        }
-        if (lensesProducts) {
-            setLensesItems(lensesProducts)
-        }
-    }, [lensesProducts])
+        if (isLoading) return
 
-    console.log(cartItems)
+        setLensesItems(response.lenses)
+    }, [isLoading])
 
     return (
         <div>
             <BackButton onClick={back} />
             <HeaderContainer>
-
+                <SearchContainer>
+                    <h3>Vyhľadať produkt</h3>
+                    <div>
+                        <CustomInput
+                            label='Vyhladať šošovky'
+                            value={searchQuery}
+                            handleChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyPress={handleSearchOnEnter}
+                        />
+                    </div>
+                    <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
+                </SearchContainer>
                 <CartContainer>
                     <h3>Vybraté položky</h3>
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
+                        <TableCol>Šosovky</TableCol>
                         <TableCol>Cena</TableCol>
-                        <TableCol>Možnosti</TableCol>
+                        <TableCol>Zľava v %</TableCol>
+                        {/* <TableCol>Možnosti</TableCol> */}
                     </CartTableHead>
                     <CartTable>
-                        {cartItems.map((item, idx) => (
-                            <CartLensesRow
-                                key={idx}
-                                idx={idx}
-                                item={item}
-                            />
-                        ))}
+                        {cart.map((item, idx) => {
+                            if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return
+                            return (
+                                <CartLensesRow
+                                    key={idx}
+                                    idx={idx}
+                                    item={item}
+                                />
+                            )
+                        })}
 
-                        {cartItems.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
+                        {cart.length === 0 && <CartParagraph>Nie sú vybrané žiadné produkty</CartParagraph>}
                     </CartTable>
                     <ButtonOptions>
-                        <NextButton >
+                        <NextButton onClick={createCombinedProducts}>
                             Dokončiť objednávku
                         </NextButton>
                     </ButtonOptions>
@@ -85,7 +118,7 @@ const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => 
                 <h3>Výber Šošoviek</h3>
                 <LensesFlexContainer>
                     {lensesItems.map((lenses, idx) => (
-                        <LensesContainer key={idx} onClick={() => handleClick(lenses)}>
+                        <LensesContainer key={idx} onClick={() => addLenses(lenses)}>
                             <h4>{lenses.name}</h4>
                             <LensesImg>
                                 {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
@@ -96,7 +129,7 @@ const SelectLensesComponent = ({ back, next, addToOrder, order, showModal }) => 
                             <h5>{(lenses.price / 100).toFixed(2)}€</h5>
                         </LensesContainer>
                     ))}
-                    <LensesContainer onClick={() => handleClick(null)}>
+                    <LensesContainer onClick={() => addLenses(null)}>
                         <h4>Žiadné sklá</h4>
                         <LensesImg>
                             {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}

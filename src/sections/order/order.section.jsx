@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { OrderContext } from '../../context/order/order.context'
 import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -18,22 +19,22 @@ import {
 } from './order.styles'
 
 const OrderSection = () => {
+    const {
+        step,
+        order,
+        setOrder,
+        addUser,
+        resetOrder,
+        changeStep
+    } = useContext(OrderContext)
+
     const { userId, orderId } = useParams()
-    const [step, setStep] = useState('selectUser')
-    const [order, setOrder] = useState({})
 
     const [hasChanged, setHasChanged] = useState(false)
     const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
 
     const [combinedProducts, setCombinedProducts] = useState([])
-
-    const handleAddCombineProduct = combinedProductToAdd => {
-        setCombinedProducts([
-            ...combinedProducts,
-            combinedProductToAdd
-        ])
-    }
 
     const handleOrderChange = valueToAdd => {
         setHasChanged(true)
@@ -62,7 +63,7 @@ const OrderSection = () => {
     const orderData = useFetchById("api/admin/orders", orderId, !orderId)
 
     const handleAddNextProduct = () => {
-        setStep('findProduct')
+        changeStep('findProduct')
         if (order?.product) {
             if (order?.lenses) {
                 delete order["lenses"]
@@ -77,8 +78,9 @@ const OrderSection = () => {
     useEffect(() => {
         if (userId !== 'nova-objednavka' && orderId) {
             setIsUpdating(true)
-            setStep('summary')
+            changeStep('summary')
             if (orderData.response) {
+                addUser(orderData.response.order.orderedBy)
                 setOrder({
                     ...order,
                     order: orderData.response.order,
@@ -87,12 +89,9 @@ const OrderSection = () => {
                 setCombinedProducts(orderData.response.order.combinedProducts)
             }
         } else if (userId !== 'nova-objednavka' && orderId === undefined) {
-            setStep('findProduct')
+            changeStep('findProduct')
             if (userData.response) {
-                setOrder(prevValue => ({
-                    ...prevValue,
-                    user: userData.response.user
-                }))
+                addUser(userData.response.user)
             }
         }
 
@@ -100,8 +99,8 @@ const OrderSection = () => {
 
     useEffect(() => {
         return () => {
-            setStep('selectUser')
-            setOrder({})
+            changeStep('select-user')
+            resetOrder({})
             setHasChanged(false)
             setShowCombinedProductModal(false)
             setCombinedProducts([])
@@ -127,29 +126,23 @@ const OrderSection = () => {
             </Header>
             <ScrollContainer>
                 <div>
-                    {step === 'selectUser' && (
+                    {step === 'select-user' && (
                         <SelectUserComponent
-                            next={() => setStep('findProduct')}
+                            next={() => changeStep('select-product')}
                             addToOrder={handleOrderChange}
                         />
                     )}
-                    {step === 'findProduct' && (
+                    {step === 'select-product' && (
                         <SelectProductComponent
-                            order={order}
-                            back={() => setStep("selectUser")}
-                            next={setStep}
-                            addToOrder={handleOrderChange}
+                            back={() => changeStep("select-user")}
+                            next={changeStep}
                             showErrorMessage={showErrorMessage}
-                            showModal={() => setShowCombinedProductModal(true)}
                         />
                     )}
-                    {step === 'selectLenses' && (
+                    {step === 'select-lenses' && (
                         <SelectLensesComponent
-                            back={() => setStep("findProduct")}
-                            next={() => setStep('summary')}
-                            addToOrder={handleOrderChange}
-                            order={order}
-                            showModal={() => setShowCombinedProductModal(true)}
+                            back={() => changeStep("select-product")}
+                            next={() => changeStep('summary')}
                         />
                     )}
                     {step === 'summary' && (
@@ -157,7 +150,7 @@ const OrderSection = () => {
                             order={order}
                             isUpdating={isUpdating}
                             combinedProducts={combinedProducts}
-                            back={() => setStep("selectLenses")}
+                            back={() => changeStep("select-lenses")}
                             addNextProduct={handleAddNextProduct}
                             setHasChanged={setHasChanged}
                         />

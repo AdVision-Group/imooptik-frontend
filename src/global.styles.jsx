@@ -113,7 +113,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: var(--background-primary-color);
     }
 
-    input {
+    input, button {
         outline: none;
 
         &:focus {

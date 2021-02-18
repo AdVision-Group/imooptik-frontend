@@ -1,40 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { OrderContext } from '../../context/order/order.context'
 
-import CustomInput from '../custom-input/custom-input.component'
-
-import {
-    AiFillCaretDown
-} from 'react-icons/ai'
 
 import {
     CartTableRow,
-    DiscountCheckbox,
-    DiscountContainer,
-    IconContainer,
-    OptionsContainer,
+    // DiscountCheckbox,
+    // DiscountContainer,
+    // IconContainer,
+    // OptionsContainer,
     TableCol
 } from './order-cart-lenses-row.styles'
 
 const CartLensesRow = ({ idx, item }) => {
-    const [showRow, setShowRow] = useState(false)
+    const {
+        selectProduct,
+        selectedProduct,
+        addLensesDiscount
+    } = useContext(OrderContext)
 
-    const [discountType, setDiscountType] = useState('')
+    const [discountType] = useState('percent')
     const [productDiscount, setProductDiscount] = useState(null)
-
-    const handleClick = (hasDiscount) => {
-        setShowRow(prevValue => !prevValue)
-        // handleAddDiscount(idx, hasDiscount)
-    }
-
-    const handleChangeDiscount = (type) => {
-        if (type === '') {
-            setProductDiscount(null)
-        } else {
-            setProductDiscount({})
-        }
-
-        setDiscountType(type)
-    }
 
     const handleDiscountChange = (e) => {
         const { name, value } = e.target
@@ -43,9 +28,7 @@ const CartLensesRow = ({ idx, item }) => {
         if (value === '') {
             delete productDiscount[name]
 
-            setProductDiscount({
-                ...productDiscount,
-            })
+            setProductDiscount(null)
             return
         }
 
@@ -55,12 +38,32 @@ const CartLensesRow = ({ idx, item }) => {
         })
     }
 
+    const handleSelectProduct = itemIdx => {
+        if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return
+        selectProduct(itemIdx)
+    }
+
     return (
-        <CartTableRow >
+        <CartTableRow isSelected={selectedProduct === idx} onClick={() => handleSelectProduct(idx)}>
             <TableCol>{idx + 1}</TableCol>
-            <TableCol>{item.lens.name}</TableCol>
-            <TableCol>{(item.lens.price / 100).toFixed(2)}€</TableCol>
+            <TableCol>{item?.product?.name}</TableCol>
+            <TableCol>{item?.lens?.name}</TableCol>
             <TableCol>
+                {item?.lens?.price ? (
+                    `${(item?.lens?.price / 100).toFixed(2)}€`
+                ) : (
+                        ""
+                    )}
+                { }
+            </TableCol>
+            <TableCol>
+                <input
+                    // placeholder='%'
+                    value={item?.discount?.lenses ? item?.discount.lenses : ''}
+                    onChange={(e) => addLensesDiscount(idx, e.target.value)}
+                />
+            </TableCol>
+            {/* <TableCol>
                 <IconContainer onClick={() => handleClick(showRow)}>
                     <AiFillCaretDown />
                 </IconContainer>
@@ -86,22 +89,11 @@ const CartLensesRow = ({ idx, item }) => {
                             />
                         </div>
                         <div>
-                            <CustomInput
-                                label='Hodnota'
-                                value={discountType === 'flat' ? productDiscount?.flat || "" : productDiscount?.percent || ""}
-                                onChange={(e) => {
-                                    handleDiscountChange({
-                                        target: {
-                                            name: discountType,
-                                            value: e.target.value
-                                        }
-                                    })
-                                }}
-                            />
+
                         </div>
                     </DiscountContainer>
                 </OptionsContainer>
-            )}
+            )} */}
         </CartTableRow>
     )
 }

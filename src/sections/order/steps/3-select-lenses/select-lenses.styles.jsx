@@ -6,8 +6,35 @@ export const HeaderContainer = styled.div`
     grid-template-columns: 1fr 2fr;
     grid-gap: 3rem;
     align-items: start;
-
 `
+
+export const SearchContainer = styled.div`
+    /* max-width: 40rem; */
+    padding: 2rem;
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+    /* margin: 0 auto; */
+    border-radius: .5rem;
+
+    h3 {
+        /* text-align: center; */
+        font-size: 2.5rem;
+    }
+
+    div {
+
+        &:not(:last-child) {
+            margin-bottom: 3rem;
+
+        }
+    }
+`
+
+export const SearchButton = styled(CustomButton)`
+    display: block;
+    margin-left: auto;
+`
+
 
 export const SelectLensesContainer = styled.div`
     margin: 5rem 0;
@@ -126,7 +153,7 @@ export const TableCol = styled.div`
 
 export const CartTableHead = styled.div`
     display:grid; 
-    grid-template-columns: 5rem 3fr 2fr 1fr;
+    grid-template-columns: 5rem 2fr 2fr 2fr 2fr;
     background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
     margin: 2rem;

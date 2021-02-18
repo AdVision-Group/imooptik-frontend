@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { OrderContext } from '../../context/order/order.context'
 
 import CustomInput from '../custom-input/custom-input.component'
 
@@ -10,52 +11,21 @@ import {
     CartTableRow,
     TableCol,
     IconContainer,
-    DiscountContainer,
-    DiscountCheckbox,
     OptionsContainer,
     ContactLensesParameterContainer,
-    CustomSelect
+    CustomSelect,
+    EmptyTittle
 } from './order-cart-row.styles'
 
-const CartRow = ({ item, idx, addProperties }) => {
+const CartRow = ({ item, idx }) => {
+    const { deleteProduct, addProductDiscount, addLensesParameters } = useContext(OrderContext)
+
     const [showRow, setShowRow] = useState(false)
-    const [discountType, setDiscountType] = useState('')
-    const [productDiscount, setProductDiscount] = useState(null)
     const [contactLenses, setContactLenses] = useState({})
 
 
-    const handleClick = (hasDiscount) => {
+    const handleClick = () => {
         setShowRow(prevValue => !prevValue)
-        // handleAddDiscount(idx, hasDiscount)
-    }
-
-    const handleChangeDiscount = (type) => {
-        if (type === '') {
-            setProductDiscount(null)
-        } else {
-            setProductDiscount({})
-        }
-
-        setDiscountType(type)
-    }
-
-    const handleDiscountChange = (e) => {
-        const { name, value } = e.target
-
-
-        if (value === '') {
-            delete productDiscount[name]
-
-            setProductDiscount({
-                ...productDiscount,
-            })
-            return
-        }
-
-        setProductDiscount({
-            ...productDiscount,
-            [name]: value
-        })
     }
 
     const handleContactLensesParameterChange = (e, idx, originalArr) => {
@@ -70,6 +40,10 @@ const CartRow = ({ item, idx, addProperties }) => {
     }
 
     useEffect(() => {
+        addLensesParameters(idx, contactLenses)
+    }, [contactLenses])
+
+    useEffect(() => {
         if (item.product.type) {
             if (item.product.type === 3) {
                 setContactLenses({
@@ -81,31 +55,35 @@ const CartRow = ({ item, idx, addProperties }) => {
         }
     }, [item.product])
 
-    useEffect(() => {
-        addProperties(idx, {
-            ...(productDiscount) && { discount: { ...productDiscount } },
-            ...(item.product.type === 3) && { contactLenses: { ...contactLenses } }
-        })
-    }, [productDiscount, contactLenses])
-
-    console.log("COMBINED PRODUCT DETAILS")
-    console.log(contactLenses)
-    console.log("PRODUCT DISCOUNT")
-    console.log(productDiscount)
-
     return (
         <CartTableRow >
-            <TableCol>{idx + 1}</TableCol>
-            <TableCol>{item.product.name}</TableCol>
-            <TableCol>{(item.product.price / 100).toFixed(2)}€</TableCol>
+            <TableCol onClick={() => deleteProduct(item)}>{idx + 1}</TableCol>
             <TableCol>
-                <IconContainer onClick={() => handleClick(showRow)}>
+                {item?.product?.name ? item?.product?.name : "Šošovky"}
+            </TableCol>
+            <TableCol>
+                {item?.product?.price ? `${(item?.product?.price / 100).toFixed(2)}€` : ""}
+            </TableCol>
+            <TableCol>
+                <div>
+                    <input
+                        value={item?.discount?.product ? item?.discount.product : ''}
+                        onChange={(e) => addProductDiscount(idx, e.target.value)}
+                    />
+                </div>
+            </TableCol>
+            <TableCol>
+                <IconContainer onClick={handleClick}>
                     <AiFillCaretDown />
                 </IconContainer>
             </TableCol>
             {showRow && (
                 <OptionsContainer>
-
+                    {item.product.type !== 3 && (
+                        <div>
+                            <EmptyTittle>Žiadne možnosti</EmptyTittle>
+                        </div>
+                    )}
                     {item.product.type === 3 && (
                         <ContactLensesParameterContainer>
                             <div>
@@ -172,40 +150,6 @@ const CartRow = ({ item, idx, addProperties }) => {
                             </div>
                         </ContactLensesParameterContainer>
                     )}
-
-                    <DiscountContainer>
-                        <div>
-                            <h4>Zľava</h4>
-                            <DiscountCheckbox
-                                label={"Fixná suma"}
-                                value={"flat"}
-                                name='flat'
-                                isActive={discountType === 'flat'}
-                                handleClick={() => handleChangeDiscount(discountType === 'flat' ? "" : "flat")}
-                            />
-                            <DiscountCheckbox
-                                label={"Percertá"}
-                                value={"percent"}
-                                name='percent'
-                                isActive={discountType === 'percent'}
-                                handleClick={() => handleChangeDiscount(discountType === 'percent' ? "" : "percent")}
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label='Hodnota'
-                                value={discountType === 'flat' ? productDiscount?.flat || "" : productDiscount?.percent || ""}
-                                onChange={(e) => {
-                                    handleDiscountChange({
-                                        target: {
-                                            name: discountType,
-                                            value: e.target.value
-                                        }
-                                    })
-                                }}
-                            />
-                        </div>
-                    </DiscountContainer>
                 </OptionsContainer>
             )}
         </CartTableRow>

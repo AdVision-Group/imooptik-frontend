@@ -257,6 +257,8 @@ const UserProvider = ({ children }) => {
 
             if (path === 'order') {
                 push(`/dashboard/objednavky/${id}`)
+            } else if (path === 'profile') {
+                push(`/dashboard/zakaznici/${id}`)
             } else {
                 push("/dashboard/zakaznici")
             }

@@ -27,6 +27,7 @@ const OrdersProvider = lazy(() => import("../../context/orders/orders.context"))
 const CouponsProvider = lazy(() => import('../../context/coupons/coupons.context'))
 const AnalyticsProvider = lazy(() => import('../../context/analytics/analytics.context'))
 const ExaminationProvider = lazy(() => import('../../context/examination/examination.context'))
+const OrderProvider = lazy(() => import("../../context/order/order.context"))
 
 const EshopSection = lazy(() => import('../../sections/e-shop/e-shop.section'))
 const CustomersSection = lazy(() => import('../../sections/customers/customers.section'))
@@ -131,7 +132,10 @@ const Dashboard = () => {
                                 <UserProvider>
                                     <WarehouseProvider>
                                         <OrdersProvider>
-                                            <OrderSection />
+                                            <OrderProvider>
+                                                <OrderSection />
+
+                                            </OrderProvider>
                                         </OrdersProvider>
                                     </WarehouseProvider>
                                 </UserProvider>
@@ -141,7 +145,9 @@ const Dashboard = () => {
                                 <UserProvider>
                                     <WarehouseProvider>
                                         <OrdersProvider>
-                                            <OrderSection />
+                                            <OrderProvider>
+                                                <OrderSection />
+                                            </OrderProvider>
                                         </OrdersProvider>
                                     </WarehouseProvider>
                                 </UserProvider>

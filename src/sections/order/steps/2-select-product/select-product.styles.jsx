@@ -48,7 +48,7 @@ export const CartTable = styled.div`
 
 export const CartTableHead = styled.div`
     display:grid; 
-    grid-template-columns: 5rem 3fr 2fr 1fr;
+    grid-template-columns: 5rem 2fr 2fr 2fr 1fr;
     background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
     margin: 2rem;
