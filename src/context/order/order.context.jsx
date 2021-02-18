@@ -187,6 +187,7 @@ const OrderProvider = ({ children }) => {
             product: item.product._id,
             ...(item.discount) && { discount: { ...item.discount } },
             ...(item.lens) && { lens: item.lens._id },
+            ...(item.lens) && { lensesQuant: 1 },
             ...(item.lens) && { lenses: order.user.lenses },
             ...(item.lenses) && { contactLenses: item.lenses }
         }))

@@ -37,7 +37,7 @@ import {
 
 const BookingSection = () => {
     const { isAdmin, currentUser, isOptometrist } = useContext(AuthContext)
-    const { showModal, setShowModal, message } = useContext(LoadingModalContext)
+    const { showModal, setShowModal, message, closeModal } = useContext(LoadingModalContext)
     const { push } = useHistory()
     // const [showModal, setShowModal] = useState(true)
     const [showPremisesSection, setShowPremisesSection] = useState(true)
@@ -127,6 +127,7 @@ const BookingSection = () => {
                     handleShowCalendarClick(userCalendar._id)
                     setShowModal(false)
                 }
+                closeModal()
             }
         }
     }, [isLoading])
