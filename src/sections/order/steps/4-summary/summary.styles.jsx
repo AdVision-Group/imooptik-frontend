@@ -117,7 +117,8 @@ export const OrderDetailsContainer = styled.div`
         }
 
         a {
-            background-color: #000;
+            background-color: var(--primary-color);
+            font-weight: bolder;
             color: #fff;
             display: inline-block;
             padding: .5rem 2.5rem;

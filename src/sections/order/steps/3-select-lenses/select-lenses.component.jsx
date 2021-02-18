@@ -44,7 +44,7 @@ const SelectLensesComponent = ({ back, next }) => {
         if (searchQuery === '') return
         setQuery({
             ...query,
-            query: searchQuery
+            // query: searchQuery
         })
         refetch()
     }
@@ -53,7 +53,7 @@ const SelectLensesComponent = ({ back, next }) => {
             if (e.key === 'Enter') {
                 setQuery({
                     ...query,
-                    query: searchQuery
+                    // query: searchQuery
                 })
                 refetch()
             }

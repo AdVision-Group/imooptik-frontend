@@ -161,117 +161,115 @@ const FinishOrderModal = ({
     }, [])
 
     return (
-        <ModalContainer>
-            <CloseButton onClick={close} />
-            <Modal>
-                <h2>{isUpdating ? "Upraviť objednávku" : 'Dokončeniť objednávky'}</h2>
+        <Modal>
+            <h2>{isUpdating ? "Upraviť objednávku" : 'Dokončeniť objednávky'}</h2>
 
-                {!isUpdating && <div>
-                    <h4>Spôsob platby</h4>
+            {!isUpdating && <div>
+                <h4>Spôsob platby</h4>
 
-                    <CustomSelect
-                        name='paymentType'
-                        value={orderDetail?.paymentType ?? "cash"}
-                        onChange={(e) => handleOrderDetailChange(e)}
-                    >
-                        <option value={"cash"}>Hotovosť</option>
-                        <option value={"card"}>Karta</option>
-                        <option value={"coupon"}>Kupón</option>
-                    </CustomSelect>
+                <CustomSelect
+                    name='paymentType'
+                    value={orderDetail?.paymentType ?? "cash"}
+                    onChange={(e) => handleOrderDetailChange(e)}
+                >
+                    <option value={"cash"}>Hotovosť</option>
+                    <option value={"card"}>Karta</option>
+                    <option value={"coupon"}>Kupón</option>
+                </CustomSelect>
 
-                    <DiscountCheckboxContainer>
-                        <input id="hasDeposit" name='hasDeposit' type='checkbox' value={hasDeposit} onChange={() => toggleDeposit(hasDeposit)} />
-                        <label htmlFor='hasDeposit'>Pridať zálohu</label>
-                    </DiscountCheckboxContainer>
+                <DiscountCheckboxContainer>
+                    <input id="hasDeposit" name='hasDeposit' type='checkbox' value={hasDeposit} onChange={() => toggleDeposit(hasDeposit)} />
+                    <label htmlFor='hasDeposit'>Pridať zálohu</label>
+                </DiscountCheckboxContainer>
 
-                    {hasDeposit && (
-                        <CustomInput
-                            label="Zaplatená záloha"
-                            name="paidAlready"
-                            type='text'
-                            value={orderDetail?.paidAlready ?? ""}
-                            onChange={e => handleOrderDetailChange(e)}
-                        />
-                    )}
-                </div>
-                }
-                <div>
-                    <h4>Informácie o doručení</h4>
-                    <OptionsCheckbox
-                        label={"Doručiť na adresu"}
-                        isActive={orderDetail?.shouldDeliver}
-                        handleClick={() => handleOrderDetailChange({
-                            target: {
-                                name: 'shouldDeliver',
-                                value: orderDetail?.shouldDeliver ? !orderDetail?.shouldDeliver : true
-                            }
-                        })}
+                {hasDeposit && (
+                    <CustomInput
+                        label="Zaplatená záloha"
+                        name="paidAlready"
+                        type='text'
+                        value={orderDetail?.paidAlready ?? ""}
+                        onChange={e => handleOrderDetailChange(e)}
                     />
-                    <OptionsCheckbox
-                        label={"Nákup na firmu"}
-                        isActive={orderDetail?.buyingAsCompany}
-                        handleClick={() => handleOrderDetailChange({
-                            target: {
-                                name: 'buyingAsCompany',
-                                value: orderDetail?.buyingAsCompany ? !orderDetail?.buyingAsCompany : true
-                            }
-                        })}
-                    />
+                )}
+            </div>
+            }
+            <div>
+                <h4>Informácie o doručení</h4>
+                <OptionsCheckbox
+                    label={"Doručiť na adresu"}
+                    isActive={orderDetail?.shouldDeliver}
+                    handleClick={() => handleOrderDetailChange({
+                        target: {
+                            name: 'shouldDeliver',
+                            value: orderDetail?.shouldDeliver ? !orderDetail?.shouldDeliver : true
+                        }
+                    })}
+                />
+                <OptionsCheckbox
+                    label={"Nákup na firmu"}
+                    isActive={orderDetail?.buyingAsCompany}
+                    handleClick={() => handleOrderDetailChange({
+                        target: {
+                            name: 'buyingAsCompany',
+                            value: orderDetail?.buyingAsCompany ? !orderDetail?.buyingAsCompany : true
+                        }
+                    })}
+                />
 
-                    {orderDetail?.shouldDeliver && (
+                {orderDetail?.shouldDeliver && (
+                    <div>
+                        <h4>Adresa</h4>
+                        <p>{order.user.psc}</p>
+                        <p>{order.user.address}</p>
+                        <p>{order.user.city}</p>
+                        <p>{order.user.country}</p>
+
                         <div>
-                            <h4>Adresa</h4>
-                            <p>{order.user.psc}</p>
-                            <p>{order.user.address}</p>
-                            <p>{order.user.city}</p>
-                            <p>{order.user.country}</p>
+                            <OverwriteAddressCheckbox>
+                                <input id="overwrite" name='overwrite' type='checkbox' value={overwrite} onChange={() => toggleOverwriteAddress(overwrite)} />
+                                <label htmlFor='overwrite'>Iná adresa</label>
+                            </OverwriteAddressCheckbox>
 
-                            <div>
-                                <OverwriteAddressCheckbox>
-                                    <input id="overwrite" name='overwrite' type='checkbox' value={overwrite} onChange={() => toggleOverwriteAddress(overwrite)} />
-                                    <label htmlFor='overwrite'>Iná adresa</label>
-                                </OverwriteAddressCheckbox>
-
-                                {overwrite && (
-                                    <div>
-                                        <CustomInput
-                                            label="Adresa"
-                                            name="address"
-                                            type='text'
-                                            value={orderDetail?.overwrite?.address ?? ""}
-                                            onChange={e => handleAddressOverwriteChange(e)}
-                                        />
-                                        <CustomInput
-                                            label="PSČ"
-                                            name="psc"
-                                            type='text'
-                                            value={orderDetail?.overwrite?.psc ?? ""}
-                                            onChange={e => handleAddressOverwriteChange(e)}
-                                        />
-                                        <CustomInput
-                                            label="Mesto"
-                                            name="city"
-                                            type='text'
-                                            value={orderDetail?.overwrite?.city ?? ""}
-                                            onChange={e => handleAddressOverwriteChange(e)}
-                                        />
-                                        <CustomInput
-                                            label="Štát"
-                                            name="country"
-                                            type='text'
-                                            value={orderDetail?.overwrite?.country ?? ""}
-                                            onChange={e => handleAddressOverwriteChange(e)}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                            {overwrite && (
+                                <div>
+                                    <CustomInput
+                                        label="Adresa"
+                                        name="address"
+                                        type='text'
+                                        value={orderDetail?.overwrite?.address ?? ""}
+                                        onChange={e => handleAddressOverwriteChange(e)}
+                                    />
+                                    <CustomInput
+                                        label="PSČ"
+                                        name="psc"
+                                        type='text'
+                                        value={orderDetail?.overwrite?.psc ?? ""}
+                                        onChange={e => handleAddressOverwriteChange(e)}
+                                    />
+                                    <CustomInput
+                                        label="Mesto"
+                                        name="city"
+                                        type='text'
+                                        value={orderDetail?.overwrite?.city ?? ""}
+                                        onChange={e => handleAddressOverwriteChange(e)}
+                                    />
+                                    <CustomInput
+                                        label="Štát"
+                                        name="country"
+                                        type='text'
+                                        value={orderDetail?.overwrite?.country ?? ""}
+                                        onChange={e => handleAddressOverwriteChange(e)}
+                                    />
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
+            </div>
 
-                <AddButton onClick={handleSubmit}>Vytvoriť objednávku</AddButton>
-            </Modal>
-        </ModalContainer>
+            {isUpdating && <AddButton onClick={handleSubmit}>Upraviť objednávku</AddButton>}
+            {!isUpdating && <AddButton onClick={handleSubmit}>Vytvoriť objednávku</AddButton>}
+        </Modal>
     )
 }
 

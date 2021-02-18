@@ -48,17 +48,6 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
 
     return (
         <div>
-            {showModal && (
-                <FinishOrderModal
-                    close={() => setShowModal(false)}
-                    order={order}
-                    combinedProducts={combinedProducts}
-                    createOrder={createOrder}
-                    setHasChanged={setHasChanged}
-                    isUpdating={isUpdating}
-                    updateOrder={updateOrder}
-                />
-            )}
             <ProductsOverviewContainer>
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
@@ -131,9 +120,14 @@ const SummaryComponent = ({ order, combinedProducts, addNextProduct, setHasChang
 
                     {isUpdating && (
                         <OptionsContainer>
-                            <h3>Možnosti</h3>
-                            {/* <OptionButton onClick={addNextProduct}>Pridať produkt</OptionButton> */}
-                            <OptionButton onClick={() => setShowModal(true)}>Upraviť objednavku</OptionButton>
+                            <FinishOrderModal
+                                order={order}
+                                combinedProducts={combinedProducts}
+                                createOrder={createOrder}
+                                setHasChanged={setHasChanged}
+                                isUpdating={isUpdating}
+                                updateOrder={updateOrder}
+                            />
                         </OptionsContainer>
                     )}
 
