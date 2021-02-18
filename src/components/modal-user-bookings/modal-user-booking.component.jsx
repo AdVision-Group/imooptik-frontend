@@ -90,10 +90,10 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
     }
 
     const handleSubmit = () => {
-        if (!userBooking?.name) return
-        if (!userBooking?.email) return
-        if (!userBooking?.phone) return
-        if (!userBooking?.booking) return
+        // if (!userBooking?.name) return
+        // if (!userBooking?.email) return
+        // if (!userBooking?.phone) return
+        // if (!userBooking?.booking) return
 
         let bookingToAdd = {
             ...userBooking,
@@ -105,9 +105,9 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
         console.log(bookingToAdd)
 
 
-        createUserBooking(bookingToAdd)
-        refetchCalendar()
-        close()
+        createUserBooking(bookingToAdd, refetchCalendar, close)
+        // refetchCalendar()
+        // close()
     }
 
     useEffect(() => {

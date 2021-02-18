@@ -241,7 +241,7 @@ const WarehouseProvider = ({ children }) => {
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -765,7 +765,7 @@ const WarehouseProvider = ({ children }) => {
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)

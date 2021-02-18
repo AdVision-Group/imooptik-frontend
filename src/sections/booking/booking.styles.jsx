@@ -1,4 +1,15 @@
 import styled from 'styled-components'
+import { paddingStyles } from '../../global.styles'
+
+
+export const Header = styled.div`
+    ${paddingStyles}
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    color: var(--primary-text-color);
+`
 
 export const Title = styled.h2`
     /* margin-bottom: 2rem; */

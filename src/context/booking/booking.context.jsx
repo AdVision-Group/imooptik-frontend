@@ -52,7 +52,7 @@ const BookingProvider = ({ children }) => {
             }
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
 
         } catch (err) {
             console.log(err)
@@ -91,7 +91,7 @@ const BookingProvider = ({ children }) => {
 
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
         } catch (err) {
             console.log(err)
             getMessage("Niečo sa pokazilo")
@@ -118,7 +118,7 @@ const BookingProvider = ({ children }) => {
             console.log(data)
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
         } catch (err) {
             console.log(err)
             getMessage("Niečo sa pokazilo")
@@ -152,7 +152,7 @@ const BookingProvider = ({ children }) => {
             }
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
         } catch (err) {
             console.log(err)
             getMessage("Niečo sa pokazilo")
@@ -214,7 +214,7 @@ const BookingProvider = ({ children }) => {
         }
     }
 
-    const createUserBooking = async (userBookingToAdd) => {
+    const createUserBooking = async (userBookingToAdd, refetchCalendar, close) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -234,9 +234,17 @@ const BookingProvider = ({ children }) => {
             console.log("USERBOOKING RESPONSE")
             console.log(data)
 
+            if (data.userBooking) {
+                setIsLoading(false)
+
+                refetchCalendar()
+                closeModal()
+                close()
+            }
+
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
         } catch (err) {
             console.log(err)
             getMessage("Niečo sa pokazilo")

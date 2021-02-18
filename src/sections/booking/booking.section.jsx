@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../../context/auth/auth.context'
 
 import SectionHeader from '../../components/section-header/section-header.component'
@@ -23,6 +24,7 @@ import {
 } from 'react-icons/ai'
 
 import {
+    Header,
     Title,
     GridRow,
     CalendarGridContainer,
@@ -34,9 +36,10 @@ import {
 } from './booking.styles'
 
 const BookingSection = () => {
-    const { isAdmin, currentUser } = useContext(AuthContext)
+    const { isAdmin, currentUser, isOptometrist } = useContext(AuthContext)
+    const { showModal, setShowModal, message } = useContext(LoadingModalContext)
     const { push } = useHistory()
-    const [showModal, setShowModal] = useState(true)
+    // const [showModal, setShowModal] = useState(true)
     const [showPremisesSection, setShowPremisesSection] = useState(true)
     const [activeCalendarFormat, setActiveCalendarFormat] = useState(0)
     const [searchQuery, setSearchQuery] = useState('')
@@ -47,7 +50,7 @@ const BookingSection = () => {
     const [calendarWeekIndex, setCalendarWeekIndex] = useState(0)
     const [selectedDay, setSelectedDay] = useState(null)
 
-    const { isLoading, response, message } = useFetch('api/booking/calendars')
+    const { isLoading, response } = useFetch('api/booking/calendars')
 
     const handleShowCalendarClick = (calendarId) => {
         setSelectedCalendar(calendarId)
@@ -155,6 +158,12 @@ const BookingSection = () => {
                 handleAddButton={() => push('rezervacie/novy-kalendar')}
                 title="Rezervácie"
             />}
+
+            {(isOptometrist && !isAdmin) && (
+                <Header>
+                    <h1>Rezervácie</h1>
+                </Header>
+            )}
 
             <ScrollContainer>
                 {isAdmin && <CalendarHeading>
