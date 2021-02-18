@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { BookingContext } from '../../context/booking/booking.context'
-
+import { AuthContext } from '../../context/auth/auth.context'
 
 import BookingModal from '../modal-booking/modal-booking.component'
 import Spinner from '../../components/spinner/spinner.component'
@@ -23,6 +23,7 @@ import {
 const BookingCalendarBookings = ({
     calendarId
 }) => {
+    const { isAdmin } = useContext(AuthContext)
     const { deleteBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendarId, !calendarId)
     const [showBookingModal, setShowBookingModal] = useState(false)
@@ -58,7 +59,7 @@ const BookingCalendarBookings = ({
             <div>
                 <Header>
                     <h3>Vyšetrenia</h3>
-                    <AddButton onClick={() => setShowBookingModal(true)}>Pridať</AddButton>
+                    {isAdmin && <AddButton onClick={() => setShowBookingModal(true)}>Pridať</AddButton>}
                 </Header>
 
                 <div>
@@ -77,10 +78,10 @@ const BookingCalendarBookings = ({
                             <ContainerBody>
                                 <p>{booking.description}</p>
                             </ContainerBody>
-                            <ContainerOptions>
+                            {isAdmin && <ContainerOptions>
                                 <UpdateButton onClick={() => handleUpdateClick(booking._id)}>Upraviť</UpdateButton>
                                 <DeleteButton onClick={() => handleDeleteClick(booking._id)}>Vymazať</DeleteButton>
-                            </ContainerOptions>
+                            </ContainerOptions>}
                         </Container>
                     ))}
                     {!response?.calendar?.bookings?.length && (

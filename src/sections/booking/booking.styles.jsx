@@ -65,6 +65,11 @@ export const CalendarMonthContainer = styled.div`
 
     }
 
+    div {
+        text-align: center;
+        margin: 0 1rem;
+    }
+
     p {
         text-transform: capitalize;
         margin: 0 1rem;

@@ -183,6 +183,7 @@ const BookingSection = () => {
 
                 {selectedCalendar && (
                     <React.Fragment>
+
                         <CalendarHeader>
                             <Title>Kalendár</Title>
 
@@ -195,7 +196,10 @@ const BookingSection = () => {
                             ) : (
                                     <CalendarMonthContainer>
                                         <button onClick={getPrevWeek}><AiOutlineLeft /></button>
-                                        <p>{calendarWeekIndex + 1}</p>
+                                        <div>
+                                            <p>{calendarWeekIndex + 1}</p>
+                                            <p>{months[selectedMonth]}</p>
+                                        </div>
                                         <button onClick={getNextWeek}><AiOutlineRight /></button>
                                     </CalendarMonthContainer>
                                 )}
