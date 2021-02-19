@@ -85,6 +85,7 @@ const OrderSection = () => {
                     ...order,
                     order: orderData.response.order,
                     user: orderData.response.order.orderedBy,
+                    combinedProducts: orderData.response.order.combinedProducts
                 })
                 setCombinedProducts(orderData.response.order.combinedProducts)
             }
