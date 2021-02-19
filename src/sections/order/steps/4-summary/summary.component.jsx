@@ -53,10 +53,16 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
                     <TableCol>#</TableCol>
-                    <TableCol>ProduktID</TableCol>
+                    <TableCol>
+                        <span>Eankód</span>
+                        <span>ProduktID</span>
+                    </TableCol>
                     <TableCol>Cena</TableCol>
                     <TableCol>Po zlave</TableCol>
-                    <TableCol>ŠosovkyID</TableCol>
+                    <TableCol>
+                        <span>Eankód</span>
+                        <span>ŠosovkyID</span>
+                    </TableCol>
                     <TableCol>Cena</TableCol>
                     <TableCol>Po zlave</TableCol>
                     <TableCol>Dohromady</TableCol>

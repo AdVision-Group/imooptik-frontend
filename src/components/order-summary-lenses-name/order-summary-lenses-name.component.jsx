@@ -6,9 +6,14 @@ const OrderSummaryLensesName = ({ lensesId }) => {
     const { isLoading, response } = useFetchById('api/store/lenses', lensesId, !lensesId)
 
     return (
-        <span style={{ whiteSpace: "nowrap" }}>
-            {isLoading ? "Hľadam..." : response.lenses.name.slice(0, 8).concat("...")}
-        </span>
+        <React.Fragment>
+            <span style={{ whiteSpace: "nowrap" }}>
+                {isLoading ? "Hľadam..." : response?.lenses?.eanCode || ""}
+            </span>
+            <span style={{ whiteSpace: "nowrap" }}>
+                {isLoading ? "Hľadam..." : response.lenses.name.slice(0, 8).concat("...")}
+            </span>
+        </React.Fragment>
     )
 }
 
