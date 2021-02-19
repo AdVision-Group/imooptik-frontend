@@ -233,20 +233,7 @@ const UserProvider = ({ children }) => {
             console.log(data)
 
             if (data.error) {
-                getMessage(data.message)
-                if (data.error === 'low-privileges') {
-                    getMessage("Nemôžeš upravovať užívateľov s väčšími alebo rovnakými právami ako máš ty")
-
-                }
-                if (data.error === 'format') {
-                    getMessage("Chyba formátovania: " + data.message)
-                }
-                if (data.error === 'format' && data.message.includes('lenses.cylinderAxes')) {
-                    getMessage("Osa musí byt väčšia alebo rovná 0")
-                }
-                if (data.error === 'phone-exists') {
-                    getMessage("Telefónne číslo už v databázy existuje")
-                }
+                getMessage(data.messageSK)
                 setIsLoading(false)
                 return
             }
@@ -259,6 +246,13 @@ const UserProvider = ({ children }) => {
                 push(`/dashboard/objednavky/${id}`)
             } else if (path === 'profile') {
                 push(`/dashboard/zakaznici/${id}`)
+            } else if (path === 'isOrder') {
+                setUser({
+                    ...user,
+                    ...data.user,
+                    fName: data.user.name ? data.user.name.split(" ")[0] : "",
+                    lName: data.user.name ? data.user.name.split(" ")[1] : ""
+                })
             } else {
                 push("/dashboard/zakaznici")
             }

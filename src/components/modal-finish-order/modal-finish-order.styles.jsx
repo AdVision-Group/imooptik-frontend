@@ -4,7 +4,7 @@ import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 export const Modal = styled.div`
     position: relative;
-    z-index: 999999;
+    /* z-index: 999999; */
 
     h4{ 
         margin-top: 2rem;

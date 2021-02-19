@@ -94,6 +94,7 @@ export const SummaryGridLayout = styled.div`
 `
 
 export const UserOverviewContainer = styled.div`
+    position: relative;
     padding: 2rem;
     border-radius: .5rem;
     box-shadow: var(--container-shadow);
@@ -180,4 +181,16 @@ export const OptionButton = styled(CustomButton)`
         background-color: var(--primary-color);
         font-weight: bolder;
     }
+`
+
+export const EditButton = styled.div`
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
 `

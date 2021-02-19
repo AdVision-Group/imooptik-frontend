@@ -34,7 +34,8 @@ const UserForm = ({
     handleChange,
     handleParameterChange,
     handleCompanyChange,
-    isOptometrist
+    isOptometrist,
+    isOrder = false
 }) => {
     const { push } = useHistory()
 
@@ -267,7 +268,7 @@ const UserForm = ({
 
             </Profile>
 
-            {isUpdating && <div>
+            {!isOrder && isUpdating && <div>
                 <OrderHeader>
                     <Title>
                         Objednávky

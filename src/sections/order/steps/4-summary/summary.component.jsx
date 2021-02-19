@@ -6,9 +6,12 @@ import ParametersTable from '../../../../components/parameters-table/parameters-
 import FinishOrderModal from '../../../../components/modal-finish-order/modal-finish-order.component'
 import OrderSummaryProductName from '../../../../components/order-summary-product-name/order-summary-product-name.component'
 import OrderSummaryLensesName from '../../../../components/order-summary-lenses-name/order-summary-lenses-name.component'
+import OrderUpdateUserModal from '../../../../components/modal-order-update-user/modal-order-update-user.component'
 
 
 import { retailNames } from '../../../../context/warehouse/warehouse.utils'
+
+import { AiOutlineEdit } from 'react-icons/ai'
 
 import {
     TableCol,
@@ -22,7 +25,8 @@ import {
     OptionsContainer,
     StyledParagraph,
     OptionButton,
-    OrderDetailsContainer
+    OrderDetailsContainer,
+    EditButton
 } from './summary.styles'
 
 const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
@@ -30,6 +34,12 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
     const { createOrder, updateOrder } = useContext(OrdersContext)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
+
+    const [showUpdateUserModal, setShowUpdateUserModal] = useState(false)
+
+    const handleClose = () => {
+        setShowUpdateUserModal(false)
+    }
 
     console.log(order)
     console.log(order?.combinedProducts)
@@ -49,6 +59,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
 
     return (
         <div>
+            {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} />}
             <ProductsOverviewContainer>
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
@@ -92,6 +103,9 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
             </ProductsOverviewContainer>
             <SummaryGridLayout>
                 <UserOverviewContainer>
+                    <EditButton onClick={() => setShowUpdateUserModal(true)}>
+                        <AiOutlineEdit />
+                    </EditButton>
                     <h3>Zákaznik</h3>
                     <div>
                         <h4>Meno a prizvisko</h4>

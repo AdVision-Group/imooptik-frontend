@@ -74,7 +74,7 @@ const ExaminationsOverview = () => {
 
 
             <div>
-                {examinations.map((examination, idx) => (
+                {examinations && examinations.map((examination, idx) => (
                     <ExaminationContainer key={idx}>
                         <ExamHead>
                             <h3>Dátum</h3>
