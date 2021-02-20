@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
+import { OrderContext } from '../order/order.context'
 
 import {
     fetchUsers,
@@ -220,7 +221,7 @@ const UserProvider = ({ children }) => {
     }
 
     // Update user
-    const updateUser = async (user, id, path, refetchUser, close) => {
+    const updateUser = async (user, id, path, refetchUser, close, addUser) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -254,10 +255,16 @@ const UserProvider = ({ children }) => {
                     lName: data.user.name ? data.user.name.split(" ")[1] : ""
                 })
 
-                console.log("REFETCH USER")
-                console.log("REFETCH USER")
-                console.log("REFETCH USER")
-                refetchUser()
+                addUser({
+                    ...user,
+                    ...data.user,
+                    fName: data.user.name ? data.user.name.split(" ")[0] : "",
+                    lName: data.user.name ? data.user.name.split(" ")[1] : ""
+                })
+                // console.log("REFETCH USER")
+                // console.log("REFETCH USER")
+                // console.log("REFETCH USER")
+                // refetchUser()
                 close()
             } else {
                 push("/dashboard/zakaznici")

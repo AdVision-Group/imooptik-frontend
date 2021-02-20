@@ -13,7 +13,7 @@ import {
     UpdateButton
 } from './modal-order-update-user.styles'
 
-const OrderUpdateUserModal = ({ close, userId, refetchUser }) => {
+const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
     const { isAdmin, isOptometrist } = useContext(AuthContext)
     const {
         user,
@@ -103,7 +103,7 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser }) => {
         } else if (!userObj.fName || !userObj.lName) {
             delete userObj["name"]
         }
-        updateUser(userObj, user._id, "isOrder", refetchUser, close)
+        updateUser(userObj, user._id, "isOrder", refetchUser, close, addUser)
     }
 
     useEffect(() => {

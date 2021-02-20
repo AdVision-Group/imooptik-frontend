@@ -15,7 +15,8 @@ const CartLensesRow = ({ idx, item }) => {
     const {
         selectProduct,
         selectedProduct,
-        addLensesDiscount
+        addLensesDiscount,
+        deleteProduct
     } = useContext(OrderContext)
 
     const [productDiscount, setProductDiscount] = useState(null)
@@ -44,7 +45,7 @@ const CartLensesRow = ({ idx, item }) => {
 
     return (
         <CartTableRow isSelected={selectedProduct === idx} onClick={() => handleSelectProduct(idx)}>
-            <TableCol>{idx + 1}</TableCol>
+            <TableCol onClick={() => deleteProduct(item)} >{idx + 1}</TableCol>
             <TableCol>{item?.product?.name}</TableCol>
             <TableCol>{item?.lens?.name}</TableCol>
             <TableCol>
@@ -62,37 +63,6 @@ const CartLensesRow = ({ idx, item }) => {
                     onChange={(e) => addLensesDiscount(idx, e.target.value)}
                 />
             </TableCol>
-            {/* <TableCol>
-                <IconContainer onClick={() => handleClick(showRow)}>
-                    <AiFillCaretDown />
-                </IconContainer>
-            </TableCol>
-            {showRow && (
-                <OptionsContainer>
-                    <DiscountContainer>
-                        <div>
-                            <h4>Zľava</h4>
-                            <DiscountCheckbox
-                                label={"Fixná suma"}
-                                value={"flat"}
-                                name='flat'
-                                isActive={discountType === 'flat'}
-                                handleClick={() => handleChangeDiscount(discountType === 'flat' ? "" : "flat")}
-                            />
-                            <DiscountCheckbox
-                                label={"Percertá"}
-                                value={"percent"}
-                                name='percent'
-                                isActive={discountType === 'percent'}
-                                handleClick={() => handleChangeDiscount(discountType === 'percent' ? "" : "percent")}
-                            />
-                        </div>
-                        <div>
-
-                        </div>
-                    </DiscountContainer>
-                </OptionsContainer>
-            )} */}
         </CartTableRow>
     )
 }

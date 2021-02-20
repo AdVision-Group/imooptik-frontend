@@ -43,6 +43,7 @@ export const CartTableRow = styled.div`
                 top: 50%;
                 transform: translate(-50%, -50%);
                 background-color: var(--color-red);
+                color: var(--button-font-color);
                 font-size: 1.2rem;
             }
         }

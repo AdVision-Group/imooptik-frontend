@@ -1,17 +1,6 @@
 import styled from 'styled-components'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
-export const CartTableRow = styled.div`
-    cursor: pointer;
-    display:grid; 
-    align-items: center;
-    grid-template-columns: 5rem 2fr 2fr 2fr 2fr;
-    background-color: var(--background-primary-color);
-    /* border: .05rem solid var(--secondary-text-color); */
-
-    border: ${({ isSelected }) => isSelected ? ".05rem solid var(--primary-color)" : ".05rem solid transparent"};
-`
-
 export const TableCol = styled.div`
     padding: 2rem;
     text-align: center;
@@ -30,6 +19,38 @@ export const TableCol = styled.div`
         font-family: inherit;
     }
 `
+
+export const CartTableRow = styled.div`
+    cursor: pointer;
+    display:grid; 
+    align-items: center;
+    grid-template-columns: 5rem 2fr 2fr 2fr 2fr;
+    background-color: var(--background-primary-color);
+    /* border: .05rem solid var(--secondary-text-color); */
+
+    border: ${({ isSelected }) => isSelected ? ".05rem solid var(--primary-color)" : ".05rem solid transparent"};
+
+    &:hover  ${TableCol}{
+        position: relative;
+        :nth-of-type(1) {
+            cursor: pointer;
+            ::after {
+                content: "X";
+                position: absolute;
+                padding: .5rem 1rem;
+                border-radius: 50%;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: var(--color-red);
+                color: var(--button-font-color);
+                font-size: 1.2rem;
+            }
+        }
+    }
+`
+
+
 
 export const IconContainer = styled.div`
     cursor: pointer;

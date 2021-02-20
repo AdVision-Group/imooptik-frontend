@@ -30,7 +30,7 @@ import {
 } from './summary.styles'
 
 const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUser }) => {
-    const { order, changeStep } = useContext(OrderContext)
+    const { order, changeStep, addUser } = useContext(OrderContext)
     const { createOrder, updateOrder } = useContext(OrdersContext)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
@@ -56,7 +56,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
 
     return (
         <div>
-            {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} refetchUser={refetchUser} />}
+            {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} refetchUser={refetchUser} addUser={addUser} />}
             <ProductsOverviewContainer>
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>

@@ -59,7 +59,7 @@ const OrderSection = () => {
         setShowModal(true)
     }
 
-    const userData = useFetchById("api/admin/users", userId, !(userId && orderId))
+    const userData = useFetchById("api/admin/users", userId, !(userId !== 'nova-objednavka'))
     const orderData = useFetchById("api/admin/orders", orderId, !orderId)
 
     const handleAddNextProduct = () => {
@@ -99,7 +99,13 @@ const OrderSection = () => {
     }, [userId, orderId, userData.response, orderData.response])
 
     useEffect(() => {
+        console.log("UPDATE USER USEEFECT")
+        console.log(userData.isLoading)
+        console.log("UPDATE USER USEEFECT")
         if (userData.isLoading) return
+        console.log("GET UPDATED USER")
+        console.log("GET UPDATED USER")
+        console.log("GET UPDATED USER")
         addUser(userData.response.user)
 
     }, [userData.isLoading])
@@ -115,8 +121,8 @@ const OrderSection = () => {
         }
     }, [])
 
-    console.log("ORDER OBJECT")
-    console.log(userData.isLoading)
+    // console.log("ORDER OBJECT")
+    // console.log(userData.isLoading)
 
     return (
 

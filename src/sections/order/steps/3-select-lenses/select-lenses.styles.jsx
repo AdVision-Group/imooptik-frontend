@@ -125,6 +125,8 @@ export const CartTable = styled.div`
     overflow-y: scroll;
     padding: 2rem 2rem 0 2rem;
     padding-top: 0;
+    font-size: 1.4rem;
+
 
     ::-webkit-scrollbar {
         width: 10px;

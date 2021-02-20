@@ -140,7 +140,8 @@ const OrderProvider = ({ children }) => {
                 ...prevValue,
                 {
                     product: {
-                        _id: 'pseudo'
+                        _id: Math.floor(Math.random() * 10),
+                        isPseudo: true
                     },
                     lens: lensesObj,
                 }
@@ -203,7 +204,7 @@ const OrderProvider = ({ children }) => {
         console.log(cart)
 
         const combinedProductsArr = cart.map(item => ({
-            product: item.product._id,
+            product: item.product.isPseudo ? "pseudo" : item.product._id,
             ...(item.discount) && { discount: { ...item.discount } },
             ...(item.lens) && { lens: item.lens._id },
             ...(item.lens) && { lensesQuant: 1 },
