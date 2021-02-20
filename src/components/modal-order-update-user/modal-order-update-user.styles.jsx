@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import CustomButton from '../custom-button/custom-button.component'
+import { Profile } from '../user-form/user.form-styles'
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -30,10 +31,14 @@ export const Modal = styled.div`
 
     padding: 2rem;
     border-radius: .5rem;
-    background-color: var(--body-background-primary-color);
+    background-color: var(--background-primary-color);
 
     position: relative;
     z-index: 999999;
+
+    ${Profile} {
+        box-shadow: none;
+    }
 
     h3{ 
         margin-bottom: 2rem;
