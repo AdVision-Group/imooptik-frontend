@@ -24,7 +24,7 @@ const ListArrows = ({
             setIsDisablePrev(true)
         } else {
             setIsDisablePrev(false)
-            setCurrentPage(0)
+            // setCurrentPage(0)
         }
     }, [listItems])
 
