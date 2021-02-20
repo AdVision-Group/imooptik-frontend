@@ -24,6 +24,13 @@ const ProductLensesForm = ({
             <LensesContainer>
                 <h3>Základné informácie</h3>
                 <CustomInput
+                    label="eanCode*"
+                    type='text'
+                    name='eanCode'
+                    value={lenses?.eanCode?.toString() ?? ""}
+                    handleChange={(e) => handleChange(e)}
+                />
+                <CustomInput
                     label="Názov šošoviek*"
                     type='text'
                     name='name'

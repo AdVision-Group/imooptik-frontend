@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { BookingContext } from '../../context/booking/booking.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
+import { AuthContext } from '../../context/auth/auth.context'
 import { useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -41,6 +42,7 @@ const CalendarSection = () => {
         message,
         showModal,
     } = useContext(LoadingModalContext)
+    const { isAdmin } = useContext(AuthContext)
     const { createCalendar, updateCalendar, deleteCalendar } = useContext(BookingContext)
     const { calendarId } = useParams()
     const { response, isLoading: isFetching } = useFetchById("api/booking/calendars", calendarId, calendarId === 'novy-kalendar')
@@ -152,9 +154,10 @@ const CalendarSection = () => {
                     ...response.calendar,
                     exceptDays: exceptDaysArr
                 })
-
+                closeModal()
             } else {
                 setCalendar(response.calendar)
+                closeModal()
             }
         }
     }, [isFetching])
@@ -185,7 +188,7 @@ const CalendarSection = () => {
             <ScrollContainer>
                 <GridContainer>
                     <div>
-                        <Container>
+                        {isAdmin && <Container>
                             <h3>Základné informácie</h3>
                             <div>
                                 <h4>Kalendar je pre prevádzku</h4>
@@ -209,7 +212,7 @@ const CalendarSection = () => {
                                     handleChange={handleCalendarValueChange}
                                 />
                             </div>
-                        </Container>
+                        </Container>}
                         <Container>
                             <h3>Dni kedy sa nerobia prehliadky</h3>
                             {calendar?.exceptDays && calendar?.exceptDays?.map((value, idx) => (

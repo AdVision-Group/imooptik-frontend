@@ -70,6 +70,8 @@ const WeekDays = ({
         }
     }, [isLoading])
 
+    console.log(response)
+
     return (
         <div>
             {showUserBooking && <UserBookingModal createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}

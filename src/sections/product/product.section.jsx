@@ -76,7 +76,7 @@ const ProductSection = () => {
 
         if (!isUpdating) {
             if (productObj.type === 0) {
-                if (Object.keys(productObj).length > 1) {
+                if (Object.keys(productObj).length > 2) {
                     const confirm = window.confirm("Rozpisane polia budú vymazane")
                     if (confirm) {
                         resetLenses()
@@ -385,7 +385,7 @@ const ProductSection = () => {
             if (!eanCode) {
                 getEanCode()
             } else {
-                if (productObj.type) {
+                if (productObj.type !== undefined) {
                     handleChange({
                         target: {
                             name: "eanCode",

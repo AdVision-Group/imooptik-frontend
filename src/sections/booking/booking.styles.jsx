@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { paddingStyles } from '../../global.styles'
+import CustomButton from '../../components/custom-button/custom-button.component'
 
 
 export const Header = styled.div`
@@ -9,6 +10,11 @@ export const Header = styled.div`
     display: flex;
     justify-content: space-between;
     color: var(--primary-text-color);
+`
+
+export const UpdateButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-weight: bolder;
 `
 
 export const Title = styled.h2`

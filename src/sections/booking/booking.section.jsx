@@ -32,7 +32,8 @@ import {
     CalendarHeader,
     CalendarFormat,
     CalendarMonthContainer,
-    IconContainer
+    IconContainer,
+    UpdateButton
 } from './booking.styles'
 
 const BookingSection = () => {
@@ -149,6 +150,7 @@ const BookingSection = () => {
     }, [])
 
     console.log(calendars)
+    console.log(selectedCalendar)
 
     return (
         <section>
@@ -162,7 +164,12 @@ const BookingSection = () => {
 
             {(isOptometrist && !isAdmin) && (
                 <Header>
-                    <h1>Rezervácie</h1>
+                    <div>
+                        <h1>Rezervácie</h1>
+                    </div>
+                    <div>
+                        <UpdateButton onClick={() => push(`rezervacie/${selectedCalendar}`)}>Upraviť kalendár</UpdateButton>
+                    </div>
                 </Header>
             )}
 
