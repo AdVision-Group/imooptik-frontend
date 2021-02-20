@@ -29,7 +29,7 @@ import {
     EditButton
 } from './summary.styles'
 
-const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
+const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUser }) => {
     const { order, changeStep } = useContext(OrderContext)
     const { createOrder, updateOrder } = useContext(OrdersContext)
     const [priceTotal, setPriceTotal] = useState(0)
@@ -40,9 +40,6 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
     const handleClose = () => {
         setShowUpdateUserModal(false)
     }
-
-    console.log(order)
-    console.log(order?.combinedProducts)
 
     useEffect(() => {
         if (order.combinedProducts) {
@@ -59,7 +56,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating }) => {
 
     return (
         <div>
-            {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} />}
+            {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} refetchUser={refetchUser} />}
             <ProductsOverviewContainer>
                 <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
                 <SummaryTableHead>

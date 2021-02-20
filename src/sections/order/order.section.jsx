@@ -99,6 +99,12 @@ const OrderSection = () => {
     }, [userId, orderId, userData.response, orderData.response])
 
     useEffect(() => {
+        if (userData.isLoading) return
+        addUser(userData.response.user)
+
+    }, [userData.isLoading])
+
+    useEffect(() => {
         return () => {
             changeStep('select-user')
             resetOrder({})
@@ -110,7 +116,7 @@ const OrderSection = () => {
     }, [])
 
     console.log("ORDER OBJECT")
-    console.log(order)
+    console.log(userData.isLoading)
 
     return (
 
@@ -152,6 +158,7 @@ const OrderSection = () => {
                             back={() => changeStep("select-lenses")}
                             addNextProduct={handleAddNextProduct}
                             setHasChanged={setHasChanged}
+                            refetchUser={userData.refetch}
                         />
                     )}
                 </div>

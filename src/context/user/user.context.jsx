@@ -220,7 +220,7 @@ const UserProvider = ({ children }) => {
     }
 
     // Update user
-    const updateUser = async (user, id, path) => {
+    const updateUser = async (user, id, path, refetchUser, close) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -253,6 +253,12 @@ const UserProvider = ({ children }) => {
                     fName: data.user.name ? data.user.name.split(" ")[0] : "",
                     lName: data.user.name ? data.user.name.split(" ")[1] : ""
                 })
+
+                console.log("REFETCH USER")
+                console.log("REFETCH USER")
+                console.log("REFETCH USER")
+                refetchUser()
+                close()
             } else {
                 push("/dashboard/zakaznici")
             }
