@@ -7,6 +7,7 @@ import SectionHeader from '../../components/section-header/section-header.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 import BookingCalendarOverview from "../../components/booking-calendar-overview/booking-calendar-overview.component"
+import WeekCalendarProvider from '../../context/week-calendar/week-calendar.context'
 
 import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
@@ -236,14 +237,22 @@ const BookingSection = () => {
                                     handleCalendarBlockClick={handleCalendarBlockClick}
                                 />
                             ) : (
-                                    <WeekDays
+                                    <WeekCalendarProvider
                                         calendar={selectedCalendar}
                                         month={selectedMonth}
                                         year={selectedYear}
                                         weekIndex={calendarWeekIndex}
                                         handleCalendarBlockClick={handleCalendarBlockClick}
+                                    >
+                                        <WeekDays
+                                            calendar={selectedCalendar}
+                                            month={selectedMonth}
+                                            year={selectedYear}
+                                            weekIndex={calendarWeekIndex}
+                                            handleCalendarBlockClick={handleCalendarBlockClick}
+                                        />
 
-                                    />
+                                    </WeekCalendarProvider>
                                 )}
                         </CalendarGridContainer>
 

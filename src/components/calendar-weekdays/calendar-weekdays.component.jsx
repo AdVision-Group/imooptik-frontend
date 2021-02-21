@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useFetchById } from '../../hooks/useFetch'
 import { BookingContext } from '../../context/booking/booking.context'
+import { WeekCalendarContext } from '../../context/week-calendar/week-calendar.context'
 
 import UserBookingModal from '../modal-user-bookings/modal-user-booking.component'
+import CalendarBookedDay from '../calendar-booked-day/calendar-booked-day.component'
 
 import {
     dayNames,
@@ -12,6 +14,8 @@ import {
     getBooking,
     checkIfHasAppoinment
 } from '../../utils/calendar.utils'
+
+import { changeSlash } from '../../utils/week-calendar.utils'
 
 import {
     Container,
@@ -31,6 +35,7 @@ const WeekDays = ({
     weekIndex,
     handleCalendarBlockClick
 }) => {
+    const { days, getDayData, refetchWeekCalendar } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
@@ -74,7 +79,7 @@ const WeekDays = ({
 
     return (
         <div>
-            {showUserBooking && <UserBookingModal createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
+            {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
@@ -101,34 +106,25 @@ const WeekDays = ({
 
                 <HourGrid>
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
+                        const day = getDayData(dayData?.dayNumber, idx)
+                        console.log(day)
 
-                        return <HourBlock key={idx}>
-                            {[...Array(24)].map((value, index) => {
-                                if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index) return
-                                if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index) return
-                                if (response?.calendar?.endTimes[idx] === "X") return
-                                return (
-                                    <HourBlockContainer key={index}>
-                                        {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) ? (
-                                            <React.Fragment>
-                                                {dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 0 && Number(booking?.split('/')[0]) === index) && <AppointmentContainer onClick={() => console.log("Click")}>
-                                                    <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 0 && Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
-                                                </AppointmentContainer>}
-                                                {dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 30 && Number(booking?.split('/')[0]) === index) && <AppointmentContainer onClick={() => console.log("Click")}>
-                                                    <p>{dayData?.bookings.find(booking => Number(booking?.split('/')[1]) === 30 && Number(booking?.split('/')[0]) === index)?.replace("/", ":")}</p>
-                                                </AppointmentContainer>}
-                                                <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
-                                            </React.Fragment>
-                                        ) : (
-                                                <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
-                                            )}
-                                        <span>{index}:00</span>
-
+                        return (
+                            <HourBlock key={idx}>
+                                {day && day.map((interval, idx) => (
+                                    <HourBlockContainer style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })} key={idx}>
+                                        {interval?.userBookings && <CalendarBookedDay
+                                            dayData={dayData}
+                                            calendarId={calendar}
+                                            time={interval.time}
+                                            userBookings={interval.userBookings}
+                                        />}
+                                        <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: interval.time })} />
+                                        <span>{changeSlash(interval?.time) ?? ""}</span>
                                     </HourBlockContainer>
-                                )
-                            })}
-                        </HourBlock>
-
+                                ))}
+                            </HourBlock>
+                        )
                     })}
                 </HourGrid>
             </Container>
@@ -137,3 +133,36 @@ const WeekDays = ({
 }
 
 export default WeekDays
+
+
+// return <HourBlock key={idx}>
+//     {[...Array(24)].map((value, index) => {
+//         if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index) return
+//         if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index) return
+//         if (response?.calendar?.endTimes[idx] === "X") return
+//         return (
+//             <HourBlockContainer key={index}>
+//                 {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) ? (
+//                     <React.Fragment>
+                        // <CalendarBookedDay
+                        //     dayData={dayData}
+                        //     calendarId={calendar}
+                        //     time={`${index < 10 ? `0${index}` : index}/00`}
+                        // />
+//                         <CalendarBookedDay
+//                             dayData={dayData}
+//                             calendarId={calendar}
+//                             time={`${index < 10 ? `0${index}` : index}/30`}
+//                         />
+//                         <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
+
+//                     </React.Fragment>
+//                 ) : (
+//                         <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
+//                     )}
+//                 <span>{index}:00</span>
+
+//             </HourBlockContainer>
+//         )
+//     })}
+// </HourBlock>

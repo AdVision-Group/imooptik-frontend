@@ -27,7 +27,7 @@ import {
     DateContainer
 } from './modal-user-booking.styles'
 
-const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBooking }) => {
+const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCalendar, createUserBooking }) => {
 
     const [query, setQuery] = useState(null)
     const [activeTab, setActiveTab] = useState(0)
@@ -105,7 +105,7 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
         console.log(bookingToAdd)
 
 
-        createUserBooking(bookingToAdd, refetchCalendar, close)
+        createUserBooking(bookingToAdd, refetchCalendar, close, refetchWeekCalendar)
         // refetchCalendar()
         // close()
     }
@@ -119,8 +119,8 @@ const UserBookingModal = ({ close, day, calendar, refetchCalendar, createUserBoo
             // const formatedDate = formatDate(`${dayNumber}-${month}-${year}`, time)
             setBookingDate({
                 date: `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${dayNumber < 10 ? `0${dayNumber}` : dayNumber}`,
-                hour: Number(time?.split(":")[0]),
-                min: Number(time?.split(":")[1])
+                hour: Number(time?.split("/")[0]),
+                min: Number(time?.split("/")[1])
             })
         }
     }, [day])

@@ -214,7 +214,7 @@ const BookingProvider = ({ children }) => {
         }
     }
 
-    const createUserBooking = async (userBookingToAdd, refetchCalendar, close) => {
+    const createUserBooking = async (userBookingToAdd, refetchCalendar, close, refetchWeekCalendar) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -238,6 +238,7 @@ const BookingProvider = ({ children }) => {
                 setIsLoading(false)
 
                 refetchCalendar()
+                refetchWeekCalendar()
                 closeModal()
                 close()
             }

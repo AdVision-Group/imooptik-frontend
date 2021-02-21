@@ -70,7 +70,7 @@ export const HeaderBlock = styled.div`
 
 export const HourBlock = styled.div`
     background-color: var(--body-background-primary-color);
-    border: var(--table-border);
+    /* border: var(--table-border); */
  
     
 
@@ -96,6 +96,7 @@ export const HourBlock = styled.div`
 export const HourBlockContainer = styled.div`
     cursor: pointer;
     position: relative;
+    /* width: 15rem; */
     height: 10rem;
     border-bottom: var(--table-border);
     background-color: var(--background-primary-color);
@@ -110,7 +111,7 @@ export const EmptyContainer = styled.div`
     content: "";
     position: relative;
     /* position: absolute; */
-    width: 100%;
+    /* width: 5rem; */
     height: 100%;
     /* top: 0;
     left: 0;
