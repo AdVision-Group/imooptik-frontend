@@ -112,3 +112,9 @@ export const CancelButton = styled(CustomButton)`
     background-color: var(--primary-color);
     font-weight: bolder;
 `
+
+export const Container = styled.div`
+    ${BlockContainer} {
+        margin-bottom: 3rem;
+    }
+`

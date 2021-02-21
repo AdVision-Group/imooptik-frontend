@@ -13,10 +13,11 @@ import {
     GridContainer,
     BlockContainer,
     Header,
-    CancelButton
+    CancelButton,
+    Container
 } from './modal-userbookings-details.styles'
 
-const UserbookingDetailsModal = ({ close, userBooking, calendarId }) => {
+const UserbookingDetailsModal = ({ close, userBooking, calendarId, cancelUserBooking }) => {
     const { response, isLoading } = useFetchByQuery(`api/booking/calendars/${calendarId}/dayInfo`, {
         date: userBooking?.userBookings?.dueDate.split(":")[1]
     }, !userBooking)
@@ -45,7 +46,7 @@ const UserbookingDetailsModal = ({ close, userBooking, calendarId }) => {
 
                 <Header>
                     <h3>Informácie:</h3>
-                    <CancelButton>Zrušiť rezerváciu</CancelButton>
+                    <CancelButton onClick={() => cancelUserBooking(booking._id)}>Zrušiť rezerváciu</CancelButton>
                 </Header>
                 <GridContainer>
                     <BlockContainer>
@@ -70,14 +71,26 @@ const UserbookingDetailsModal = ({ close, userBooking, calendarId }) => {
                     </BlockContainer>
                     <BlockContainer>
                         <h3>Zrušené</h3>
-                        <p>{booking?.canceled ? "Ano" : "Nie"}</p>
+                        <p>{booking?.cancelled ? "Ano" : "Nie"}</p>
                     </BlockContainer>
                 </GridContainer>
 
-                <BlockContainer>
-                    <h3>Popis</h3>
-                    <p>{booking?.booking?.description}</p>
-                </BlockContainer>
+                <Container>
+                    <BlockContainer>
+                        <h3>Poznámka</h3>
+                        {booking?.note ? (
+                            <p>{booking?.note}</p>
+                        ) : (
+                                <p>Žiadná poznámka</p>
+                            )}
+                    </BlockContainer>
+
+                    <BlockContainer>
+                        <h3>Popis</h3>
+                        <p>{booking?.booking?.description}</p>
+                    </BlockContainer>
+
+                </Container>
             </Modal>
         </ModalContainer>
     ), document.getElementById('portal'))

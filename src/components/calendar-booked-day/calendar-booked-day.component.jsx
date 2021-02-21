@@ -35,12 +35,6 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
         }
     }, [])
 
-    // console.log(isHalfHour)
-    // if (isLoading) return <Spinner />
-
-    // const appointment = 
-    // console.log(appointment)
-
     return (
         <React.Fragment>
             <BookedDayContainer onClick={open} isHalfHour={isHalfHour}>

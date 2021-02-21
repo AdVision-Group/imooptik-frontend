@@ -36,7 +36,7 @@ const WeekDays = ({
     weekIndex,
     handleCalendarBlockClick
 }) => {
-    const { getDayData, refetchWeekCalendar } = useContext(WeekCalendarContext)
+    const { getDayData, refetchWeekCalendar, cancelUserBooking } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
@@ -86,7 +86,7 @@ const WeekDays = ({
 
     return (
         <div>
-            {showBookingDetails && <UserbookingDetailsModal calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
+            {showBookingDetails && <UserbookingDetailsModal cancelUserBooking={cancelUserBooking} calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
             {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
