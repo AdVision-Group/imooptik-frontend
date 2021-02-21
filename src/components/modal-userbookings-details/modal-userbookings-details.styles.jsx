@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import CustomButton from '../custom-button/custom-button.component'
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -28,11 +29,11 @@ export const Modal = styled.div`
     color: var(--primary-text-color);
 
     position: relative;
-    z-index: 999999;
+    z-index: 999999; 
 
     h2{ 
         margin-bottom: 2rem;
-        text-align: center;
+        /* text-align: center; */
     }
 
     ::-webkit-scrollbar {
@@ -71,4 +72,43 @@ export const CloseButton = styled.button`
     &:focus {
         outline: none
     }
+`
+
+export const GridContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    grid-gap: 3rem;
+    margin-bottom: 3rem;
+
+`
+
+export const BlockContainer = styled.div`
+    padding: 1rem;
+    background-color: var(--body-background-primary-color);
+
+    h3 {
+        font-size: 1.3rem;
+        font-weight: lighter;
+        opacity: .8;
+        margin-bottom: .5rem;
+    }
+
+    p {
+        font-size: 1.8rem;
+        margin-left: 2rem;
+    }
+`
+
+export const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+`
+
+export const CancelButton = styled(CustomButton)`
+    display: block;
+    background-color: var(--primary-color);
+    font-weight: bolder;
 `
