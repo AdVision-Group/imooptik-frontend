@@ -3,6 +3,7 @@ import { useFetchById } from '../../hooks/useFetch'
 import { BookingContext } from '../../context/booking/booking.context'
 import { WeekCalendarContext } from '../../context/week-calendar/week-calendar.context'
 
+import UserbookingDetailsModal from '../modal-userbookings-details/modal-userbookings-details.component'
 import UserBookingModal from '../modal-user-bookings/modal-user-booking.component'
 import CalendarBookedDay from '../calendar-booked-day/calendar-booked-day.component'
 
@@ -35,7 +36,7 @@ const WeekDays = ({
     weekIndex,
     handleCalendarBlockClick
 }) => {
-    const { days, getDayData, refetchWeekCalendar } = useContext(WeekCalendarContext)
+    const { getDayData, refetchWeekCalendar } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
@@ -48,6 +49,9 @@ const WeekDays = ({
     const [calendarDays, setCalendarDays] = useState([])
     const [selectedDay, setSelectedDay] = useState(null)
     const [showUserBooking, setShowUserBooking] = useState(false)
+    const [showBookingDetails, setShowBookingDetails] = useState(false)
+
+    const [selectedUserBooking, setSelectedUserBooking] = useState(null)
 
     const handleOpenUserBookingModal = (dayData) => {
         setSelectedDay({
@@ -56,6 +60,11 @@ const WeekDays = ({
             month,
         })
         setShowUserBooking(true)
+    }
+
+    const handleOpenDetailsModal = (userBooking) => {
+        setSelectedUserBooking(userBooking)
+        setShowBookingDetails(true)
     }
 
     useEffect(() => {
@@ -75,10 +84,9 @@ const WeekDays = ({
         }
     }, [isLoading])
 
-    console.log(response)
-
     return (
         <div>
+            {showBookingDetails && <UserbookingDetailsModal calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
             {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
@@ -107,8 +115,6 @@ const WeekDays = ({
                 <HourGrid>
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
                         const day = getDayData(dayData?.dayNumber, idx)
-                        console.log(day)
-
                         return (
                             <HourBlock key={idx}>
                                 {day && day.map((interval, idx) => (
@@ -118,6 +124,7 @@ const WeekDays = ({
                                             calendarId={calendar}
                                             time={interval.time}
                                             userBookings={interval.userBookings}
+                                            open={() => handleOpenDetailsModal(interval)}
                                         />}
                                         <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: interval.time })} />
                                         <span>{changeSlash(interval?.time) ?? ""}</span>
