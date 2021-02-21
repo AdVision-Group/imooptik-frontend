@@ -67,6 +67,10 @@ const WeekDays = ({
         setShowBookingDetails(true)
     }
 
+    const handleCancelUserBooking = (userBookingId) => {
+        cancelUserBooking(userBookingId, refetchWeekCalendar, setShowBookingDetails)
+    }
+
     useEffect(() => {
         if (isLoading) return
 
@@ -86,7 +90,7 @@ const WeekDays = ({
 
     return (
         <div>
-            {showBookingDetails && <UserbookingDetailsModal cancelUserBooking={cancelUserBooking} calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
+            {showBookingDetails && <UserbookingDetailsModal cancelUserBooking={handleCancelUserBooking} calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
             {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>

@@ -47,7 +47,7 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
-    const cancelUserBooking = async (userBookingId) => {
+    const cancelUserBooking = async (userBookingId, refetchCalendar, setShowBookingDetails) => {
         setShowModal(true)
         setIsLoading(true)
 
@@ -63,6 +63,12 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
             const data = await response.json()
 
             console.log(data)
+
+            if (data.userBooking) {
+                closeModal()
+                refetchCalendar()
+                setShowBookingDetails(false)
+            }
 
             getMessage(data.messageSK)
             setIsLoading(false)
