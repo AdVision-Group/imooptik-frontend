@@ -1,18 +1,26 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { useFetchById } from '../../hooks/useFetch'
+
+const SpanContainer = styled.span`
+    /* width: 8rem; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
 
 const OrderSummaryLensesName = ({ lensesId }) => {
     const { isLoading, response } = useFetchById('api/store/lenses', lensesId, !lensesId)
 
     return (
         <React.Fragment>
-            <span style={{ whiteSpace: "nowrap" }}>
+            <SpanContainer >
                 {isLoading ? "Hľadam..." : response?.lenses?.eanCode || ""}
-            </span>
-            <span style={{ whiteSpace: "nowrap" }}>
-                {isLoading ? "Hľadam..." : response.lenses.name.slice(0, 8).concat("...")}
-            </span>
+            </SpanContainer>
+            <SpanContainer >
+                {isLoading ? "Hľadam..." : response.lenses.name}
+            </SpanContainer>
         </React.Fragment>
     )
 }
