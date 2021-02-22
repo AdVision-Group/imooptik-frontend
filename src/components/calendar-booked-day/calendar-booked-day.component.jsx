@@ -37,7 +37,7 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
 
     return (
         <React.Fragment>
-            <BookedDayContainer onClick={open} isHalfHour={isHalfHour}>
+            <BookedDayContainer onClick={isValidDueTime ? open : () => { }} isHalfHour={isHalfHour}>
                 {isValidDueTime && <div>
                     <h4>{appointment && appointment?.booking?.name}</h4>
                     <h5>{time}</h5>
