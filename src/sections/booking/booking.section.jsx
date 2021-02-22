@@ -43,14 +43,28 @@ const BookingSection = () => {
     const { push } = useHistory()
     // const [showModal, setShowModal] = useState(true)
     const [showPremisesSection, setShowPremisesSection] = useState(true)
-    const [activeCalendarFormat, setActiveCalendarFormat] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('')
+    const [activeCalendarFormat, setActiveCalendarFormat] = useState(1)
     const [calendars, setCalendars] = useState([])
     const [selectedCalendar, setSelectedCalendar] = useState(null)
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
     const [calendarWeekIndex, setCalendarWeekIndex] = useState(0)
     const [selectedDay, setSelectedDay] = useState(null)
+
+    const [showUserBooking, setShowUserBooking] = useState(false)
+
+
+    const handleOpenUserBookingModal = (dayData) => {
+        console.log("dayData")
+        console.log("dayData")
+        console.log(dayData)
+        if (dayData !== null) {
+            setSelectedDay({
+                ...dayData,
+            })
+        }
+        setShowUserBooking(true)
+    }
 
     const { isLoading, response } = useFetch('api/booking/calendars')
 
@@ -122,6 +136,8 @@ const BookingSection = () => {
             if (response) {
                 if (isAdmin) {
                     setCalendars(response.calendars)
+                    const userCalendar = response.calendars.find(calendar => calendar.premises === currentUser.premises)
+                    handleShowCalendarClick(userCalendar._id)
                     setShowModal(false)
                 } else {
                     setCalendars(response.calendars.filter(calendar => calendar.premises === currentUser.premises))
@@ -140,7 +156,6 @@ const BookingSection = () => {
             setShowModal(true)
             setShowPremisesSection(true)
             setActiveCalendarFormat(0)
-            setSearchQuery('')
             setCalendars([])
             setSelectedCalendar(null)
             setSelectedMonth(new Date().getMonth())
@@ -152,16 +167,31 @@ const BookingSection = () => {
 
     console.log(calendars)
     console.log(selectedCalendar)
+    console.log(showUserBooking)
 
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}
-            {isAdmin && <SectionHeader
-                searchQuery={searchQuery}
-                handleChange={e => setSearchQuery(e.target.value)}
-                handleAddButton={() => push('rezervacie/novy-kalendar')}
-                title="Rezervácie"
-            />}
+            {isAdmin && <Header>
+                <div>
+                    <h1>Rezervácie</h1>
+                </div>
+                <div>
+                    <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
+                    <UpdateButton onClick={() => push('rezervacie/novy-kalendar')}>Pridať kalendár</UpdateButton>
+                </div>
+            </Header>}
+
+            {(!isOptometrist && !isAdmin) && (
+                <Header>
+                    <div>
+                        <h1>Rezervácie</h1>
+                    </div>
+                    <div>
+                        <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
+                    </div>
+                </Header>
+            )}
 
             {(isOptometrist && !isAdmin) && (
                 <Header>
@@ -169,6 +199,7 @@ const BookingSection = () => {
                         <h1>Rezervácie</h1>
                     </div>
                     <div>
+                        <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
                         <UpdateButton onClick={() => push(`rezervacie/${selectedCalendar}`)}>Upraviť kalendár</UpdateButton>
                     </div>
                 </Header>
@@ -250,6 +281,10 @@ const BookingSection = () => {
                                             year={selectedYear}
                                             weekIndex={calendarWeekIndex}
                                             handleCalendarBlockClick={handleCalendarBlockClick}
+                                            showUserBooking={showUserBooking}
+                                            setShowUserBooking={setShowUserBooking}
+                                            handleOpenUserBookingModal={handleOpenUserBookingModal}
+                                            selectedDay={selectedDay}
                                         />
 
                                     </WeekCalendarProvider>
@@ -260,11 +295,11 @@ const BookingSection = () => {
                     </React.Fragment>
                 )}
 
-                {selectedDay && (
+                {/* {selectedDay && (
                     <BookingAppoinments
                         day={selectedDay}
                     />
-                )}
+                )} */}
             </ScrollContainer>
         </section>
     )

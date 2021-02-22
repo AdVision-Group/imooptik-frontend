@@ -15,6 +15,7 @@ export const Header = styled.div`
 export const UpdateButton = styled(CustomButton)`
     background-color: var(--primary-color);
     font-weight: bolder;
+    margin-left: 2rem;
 `
 
 export const Title = styled.h2`

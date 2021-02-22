@@ -38,8 +38,10 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
         min: 0
     })
 
-    const startTime = formatCalendarStartTime(calendar, day)
-    const endTime = formatCalendarEndTime(calendar, day)
+    const [startTime, setStartTime] = useState(null)
+    const [endTime, setEndTime] = useState(null)
+
+
 
     const { refetch, response } = useFetchByQuery('api/admin/users/filter', query, !query)
 
@@ -116,6 +118,8 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             console.log("DAY DATA")
             console.log(day)
 
+            setStartTime(formatCalendarStartTime(calendar, day))
+            setEndTime(formatCalendarEndTime(calendar, day))
             // const formatedDate = formatDate(`${dayNumber}-${month}-${year}`, time)
             setBookingDate({
                 date: `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${dayNumber < 10 ? `0${dayNumber}` : dayNumber}`,

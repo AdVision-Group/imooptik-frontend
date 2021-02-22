@@ -34,7 +34,10 @@ const WeekDays = ({
     year,
     month,
     weekIndex,
-    handleCalendarBlockClick
+    showUserBooking,
+    setShowUserBooking,
+    handleOpenUserBookingModal,
+    selectedDay
 }) => {
     const { getDayData, refetchWeekCalendar, cancelUserBooking } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
@@ -47,20 +50,12 @@ const WeekDays = ({
     const nextDays = 7 - lastDayIndex
 
     const [calendarDays, setCalendarDays] = useState([])
-    const [selectedDay, setSelectedDay] = useState(null)
-    const [showUserBooking, setShowUserBooking] = useState(false)
+    // const [selectedDay, setSelectedDay] = useState(null)
     const [showBookingDetails, setShowBookingDetails] = useState(false)
 
     const [selectedUserBooking, setSelectedUserBooking] = useState(null)
 
-    const handleOpenUserBookingModal = (dayData) => {
-        setSelectedDay({
-            ...dayData,
-            year,
-            month,
-        })
-        setShowUserBooking(true)
-    }
+
 
     const handleOpenDetailsModal = (userBooking) => {
         setSelectedUserBooking(userBooking)
@@ -130,7 +125,10 @@ const WeekDays = ({
                                             userBookings={interval.userBookings}
                                             open={() => handleOpenDetailsModal(interval)}
                                         />}
-                                        <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: interval.time })} />
+                                        <EmptyContainer onClick={() => handleOpenUserBookingModal({
+                                            ...dayData, time: interval.time, year,
+                                            month,
+                                        })} />
                                         <span>{changeSlash(interval?.time) ?? ""}</span>
                                     </HourBlockContainer>
                                 ))}
