@@ -31,10 +31,7 @@ const OrderSection = () => {
     const { userId, orderId } = useParams()
 
     const [hasChanged, setHasChanged] = useState(false)
-    const [showCombinedProductModal, setShowCombinedProductModal] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
-
-    const [combinedProducts, setCombinedProducts] = useState([])
 
     const handleOrderChange = valueToAdd => {
         setHasChanged(true)
@@ -87,10 +84,9 @@ const OrderSection = () => {
                     user: orderData.response.order.orderedBy,
                     combinedProducts: orderData.response.order.combinedProducts
                 })
-                setCombinedProducts(orderData.response.order.combinedProducts)
             }
         } else if (userId !== 'nova-objednavka' && orderId === undefined) {
-            changeStep('findProduct')
+            changeStep('select-product')
             if (userData.response) {
                 addUser(userData.response.user)
             }
@@ -99,13 +95,7 @@ const OrderSection = () => {
     }, [userId, orderId, userData.response, orderData.response])
 
     useEffect(() => {
-        console.log("UPDATE USER USEEFECT")
-        console.log(userData.isLoading)
-        console.log("UPDATE USER USEEFECT")
         if (userData.isLoading) return
-        console.log("GET UPDATED USER")
-        console.log("GET UPDATED USER")
-        console.log("GET UPDATED USER")
         addUser(userData.response.user)
 
     }, [userData.isLoading])
@@ -115,8 +105,6 @@ const OrderSection = () => {
             changeStep('select-user')
             resetOrder({})
             setHasChanged(false)
-            setShowCombinedProductModal(false)
-            setCombinedProducts([])
             setIsUpdating(false)
         }
     }, [])

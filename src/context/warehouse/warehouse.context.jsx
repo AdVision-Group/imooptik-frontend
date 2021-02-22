@@ -200,7 +200,7 @@ const WarehouseProvider = ({ children }) => {
             ...initGlassesObj,
             specs: {
                 ...initGlassesObj.specs,
-                size: [1001, 1001, 1001]
+                size: [1001, 1001, 1001, 1001]
             }
         })
     }
@@ -345,7 +345,7 @@ const WarehouseProvider = ({ children }) => {
                         colorCode: data.product.colorCode ?? "",
                         specs: {
                             ...data.product.specs,
-                            size: [...Array(3)].map((value, idx) => data.product.specs.size[idx] ? data.product.specs.size[idx] : 0)
+                            size: [...Array(4)].map((value, idx) => data.product.specs.size[idx] ? data.product.specs.size[idx] : 0)
                         }
                     })
                 }

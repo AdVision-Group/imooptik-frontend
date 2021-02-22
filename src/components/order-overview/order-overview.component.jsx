@@ -41,9 +41,8 @@ const OrderOverview = ({ order, refetch }) => {
     }
 
     const handleFinishOrder = (id) => {
-        finishOrder(id)
+        finishOrder(id, refetch)
         setShowDropdownMenu(false)
-        refetch()
     }
     return (
         <OrderOverviewRow>

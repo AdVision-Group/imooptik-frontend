@@ -7,9 +7,7 @@ import {
 import CustomInput from '../custom-input/custom-input.component'
 
 import {
-    CloseButton,
     Modal,
-    ModalContainer,
     AddButton,
     CustomSelect,
     OptionsCheckbox,
@@ -18,7 +16,6 @@ import {
 } from './modal-finish-order.styles'
 
 const FinishOrderModal = ({
-    close,
     order,
     combinedProducts,
     createOrder,

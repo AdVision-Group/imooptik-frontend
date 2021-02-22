@@ -18,7 +18,9 @@ export const OrderContext = createContext({
     resetOrder: () => { },
     changeStep: () => { },
     selectProduct: () => { },
-    createCombinedProducts: () => { }
+    createCombinedProducts: () => { },
+    incrementQuantity: () => { },
+    decrementQuantity: () => { },
 })
 
 const OrderProvider = ({ children }) => {
@@ -123,12 +125,14 @@ const OrderProvider = ({ children }) => {
     }
 
     const addLenses = (lensesObj) => {
+        if (lensesObj === null && selectedProduct === null) return
         if (selectedProduct !== null) {
             const newCart = cart.map((item, idx) => {
                 if (idx === selectedProduct) {
                     return ({
                         ...item,
-                        lens: lensesObj
+                        lens: lensesObj,
+                        lensesQuant: 1
                     })
                 } else {
                     return item
@@ -144,11 +148,42 @@ const OrderProvider = ({ children }) => {
                         isPseudo: true
                     },
                     lens: lensesObj,
+                    lensesQuant: 1
                 }
             ])
         }
 
         setSelectedProduct(null)
+    }
+
+    const incrementQuantity = (prevValue, idx) => {
+        const newCart = cart.map((item, index) => {
+            if (idx === index) {
+                return ({
+                    ...item,
+                    lensesQuant: prevValue + 1
+                })
+            } else {
+                return item
+            }
+        })
+        setCart(newCart)
+    }
+
+
+    const decrementQuantity = (prevValue, idx) => {
+        if (prevValue === 1) return
+        const newCart = cart.map((item, index) => {
+            if (idx === index) {
+                return ({
+                    ...item,
+                    lensesQuant: prevValue - 1
+                })
+            } else {
+                return item
+            }
+        })
+        setCart(newCart)
     }
 
 
@@ -207,7 +242,7 @@ const OrderProvider = ({ children }) => {
             product: item.product.isPseudo ? "pseudo" : item.product._id,
             ...(item.discount) && { discount: { ...item.discount } },
             ...(item.lens) && { lens: item.lens._id },
-            ...(item.lens) && { lensesQuant: 1 },
+            ...(item.lensesQuant) && { lensesQuant: item.lensesQuant },
             // ...(item.lens && order.user) && { lenses: order.user.lenses },
             ...(item.lenses) && { contactLenses: item.lenses }
         }))
@@ -273,6 +308,8 @@ const OrderProvider = ({ children }) => {
                 changeStep,
                 selectProduct,
                 createCombinedProducts,
+                incrementQuantity,
+                decrementQuantity,
             }}
         >
             {children}

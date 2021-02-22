@@ -8,10 +8,11 @@ import CartLensesRow from '../../../../components/order-cart-lenses-row/order-ca
 import CustomInput from '../../../../components/custom-input/custom-input.component'
 
 import {
-    LensesContainer,
+    LensesTableContainer,
+    LensesTableHead,
+    LensesTableRow,
     LensesImg,
     SelectLensesContainer,
-    LensesFlexContainer,
     CartContainer,
     CartParagraph,
     CartTable,
@@ -21,21 +22,25 @@ import {
     ButtonOptions,
     HeaderContainer,
     SearchButton,
-    SearchContainer
+    SearchContainer,
+    HeadingContainer,
+    UnselectButton
 } from './select-lenses.styles'
 
 const SelectLensesComponent = ({ back, next }) => {
     const {
         cart,
         addLenses,
-        createCombinedProducts
+        createCombinedProducts,
+        selectedProduct,
+        selectProduct
     } = useContext(OrderContext)
 
     const [searchQuery, setSearchQuery] = useState("")
 
     const [lensesItems, setLensesItems] = useState([])
     const [query, setQuery] = useState({
-        limit: 10,
+        limit: 9,
         skip: 0
     })
     const { response, isLoading, refetch } = useFetchByQuery("api/admin/lenses/filter", query)
@@ -44,7 +49,7 @@ const SelectLensesComponent = ({ back, next }) => {
         if (searchQuery === '') return
         setQuery({
             ...query,
-            // query: searchQuery
+            query: searchQuery
         })
         refetch()
     }
@@ -53,7 +58,7 @@ const SelectLensesComponent = ({ back, next }) => {
             if (e.key === 'Enter') {
                 setQuery({
                     ...query,
-                    // query: searchQuery
+                    query: searchQuery
                 })
                 refetch()
             }
@@ -62,9 +67,12 @@ const SelectLensesComponent = ({ back, next }) => {
 
     useEffect(() => {
         if (isLoading) return
+        console.log("UPDATE LENSES")
 
         setLensesItems(response.lenses)
     }, [isLoading])
+
+    console.log(cart)
 
     return (
         <div>
@@ -83,12 +91,16 @@ const SelectLensesComponent = ({ back, next }) => {
                     <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
                 </SearchContainer>
                 <CartContainer>
-                    <h3>Vybraté položky</h3>
+                    <HeadingContainer>
+                        <h3>Vybraté položky</h3>
+                        {selectedProduct !== null && <UnselectButton onClick={() => selectProduct(null)}>Odznačiť</UnselectButton>}
+                    </HeadingContainer>
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
                         <TableCol>Šosovky</TableCol>
                         <TableCol>Cena</TableCol>
+                        <TableCol>Ks</TableCol>
                         <TableCol>Zľava v %</TableCol>
                         {/* <TableCol>Možnosti</TableCol> */}
                     </CartTableHead>
@@ -115,29 +127,47 @@ const SelectLensesComponent = ({ back, next }) => {
             </HeaderContainer>
 
             <SelectLensesContainer>
-                <h3>Výber Šošoviek</h3>
-                <LensesFlexContainer>
+                <LensesTableContainer>
+                    <LensesTableHead>
+                        <TableCol>eanKód</TableCol>
+                        <TableCol>Obrázok</TableCol>
+                        <TableCol>Názov</TableCol>
+                        <TableCol>Dioptrie</TableCol>
+                        <TableCol>Cylinder</TableCol>
+                        <TableCol>Cena</TableCol>
+                    </LensesTableHead>
+
                     {lensesItems.map((lenses, idx) => (
-                        <LensesContainer key={idx} onClick={() => addLenses(lenses)}>
-                            <h4>{lenses.name}</h4>
+                        <LensesTableRow key={idx} onClick={() => addLenses(lenses)}>
+                            <TableCol>{lenses.eanCode}</TableCol>
+                            <TableCol>
+                                <LensesImg>
+                                    {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
+                                </LensesImg>
+                            </TableCol>
+                            <TableCol>{lenses.name}</TableCol>
+                            <TableCol>
+                                {lenses.dioptersRange && <p>{`od ${lenses.dioptersRange[0]} do ${lenses.dioptersRange[1]}`}</p>}
+                            </TableCol>
+                            <TableCol>
+                                {lenses.cylinderRange && <p>{`od ${lenses.cylinderRange[0]} do ${lenses.cylinderRange[1]}`}</p>}
+                            </TableCol>
+                            <TableCol>{(lenses.price / 100).toFixed(2)}€</TableCol>
+                        </LensesTableRow>
+                    ))}
+                    <LensesTableRow onClick={() => addLenses(null)}>
+                        <TableCol>-</TableCol>
+                        <TableCol>
                             <LensesImg>
                                 {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
                             </LensesImg>
-                            <p>{lenses.description}</p>
-                            {lenses.dioptersRange && <p>{`Dioptrie od ${lenses.dioptersRange[0]} do ${lenses.dioptersRange[1]}`}</p>}
-                            {lenses.cylinderRange && <p>{`Cylinder  od ${lenses.cylinderRange[0]} do ${lenses.cylinderRange[1]}`}</p>}
-                            <h5>{(lenses.price / 100).toFixed(2)}€</h5>
-                        </LensesContainer>
-                    ))}
-                    <LensesContainer onClick={() => addLenses(null)}>
-                        <h4>Žiadné sklá</h4>
-                        <LensesImg>
-                            {/* <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${lenses.image.imagePath}`} alt={lenses.image.alt} /> */}
-                        </LensesImg>
-                        <h5>0€</h5>
-
-                    </LensesContainer>
-                </LensesFlexContainer>
+                        </TableCol>
+                        <TableCol>Žiadné sklá</TableCol>
+                        <TableCol>-</TableCol>
+                        <TableCol>-</TableCol>
+                        <TableCol>0€</TableCol>
+                    </LensesTableRow>
+                </LensesTableContainer>
             </SelectLensesContainer>
         </div >
     )

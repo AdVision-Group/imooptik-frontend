@@ -20,11 +20,30 @@ export const TableCol = styled.div`
     }
 `
 
+
+export const QuantityContainer = styled.div`
+    display: flex;
+    align-items: center;
+
+    button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+        color: var(--primary-color);
+    }
+
+    p {
+        font-size: 1.6rem;
+    }
+`
+
 export const CartTableRow = styled.div`
     cursor: pointer;
     display:grid; 
     align-items: center;
-    grid-template-columns: 5rem 2fr 2fr 2fr 2fr;
+    grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr;
     background-color: var(--background-primary-color);
     /* border: .05rem solid var(--secondary-text-color); */
 

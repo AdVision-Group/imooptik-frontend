@@ -44,68 +44,55 @@ export const SelectLensesContainer = styled.div`
         margin-bottom: 3rem;
     }
 `
-export const LensesFlexContainer = styled.div`
-    display: flex;
+export const LensesTableContainer = styled.div`
+    /* display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 2rem; */
 `
 
-export const LensesContainer = styled.div`
+export const LensesTableHead = styled.div`
+    display: grid;
+    align-items: center;
+    grid-template-columns: 10rem 1fr 2fr 1fr 1fr 10rem;
+    border-bottom: 1px solid var(--secondary-text-color);
+    font-weight: bolder;
+`
+
+export const LensesTableRow = styled.div`
     cursor: pointer;
-    width: 100%;
-    max-width: 32rem;
-    padding: 2rem;
-    border-radius: .5rem;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 10rem 1fr 2fr 1fr 1fr 10rem;
+
+    margin-bottom: 1rem;
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
-    text-align: center;
-    transition: transform .3s ease-out,
-                box-shadow .3s ease-out;
 
-    &:last-child {
-        display:flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    h4 {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem
-    }
+    transition: all .3s ease-out;
 
     img {
         /* background-color:#000; */
-        width: 15rem;
-        height: 15rem;
+        width: 5rem;
+        height: 5rem;
         margin-bottom: 1rem; 
         object-fit: contain;
         object-position: center;
     }
 
-    p {
-        opacity: .65;
-        &:not(:last-child){
-            margin-bottom: .5rem;
-        }
-    }
-
-    h5 {
-        font-size: 2.5rem;
-    }
-
     &:hover {
-        transform: scale(1.03);
-        box-shadow: var(--container-shadow);
+        background-color: var(--primary-color); 
+        font-weight: bolder;
+        color: var(--button-font-color);
     }
 `
 
 export const LensesImg = styled.div`
     background-color: var(--background-primary-color);
     border-radius: 50%;
-    width: 10rem;
-    height: 10rem;
+    width: 5rem;
+    height: 5rem;
     margin: 0 auto;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
 `
 
 export const CartContainer = styled.div`
@@ -113,11 +100,23 @@ export const CartContainer = styled.div`
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
 
-    h3 {
-        padding: 2rem;
-        font-size: 2.5rem;
 
+`
+
+export const HeadingContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+
+    h3 {
+        font-size: 2.5rem;
     }
+`
+
+export const UnselectButton = styled(CustomButton)`
+    font-size: 1.2rem;
+    background-color: var(--primary-color);
+    font-weight: bolder;
 `
 
 export const CartTable = styled.div`
@@ -155,7 +154,7 @@ export const TableCol = styled.div`
 
 export const CartTableHead = styled.div`
     display:grid; 
-    grid-template-columns: 5rem 2fr 2fr 2fr 2fr;
+    grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr;
     background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
     margin: 2rem;

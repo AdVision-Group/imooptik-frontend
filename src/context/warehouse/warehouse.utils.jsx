@@ -21,7 +21,7 @@ export const initGlassesObj = {
         frameStyle: "",
         lensColor: "",
         sex: "M",
-        size: [1001, 1001, 1001],
+        size: [1001, 1001, 1001, 1001],
     }
 }
 

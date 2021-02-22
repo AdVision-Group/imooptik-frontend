@@ -37,7 +37,7 @@ export const TableCol = styled.div`
 export const SummaryTableHead = styled.div`
     display: grid;
     align-content: center;
-    grid-template-columns: 5rem 2fr 8rem 8rem 2fr 8rem 8rem 10rem 10rem;
+    grid-template-columns: 5rem 2fr 8rem 8rem 2fr 8rem 8rem 5rem 10rem 10rem;
     font-weight: bolder;
     border-bottom: 1px solid var(--secondary-text-color);
     font-size: 1.2rem;
@@ -57,7 +57,7 @@ export const SummaryTableHead = styled.div`
 export const SummaryTableRow = styled.div`
     display: grid;
     align-content: center;
-    grid-template-columns: 5rem 2fr 8rem 8rem 2fr 8rem 8rem 10rem 10rem;
+    grid-template-columns: 5rem 2fr 8rem 8rem 2fr 8rem 8rem 5rem 10rem 10rem;
     /* box-shadow: 0 0 1.5rem 0 rgba(0,0,0, 0.08); */
     /* margin-bottom: 1rem; */
     font-size: 1.2rem;

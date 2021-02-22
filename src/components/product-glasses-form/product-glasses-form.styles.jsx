@@ -50,7 +50,7 @@ export const GlassesParameterContainer = styled.div`
     margin-bottom: 3rem;
 
     h4 {
-        margin-top: 1rem;
+        margin-top: 2rem;
     }
 `
 

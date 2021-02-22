@@ -164,7 +164,7 @@ const ProductGlassesForm = ({
                         {glassesParameters.specs.size.map((value, idx) => (
                             <CustomInput
                                 key={idx}
-                                label={idx === 0 ? "Šírka očnice (mm)" : idx === 1 ? "Veľkosť nosníka (mm)" : "Dĺžka stranice (mm)"}
+                                label={idx === 0 ? "Šírka očnice (mm)" : idx === 1 ? "Výška očnice (mm)" : idx === 2 ? "Veľkosť nosníka (mm)" : "Dĺžka stranice (mm)"}
                                 type='text'
                                 name='size'
                                 value={checkParameter(glassesParameters.specs.size, idx)}

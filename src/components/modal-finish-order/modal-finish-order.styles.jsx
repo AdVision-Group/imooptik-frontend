@@ -6,6 +6,9 @@ export const Modal = styled.div`
     position: relative;
     /* z-index: 999999; */
 
+    h2{ 
+        margin-top: 2rem;
+    }
     h4{ 
         margin-top: 2rem;
     }

@@ -122,12 +122,12 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
 
             <TableContainer>
                 <ProductTableHead>
-                    <TableCol>eanCode</TableCol>
+                    <TableCol>eanKód</TableCol>
                     <TableCol>Obrázok</TableCol>
                     <TableCol>Názov</TableCol>
                     <TableCol>Značka</TableCol>
                     <TableCol>Cena</TableCol>
-                    <TableCol>Dostupnosť</TableCol>
+                    <TableCol>Na sklade</TableCol>
                 </ProductTableHead>
                 {productItems.map((product, idx) => (
                     <ProductTableRow key={idx} onClick={() => isAvailable(product.available) ? addProduct(product) : showErrorMessage("Produkt nieje na sklade.")}>

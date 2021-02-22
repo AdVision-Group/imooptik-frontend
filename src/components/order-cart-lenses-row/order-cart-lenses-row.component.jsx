@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { OrderContext } from '../../context/order/order.context'
 
+import {
+    AiOutlineLeft,
+    AiOutlineRight
+} from 'react-icons/ai'
 
 import {
     CartTableRow,
@@ -8,7 +12,8 @@ import {
     // DiscountContainer,
     // IconContainer,
     // OptionsContainer,
-    TableCol
+    TableCol,
+    QuantityContainer
 } from './order-cart-lenses-row.styles'
 
 const CartLensesRow = ({ idx, item }) => {
@@ -16,27 +21,11 @@ const CartLensesRow = ({ idx, item }) => {
         selectProduct,
         selectedProduct,
         addLensesDiscount,
-        deleteProduct
+        deleteProduct,
+        incrementQuantity,
+        decrementQuantity,
     } = useContext(OrderContext)
 
-    const [productDiscount, setProductDiscount] = useState(null)
-
-    const handleDiscountChange = (e) => {
-        const { name, value } = e.target
-
-
-        if (value === '') {
-            delete productDiscount[name]
-
-            setProductDiscount(null)
-            return
-        }
-
-        setProductDiscount({
-            ...productDiscount,
-            [name]: value
-        })
-    }
 
     const handleSelectProduct = itemIdx => {
         if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return
@@ -55,6 +44,13 @@ const CartLensesRow = ({ idx, item }) => {
                         ""
                     )}
                 { }
+            </TableCol>
+            <TableCol>
+                {item?.lensesQuant && <QuantityContainer>
+                    <button onClick={() => decrementQuantity(item?.lensesQuant, idx)}><AiOutlineLeft /></button>
+                    <p>{item?.lensesQuant}</p>
+                    <button onClick={() => incrementQuantity(item?.lensesQuant, idx)}><AiOutlineRight /></button>
+                </QuantityContainer>}
             </TableCol>
             <TableCol>
                 <input

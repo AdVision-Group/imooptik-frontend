@@ -94,7 +94,14 @@ const OrdersProvider = ({ children }) => {
                 getOrders()
                 closeModal()
                 push('/dashboard/objednavky')
+
+                setTimeout(() => {
+                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.order.pdfPath}`, "_blank", "noreferrer noopener");
+                    win?.focus();
+                }, 2000)
             }
+
+            // {`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.order.pdfPath}`} target="_blank" rel="noreferrer noopener"
 
             getMessage(data.messageSK)
             setIsLoading(false)
@@ -148,7 +155,7 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
-    const finishOrder = async (orderId) => {
+    const finishOrder = async (orderId, refetch) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -165,6 +172,7 @@ const OrdersProvider = ({ children }) => {
             console.log(data)
 
             if (data.order) {
+                refetch()
                 closeModal()
                 return
             }
