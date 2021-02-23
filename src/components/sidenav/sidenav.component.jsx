@@ -21,8 +21,8 @@ const Sidenav = ({ routes, match }) => {
 
     const [isOpen, setIsOpen] = useState(false)
 
-    const [activeLink, setActiveLink] = useState(0)
-    // const [activeLink, setActiveLink] = useState(4)
+    // const [activeLink, setActiveLink] = useState(0)
+    const [activeLink, setActiveLink] = useState(4)
 
     const handleClick = (path, idx) => {
         if (isOpen) {

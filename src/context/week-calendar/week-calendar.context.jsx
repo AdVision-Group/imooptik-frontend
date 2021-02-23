@@ -4,10 +4,12 @@ import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { useFetchById } from '../../hooks/useFetch'
 import {
     getHourTime,
-    checkBookings
+    checkBookings,
+    getTimeline
 } from '../../utils/week-calendar.utils'
 
 export const WeekCalendarContext = createContext({
+    timeline: null,
     getDayData: () => { },
     refetchWeekCalendar: () => { },
     cancelUserBooking: () => { },
@@ -19,7 +21,7 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
     const { token } = useContext(AuthContext)
     const [calendarDataObj, setCalendarDataObj] = useState(null)
     const [numberOfHours, setNumberOfHours] = useState(0)
-
+    const [timeline, setTimeline] = useState(null)
 
     const getDayData = (dayNumber, dayIdx) => {
         if (!calendarDataObj) return
@@ -84,6 +86,8 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
         setCalendarDataObj(response.calendar)
         if (response.calendar.interval === 30) setNumberOfHours(48)
         if (response.calendar.interval === 60) setNumberOfHours(24)
+        const timelineArr = getTimeline(response.calendar.startTimes, response.calendar.endTimes, response.calendar.interval)
+        setTimeline(timelineArr)
     }, [isLoading])
 
     useEffect(() => {
@@ -95,6 +99,7 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
     return (
         <WeekCalendarContext.Provider
             value={{
+                timeline,
                 getDayData,
                 refetchWeekCalendar: refetch,
                 cancelUserBooking

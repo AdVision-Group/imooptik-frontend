@@ -5,7 +5,7 @@ export const initProductObj = {
     type: 0,
     brand: "",
     soldAmount: 0,
-    available: [1001, 1001, 1001, 1001, 0],
+    available: [0, 1001, 1001, 1001, 1001],
     eanCode: "",
     image: "",
     eshop: true,
@@ -236,7 +236,7 @@ export const formatAvailable = (available, activePremisesTab) => {
         if (activePremisesTab === 0) {
             return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} kusov`
         } else {
-            return `Na sklade ${available[activePremisesTab - 1]} kusov`
+            return `Na sklade ${available[activePremisesTab]} kusov`
         }
     }
 }

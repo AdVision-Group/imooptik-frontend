@@ -55,3 +55,23 @@ export const checkBookings = (calendarDataObj, idx, day, month, year) => {
         dueDate: `${bookingTime}:${bookedDate}`
     }) : null
 }
+
+export const getTimeline = (startTimes, endTimes, interval) => {
+    const numberedStartTimes = startTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
+    const numberedEndTimes = endTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
+    const numberedEndMinutes = endTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[1])))
+    const startTime = Math.max(...numberedStartTimes)
+    const endTime = Math.max(...numberedEndTimes)
+    const endMinutes = Math.max(...numberedEndMinutes)
+
+    const timeline = [...Array(interval === 30 ? 48 : 24)].map((value, idx) => {
+        const time = getHourTime(idx, interval)
+        const splitedTime = time.split('/').map(value => Number(value))
+        if (startTime > splitedTime[0]) return null
+        if (endTime < splitedTime[0]) return null
+        if (endTime === splitedTime[0] && !(endMinutes === splitedTime[1]) && splitedTime[1] === 30) return null
+        return time
+    }).filter(time => time !== null)
+
+    return timeline
+}

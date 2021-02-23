@@ -1,5 +1,9 @@
 import styled from 'styled-components'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
+export const BrandedCheckbox = styled(CustomCheckbox)`
+    margin-top: 2rem;
+`
 
 export const ImageContainer = styled.div`
     margin-top: 2rem;

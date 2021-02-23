@@ -5,14 +5,16 @@ export const Container = styled.div`
 `
 
 export const HourGrid = styled.div`
+    position: relative;
+
     overflow-y: scroll;
     /* overflow-x: auto; */
     height: 60rem;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 6rem repeat(7, 1fr);
     /* border: var(--table-border); */
     min-width: 55rem;
-    padding-left: 5rem;
+    /* padding-left: 5rem; */
 
 
    ::-webkit-scrollbar {
@@ -37,12 +39,13 @@ export const HourGrid = styled.div`
 
 export const TableHead = styled.div`
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 6rem repeat(7, 1fr);
+
     background-color: var(--color-black);
 
     /* border: var(--table-border); */
     min-width: 55rem;
-    padding-left: 5rem;
+    /* padding-left: 5rem; */
     padding-right: 1rem;
 
 `
@@ -70,26 +73,25 @@ export const HeaderBlock = styled.div`
 
 export const HourBlock = styled.div`
     background-color: var(--body-background-primary-color);
-    /* border: var(--table-border); */
- 
-    
 
-    &:nth-child(1) {
-        div {
-            span {
-                width: 6rem;
-                display: block;
-                opacity: .6;
-                position: absolute;
-                top: 0rem;
-                left: -5.8rem;
-                font-size: 1.4rem;
-                padding: .5rem 1rem .5rem .2rem;
-                border-radius: 9999rem;
-                text-align: end;
-                letter-spacing: .05rem;
-            }
-        }
+`
+
+export const HourTime = styled.div`
+    display: block;
+    /* position: relative; */
+    p {
+        /* width: 6rem; */
+        display: block;
+        opacity: .6;
+        /* position: absolute; */
+        top: 0rem;
+        /* left: -5.8rem; */
+        left: 0;
+        font-size: 1.4rem;
+        padding: .5rem 1rem .5rem .2rem;
+        border-radius: 9999rem;
+        text-align: end;
+        letter-spacing: .05rem;
     }
 `
 

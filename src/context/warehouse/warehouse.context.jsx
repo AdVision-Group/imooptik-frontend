@@ -172,7 +172,7 @@ const WarehouseProvider = ({ children }) => {
     const resetProduct = () => {
         setProduct({
             ...initProductObj,
-            available: [1001, 1001, 1001, 1001, 0],
+            available: [0, 1001, 1001, 1001, 1001],
         })
         setEanCode(null)
     }

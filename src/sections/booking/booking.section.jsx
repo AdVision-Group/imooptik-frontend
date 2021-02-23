@@ -118,7 +118,7 @@ const BookingSection = () => {
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
         setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
-        setSelectedDay(null)
+        // setSelectedDay(null)
     }
 
     const handleCalendarBlockClick = (dayData) => {

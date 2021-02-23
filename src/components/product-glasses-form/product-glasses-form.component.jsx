@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
@@ -12,7 +12,8 @@ import {
     GlassesContainer,
     GlassesParameterContainer,
     StockContainer,
-    CustomSelect
+    CustomSelect,
+    BrandedCheckbox
 } from './product-glasses-form.styles.jsx'
 
 const ProductGlassesForm = ({
@@ -30,7 +31,29 @@ const ProductGlassesForm = ({
     setImageModal,
     isUpdating,
 }) => {
+    const [isBranded, setIsBranded] = useState(true)
 
+    const handleIsBrandedClick = (isBrandedBool) => {
+        if (isBrandedBool) {
+            handleChange({
+                target: {
+                    name: "brand",
+                    value: "Neznačkové"
+                }
+            })
+            setIsBranded(false)
+        } else {
+            handleChange({
+                target: {
+                    name: "brand",
+                    value: ""
+                }
+            })
+
+            setIsBranded(true)
+
+        }
+    }
     console.log(product)
 
     return (
@@ -52,19 +75,29 @@ const ProductGlassesForm = ({
                     handleChange={(e) => handleChange(e)}
                 />
 
-                <CustomInput
-                    label="Značka"
-                    type='text'
-                    name='brand'
-                    value={product.brand ?? ""}
-                    handleChange={(e) => handleChange(e)}
-                    list="brands"
+                <BrandedCheckbox
+                    label={"Značkové"}
+                    isActive={isBranded}
+                    handleClick={() => handleIsBrandedClick(isBranded)}
                 />
-                <datalist id="brands">
-                    {brands.map((brand, idx) => (
-                        <option key={idx} value={brand} />
-                    ))}
-                </datalist>
+
+                {isBranded && (
+                    <React.Fragment>
+                        <CustomInput
+                            label="Značka"
+                            type='text'
+                            name='brand'
+                            value={product.brand ?? ""}
+                            handleChange={(e) => handleChange(e)}
+                            list="brands"
+                        />
+                        <datalist id="brands">
+                            {brands.map((brand, idx) => (
+                                <option key={idx} value={brand} />
+                            ))}
+                        </datalist>
+                    </React.Fragment>
+                )}
 
                 <CustomInput
                     label="Kategória"
@@ -177,7 +210,7 @@ const ProductGlassesForm = ({
                     <StockContainer>
                         <h3>Skladové zásoby</h3>
                         {product.available.map((value, idx) => {
-                            if (idx === 4) return
+                            if (idx === 0) return
                             return (
                                 <CustomInput
                                     key={idx}

@@ -76,10 +76,11 @@ export const lensesBrands = [
 
 export const retailNames = [
     "Obchodná 57, Bratislava",
+    "Obchodná 57, Bratislava",
     "Miletičova 38, Bratislava",
     "Vajnory, Bratislava",
     "Senica, OC Branč",
-    "Trnava, City Aréna"
+    // "Trnava, City Aréna"
 ]
 
 export const retailNamesTabs = [

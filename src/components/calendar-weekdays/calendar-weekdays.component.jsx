@@ -26,7 +26,8 @@ import {
     HourGrid,
     TableHead,
     HourBlockContainer,
-    EmptyContainer
+    EmptyContainer,
+    HourTime
 } from './calendar-weekdays.styles'
 
 const WeekDays = ({
@@ -39,7 +40,7 @@ const WeekDays = ({
     handleOpenUserBookingModal,
     selectedDay
 }) => {
-    const { getDayData, refetchWeekCalendar, cancelUserBooking } = useContext(WeekCalendarContext)
+    const { timeline, getDayData, refetchWeekCalendar, cancelUserBooking } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
@@ -89,6 +90,7 @@ const WeekDays = ({
             {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
+                    <HeaderBlock>{" "}</HeaderBlock>
                     {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
                         <HeaderBlock isDisabled={isDisable} key={idx}>
                             {isPrevDay ? (
@@ -112,7 +114,18 @@ const WeekDays = ({
                 </TableHead>
 
                 <HourGrid>
-                    {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
+                    <HourBlock>
+                        {timeline && timeline.map((time, idx) => (
+                            <HourBlockContainer key={idx} style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })}>
+                                <HourTime >
+                                    <p>{changeSlash(time) ?? ""}</p>
+                                </HourTime>
+                            </HourBlockContainer>
+
+                        ))}
+                    </HourBlock>
+                    {calendarDays.length > 0 && calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
+                        console.log(dayData)
                         const day = getDayData(dayData?.dayNumber, idx)
                         return (
                             <HourBlock key={idx}>
@@ -129,7 +142,6 @@ const WeekDays = ({
                                             ...dayData, time: interval.time, year,
                                             month,
                                         })} />
-                                        <span>{changeSlash(interval?.time) ?? ""}</span>
                                     </HourBlockContainer>
                                 ))}
                             </HourBlock>

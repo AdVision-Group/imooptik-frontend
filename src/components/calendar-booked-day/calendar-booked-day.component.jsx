@@ -12,13 +12,13 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
     const [isHalfHour, setIsHalfHour] = useState(false)
     const { response, isLoading } = useFetchByQuery(`api/booking/calendars/${calendarId}/dayInfo`, {
         date: dayData.bookingDate
-    }, !userBookings)
+    }, (!userBookings && !dayData))
     const [appointment, setAppointment] = useState(null)
     const [isValidDueTime, setIsValiDueTime] = useState(false)
 
     useEffect(() => {
         if (isLoading) return
-        const todayBooking = response.userBookings.find(booking => booking.dueTime === userBookings.dueDate)
+        const todayBooking = response?.userBookings?.find(booking => booking?.dueTime === userBookings?.dueDate)
 
         if (userBookings.dueDate === todayBooking?.dueTime) {
             setIsValiDueTime(true)

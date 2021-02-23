@@ -170,7 +170,7 @@ const ProductContactLensesForm = ({
                     <StockContainer>
                         <h3>Skladové zásoby</h3>
                         {product.available.map((value, idx) => {
-                            if (idx === 4) return
+                            if (idx === 0) return
                             return (
                                 <CustomInput
                                     key={idx}
