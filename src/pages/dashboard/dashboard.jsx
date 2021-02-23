@@ -203,8 +203,8 @@ const Dashboard = () => {
 
                         </Switch>
                         {/* {currentUser.admin === 0 ? <Redirect to={`${match.path}/objednavky`} /> : <Redirect to={`${match.path}/obchod`} />} */}
-                        <Redirect to={`${match.path}/zakaznici`} />
-                        {/* <Redirect to={`${match.path}/rezervacie`} /> */}
+                        {/* <Redirect to={`${match.path}/zakaznici`} /> */}
+                        <Redirect to={`${match.path}/rezervacie`} />
                     </ImageProvider>
                 </Suspense>
             </main>

@@ -69,6 +69,7 @@ const BookingSection = () => {
     const { isLoading, response } = useFetch('api/booking/calendars')
 
     const handleShowCalendarClick = (calendarId) => {
+        if (!calendarId) return
         setSelectedCalendar(calendarId)
         setShowPremisesSection(false)
         resetCalendarToDefault()
@@ -137,12 +138,12 @@ const BookingSection = () => {
                 if (isAdmin) {
                     setCalendars(response.calendars)
                     const userCalendar = response.calendars.find(calendar => calendar.premises === currentUser.premises)
-                    handleShowCalendarClick(userCalendar._id)
+                    handleShowCalendarClick(userCalendar?._id)
                     setShowModal(false)
                 } else {
                     setCalendars(response.calendars.filter(calendar => calendar.premises === currentUser.premises))
                     const userCalendar = response.calendars.find(calendar => calendar.premises === currentUser.premises)
-                    handleShowCalendarClick(userCalendar._id)
+                    handleShowCalendarClick(userCalendar?._id)
                     setShowModal(false)
                 }
                 closeModal()
@@ -187,9 +188,13 @@ const BookingSection = () => {
                     <div>
                         <h1>Rezervácie</h1>
                     </div>
-                    <div>
+                    {selectedCalendar ? <div>
                         <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
-                    </div>
+                    </div> : (
+                            <div>
+                                <p>K vašemu účtu nieje priradená prevádzka</p>
+                            </div>
+                        )}
                 </Header>
             )}
 
@@ -198,10 +203,14 @@ const BookingSection = () => {
                     <div>
                         <h1>Rezervácie</h1>
                     </div>
-                    <div>
+                    {selectedCalendar ? <div>
                         <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
                         <UpdateButton onClick={() => push(`rezervacie/${selectedCalendar}`)}>Upraviť kalendár</UpdateButton>
-                    </div>
+                    </div> : (
+                            <div>
+                                <p>K vašemu účtu nieje priradená prevádzka</p>
+                            </div>
+                        )}
                 </Header>
             )}
 
