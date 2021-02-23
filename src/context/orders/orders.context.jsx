@@ -10,6 +10,7 @@ export const OrdersContext = createContext({
     createOrder: () => { },
     updateOrder: () => { },
     finishOrder: () => { },
+    cancelOrder: () => { },
 })
 
 const OrdersProvider = ({ children }) => {
@@ -186,6 +187,41 @@ const OrdersProvider = ({ children }) => {
         }
     }
 
+    const cancelOrder = async (orderId, refetch) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/cancel`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.order) {
+                setTimeout(() => {
+                    refetch()
+                    closeModal()
+
+                }, 100)
+                return
+            }
+
+            getMessage(data.messageSK)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <OrdersContext.Provider
             value={{
@@ -193,7 +229,8 @@ const OrdersProvider = ({ children }) => {
                 getOrders,
                 createOrder,
                 updateOrder,
-                finishOrder
+                finishOrder,
+                cancelOrder,
             }}
         >
             {children}

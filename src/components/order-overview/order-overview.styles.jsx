@@ -71,7 +71,9 @@ export const DropdownMenu = styled.div`
             border-radius: 9999rem .5rem .5rem 9999rem;
             color: var(--primary-text-color);
 
-
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+            }
 
             div {
                 display: flex;

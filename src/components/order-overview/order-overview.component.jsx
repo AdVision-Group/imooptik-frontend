@@ -14,6 +14,8 @@ import {
     AiOutlineCheck
 } from 'react-icons/ai'
 
+import { BsTrash } from 'react-icons/bs'
+
 import {
     DeligateButton,
     DeligateCol,
@@ -25,7 +27,7 @@ import {
 } from './order-overview.styles'
 
 const OrderOverview = ({ order, refetch }) => {
-    const { finishOrder } = useContext(OrdersContext)
+    const { finishOrder, cancelOrder } = useContext(OrdersContext)
     const [showDropdownMenu, setShowDropdownMenu] = useState(false)
     const date = new Date(order.date)
     const dropdownRef = useRef(null)
@@ -38,12 +40,19 @@ const OrderOverview = ({ order, refetch }) => {
         if (status === 'pending') return "Čaká na vybavenie"
         if (status === 'paid') return "Zaplatené"
         if (status === 'half-paid') return "Zálohované"
+        if (status === 'cancelled') return "Zrušené"
     }
 
     const handleFinishOrder = (id) => {
         finishOrder(id, refetch)
         setShowDropdownMenu(false)
     }
+
+    const handleCancelOrder = (id) => {
+        cancelOrder(id, refetch)
+        setShowDropdownMenu(false)
+    }
+
     return (
         <OrderOverviewRow>
             <TableCol>{order.customId}</TableCol>
@@ -68,6 +77,18 @@ const OrderOverview = ({ order, refetch }) => {
                                 </div>
                                     Vybavené
                             </li>
+                            <li onClick={() => handleCancelOrder(order._id)}>
+                                <div>
+                                    <BsTrash />
+                                </div>
+                                    Odstrániť
+                            </li>
+                            {/* {order.status === "fulfilled" && <li onClick={() => handleCancelOrder(order._id)}>
+                                <div>
+                                    <BsTrash />
+                                </div>
+                                    Odstrániť
+                            </li>} */}
                         </ul>
                         <Line />
                         <ul>

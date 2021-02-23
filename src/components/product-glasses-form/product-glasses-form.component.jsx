@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
@@ -55,6 +55,10 @@ const ProductGlassesForm = ({
         }
     }
     console.log(product)
+
+    useEffect(() => {
+        if (product.brand === "Neznačkové") setIsBranded(false)
+    }, [isBranded])
 
     return (
         <GlassesContainerForm>
