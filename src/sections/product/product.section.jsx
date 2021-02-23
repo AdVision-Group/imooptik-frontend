@@ -444,7 +444,7 @@ const ProductSection = () => {
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={handleSelectImage} />}
             <Header>
                 <div>
-                    <h1>Nový Produkt</h1>
+                    <h1>{isUpdating ? "Upraviť produkt" : "Nový produkt"}</h1>
                 </div>
                 <div>
                     <IsPublicCheckbox
@@ -459,7 +459,7 @@ const ProductSection = () => {
                             }
                         })}
                     />
-                    <SubmitButton onClick={handleSubmit}>Vytvoriť</SubmitButton>
+                    <SubmitButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</SubmitButton>
                 </div>
             </Header>
 
