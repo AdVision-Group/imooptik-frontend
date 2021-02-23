@@ -28,7 +28,7 @@ const CartLensesRow = ({ idx, item }) => {
 
 
     const handleSelectProduct = itemIdx => {
-        if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return
+        if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5 || item.product.isPseudo) return
         selectProduct(itemIdx)
     }
 
