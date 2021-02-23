@@ -53,7 +53,11 @@ const OrderProvider = ({ children }) => {
     }
 
     const selectProduct = productIdx => {
-        setSelectedProduct(productIdx)
+        if (selectedProduct === productIdx) {
+            setSelectedProduct(null)
+        } else {
+            setSelectedProduct(productIdx)
+        }
     }
 
     const addProduct = (productObj) => {
@@ -118,10 +122,13 @@ const OrderProvider = ({ children }) => {
         setCart(newCart)
     }
 
-    const deleteProduct = (productObj) => {
-        console.log(productObj)
-        const newCart = cart.filter(item => item.product._id !== productObj.product._id)
+    const deleteProduct = (productIdx, handleSelectProduct) => {
+        const newCart = cart.filter((item, idx) => idx !== productIdx)
         setCart(newCart)
+        setTimeout(() => {
+            handleSelectProduct(null)
+
+        }, 100)
     }
 
     const addLenses = (lensesObj) => {

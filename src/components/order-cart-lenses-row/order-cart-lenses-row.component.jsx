@@ -32,9 +32,13 @@ const CartLensesRow = ({ idx, item }) => {
         selectProduct(itemIdx)
     }
 
+    const handleDeleteProduct = (item) => {
+        deleteProduct(item, handleSelectProduct)
+    }
+
     return (
         <CartTableRow isSelected={selectedProduct === idx} onClick={() => handleSelectProduct(idx)}>
-            <TableCol onClick={() => deleteProduct(item)} >{idx + 1}</TableCol>
+            <TableCol onClick={() => handleDeleteProduct(idx)} >{idx + 1}</TableCol>
             <TableCol>{item?.product?.name}</TableCol>
             <TableCol>{item?.lens?.name}</TableCol>
             <TableCol>
