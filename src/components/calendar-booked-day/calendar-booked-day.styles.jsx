@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const BookedDayContainer = styled.div`
     cursor: pointer;
     border: var(--appointment-container-border);
-    background-color: var(--appointment-container-background-color);
+    background-color: ${({ color }) => color ? color : "transparent"};
     color: var(--appointment-container-text-color);
     font-weight: bolder;
     width: 100%;

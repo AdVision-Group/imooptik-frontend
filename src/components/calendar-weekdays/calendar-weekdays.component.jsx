@@ -125,7 +125,6 @@ const WeekDays = ({
                         ))}
                     </HourBlock>
                     {calendarDays.length > 0 && calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
-                        console.log(dayData)
                         const day = getDayData(dayData?.dayNumber, idx)
                         return (
                             <HourBlock key={idx}>

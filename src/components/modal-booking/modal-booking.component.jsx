@@ -18,7 +18,8 @@ import {
     CloseButton,
     SubmitButton,
     InputContainer,
-    ModalHeader
+    ModalHeader,
+    CustomSelect
 } from './modal-booking.styles'
 
 const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
@@ -131,6 +132,19 @@ const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
                         value={booking?.time || ""}
                         handleChange={handleBookingChange}
                     />
+                </InputContainer>
+                <InputContainer>
+                    <CustomSelect
+                        label="Farba"
+                        type='text'
+                        name='color'
+                        value={booking?.color || ""}
+                        onChange={handleBookingChange}
+                    >
+                        <option value='DD4C4C'>Červená</option>
+                        <option value='ebac01'>Žltá</option>
+                        <option value='32AA5F'>Zelená</option>
+                    </CustomSelect>
                 </InputContainer>
                 <InputContainer>
                     <CustomTextarea

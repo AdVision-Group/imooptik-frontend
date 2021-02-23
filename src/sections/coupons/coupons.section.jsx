@@ -10,7 +10,7 @@ import Popup from '../../components/popup/pop-up.component'
 import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
-    CouponOverviewContainer,
+    // CouponOverviewContainer,
     DeleteButton,
     OpenButton,
     TableContainer,
@@ -20,7 +20,7 @@ import {
 } from './coupons.styles'
 
 const CouponsSection = () => {
-    const [searchQuery, setSearchQuery] = useState('')
+    // const [searchQuery, setSearchQuery] = useState('')
     const { push } = useHistory()
 
     const {

@@ -258,7 +258,7 @@ const nodia = "aacdeillnoorstuyzACDEILLNOSTUYZ";
 export const diaConvert = (text) => {
     let convertText = "";
     for (let i = 0; i < text.length; i++) {
-        if (dia.indexOf(text.charAt(i)) != -1) {
+        if (dia.indexOf(text.charAt(i)) !== -1) {
             convertText += nodia.charAt(dia.indexOf(text.charAt(i)));
         }
         else {

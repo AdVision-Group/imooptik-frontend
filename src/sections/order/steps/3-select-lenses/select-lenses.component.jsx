@@ -106,7 +106,7 @@ const SelectLensesComponent = ({ back, next }) => {
                     </CartTableHead>
                     <CartTable>
                         {cart.map((item, idx) => {
-                            if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return
+                            if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5) return false
                             return (
                                 <CartLensesRow
                                     key={idx}

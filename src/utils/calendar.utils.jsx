@@ -218,7 +218,7 @@ export const calendarFormat = [
 export const getMonday = (d) => {
     d = new Date(d);
     var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
     return new Date(d.setDate(diff));
 }
 
@@ -273,6 +273,7 @@ export const getBooking = (days, calendar, month, year) => {
         if (isBelongHere) {
             return booking
         }
+        return false
     })
 
     const daysWithBookingsArr = days.map(day => {

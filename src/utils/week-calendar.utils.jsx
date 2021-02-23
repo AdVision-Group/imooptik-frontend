@@ -1,5 +1,5 @@
 export const getTimefromIndex = (idx, isHalf) => {
-    if (Number(idx) === NaN) return
+    if (isNaN(idx)) return
     console.log(isHalf)
     let time = ""
     if (isHalf) {
@@ -12,7 +12,7 @@ export const getTimefromIndex = (idx, isHalf) => {
 }
 
 export const getHourTime = (idx, interval) => {
-    if (Number(idx) === NaN) return
+    if (isNaN(idx)) return
     const totalMinutes = idx * interval
 
     const hours = Math.floor(totalMinutes / 60);
@@ -42,6 +42,7 @@ export const checkBookings = (calendarDataObj, idx, day, month, year) => {
         if (splitedDate[0] === day && splitedDate[1] === month + 1 && splitedDate[2] === year) {
             return date
         }
+        return false
     })
 
     if (!bookedDate) return null

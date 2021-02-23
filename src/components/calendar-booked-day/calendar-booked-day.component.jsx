@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import stringSimilarity from "string-similarity"
 
-import Spinner from '../spinner/spinner.component'
+
+// import Spinner from '../spinner/spinner.component'
 
 import { useFetchByQuery } from '../../hooks/useFetch'
 
@@ -15,16 +17,32 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
     }, (!userBookings && !dayData))
     const [appointment, setAppointment] = useState(null)
     const [isValidDueTime, setIsValiDueTime] = useState(false)
+    const [isBelongToAnother, setIsBelongToAnother] = useState(false)
 
     useEffect(() => {
         if (isLoading) return
-        const todayBooking = response?.userBookings?.find(booking => booking?.dueTime === userBookings?.dueDate)
+        const bookingsDueTime = response?.userBookings?.filter(booking => !booking?.cancelled).map(booking => booking?.dueTime)
 
-        if (userBookings.dueDate === todayBooking?.dueTime) {
-            setIsValiDueTime(true)
+        // console.log(bookingsDueTime)
+        if (bookingsDueTime.length > 0) {
+            const matches = stringSimilarity.findBestMatch(userBookings?.dueDate, bookingsDueTime);
+            const exactBooking = response?.userBookings?.find(booking => booking?.dueTime === userBookings?.dueDate)
+            const todayBooking = response?.userBookings?.find(booking => booking?.dueTime === matches?.bestMatch?.target)
+
+            // console.log(matches)
+
+
+            // console.log(todayBooking)
+
+            if (userBookings?.dueDate === todayBooking?.dueTime) {
+                setIsValiDueTime(true)
+            } else if (matches?.bestMatch?.target === todayBooking?.dueTime) {
+                setIsBelongToAnother(true)
+            }
+
+            setAppointment(todayBooking)
+
         }
-
-        setAppointment(todayBooking)
 
     }, [isLoading])
 
@@ -37,7 +55,8 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
 
     return (
         <React.Fragment>
-            <BookedDayContainer onClick={isValidDueTime ? open : () => { }} isHalfHour={isHalfHour}>
+            <BookedDayContainer onClick={isValidDueTime ? open : () => { }} color={appointment?.booking?.color ? `#${appointment?.booking?.color}` : `#${response?.userBookings[0]?.booking?.color}`} isHalfHour={isHalfHour}>
+                {/* <BookedDayContainer onClick={() => console.log(appointment)} color={appointment?.booking?.color ? `#${appointment?.booking?.color}` : `#${response?.userBookings[0]?.booking?.color}`} isHalfHour={isHalfHour}> */}
                 {isValidDueTime && <div>
                     <h4>{appointment && appointment?.booking?.name}</h4>
                     <h5>{time}</h5>

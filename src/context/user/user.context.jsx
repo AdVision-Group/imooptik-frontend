@@ -2,10 +2,10 @@ import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
-import { OrderContext } from '../order/order.context'
+// import { OrderContext } from '../order/order.context'
 
 import {
-    fetchUsers,
+    // fetchUsers,
     fetchUser,
     patchUser,
     postAdmin,
@@ -53,7 +53,7 @@ const UserProvider = ({ children }) => {
 
     const [user, setUser] = useState(initUserObj)
     const [users, setUsers] = useState(null)
-    const [totalCount, setTotalCount] = useState(0)
+    const [totalCount] = useState(0)
 
     // ------------------------
 
@@ -148,9 +148,9 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         setUser({
             ...user,
-            name: user.fName + " " + user.lName
+            name: user?.fName + " " + user?.lName
         })
-    }, [user.fName, user.lName])
+    }, [user?.fName, user?.lName])
 
     const resetUser = () => {
         setUser(initUserObj)
