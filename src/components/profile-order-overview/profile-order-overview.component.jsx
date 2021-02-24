@@ -42,9 +42,9 @@ const ProfileOrderOverview = ({ id, handleUpdateClick }) => {
                 <UpdateButton onClick={handleUpdateClick}>
                     Zobraziť
                 </UpdateButton>
-                <DeleteButton>
+                {/* <DeleteButton>
                     Vymazať
-                </DeleteButton>
+                </DeleteButton> */}
             </Options>}
 
         </OrderContainer>

@@ -92,6 +92,8 @@ export const OrderHeader = styled.div`
 `
 
 export const OrderButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-weight: bolder;
     margin-top: .2rem;
     font-size: 1.2rem;
 `

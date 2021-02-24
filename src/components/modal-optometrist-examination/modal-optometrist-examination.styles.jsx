@@ -110,8 +110,55 @@ export const InputContainer = styled.div`
     margin-bottom: 2rem;
 `
 
-export const Table = styled.div``
+export const Table = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(7, 1fr);
+`
 
-export const TableTitleCol = styled.div``
+export const ObjectiveRefTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(4, 1fr);
+`
 
-export const Col = styled.div``
+export const SubjectiveRefTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(9, 1fr);
+`
+
+export const TableTitleCol = styled.div`
+    padding: 1rem;
+`
+
+export const TableCol = styled.div`
+
+`
+
+export const Col = styled.div`
+    text-align: center;
+    margin: 1rem;
+    height: 4rem;
+
+    input {
+        display:block;
+        width: 100%;
+        border: none;
+        padding: 1rem .5rem;
+        text-align: center;
+        font-family: inherit;
+        font-size: inherit;
+        background-color: var(--input-background-color);
+        color: var(--input-color);
+        border-radius: .5rem;
+        outline: none;
+        &:focus {
+            outline: none;
+        }
+        &:disabled {
+            opacity: .83;
+        }
+    }
+`
+
+export const TableBlock = styled.div`
+
+`

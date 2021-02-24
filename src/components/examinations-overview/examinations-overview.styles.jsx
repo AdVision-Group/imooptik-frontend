@@ -73,6 +73,8 @@ export const ExaminationOptions = styled.div`
 `
 
 export const AddButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-weight: bolder;
     font-size: 1.2rem;
 `
 

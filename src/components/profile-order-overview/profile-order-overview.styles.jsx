@@ -40,6 +40,8 @@ export const Options = styled.div`
 `
 
 export const UpdateButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-weight: bolder;
     font-size: 1.2rem;
     /* margin-left: auto; */
     display:block;
