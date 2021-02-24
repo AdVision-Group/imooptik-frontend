@@ -77,8 +77,15 @@ const BookingSection = () => {
 
     const getPrevWeek = () => {
         if (calendarWeekIndex - 1 < 0) {
-            setCalendarWeekIndex(0)
+            if (selectedMonth === 0) {
+                setSelectedYear(prevValue => prevValue - 1)
+                setSelectedMonth(11)
+                setCalendarWeekIndex(Math.ceil(new Date(selectedYear, selectedMonth, 0).getDate() / 7) - 1)
 
+            } else {
+                setSelectedMonth(prevValue => prevValue - 1)
+                setCalendarWeekIndex(Math.ceil(new Date(selectedYear, selectedMonth, 0).getDate() / 7) - 1)
+            }
         } else {
             setCalendarWeekIndex(prevValue => prevValue - 1)
         }
@@ -86,10 +93,17 @@ const BookingSection = () => {
 
     const getNextWeek = () => {
         const lastDayIndex = new Date(selectedYear, selectedMonth, 0).getDate()
-        console.log(calendarWeekIndex * 7)
-        console.log(lastDayIndex)
-        if (((calendarWeekIndex + 1) * 7) >= lastDayIndex) {
+
+        if (((calendarWeekIndex) * 7) >= lastDayIndex - 7) {
             setCalendarWeekIndex(0)
+            setSelectedMonth(prevValue => prevValue + 1)
+
+            if (selectedMonth === 11) {
+                setSelectedYear(prevValue => prevValue + 1)
+                setSelectedMonth(0)
+                setCalendarWeekIndex(0)
+
+            }
         } else {
             setCalendarWeekIndex(prevValue => prevValue + 1)
         }

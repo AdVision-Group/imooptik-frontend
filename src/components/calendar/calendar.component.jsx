@@ -64,6 +64,16 @@ const Calendar = ({
         }
     }, [isLoading])
 
+    useEffect(() => {
+        console.log("UNMOUNT WEEK CALENDAR")
+
+        return () => {
+            setPrevDays([])
+            setCurrentMonthDays([])
+            setMonthNextDays([])
+        }
+    }, [])
+
     return (
         <Container>
 

@@ -6,6 +6,7 @@ import { WeekCalendarContext } from '../../context/week-calendar/week-calendar.c
 import UserbookingDetailsModal from '../modal-userbookings-details/modal-userbookings-details.component'
 import UserBookingModal from '../modal-user-bookings/modal-user-booking.component'
 import CalendarBookedDay from '../calendar-booked-day/calendar-booked-day.component'
+import Spinner from '../spinner/spinner.component'
 
 import {
     dayNames,
@@ -83,6 +84,11 @@ const WeekDays = ({
             ])
         }
     }, [isLoading])
+
+    useEffect(() => {
+        refetch()
+    }, [month])
+
 
     return (
         <div>
