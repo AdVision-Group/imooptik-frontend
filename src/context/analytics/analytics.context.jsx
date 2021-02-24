@@ -67,6 +67,13 @@ const AnalyticsProvider = ({ children }) => {
 
             console.log(data)
 
+            if (data.name) {
+                setTimeout(() => {
+                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/excel/${data.name}`, "_blank", "noreferrer noopener");
+                    win?.focus();
+                }, 2000)
+            }
+
             getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
