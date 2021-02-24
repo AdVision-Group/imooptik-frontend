@@ -19,7 +19,7 @@ const OrderSummaryLensesName = ({ lensesId }) => {
                 {isLoading ? "Hľadam..." : response?.lenses?.eanCode || ""}
             </SpanContainer>
             <SpanContainer >
-                {isLoading ? "Hľadam..." : response.lenses.name}
+                {isLoading ? "Hľadam..." : response?.lenses?.name || ""}
             </SpanContainer>
         </React.Fragment>
     )

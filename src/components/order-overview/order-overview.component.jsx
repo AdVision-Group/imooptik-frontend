@@ -53,6 +53,8 @@ const OrderOverview = ({ order, refetch }) => {
         setShowDropdownMenu(false)
     }
 
+    const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
+
     return (
         <OrderOverviewRow>
             <TableCol>{order.customId}</TableCol>
@@ -100,7 +102,7 @@ const OrderOverview = ({ order, refetch }) => {
                                     Zobraz PDF
                                 </li>
                             </a>
-                            <Link to={`/dashboard/objednavky/${order?.orderedBy?._id}/${order._id}`}>
+                            <Link to={`/dashboard/objednavky/${orderedByID}/${order._id}`}>
                                 <li>
                                     <div>
                                         <AiOutlineFolderOpen />

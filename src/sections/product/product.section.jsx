@@ -15,6 +15,7 @@ import ProductGlassesForm from '../../components/product-glasses-form/product-gl
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 import ProductAccessoriesForm from '../../components/product-accessories-form/product-accessories-form.component'
 import ProductContactLensesForm from '../../components/product-contact-lenses-form/product-contact-lenses-form.component'
+import ProductServiceForm from '../../components/product-service-form/product-service-form.component'
 
 // import { useFetch } from '../../hooks/useFetch'
 
@@ -111,6 +112,9 @@ const ProductSection = () => {
             handleLensesChange(e)
         }
 
+        if (productObj.type === 6) {
+            handleProductChange(e)
+        }
         if (productObj.type === 5) {
             handleProductChange(e)
         }
@@ -365,7 +369,7 @@ const ProductSection = () => {
                     createLenses(newProductObj)
                 }
             }
-            if (newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
+            if (newProductObj.type === 6 || newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
                 if (!newProductObj.name || !newProductObj.price || !newProductObj.image) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
@@ -491,6 +495,16 @@ const ProductSection = () => {
                         handleChange={handleChange}
                         handleParameterChange={handleParameterChange}
                         checkParameter={checkParameter}
+                    />
+                )}
+
+                {productObj.type === 6 && (
+                    <ProductServiceForm
+                        product={product}
+                        isUpdating={isUpdating}
+                        handleChange={handleChange}
+                        selectedImage={selectedImage}
+                        setImageModal={setImageModal}
                     />
                 )}
 

@@ -29,11 +29,11 @@ const OrderSummaryProductName = ({ productId }) => {
         return (
             <React.Fragment>
                 <SpanContainer >
-                    {isLoading ? "Hľadam..." : response.product.eanCode}
+                    {isLoading ? "Hľadam..." : response?.product?.eanCode}
                 </SpanContainer>
                 {/* <span>{" - "}</span> */}
                 <SpanContainer >
-                    {isLoading ? "Hľadam..." : response.product.name}
+                    {isLoading ? "Hľadam..." : response?.product?.name || "Produkt sa nenašiel"}
                 </SpanContainer>
             </React.Fragment>
         )

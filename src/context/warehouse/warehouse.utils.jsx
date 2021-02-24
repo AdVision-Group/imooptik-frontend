@@ -73,6 +73,10 @@ export const productCategories = [
         value: 5
     },
     {
+        name: "Služby",
+        value: 6
+    },
+    {
         name: "Šošovky",
         value: 0
     },
