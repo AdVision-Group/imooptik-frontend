@@ -4,7 +4,8 @@ import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
 export const AnalyticsContext = createContext({
     stats: null,
-    getAnalytics: () => { }
+    getAnalytics: () => { },
+    generateReport: () => { },
 })
 
 const AnalyticsProvider = ({ children }) => {
@@ -18,7 +19,6 @@ const AnalyticsProvider = ({ children }) => {
     myHeaders.append("Content-Type", "application/json");
 
     const getAnalytics = async (time) => {
-        console.log(time)
         setShowModal(true)
         setIsLoading(true)
 
@@ -30,7 +30,6 @@ const AnalyticsProvider = ({ children }) => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats?timespan=${time}`, requestOptions)
-            console.log(response)
             const data = await response.json()
 
             console.log(data)
@@ -40,7 +39,35 @@ const AnalyticsProvider = ({ children }) => {
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const generateReport = async (reportParametersObj) => {
+        setShowModal(true)
+        setIsLoading(true)
+
+        const raw = JSON.stringify(reportParametersObj)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats/generateReport`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -53,7 +80,8 @@ const AnalyticsProvider = ({ children }) => {
         <AnalyticsContext.Provider
             value={{
                 stats,
-                getAnalytics
+                getAnalytics,
+                generateReport,
             }}
         >
             {children}

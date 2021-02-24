@@ -122,7 +122,7 @@ const AuthProvider = ({ children }) => {
             const data = await response.json()
 
             setIsLoading(false)
-            getMessage(data.message)
+            getMessage(data.messageSK)
 
         } catch (err) {
             console.log(err)
@@ -146,7 +146,7 @@ const AuthProvider = ({ children }) => {
             const response = await resetPassword(email)
             const user = await response.json()
 
-            getMessage(user.message)
+            getMessage(user.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -178,7 +178,7 @@ const AuthProvider = ({ children }) => {
             const response = await setNewPassword(resetSecret, password)
             const user = await response.json()
 
-            getMessage(user.message)
+            getMessage(user.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)

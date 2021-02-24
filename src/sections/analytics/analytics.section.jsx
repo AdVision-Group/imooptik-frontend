@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/auth/auth.context'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
+import CustomInput from '../../components/custom-input/custom-input.component'
 
 import { retailNamesTabs } from '../../utils/warehouse.utils'
 import { analyticsTabItems } from '../../utils/analytics.utils'
@@ -14,7 +15,12 @@ import {
     Header,
     GridContainer,
     StatsContainer,
-    StatsGrid
+    StatsGrid,
+    ReportContainer,
+    SubmitButton,
+    TypeCheckbox,
+    TwoColContainer,
+    CheckboxContainer
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -25,13 +31,50 @@ const AnalyticsSection = () => {
         showModal
     } = useContext(LoadingModalContext)
     const { stats: storeData, isAdmin, currentUser } = useContext(AuthContext)
-    const { stats, getAnalytics } = useContext(AnalyticsContext)
+    const { stats, getAnalytics, generateReport } = useContext(AnalyticsContext)
     const premisesTabs = isAdmin ? retailNamesTabs : retailNamesTabs.filter(tab => tab.id === currentUser.premises || tab.id === 0)
 
     const [activePremiseIndex, setActivePremiseIndex] = useState(0)
     const [activeIndex, setActiveIndex] = useState(2)
 
     const [activeTabStats, setActiveTabStats] = useState(null)
+
+    const [reportObj, setReportObj] = useState({})
+    const [activeReportType, setActiveReportType] = useState(reportTypes[0].value)
+    const [activeRetailType, setActiveRetailType] = useState(retailTypes[0].value)
+
+    const handleChange = e => {
+        const { name, value } = e.target
+
+        if (value === '') {
+            delete reportObj[name]
+            setReportObj({
+                ...reportObj,
+            })
+            return
+        }
+
+        setReportObj({
+            ...reportObj,
+            [name]: value
+        })
+    }
+
+    const handleSubmitReport = () => {
+        if (!reportObj?.from && !reportObj?.to) return
+        const formatedFrom = reportObj?.from.split("-").reverse().join("/")
+        const formatedto = reportObj?.to.split("-").reverse().join("/")
+
+        generateReport({
+            type: activeReportType,
+            timespan: `${formatedFrom}:${formatedto}`,
+            filters: {
+                premises: activeRetailType
+            }
+        })
+    }
+
+    console.log(reportObj)
 
     useEffect(() => {
         getAnalytics(analyticsTabItems[activeIndex - 1].value)
@@ -113,16 +156,102 @@ const AnalyticsSection = () => {
                                     </div>
                                 </StatsContainer>
                             ) : (
-                                    <div>
+                                    <StatsContainer>
                                         <p>Žiadné štatistiky</p>
-                                    </div>
+                                    </StatsContainer>
                                 )
                         }
                     </StatsGrid>
                 )}
+
+                {isAdmin && <ReportContainer>
+                    <h2>Vytvoriť report</h2>
+                    <CheckboxContainer>
+                        <h5>Typ reportu</h5>
+                        {reportTypes.map((type, idx) => (
+                            <TypeCheckbox
+                                key={idx}
+                                label={type.name}
+                                isActive={activeReportType === type.value}
+                                handleClick={() => setActiveReportType(type.value)}
+                            />
+                        ))}
+                    </CheckboxContainer>
+
+                    <CheckboxContainer>
+                        <h5>Prevádzka</h5>
+                        {retailTypes.map((type, idx) => (
+                            <TypeCheckbox
+                                key={idx}
+                                label={type.name}
+                                isActive={activeRetailType === type.value}
+                                handleClick={() => setActiveRetailType(type.value)}
+                            />
+                        ))}
+                    </CheckboxContainer>
+
+                    <TwoColContainer>
+                        <div>
+                            <h5>Od:</h5>
+                            <CustomInput
+                                label={''}
+                                value={reportObj?.from || ""}
+                                type="date"
+                                name="from"
+                                handleChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <h5>Do:</h5>
+                            <CustomInput
+                                label={''}
+                                value={reportObj?.to || ""}
+                                type="date"
+                                name="to"
+                                handleChange={handleChange}
+                            />
+                        </div>
+                    </TwoColContainer>
+
+                    <SubmitButton onClick={handleSubmitReport}>Generovať</SubmitButton>
+                </ReportContainer>}
             </ScrollContainer>
         </section>
     )
 }
 
 export default AnalyticsSection
+
+const reportTypes = [
+    {
+        name: "Zákazníci",
+        value: "users",
+    },
+    {
+        name: "Produkty",
+        value: "products",
+    },
+    {
+        name: "Zákazky",
+        value: "orders",
+    },
+]
+
+const retailTypes = [
+    {
+        name: "Obchodná 57, Bratislava",
+        value: 1,
+    },
+    {
+        name: "Miletičova 38, Bratislava",
+        value: 2,
+    },
+    {
+        name: "Vajnory, Bratislava",
+        value: 3,
+    },
+    {
+        name: "Senica, OC Branč",
+        value: 4,
+    },
+]
