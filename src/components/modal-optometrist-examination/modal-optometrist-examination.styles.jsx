@@ -125,6 +125,32 @@ export const SubjectiveRefTable = styled.div`
     grid-template-columns: 4rem repeat(9, 1fr);
 `
 
+export const RefractTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(4, 1fr);
+`
+export const KerathTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(2, 1fr);
+`
+export const SubjectiveRefATable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(6, 1fr);
+`
+export const ContactLensesTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(8, 1fr);
+`
+export const ContactLensesTypeTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(4, 1fr);
+`
+
+export const ExamTable = styled.div`
+    display: grid;
+    grid-template-columns: 4rem repeat(5, 1fr);
+`
+
 export const TableTitleCol = styled.div`
     padding: 1rem;
 `
