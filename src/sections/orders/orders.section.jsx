@@ -23,6 +23,11 @@ import {
 } from '../../context/orders/orders.utils'
 
 import {
+    FixedContainer,
+    FlexContainer
+} from '../../global.styles'
+
+import {
     TableHead,
     OrdersTable,
     TableCol,
@@ -170,11 +175,17 @@ const OrdersSection = () => {
                 title="Objednávky"
             />
 
-            <SectionNavbar
-                items={tabItems}
-                activeIndex={activeIndex}
-                setActiveIndex={handleIndexChange}
-            />
+            <FlexContainer>
+                <FixedContainer>
+
+                    <SectionNavbar
+                        items={tabItems}
+                        activeIndex={activeIndex}
+                        setActiveIndex={handleIndexChange}
+                    />
+                </FixedContainer>
+
+            </FlexContainer>
 
             <ScrollContainer>
                 <OrdersTable>

@@ -12,6 +12,11 @@ import ModalImage from '../../components/modal-images/modal-images.component'
 import { Quill } from 'react-quill'
 
 import {
+    FixedContainer
+} from '../../global.styles'
+
+
+import {
     Header,
     GridContainer,
     PostImage,
@@ -106,18 +111,21 @@ const PostSection = () => {
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={setImage} />}
 
             <Header>
-                <div>
-                    <h1>Post</h1>
-                </div>
-                <div>
-                    <CustomCheckbox
-                        label='Draft'
-                        isActive={draft}
-                        handleClick={() => toggleDraft(prevValue => !prevValue)}
-                    />
-                    <DeleteButton>Vymazať</DeleteButton>
-                    <AddButton type='submit'>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>
-                </div>
+                <FixedContainer>
+                    <div>
+                        <h1>Post</h1>
+                    </div>
+                    <div>
+                        <CustomCheckbox
+                            label='Draft'
+                            isActive={draft}
+                            handleClick={() => toggleDraft(prevValue => !prevValue)}
+                        />
+                        <DeleteButton>Vymazať</DeleteButton>
+                        <AddButton type='submit'>{isUpdating ? "Upraviť príspevok" : "Pridať príspevok"}</AddButton>
+                    </div>
+
+                </FixedContainer>
             </Header>
 
             <ScrollContainer>

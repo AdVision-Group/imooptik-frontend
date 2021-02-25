@@ -4,9 +4,6 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
 
 export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;

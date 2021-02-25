@@ -6,8 +6,6 @@ export const Header = styled.div`
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;
-    display: flex;
-    justify-content: space-between;
     color: var(--primary-text-color);
 `
 

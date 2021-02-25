@@ -21,6 +21,10 @@ import {
 } from '../../utils/calendar.utils'
 
 import {
+    FixedContainer
+} from '../../global.styles'
+
+import {
     Header,
     CreateCalendarButton,
     Container,
@@ -173,17 +177,20 @@ const CalendarSection = () => {
         <section>
             {(showModal) && <Popup loading={isLoading} title={message} close={closeModal} />}
             <Header>
-                <div>
-                    {isUpdating ? (
-                        <h1>Kalendár: {calendar?.name}</h1>
-                    ) : (
-                            <h1>Nový kalendár</h1>
-                        )}
-                </div>
-                <div>
-                    {isUpdating && <DeleteCalendarButton onClick={() => deleteCalendar(calendar?._id)}>Vymazať</DeleteCalendarButton>}
-                    <CreateCalendarButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</CreateCalendarButton>
-                </div>
+                <FixedContainer>
+                    <div>
+                        {isUpdating ? (
+                            <h1>Kalendár: {calendar?.name}</h1>
+                        ) : (
+                                <h1>Nový kalendár</h1>
+                            )}
+                    </div>
+                    <div>
+                        {isUpdating && <DeleteCalendarButton onClick={() => deleteCalendar(calendar?._id)}>Vymazať</DeleteCalendarButton>}
+                        <CreateCalendarButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</CreateCalendarButton>
+                    </div>
+
+                </FixedContainer>
             </Header>
             <ScrollContainer>
                 <GridContainer>

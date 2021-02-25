@@ -11,6 +11,7 @@ export const ProductContainer = styled.div`
 
 
     box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
     padding: 2rem;
 
     &:not(:last-child) {

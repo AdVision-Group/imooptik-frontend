@@ -9,6 +9,7 @@ import {
     SearchButton,
     // Notification,
     AddButton,
+    FixedContainer
 } from './section-header.styles'
 
 const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count = 999, handleAddButton = () => { } }) => {
@@ -22,25 +23,28 @@ const SectionHeader = ({ searchQuery, handleSearch, handleChange, title, count =
 
     return (
         <HeaderContainer>
-            <Left>
-                <h1>{title}</h1>
-                {/* <Notification>{count}</Notification> */}
-            </Left>
-            <Right>
-                {handleSearch && <div>
-                    <CustomInput
-                        type='search'
-                        name='searchbox'
-                        value={searchQuery}
-                        handleChange={handleChange}
-                        onKeyPress={handleSearchOnEnter}
-                        label='Vyhľadať'
-                    />
-                </div>}
-                {handleSearch && <SearchButton onClick={handleSearch}>Vyhľadať</SearchButton>}
-                <AddButton onClick={handleAddButton}>Pridať</AddButton>
-            </Right>
+            <FixedContainer>
+                <Left>
+                    <h1>{title}</h1>
+                    {/* <Notification>{count}</Notification> */}
+                </Left>
+                <Right>
+                    {handleSearch && <div>
+                        <CustomInput
+                            type='search'
+                            name='searchbox'
+                            value={searchQuery}
+                            handleChange={handleChange}
+                            onKeyPress={handleSearchOnEnter}
+                            label='Vyhľadať'
+                        />
+                    </div>}
+                    {handleSearch && <SearchButton onClick={handleSearch}>Vyhľadať</SearchButton>}
+                    <AddButton onClick={handleAddButton}>Pridať</AddButton>
+                </Right>
+            </FixedContainer>
         </HeaderContainer>
+
     )
 }
 

@@ -1,10 +1,5 @@
 import styled from "styled-components"
 
-export const FlexContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding-right: 3rem;
-`
 
 export const Filterbutton = styled.button`
     cursor: pointer;

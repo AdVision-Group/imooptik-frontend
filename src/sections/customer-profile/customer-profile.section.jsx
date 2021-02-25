@@ -11,6 +11,10 @@ import NewUserForm from '../../components/new-user-form/new-user-form.component'
 import Popup from '../../components/popup/pop-up.component'
 
 import {
+    FixedContainer
+} from '../../global.styles'
+
+import {
     Header,
     DeleteProfileButton,
     // Name,
@@ -176,15 +180,18 @@ const CustomerProfile = () => {
             /> */}
             <form>
                 <Header>
-                    <h1>Profil</h1>
-                    <div>
-                        {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
-                        {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a preisť na profil</SaveButton>}
-                        {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a preisť na objednávku</SaveButton>}
-                        <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
-                            {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
-                        </SaveButton>
-                    </div>
+                    <FixedContainer>
+                        <h1>Profil</h1>
+                        <div>
+                            {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
+                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a preisť na profil</SaveButton>}
+                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a preisť na objednávku</SaveButton>}
+                            <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
+                                {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
+                            </SaveButton>
+                        </div>
+
+                    </FixedContainer>
                 </Header>
 
                 <ScrollContainer>

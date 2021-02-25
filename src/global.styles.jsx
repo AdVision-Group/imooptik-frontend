@@ -111,6 +111,7 @@ export const GlobalStyles = createGlobalStyle`
         flex-direction: column;
         height: 100vh;
         background-color: var(--background-primary-color);
+        
     }
 
     input, button {
@@ -167,4 +168,19 @@ export const SwitchButton = styled.button`
     font-size: 3rem;
     color: var(--button-font-color);
     border-radius: 50%;
+`
+
+export const FlexContainer = styled.div`
+    ${paddingStyles};    
+    /* margin-bottom: 3rem; */
+    /* max-width: 125rem; */
+`
+
+export const FixedContainer = styled.div`
+    max-width: 125rem;
+    display: flex;
+    justify-content: space-between;
+    @media all and (max-width: 600px) {
+        flex-wrap: wrap;
+    }
 `

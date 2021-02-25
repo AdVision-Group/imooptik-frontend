@@ -13,6 +13,11 @@ import { useFetchByQuery } from '../../hooks/useFetch'
 import { userTabs } from '../../utils/user.utils'
 
 import {
+    FixedContainer,
+    FlexContainer
+} from '../../global.styles'
+
+import {
     TableCol,
     TableContainer,
     TableHead,
@@ -119,16 +124,21 @@ const CustomersSection = () => {
                 title="Zákazníci"
             />
 
-            <SectionNavbar
-                items={isAdmin ? userTabs : [
-                    {
-                        id: 0,
-                        name: "Zákazníci",
-                        filter: 0,
-                    },]}
-                activeIndex={activeIndex}
-                setActiveIndex={handleActiveIndexChange}
-            />
+            <FlexContainer>
+                <FixedContainer>
+                    <SectionNavbar
+                        items={isAdmin ? userTabs : [
+                            {
+                                id: 0,
+                                name: "Zákazníci",
+                                filter: 0,
+                            },]}
+                        activeIndex={activeIndex}
+                        setActiveIndex={handleActiveIndexChange}
+                    />
+
+                </FixedContainer>
+            </FlexContainer>
 
             <ScrollContainer>
                 <TableContainer>

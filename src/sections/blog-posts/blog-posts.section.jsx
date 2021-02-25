@@ -12,6 +12,11 @@ import ListArrows from '../../components/list-arrows/list-arrows.component'
 import { useFetchByQuery } from '../../hooks/useFetch'
 
 import {
+    FixedContainer,
+    FlexContainer
+} from '../../global.styles'
+
+import {
     PostContainer,
     PostImage,
     PostContent,
@@ -142,12 +147,18 @@ const BlogPosts = () => {
                 count={postsCount}
                 title="Blog"
             />
+            <FlexContainer>
+                <FixedContainer>
 
-            <SectionNavbar
-                items={items}
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-            />
+                    <SectionNavbar
+                        items={items}
+                        activeIndex={activeIndex}
+                        setActiveIndex={setActiveIndex}
+                    />
+
+                </FixedContainer>
+
+            </FlexContainer>
 
             <ScrollContainer>
                 {posts && posts.length ? posts.map(post => (

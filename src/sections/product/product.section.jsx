@@ -23,6 +23,9 @@ import { productCategories, checkParameter, formatLink } from '../../context/war
 import { retailNames } from '../../utils/warehouse.utils'
 import { useFetch } from '../../hooks/useFetch'
 
+import {
+    FixedContainer
+} from '../../global.styles'
 
 import {
     Header,
@@ -464,24 +467,27 @@ const ProductSection = () => {
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={handleSelectImage} />}
             <Header>
-                <div>
-                    <h1>{isUpdating ? "Upraviť produkt" : "Nový produkt"}</h1>
-                </div>
-                <div>
-                    <IsPublicCheckbox
-                        label="Verejné"
-                        // value={product.ehop}
-                        name='eshop'
-                        isActive={product.eshop}
-                        handleClick={() => handleChange({
-                            target: {
-                                name: "eshop",
-                                value: !product.eshop
-                            }
-                        })}
-                    />
-                    <SubmitButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</SubmitButton>
-                </div>
+                <FixedContainer>
+
+                    <div>
+                        <h1>{isUpdating ? "Upraviť produkt" : "Nový produkt"}</h1>
+                    </div>
+                    <div>
+                        <IsPublicCheckbox
+                            label="Verejné"
+                            // value={product.ehop}
+                            name='eshop'
+                            isActive={product.eshop}
+                            handleClick={() => handleChange({
+                                target: {
+                                    name: "eshop",
+                                    value: !product.eshop
+                                }
+                            })}
+                        />
+                        <SubmitButton onClick={handleSubmit}>{isUpdating ? "Upraviť" : "Vytvoriť"}</SubmitButton>
+                    </div>
+                </FixedContainer>
             </Header>
 
             <ScrollContainer>

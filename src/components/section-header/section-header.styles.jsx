@@ -3,12 +3,18 @@ import CustomButton from '../custom-button/custom-button.component'
 import { paddingStyles } from '../../global.styles'
 
 export const HeaderContainer = styled.div`
-    display: flex;
     color: var(--primary-text-color);
-    justify-content: space-between;
     margin-bottom: 3rem;
     ${paddingStyles};    
+    /* max-width: 125rem; */
 
+
+`
+
+export const FixedContainer = styled.div`
+    max-width: 125rem;
+    display: flex;
+    justify-content: space-between;
     @media all and (max-width: 600px) {
         flex-wrap: wrap;
     }

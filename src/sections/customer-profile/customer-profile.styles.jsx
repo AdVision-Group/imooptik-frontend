@@ -4,9 +4,6 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import { paddingStyles } from '../../global.styles'
 
 export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-
     ${paddingStyles}
     padding-top: 3rem;
     padding-bottom: 3rem;

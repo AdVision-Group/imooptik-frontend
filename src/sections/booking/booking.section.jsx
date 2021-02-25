@@ -25,6 +25,10 @@ import {
 } from 'react-icons/ai'
 
 import {
+    FixedContainer,
+} from '../../global.styles'
+
+import {
     Header,
     Title,
     GridRow,
@@ -188,44 +192,54 @@ const BookingSection = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={() => setShowModal(false)} />}
+
             {isAdmin && <Header>
-                <div>
-                    <h1>Rezervácie</h1>
-                </div>
-                <div>
-                    <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
-                    <UpdateButton onClick={() => push('rezervacie/novy-kalendar')}>Pridať kalendár</UpdateButton>
-                </div>
+                <FixedContainer>
+                    <div>
+                        <h1>Rezervácie</h1>
+                    </div>
+                    <div>
+                        <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
+                        <UpdateButton onClick={() => push('rezervacie/novy-kalendar')}>Pridať kalendár</UpdateButton>
+                    </div>
+
+                </FixedContainer>
             </Header>}
 
             {(!isOptometrist && !isAdmin) && (
                 <Header>
-                    <div>
-                        <h1>Rezervácie</h1>
-                    </div>
-                    {selectedCalendar ? <div>
-                        <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
-                    </div> : (
-                            <div>
-                                <p>K vašemu účtu nieje priradená prevádzka</p>
-                            </div>
-                        )}
+                    <FixedContainer>
+                        <div>
+                            <h1>Rezervácie</h1>
+                        </div>
+                        {selectedCalendar ? <div>
+                            <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
+                        </div> : (
+                                <div>
+                                    <p>K vašemu účtu nieje priradená prevádzka</p>
+                                </div>
+                            )}
+
+                    </FixedContainer>
                 </Header>
             )}
 
             {(isOptometrist && !isAdmin) && (
                 <Header>
-                    <div>
-                        <h1>Rezervácie</h1>
-                    </div>
-                    {selectedCalendar ? <div>
-                        <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
-                        <UpdateButton onClick={() => push(`rezervacie/${selectedCalendar}`)}>Upraviť kalendár</UpdateButton>
-                    </div> : (
-                            <div>
-                                <p>K vašemu účtu nieje priradená prevádzka</p>
-                            </div>
-                        )}
+                    <FixedContainer>
+                        <div>
+                            <h1>Rezervácie</h1>
+                        </div>
+                        {selectedCalendar ? <div>
+                            <UpdateButton onClick={() => handleOpenUserBookingModal(null)}>Pridať rezerváciu</UpdateButton>
+                            <UpdateButton onClick={() => push(`rezervacie/${selectedCalendar}`)}>Upraviť kalendár</UpdateButton>
+                        </div> : (
+                                <div>
+                                    <p>K vašemu účtu nieje priradená prevádzka</p>
+                                </div>
+                            )}
+
+                    </FixedContainer>
                 </Header>
             )}
 

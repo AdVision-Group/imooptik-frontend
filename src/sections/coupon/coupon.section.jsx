@@ -9,6 +9,10 @@ import CustomInput from '../../components/custom-input/custom-input.component'
 import Popup from "../../components/popup/pop-up.component"
 
 import {
+    FixedContainer
+} from '../../global.styles'
+
+import {
     Header,
     CustomSelect,
     SubmitButton,
@@ -52,14 +56,17 @@ const CouponSection = () => {
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
 
             <Header>
-                <div>
-                    <h1>Nový kupón</h1>
-                </div>
+                <FixedContainer>
+                    <div>
+                        <h1>Nový kupón</h1>
+                    </div>
 
-                <div>
-                    {isUpdating && <DeleteButton onClick={() => deleteCoupon(couponId)}>Odstrániť</DeleteButton>}
-                    {!isUpdating && <SubmitButton onClick={() => createCoupon(coupon)}>Vytvoriť</SubmitButton>}
-                </div>
+                    <div>
+                        {isUpdating && <DeleteButton onClick={() => deleteCoupon(couponId)}>Odstrániť</DeleteButton>}
+                        {!isUpdating && <SubmitButton onClick={() => createCoupon(coupon)}>Vytvoriť</SubmitButton>}
+                    </div>
+
+                </FixedContainer>
             </Header>
             <ScrollContainer>
                 <GridRow>

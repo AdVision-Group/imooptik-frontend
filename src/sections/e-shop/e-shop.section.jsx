@@ -15,9 +15,13 @@ import EshopFilterModal from '../../components/modal-eshop-filter/modal-eshop-fi
 import ListArrows from '../../components/list-arrows/list-arrows.component'
 
 import {
-    FlexContainer,
+    FixedContainer,
+    FlexContainer
+} from '../../global.styles'
+
+import {
     Filterbutton,
-    ResetButton
+    ResetButton,
 } from './e-shop.styles'
 
 const EshopSection = () => {
@@ -136,22 +140,30 @@ const EshopSection = () => {
 
             />
 
-            <SectionNavbar
-                items={retailPremisesTabs}
-                activeIndex={activePremisesTab}
-                setActiveIndex={handleChangePremisesTab}
-            />
+            <FlexContainer>
+                <FixedContainer>
+
+                    <SectionNavbar
+                        items={retailPremisesTabs}
+                        activeIndex={activePremisesTab}
+                        setActiveIndex={handleChangePremisesTab}
+                    />
+                </FixedContainer>
+            </FlexContainer>
+
 
             <FlexContainer>
-                <SectionNavbar
-                    items={productCategoryTypeTabs}
-                    activeIndex={activeCategoryTypeTab}
-                    setActiveIndex={handleChangeCategoryTypeTab}
-                />
-                {activeCategoryTypeTab === 0 && <div>
-                    {hasFilter && <ResetButton onClick={resetFilter}>reset</ResetButton>}
-                    <Filterbutton onClick={() => setShowFilterModal(true)}>Filter</Filterbutton>
-                </div>}
+                <FixedContainer>
+                    <SectionNavbar
+                        items={productCategoryTypeTabs}
+                        activeIndex={activeCategoryTypeTab}
+                        setActiveIndex={handleChangeCategoryTypeTab}
+                    />
+                    {activeCategoryTypeTab === 0 && <div>
+                        {hasFilter && <ResetButton onClick={resetFilter}>reset</ResetButton>}
+                        <Filterbutton onClick={() => setShowFilterModal(true)}>Filter</Filterbutton>
+                    </div>}
+                </FixedContainer>
             </FlexContainer>
 
             <ScrollContainer>

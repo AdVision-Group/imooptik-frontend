@@ -12,6 +12,11 @@ import { retailNamesTabs } from '../../utils/warehouse.utils'
 import { analyticsTabItems } from '../../utils/analytics.utils'
 
 import {
+    FixedContainer,
+    FlexContainer
+} from '../../global.styles'
+
+import {
     Header,
     GridContainer,
     StatsContainer,
@@ -110,16 +115,25 @@ const AnalyticsSection = () => {
                 <h1>Analytiká</h1>
             </Header>
 
-            <SectionNavbar
-                items={premisesTabs}
-                activeIndex={activePremiseIndex}
-                setActiveIndex={setActivePremiseIndex}
-            />
-            <SectionNavbar
-                items={analyticsTabItems}
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-            />
+            <FlexContainer>
+                <FixedContainer>
+                    <SectionNavbar
+                        items={premisesTabs}
+                        activeIndex={activePremiseIndex}
+                        setActiveIndex={setActivePremiseIndex}
+                    />
+                </FixedContainer>
+            </FlexContainer>
+            <FlexContainer>
+                <FixedContainer>
+                    <SectionNavbar
+                        items={analyticsTabItems}
+                        activeIndex={activeIndex}
+                        setActiveIndex={setActiveIndex}
+                    />
+                </FixedContainer>
+            </FlexContainer>
+
 
             <ScrollContainer>
                 <GridContainer>

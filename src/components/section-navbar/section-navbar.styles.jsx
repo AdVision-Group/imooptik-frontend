@@ -5,7 +5,7 @@ import { paddingStyles } from '../../global.styles'
 
 export const NavbarContainer = styled.div`
     margin-bottom: 3rem;
-    ${paddingStyles}
+    /* ${paddingStyles} */
 
     ul {
         display: flex;
