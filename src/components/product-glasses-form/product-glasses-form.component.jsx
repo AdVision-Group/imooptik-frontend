@@ -30,8 +30,10 @@ const ProductGlassesForm = ({
     glassesParameters,
     setImageModal,
     isUpdating,
+    filters
 }) => {
     const [isBranded, setIsBranded] = useState(true)
+
 
     const handleIsBrandedClick = (isBrandedBool) => {
         if (isBrandedBool) {
@@ -55,6 +57,7 @@ const ProductGlassesForm = ({
         }
     }
     console.log(product)
+
 
     useEffect(() => {
         if (product.brand === "Neznačkové") setIsBranded(false)
@@ -96,7 +99,7 @@ const ProductGlassesForm = ({
                             list="brands"
                         />
                         <datalist id="brands">
-                            {brands.map((brand, idx) => (
+                            {filters?.brands && filters?.brands.map((brand, idx) => (
                                 <option key={idx} value={brand} />
                             ))}
                         </datalist>
@@ -109,7 +112,15 @@ const ProductGlassesForm = ({
                     name='category'
                     value={product.category ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="categories"
+
                 />
+
+                <datalist id="categories">
+                    {filters?.categories && filters?.categories.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 {isUpdating && <CustomInput
                     label="Link"

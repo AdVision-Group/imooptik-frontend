@@ -21,6 +21,8 @@ import ProductServiceForm from '../../components/product-service-form/product-se
 
 import { productCategories, checkParameter, formatLink } from '../../context/warehouse/warehouse.utils'
 import { retailNames } from '../../utils/warehouse.utils'
+import { useFetch } from '../../hooks/useFetch'
+
 
 import {
     Header,
@@ -70,6 +72,8 @@ const ProductSection = () => {
     const [productObj, setProductObj] = useState({})
 
 
+    const { response, isLoading: isLoadingFilters, refetch } = useFetch(`api/store/products/${productObj?.type}/filters`, !productObj?.type, "GET")
+    const [filters, setFilters] = useState(null)
 
     const handleChangeType = e => {
         setHasChanged(true)
@@ -385,6 +389,19 @@ const ProductSection = () => {
     }
 
     useEffect(() => {
+        if (!productObj?.type) return
+        setFilters(null)
+        refetch()
+    }, [productObj?.type])
+
+    useEffect(() => {
+        if (isLoadingFilters) return
+        if (response?.filters) {
+            setFilters(response?.filters)
+        }
+    }, [isLoadingFilters])
+
+    useEffect(() => {
         if (id === "novy-produkt") {
             if (!eanCode) {
                 getEanCode()
@@ -554,6 +571,7 @@ const ProductSection = () => {
                         handleAvailableChange={handleAvailableChange}
                         handleGlassesSpecsSizeChange={handleGlassesSpecsSizeChange}
                         handleGlassesParametersChange={handleGlassesParametersChange}
+                        filters={filters}
                     />
                 )}
 

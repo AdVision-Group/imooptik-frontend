@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useFetch = (path, skip = false) => {
+export const useFetch = (path, skip = false, method = "GET") => {
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [message, setMessage] = useState(null)
@@ -9,11 +9,19 @@ export const useFetch = (path, skip = false) => {
 
     const refetch = () => setRefetchIndex(prevRefetchIndex => prevRefetchIndex + 1)
 
+    const requestOptions = {
+        method: method,
+        // headers: myHeaders,
+        // body: raw,
+        redirect: 'follow'
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             if (skip) return
+            setIsLoading(true)
             try {
-                const res = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/${path}`)
+                const res = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/${path}`, requestOptions)
                 const data = await res.json()
 
                 setMessage(data.message)

@@ -5,6 +5,7 @@ import CustomInput from '../custom-input/custom-input.component'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 import { brands } from '../../utils/warehouse.utils'
+import { useFetch } from '../../hooks/useFetch'
 
 import {
     ModalContainer,
@@ -18,6 +19,9 @@ import {
 
 const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
     const [filter, setFilter] = useState({})
+
+    const { response, isLoading, refetch } = useFetch(`api/store/products/${filter?.filters?.type}/filters`, !filter?.filters?.type, "GET")
+    const [filters, setFilters] = useState(null)
 
     const handleChangeFilters = e => {
         const { name, value } = e.target
@@ -45,6 +49,19 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
             }
         }))
     }
+
+    useEffect(() => {
+        if (!filter?.filters?.type) return
+        setFilters(null)
+        refetch()
+    }, [filter?.filters?.type])
+
+    useEffect(() => {
+        if (isLoading) return
+        if (response?.filters) {
+            setFilters(response?.filters)
+        }
+    }, [isLoading])
 
     useEffect(() => {
         return () => {
@@ -120,7 +137,7 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
 
                         />
                         <datalist id="brands">
-                            {brands.map((brand, idx) => (
+                            {filters?.brands.length > 0 && filters.brands.map((brand, idx) => (
                                 <option key={idx} value={brand} />
                             ))}
                         </datalist>
@@ -131,8 +148,14 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                             name='category'
                             value={filter?.filters?.category || ""}
                             handleChange={handleChangeFilters}
-                        />
+                            list="categories"
 
+                        />
+                        <datalist id="categories">
+                            {filters?.categories.length > 0 && filters.categories.map((brand, idx) => (
+                                <option key={idx} value={brand} />
+                            ))}
+                        </datalist>
 
                     </div>
                     <div>
