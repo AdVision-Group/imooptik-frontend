@@ -115,6 +115,21 @@ const BlogPosts = () => {
         }
     }, [blogsData.isLoading])
 
+    useEffect(() => {
+        return () => {
+            closeModal()
+            setSearchQuery('')
+            setActiveIndex(0)
+            setPosts([])
+            setFilterQuery({
+                limit: 10,
+                sortBy: {
+                    date: -1
+                },
+            })
+        }
+    }, [])
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}

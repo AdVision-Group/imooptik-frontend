@@ -74,13 +74,9 @@ const AnalyticsSection = () => {
         })
     }
 
-    console.log(reportObj)
-
     useEffect(() => {
         getAnalytics(analyticsTabItems[activeIndex - 1].value)
     }, [activeIndex])
-
-    console.log(stats)
 
     useEffect(() => {
         if (stats) {
@@ -88,8 +84,16 @@ const AnalyticsSection = () => {
         }
     }, [stats, activePremiseIndex])
 
-    console.log("ACTIVE TAB")
-    console.log(activeTabStats)
+    useEffect(() => {
+        return () => {
+            setActivePremiseIndex(0)
+            setActiveIndex(2)
+            setActiveTabStats(null)
+            setReportObj({})
+            setActiveReportType(reportTypes[0].value)
+            setActiveRetailType(retailTypes[0].value)
+        }
+    }, [])
 
     return (
         <section>

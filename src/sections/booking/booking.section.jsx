@@ -177,6 +177,7 @@ const BookingSection = () => {
             setSelectedYear(new Date().getFullYear())
             setCalendarWeekIndex(0)
             setSelectedDay(null)
+            closeModal()
         }
     }, [])
 
