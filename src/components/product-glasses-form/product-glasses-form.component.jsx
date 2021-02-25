@@ -187,9 +187,10 @@ const ProductGlassesForm = ({
                             label="Pohlavie"
                             type='text'
                             name='sex'
-                            value={glassesParameters.specs.sex ?? ""}
+                            value={glassesParameters?.specs?.sex || ""}
                             onChange={(e) => handleSpecsChange(e)}
                         >
+                            <option value=''>-</option>
                             <option value='M'>Pánske</option>
                             <option value='W'>Dámske</option>
                             <option value='D'>Detské</option>

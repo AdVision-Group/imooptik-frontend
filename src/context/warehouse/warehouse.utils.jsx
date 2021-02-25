@@ -20,7 +20,7 @@ export const initGlassesObj = {
         frameMaterial: "",
         frameStyle: "",
         lensColor: "",
-        sex: "M",
+        sex: "",
         size: [1001, 1001, 1001, 1001],
     }
 }
@@ -237,19 +237,37 @@ export const formatAvailable = (available, activePremisesTab) => {
     if (typeof available === "number") {
         if (available < 0) {
             return <>
-                <p style={{ color: "var(--color-red)" }}>Na sklade je 0 kusov.</p>
+                <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
                 <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
             </>
         } else if (available === 0) {
-            return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 kusov.</p>
+            return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
         } else {
-            return `Na sklade je ${available} kusov.`
+            return `Na sklade je ${available} ks.`
         }
     } else {
         if (activePremisesTab === 0) {
-            return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} kusov`
+            if (available.reduce((acc, currValue) => acc + currValue) < 0) {
+                return <>
+                    <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
+                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
+                </>
+            } else if (available.reduce((acc, currValue) => acc + currValue) === 0) {
+                return <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
+            } else {
+                return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} ks`
+            }
         } else {
-            return `Na sklade je ${available[activePremisesTab]} kusov`
+            if (available[activePremisesTab] < 0) {
+                return <>
+                    <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
+                </>
+            } else if (available[activePremisesTab] === 0) {
+                return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+            } else {
+                return `Na sklade je ${available[activePremisesTab]} ks`
+            }
         }
     }
 }
