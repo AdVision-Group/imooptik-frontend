@@ -2,16 +2,16 @@
   "files": {
     "static/js/0.e8ca0d72.chunk.js": "/imooptik-frontend/static/js/0.e8ca0d72.chunk.js",
     "static/js/0.e8ca0d72.chunk.js.map": "/imooptik-frontend/static/js/0.e8ca0d72.chunk.js.map",
-    "static/js/1.22966885.chunk.js": "/imooptik-frontend/static/js/1.22966885.chunk.js",
-    "static/js/1.22966885.chunk.js.map": "/imooptik-frontend/static/js/1.22966885.chunk.js.map",
+    "static/js/1.c676ad4d.chunk.js": "/imooptik-frontend/static/js/1.c676ad4d.chunk.js",
+    "static/js/1.c676ad4d.chunk.js.map": "/imooptik-frontend/static/js/1.c676ad4d.chunk.js.map",
     "static/js/2.0a43d5aa.chunk.js": "/imooptik-frontend/static/js/2.0a43d5aa.chunk.js",
     "static/js/2.0a43d5aa.chunk.js.map": "/imooptik-frontend/static/js/2.0a43d5aa.chunk.js.map",
     "static/js/3.adbca310.chunk.js": "/imooptik-frontend/static/js/3.adbca310.chunk.js",
     "static/js/3.adbca310.chunk.js.map": "/imooptik-frontend/static/js/3.adbca310.chunk.js.map",
     "main.js": "/imooptik-frontend/static/js/main.e5381bc5.chunk.js",
     "main.js.map": "/imooptik-frontend/static/js/main.e5381bc5.chunk.js.map",
-    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.9a06a2d8.js",
-    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.9a06a2d8.js.map",
+    "runtime-main.js": "/imooptik-frontend/static/js/runtime-main.d12da1eb.js",
+    "runtime-main.js.map": "/imooptik-frontend/static/js/runtime-main.d12da1eb.js.map",
     "static/js/6.b90aecf1.chunk.js": "/imooptik-frontend/static/js/6.b90aecf1.chunk.js",
     "static/js/6.b90aecf1.chunk.js.map": "/imooptik-frontend/static/js/6.b90aecf1.chunk.js.map",
     "static/js/7.586bf56c.chunk.js": "/imooptik-frontend/static/js/7.586bf56c.chunk.js",
@@ -83,7 +83,7 @@
     "static/media/undraw_security_o890.95a3670a.svg": "/imooptik-frontend/static/media/undraw_security_o890.95a3670a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9a06a2d8.js",
+    "static/js/runtime-main.d12da1eb.js",
     "static/js/7.586bf56c.chunk.js",
     "static/js/main.e5381bc5.chunk.js"
   ]
