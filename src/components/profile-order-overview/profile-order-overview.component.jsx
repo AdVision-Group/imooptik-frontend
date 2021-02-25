@@ -14,8 +14,6 @@ import {
 const ProfileOrderOverview = ({ id, handleUpdateClick }) => {
     const orderData = useFetchById('api/admin/orders', id, !id)
 
-    console.log(orderData)
-
     if (orderData.isLoading) return <OrderContainer>
         <h3>Načítavam</h3>
     </OrderContainer>

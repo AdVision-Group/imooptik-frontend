@@ -57,6 +57,8 @@ const ExaminationsOverview = () => {
         }
     }, [examinationData.isLoading])
 
+    console.log(examinationData)
+
     return (
         <ExaminationsOverviewContainer>
             {showOptometristModal && <OptometristExaminationModal
@@ -77,101 +79,14 @@ const ExaminationsOverview = () => {
                 {examinations && examinations.map((examination, idx) => (
                     <ExaminationContainer key={idx}>
                         <ExamHead>
-                            <h3>Dátum</h3>
+                            <h3>Dátum:</h3>
                             <p>{new Date(examination?.date).toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</p>
                         </ExamHead>
-                        <ExamTableContainer>
-                            <HeadTableCol>
-                                <div>-</div>
-                                <div>PO</div>
-                                <div>ĽO</div>
-                                <div>PO</div>
-                                <div>ĽO</div>
-                            </HeadTableCol>
-                            <TableCol>
-                                <div>sph</div>
-                                {examination?.parameters?.sph.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>cyl</div>
-                                {examination?.parameters?.cyl.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>ax</div>
-                                {examination?.parameters?.ax.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>vizus D</div>
-                                {examination?.parameters?.vizusD.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>vizus bino</div>
-                                {examination?.parameters?.vizusBino.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>vizus B</div>
-                                {examination?.parameters?.vizusB.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>prizma</div>
-                                {examination?.parameters?.prizma.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>basis</div>
-                                {examination?.parameters?.basis.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>PD</div>
-                                {examination?.parameters?.pd.map((value, idx) => (
-                                    <div key={idx}>
-                                        {checkParameterValue(value)}
-                                    </div>
-                                ))}
-                            </TableCol>
-                            <TableCol>
-                                <div>ADD</div>
-                                {examination?.parameters?.add.map((value, idx) => {
-                                    if (idx > 1) return
-                                    return (
-                                        <div key={idx}>
-                                            {checkParameterValue(value)}
-                                        </div>
-                                    )
-                                })}
-                            </TableCol>
-                        </ExamTableContainer>
+                        <ExamHead>
+                            <h3>Typ vyšetrenia:</h3>
+                            <p>{examTypes[examination?.type - 1].name}</p>
+                        </ExamHead>
+
                         <ExaminationOptions>
                             <ExaminationUser userId={examination.doneBy} />
                             <div>
@@ -187,3 +102,18 @@ const ExaminationsOverview = () => {
 }
 
 export default ExaminationsOverview
+
+const examTypes = [
+    {
+        name: "Refrakcia",
+        value: 1
+    },
+    {
+        name: "Anamnéza",
+        value: 2
+    },
+    {
+        name: "Kontrola",
+        value: 3
+    },
+]
