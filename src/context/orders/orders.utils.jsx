@@ -45,5 +45,9 @@ export const tabItems = [
     {
         id: 2,
         name: "Dokončené",
+    },
+    {
+        id: 3,
+        name: "Zrušené",
     }
 ]

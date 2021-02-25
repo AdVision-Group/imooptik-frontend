@@ -71,7 +71,7 @@ const OrdersSection = () => {
                     finished: false
                 }
             })
-        } else {
+        } else if (idx === 2) {
             setFetchQueryObj({
                 limit: 10,
                 skip: 0,
@@ -80,6 +80,17 @@ const OrdersSection = () => {
                 },
                 filters: {
                     finished: true
+                }
+            })
+        } else if (idx === 3) {
+            setFetchQueryObj({
+                limit: 10,
+                skip: 0,
+                sortBy: {
+                    date: -1
+                },
+                filters: {
+                    status: "cancelled"
                 }
             })
         }

@@ -136,11 +136,17 @@ const OrderProvider = ({ children }) => {
         if (selectedProduct !== null) {
             const newCart = cart.map((item, idx) => {
                 if (idx === selectedProduct) {
-                    return ({
-                        ...item,
-                        lens: lensesObj,
-                        lensesQuant: 1
-                    })
+                    if (lensesObj === null) {
+                        delete item["lensesQuant"]
+                        delete item["lens"]
+                        return item
+                    } else {
+                        return ({
+                            ...item,
+                            lens: lensesObj,
+                            lensesQuant: 1
+                        })
+                    }
                 } else {
                     return item
                 }
