@@ -26,6 +26,7 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
         // console.log(bookingsDueTime)
         if (bookingsDueTime?.length > 0) {
             const matches = stringSimilarity.findBestMatch(userBookings?.dueDate, bookingsDueTime);
+
             const exactBooking = response?.userBookings?.find(booking => booking?.dueTime === userBookings?.dueDate)
             const todayBooking = response?.userBookings?.find(booking => booking?.dueTime === matches?.bestMatch?.target)
 
@@ -35,7 +36,7 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
                 setIsBelongToAnother(true)
             }
 
-            setAppointment(todayBooking)
+            setAppointment(exactBooking)
 
         }
 
@@ -55,7 +56,7 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
 
     return (
         <React.Fragment>
-            <BookedDayContainer onClick={isValidDueTime ? open : () => { }} color={appointment?.booking?.color ? `#${appointment?.booking?.color}` : `#444`} isHalfHour={isHalfHour}>
+            <BookedDayContainer onClick={isValidDueTime ? open : () => { }} color={appointment?.booking?.color ? `#${appointment?.booking?.color}` : `var(--appointment-container-background-color)`} isHalfHour={isHalfHour}>
                 {/* <BookedDayContainer onClick={() => console.log(appointment)} color={appointment?.booking?.color ? `#${appointment?.booking?.color}` : `#${response?.userBookings[0]?.booking?.color}`} isHalfHour={isHalfHour}> */}
                 {isValidDueTime && <div>
                     <h4>{appointment && appointment?.booking?.name}</h4>

@@ -308,6 +308,7 @@ const BookingSection = () => {
                                             setShowUserBooking={setShowUserBooking}
                                             handleOpenUserBookingModal={handleOpenUserBookingModal}
                                             selectedDay={selectedDay}
+                                            getNextWeek={getNextWeek}
                                         />
 
                                     </WeekCalendarProvider>

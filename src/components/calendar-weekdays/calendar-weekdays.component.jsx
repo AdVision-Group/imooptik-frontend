@@ -6,7 +6,6 @@ import { WeekCalendarContext } from '../../context/week-calendar/week-calendar.c
 import UserbookingDetailsModal from '../modal-userbookings-details/modal-userbookings-details.component'
 import UserBookingModal from '../modal-user-bookings/modal-user-booking.component'
 import CalendarBookedDay from '../calendar-booked-day/calendar-booked-day.component'
-import Spinner from '../spinner/spinner.component'
 
 import {
     dayNames,
@@ -14,7 +13,6 @@ import {
     getNextMonthDays,
     getCurrentMonthDays,
     getBooking,
-    checkIfHasAppoinment
 } from '../../utils/calendar.utils'
 
 import { changeSlash } from '../../utils/week-calendar.utils'
@@ -23,7 +21,6 @@ import {
     Container,
     HeaderBlock,
     HourBlock,
-    AppointmentContainer,
     HourGrid,
     TableHead,
     HourBlockContainer,
@@ -39,7 +36,7 @@ const WeekDays = ({
     showUserBooking,
     setShowUserBooking,
     handleOpenUserBookingModal,
-    selectedDay
+    selectedDay,
 }) => {
     const { timeline, getDayData, refetchWeekCalendar, cancelUserBooking } = useContext(WeekCalendarContext)
     const { createUserBooking } = useContext(BookingContext)
@@ -57,15 +54,13 @@ const WeekDays = ({
 
     const [selectedUserBooking, setSelectedUserBooking] = useState(null)
 
-
-
     const handleOpenDetailsModal = (userBooking) => {
         setSelectedUserBooking(userBooking)
         setShowBookingDetails(true)
     }
 
     const handleCancelUserBooking = (userBookingId) => {
-        cancelUserBooking(userBookingId, refetchWeekCalendar, setShowBookingDetails)
+        cancelUserBooking(userBookingId, refetch, setShowBookingDetails)
     }
 
     useEffect(() => {
@@ -82,6 +77,12 @@ const WeekDays = ({
                 ...monthDaysWithBookings,
                 ...nextMonthDays
             ])
+
+            // fillDayData([
+            //     ...prevMonthDays,
+            //     ...monthDaysWithBookings,
+            //     ...nextMonthDays
+            // ], response.calendar)
         }
     }, [isLoading])
 
@@ -92,7 +93,7 @@ const WeekDays = ({
 
     return (
         <div>
-            {showBookingDetails && <UserbookingDetailsModal cancelUserBooking={handleCancelUserBooking} calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
+            {showBookingDetails && <UserbookingDetailsModal cancelUserBooking={handleCancelUserBooking} refetchCalendar={refetch} calendarId={calendar} userBooking={selectedUserBooking} close={() => setShowBookingDetails(false)} />}
             {showUserBooking && <UserBookingModal refetchWeekCalendar={refetchWeekCalendar} createUserBooking={createUserBooking} refetchCalendar={refetch} calendar={response?.calendar} day={selectedDay} close={() => setShowUserBooking(false)} />}
             <Container>
                 <TableHead>
@@ -131,10 +132,10 @@ const WeekDays = ({
                         ))}
                     </HourBlock>
                     {calendarDays.length > 0 && calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
-                        const day = getDayData(dayData?.dayNumber, idx)
+                        const day = getDayData(dayData?.dayNumber, idx, response.calendar)
                         return (
-                            <HourBlock key={idx}>
-                                {day && day.map((interval, idx) => (
+                            < HourBlock key={idx} >
+                                { day && day.map((interval, idx) => (
                                     <HourBlockContainer style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })} key={idx}>
                                         {interval?.userBookings && <CalendarBookedDay
                                             dayData={dayData}
@@ -143,13 +144,13 @@ const WeekDays = ({
                                             userBookings={interval.userBookings}
                                             open={() => handleOpenDetailsModal(interval)}
                                         />}
-                                        <EmptyContainer onClick={() => handleOpenUserBookingModal({
+                                        <EmptyContainer onClick={dayData.isDisable ? () => { } : () => handleOpenUserBookingModal({
                                             ...dayData, time: interval.time, year,
                                             month,
                                         })} />
                                     </HourBlockContainer>
                                 ))}
-                            </HourBlock>
+                            </HourBlock >
                         )
                     })}
                 </HourGrid>
@@ -159,36 +160,3 @@ const WeekDays = ({
 }
 
 export default WeekDays
-
-
-// return <HourBlock key={idx}>
-//     {[...Array(24)].map((value, index) => {
-//         if (Number(response?.calendar?.startTimes[idx].split('/')[0]) > index) return
-//         if (Number(response?.calendar?.endTimes[idx].split('/')[0]) < index) return
-//         if (response?.calendar?.endTimes[idx] === "X") return
-//         return (
-//             <HourBlockContainer key={index}>
-//                 {dayData.bookings && checkIfHasAppoinment(index, dayData?.bookings) ? (
-//                     <React.Fragment>
-                        // <CalendarBookedDay
-                        //     dayData={dayData}
-                        //     calendarId={calendar}
-                        //     time={`${index < 10 ? `0${index}` : index}/00`}
-                        // />
-//                         <CalendarBookedDay
-//                             dayData={dayData}
-//                             calendarId={calendar}
-//                             time={`${index < 10 ? `0${index}` : index}/30`}
-//                         />
-//                         <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
-
-//                     </React.Fragment>
-//                 ) : (
-//                         <EmptyContainer onClick={() => handleOpenUserBookingModal({ ...dayData, time: `${index}:00` })} />
-//                     )}
-//                 <span>{index}:00</span>
-
-//             </HourBlockContainer>
-//         )
-//     })}
-// </HourBlock>

@@ -14,7 +14,7 @@ export const DefaultThemeColors = createGlobalStyle`
         --table-border: 1px solid rgba(0,0,0,0.1);
 
         --appointment-container-border: none;
-        --appointment-container-background-color: #ebac01;
+        --appointment-container-background-color: #eee;
         --appointment-container-text-color: #fff;
 
         --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.08);
@@ -57,7 +57,7 @@ export const DarkThemeColors = createGlobalStyle`
         --table-border: 1px solid rgba(0,0,0,0.1);
 
         --appointment-container-border: none;
-        --appointment-container-background-color: #c28e01;
+        --appointment-container-background-color: #333;
         --appointment-container-text-color: #ffffff;
 
 

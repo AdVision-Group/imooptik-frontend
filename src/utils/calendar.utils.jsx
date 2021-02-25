@@ -243,6 +243,7 @@ export const getNextMonthDays = (nextDays) => {
             isNextDay: true
         })
     }
+    // return arr.length >= 6 ? [] : arr /
     return arr
 }
 

@@ -13,36 +13,42 @@ export const WeekCalendarContext = createContext({
     getDayData: () => { },
     refetchWeekCalendar: () => { },
     cancelUserBooking: () => { },
+    fillDayData: () => { }
 })
 
-const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }) => {
+const WeekCalendarProvider = ({ children, calendar, month, year }) => {
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const { closeModal, setIsLoading, setShowModal, getMessage } = useContext(LoadingModalContext)
     const { token } = useContext(AuthContext)
-    const [calendarDataObj, setCalendarDataObj] = useState(null)
     const [numberOfHours, setNumberOfHours] = useState(0)
     const [timeline, setTimeline] = useState(null)
 
-    const getDayData = (dayNumber, dayIdx) => {
-        if (!calendarDataObj) return
-        const newDay = [...Array(numberOfHours)].map((value, idx) => {
-            const splitedStartTime = calendarDataObj.startTimes[dayIdx]?.split("/").map(value => Number(value))
-            const splitedEndTime = calendarDataObj.endTimes[dayIdx]?.split("/").map(value => Number(value))
-            const time = getHourTime(idx, calendarDataObj.interval)
+    const fillDayData = (calendarDaysArr, calendarObj) => {
+        console.log(calendarObj)
+        console.log(calendarDaysArr)
+
+    }
+
+    const getDayData = (dayNumber, dayIdx, calendar) => {
+        if (!calendar) return
+        const hourblock = [...Array(numberOfHours)].map((value, idx) => {
+            const splitedStartTime = calendar.startTimes[dayIdx]?.split("/").map(value => Number(value))
+            const splitedEndTime = calendar.endTimes[dayIdx]?.split("/").map(value => Number(value))
+            const time = getHourTime(idx, calendar.interval)
             const splitedTime = time.split('/').map(value => Number(value))
             if (splitedStartTime[0] > splitedTime[0]) return
             if (splitedEndTime[0] < splitedTime[0]) return
-            if (calendarDataObj.startTimes[dayIdx] === 'X') return
+            if (calendar.startTimes[dayIdx] === 'X') return
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 30) return
 
             return ({
                 id: idx,
                 time: time,
-                userBookings: checkBookings(calendarDataObj, idx, dayNumber, month, year)
+                userBookings: checkBookings(calendar, idx, dayNumber, month, year)
             })
-        })
+        }).filter(item => item !== undefined)
 
-        return newDay.filter(item => item !== undefined)
+        return hourblock
     }
 
     const myHeaders = new Headers();
@@ -64,12 +70,14 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/booking/userBookings/${userBookingId}/cancel`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
+            console.log(refetchCalendar)
 
             if (data.userBooking) {
                 closeModal()
-                refetchCalendar()
-                setShowBookingDetails(false)
+                setShowBookingDetails()
+                setTimeout(() => {
+                    refetchCalendar()
+                }, 200);
             }
 
             getMessage(data.messageSK)
@@ -83,18 +91,11 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
 
     useEffect(() => {
         if (isLoading) return
-        setCalendarDataObj(response.calendar)
         if (response.calendar.interval === 30) setNumberOfHours(48)
         if (response.calendar.interval === 60) setNumberOfHours(24)
         const timelineArr = getTimeline(response.calendar.startTimes, response.calendar.endTimes, response.calendar.interval)
         setTimeline(timelineArr)
     }, [isLoading])
-
-    useEffect(() => {
-        return () => {
-            setCalendarDataObj(null)
-        }
-    }, [])
 
     return (
         <WeekCalendarContext.Provider
@@ -102,7 +103,8 @@ const WeekCalendarProvider = ({ children, calendar, month, year, ...otherProps }
                 timeline,
                 getDayData,
                 refetchWeekCalendar: refetch,
-                cancelUserBooking
+                cancelUserBooking,
+                fillDayData
             }}
         >
             {children}
