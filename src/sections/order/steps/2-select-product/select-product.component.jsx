@@ -138,7 +138,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                         <TableCol>{product.name}</TableCol>
                         <TableCol>{product.brand}</TableCol>
                         <TableCol>{(product.price / 100).toFixed(2)}€</TableCol>
-                        <TableCol>{formatAvailable(product.available)}</TableCol>
+                        <TableCol>{product.type === 6 ? 'Služba' : formatAvailable(product.available)}</TableCol>
                     </ProductTableRow>
                 ))}
             </TableContainer>
