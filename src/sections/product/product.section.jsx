@@ -512,6 +512,7 @@ const ProductSection = () => {
                         handleChange={handleChange}
                         handleParameterChange={handleParameterChange}
                         checkParameter={checkParameter}
+                        filters={filters}
                     />
                 )}
 
@@ -522,6 +523,7 @@ const ProductSection = () => {
                         handleChange={handleChange}
                         selectedImage={selectedImage}
                         setImageModal={setImageModal}
+                        filters={filters}
                     />
                 )}
 
@@ -536,6 +538,7 @@ const ProductSection = () => {
                         setImageModal={setImageModal}
                         checkParameter={checkParameter}
                         handleAvailableChange={handleAvailableChange}
+                        filters={filters}
                     />
                 )}
 
@@ -553,6 +556,7 @@ const ProductSection = () => {
                         handleAddNewParameter={handleAddNewParameter}
                         handleAvailableChange={handleAvailableChange}
                         handleContactLensesChange={handleContactLensesChange}
+                        filters={filters}
                     />
                 )}
 

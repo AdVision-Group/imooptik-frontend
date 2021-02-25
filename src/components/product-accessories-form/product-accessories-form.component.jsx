@@ -20,7 +20,8 @@ const ProductAccessoriesForm = ({
     checkParameter,
     retailNames,
     currentUser,
-    isUpdating
+    isUpdating,
+    filters
 }) => {
     return (
         <AccessoriesFormContainer>
@@ -47,7 +48,14 @@ const ProductAccessoriesForm = ({
                     name='brand'
                     value={product.brand ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="brands"
                 />
+
+                <datalist id="brands">
+                    {filters?.brands && filters?.brands.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 <CustomInput
                     label="Kategória"
@@ -55,7 +63,15 @@ const ProductAccessoriesForm = ({
                     name='category'
                     value={product.category ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="categories"
+
                 />
+
+                <datalist id="categories">
+                    {filters?.categories && filters?.categories.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 {isUpdating && <CustomInput
                     label="Link"

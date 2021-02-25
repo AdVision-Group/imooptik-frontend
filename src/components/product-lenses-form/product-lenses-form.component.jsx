@@ -18,6 +18,8 @@ const ProductLensesForm = ({
     handleChange,
     handleParameterChange,
     checkParameter,
+    filters
+
 }) => {
     return (
         <LensesFormContainer>
@@ -44,7 +46,14 @@ const ProductLensesForm = ({
                     name='brand'
                     value={lenses.brand ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="brands"
                 />
+
+                <datalist id="brands">
+                    {filters?.brands && filters?.brands.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 <CustomTextarea
                     label="Popis*"

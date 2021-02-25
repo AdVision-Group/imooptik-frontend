@@ -27,7 +27,8 @@ const ProductContactLensesForm = ({
     retailNames,
     currentUser,
     handleAvailableChange,
-    isUpdating
+    isUpdating,
+    filters
 }) => {
     return (
         <ContactLensesFormContainer>
@@ -57,7 +58,7 @@ const ProductContactLensesForm = ({
                     list="brands"
                 />
                 <datalist id="brands">
-                    {lensesBrands.map((brand, idx) => (
+                    {filters?.brands && filters?.brands.map((brand, idx) => (
                         <option key={idx} value={brand} />
                     ))}
                 </datalist>
@@ -68,7 +69,14 @@ const ProductContactLensesForm = ({
                     name='category'
                     value={product.category ?? ""}
                     handleChange={(e) => handleChange(e)}
+                    list="categories"
                 />
+
+                <datalist id="categories">
+                    {filters?.categories && filters?.categories.map((brand, idx) => (
+                        <option key={idx} value={brand} />
+                    ))}
+                </datalist>
 
                 {isUpdating && <CustomInput
                     label="Link"
