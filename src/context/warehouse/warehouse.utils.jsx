@@ -237,36 +237,36 @@ export const formatAvailable = (available, activePremisesTab) => {
     if (typeof available === "number") {
         if (available < 0) {
             return <>
-                <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+                <p style={{ color: "var(--color-red)" }}>0 ks.</p>
                 <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
             </>
         } else if (available === 0) {
-            return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+            return <p style={{ color: "var(--color-red)" }}>0 ks.</p>
         } else {
-            return `Na sklade je ${available} ks.`
+            return `${available} ks.`
         }
     } else {
         if (activePremisesTab === 0) {
             if (available.reduce((acc, currValue) => acc + currValue) < 0) {
                 return <>
-                    <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
+                    <p style={{ color: "var(--color-red)" }}>Všetky: 0 ks.</p>
                     <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available[activePremisesTab])}</p>
                 </>
             } else if (available.reduce((acc, currValue) => acc + currValue) === 0) {
-                return <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
+                return <p style={{ color: "var(--color-red)" }}>Všetky: 0 ks.</p>
             } else {
-                return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} ks`
+                return `Všetky: ${available.reduce((acc, currValue) => acc + currValue)} ks`
             }
         } else {
             if (available[activePremisesTab] < 0) {
                 return <>
-                    <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+                    <p style={{ color: "var(--color-red)" }}>0 ks.</p>
                     <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available[activePremisesTab])}</p>
                 </>
             } else if (available[activePremisesTab] === 0) {
-                return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
+                return <p style={{ color: "var(--color-red)" }}>0 ks.</p>
             } else {
-                return `Na sklade je ${available[activePremisesTab]} ks`
+                return `${available[activePremisesTab]} ks`
             }
         }
     }
