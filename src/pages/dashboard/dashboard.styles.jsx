@@ -7,7 +7,7 @@ export const DashboardContainer = styled.div`
     grid-template-columns: 30rem 1fr;
 
     main {
-        max-width: 125rem;
+        /* max-width: 125rem; */
         background-color: var(--background-primary-color);
     }
 

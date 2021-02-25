@@ -143,8 +143,8 @@ const OrdersProvider = ({ children }) => {
 
             // {`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.order.pdfPath}`} target="_blank" rel="noreferrer noopener"
 
-            getMessage(data.messageSK)
-            setIsLoading(false)
+            // getMessage(data.messageSK)
+            // setIsLoading(false)
         } catch (err) {
             console.log(err)
             getMessage("Nieco sa pokazilo")
