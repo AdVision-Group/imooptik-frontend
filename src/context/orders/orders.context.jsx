@@ -6,6 +6,7 @@ import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 
 export const OrdersContext = createContext({
     orders: null,
+    getPDF: () => { },
     getOrders: () => { },
     createOrder: () => { },
     updateOrder: () => { },
@@ -64,29 +65,41 @@ const OrdersProvider = ({ children }) => {
 
     }
 
-    // const getPDF = async (orderId) => {
-    //     setIsLoading(true)
-    //     setShowModal(true)
+    const getPDF = async (orderId) => {
+        setIsLoading(true)
+        setShowModal(true)
 
-    //     const requestOptions = {
-    //         method: 'GET',
-    //         headers: myHeaders,
-    //         // body: raw,
-    //         redirect: 'follow'
-    //     };
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            // body: raw,
+            redirect: 'follow'
+        };
 
-    //     try {
-    //         const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/createPdf`, requestOptions)
-    //         const data = await response.json()
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/createPdf`, requestOptions)
+            const data = await response.json()
 
-    //         console.log(data)
+            console.log(data)
 
-    //     } catch (err) {
-    //         console.log(err)
-    //         getMessage("Nieco sa pokazilo")
-    //         setIsLoading(false)
-    //     }
-    // }
+            if (data.filename) {
+                setIsLoading(false)
+                getMessage(data.messageSK)
+
+                setTimeout(() => {
+                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.filename}`, "_blank", "noreferrer noopener");
+                    win?.focus();
+                }, 100)
+            }
+
+            getMessage(data.messageSK)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Nieco sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     const createOrder = async (orderToCreate) => {
         setIsLoading(true)
@@ -120,12 +133,12 @@ const OrdersProvider = ({ children }) => {
                 closeModal()
                 push('/dashboard/objednavky')
 
-                // getPDF(data.order._id)
-
                 setTimeout(() => {
-                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.order.pdfPath}`, "_blank", "noreferrer noopener");
-                    win?.focus();
-                }, 2000)
+                    getPDF(data.order._id)
+                    //     const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.order.pdfPath}`, "_blank", "noreferrer noopener");
+                    //     win?.focus();
+                }, 100)
+
             }
 
             // {`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.order.pdfPath}`} target="_blank" rel="noreferrer noopener"
@@ -252,6 +265,7 @@ const OrdersProvider = ({ children }) => {
         <OrdersContext.Provider
             value={{
                 orders,
+                getPDF,
                 getOrders,
                 createOrder,
                 updateOrder,

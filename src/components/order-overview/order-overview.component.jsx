@@ -27,7 +27,7 @@ import {
 } from './order-overview.styles'
 
 const OrderOverview = ({ order, refetch }) => {
-    const { finishOrder, cancelOrder } = useContext(OrdersContext)
+    const { finishOrder, cancelOrder, getPDF } = useContext(OrdersContext)
     const [showDropdownMenu, setShowDropdownMenu] = useState(false)
     const date = new Date(order.date)
     const dropdownRef = useRef(null)
@@ -94,14 +94,14 @@ const OrderOverview = ({ order, refetch }) => {
                         </ul>
                         <Line />
                         <ul>
-                            <a href={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.pdfPath}`} target="_blank" rel="noreferrer noopener">
+                            <button onClick={() => getPDF(order._id)}>
                                 <li>
                                     <div>
                                         <AiOutlineFilePdf />
                                     </div>
                                     Zobraz PDF
                                 </li>
-                            </a>
+                            </button>
                             <Link to={`/dashboard/objednavky/${orderedByID}/${order._id}`}>
                                 <li>
                                     <div>
