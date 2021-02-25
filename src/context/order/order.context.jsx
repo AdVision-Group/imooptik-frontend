@@ -145,7 +145,7 @@ const OrderProvider = ({ children }) => {
                         return ({
                             ...item,
                             lens: lensesObj,
-                            lensesQuant: 1
+                            lensesQuant: 2
                         })
                     }
                 } else {
