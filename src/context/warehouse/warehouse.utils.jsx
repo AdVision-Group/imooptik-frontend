@@ -250,7 +250,7 @@ export const formatAvailable = (available, activePremisesTab) => {
             if (available.reduce((acc, currValue) => acc + currValue) < 0) {
                 return <>
                     <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
-                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
+                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available[activePremisesTab])}</p>
                 </>
             } else if (available.reduce((acc, currValue) => acc + currValue) === 0) {
                 return <p style={{ color: "var(--color-red)" }}>Vo všetkých skladoch je 0 ks.</p>
@@ -261,7 +261,7 @@ export const formatAvailable = (available, activePremisesTab) => {
             if (available[activePremisesTab] < 0) {
                 return <>
                     <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
-                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
+                    <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available[activePremisesTab])}</p>
                 </>
             } else if (available[activePremisesTab] === 0) {
                 return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 ks.</p>
