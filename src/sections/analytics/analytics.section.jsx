@@ -65,14 +65,22 @@ const AnalyticsSection = () => {
         const formatedFrom = reportObj?.from.split("-").reverse().join("/")
         const formatedto = reportObj?.to.split("-").reverse().join("/")
 
-        generateReport({
+        const reportQueryObj = {
             type: activeReportType,
             timespan: `${formatedFrom}:${formatedto}`,
-            filters: {
-                premises: activeRetailType
+            ...(activeRetailType !== null) && {
+                filters: {
+                    premises: activeRetailType
+                }
             }
-        })
+        }
+
+        generateReport(reportQueryObj)
     }
+
+    useEffect(() => {
+        setActiveRetailType(retailTypes[0].value)
+    }, [activeReportType])
 
     useEffect(() => {
         getAnalytics(analyticsTabItems[activeIndex - 1].value)
@@ -182,7 +190,7 @@ const AnalyticsSection = () => {
                         ))}
                     </CheckboxContainer>
 
-                    <CheckboxContainer>
+                    {activeReportType !== 'users' && <CheckboxContainer>
                         <h5>Prevádzka</h5>
                         {retailTypes.map((type, idx) => (
                             <TypeCheckbox
@@ -192,7 +200,7 @@ const AnalyticsSection = () => {
                                 handleClick={() => setActiveRetailType(type.value)}
                             />
                         ))}
-                    </CheckboxContainer>
+                    </CheckboxContainer>}
 
                     <TwoColContainer>
                         <div>
@@ -242,6 +250,10 @@ const reportTypes = [
 ]
 
 const retailTypes = [
+    {
+        name: "Všetko",
+        value: null,
+    },
     {
         name: "Obchodná 57, Bratislava",
         value: 1,
