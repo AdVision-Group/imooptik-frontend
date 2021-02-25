@@ -64,6 +64,30 @@ const OrdersProvider = ({ children }) => {
 
     }
 
+    // const getPDF = async (orderId) => {
+    //     setIsLoading(true)
+    //     setShowModal(true)
+
+    //     const requestOptions = {
+    //         method: 'GET',
+    //         headers: myHeaders,
+    //         // body: raw,
+    //         redirect: 'follow'
+    //     };
+
+    //     try {
+    //         const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/createPdf`, requestOptions)
+    //         const data = await response.json()
+
+    //         console.log(data)
+
+    //     } catch (err) {
+    //         console.log(err)
+    //         getMessage("Nieco sa pokazilo")
+    //         setIsLoading(false)
+    //     }
+    // }
+
     const createOrder = async (orderToCreate) => {
         setIsLoading(true)
         setShowModal(true)
@@ -95,6 +119,8 @@ const OrdersProvider = ({ children }) => {
                 getOrders()
                 closeModal()
                 push('/dashboard/objednavky')
+
+                // getPDF(data.order._id)
 
                 setTimeout(() => {
                     const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.order.pdfPath}`, "_blank", "noreferrer noopener");
