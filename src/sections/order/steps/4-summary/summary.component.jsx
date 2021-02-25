@@ -26,12 +26,12 @@ import {
     StyledParagraph,
     OptionButton,
     OrderDetailsContainer,
-    EditButton
+    EditButton,
 } from './summary.styles'
 
 const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUser }) => {
     const { order, changeStep, addUser } = useContext(OrderContext)
-    const { createOrder, updateOrder } = useContext(OrdersContext)
+    const { createOrder, updateOrder, getPDF } = useContext(OrdersContext)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
 
@@ -198,9 +198,9 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         </div>
                         <div>
                             <h4>PDF</h4>
-                            <a href={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${order.order.pdfPath}`} target="_blank" rel="noreferrer noopener">
+                            <OptionButton onClick={() => getPDF(order.order._id)}>
                                 Zobraz PDF
-                            </a>
+                            </OptionButton>
                         </div>
                     </OrderDetailsContainer>}
                 </div>
