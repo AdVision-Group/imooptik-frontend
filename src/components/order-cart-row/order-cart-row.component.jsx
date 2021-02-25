@@ -57,7 +57,7 @@ const CartRow = ({ item, idx }) => {
 
     return (
         <CartTableRow >
-            <TableCol onClick={() => deleteProduct(item)}>{idx + 1}</TableCol>
+            <TableCol onClick={() => deleteProduct(idx)}>{idx + 1}</TableCol>
             <TableCol>
                 {item?.product?.name ? item?.product?.name : "Šošovky"}
             </TableCol>

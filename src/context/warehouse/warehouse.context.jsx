@@ -471,9 +471,16 @@ const WarehouseProvider = ({ children }) => {
         }
 
         if (modifiedProduct.available) {
-            modifiedProduct = {
-                ...modifiedProduct,
-                available: productToUpdate.available ? productToUpdate.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+            if (typeof modifiedProduct.available === "number") {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    available: productToUpdate.available
+                }
+            } else {
+                modifiedProduct = {
+                    ...modifiedProduct,
+                    available: productToUpdate.available ? productToUpdate.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+                }
             }
         }
 

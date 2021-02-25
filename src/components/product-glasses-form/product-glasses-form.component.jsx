@@ -231,7 +231,7 @@ const ProductGlassesForm = ({
                         <StockContainer>
                             <h3>Skladové zásoby</h3>
                             <CustomInput
-                                label={currentUser.admin === 1 ? retailNames[currentUser.premises - 1] : retailNames[currentUser.premises]}
+                                label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[currentUser.premises]}
                                 type='number'
                                 name={"available"}
                                 value={checkParameter(product.available, currentUser.premises)}

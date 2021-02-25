@@ -125,6 +125,7 @@ const OrderProvider = ({ children }) => {
     const deleteProduct = (productIdx, handleSelectProduct) => {
         const newCart = cart.filter((item, idx) => idx !== productIdx)
         setCart(newCart)
+        if (!handleSelectProduct) return
         setTimeout(() => {
             handleSelectProduct(null)
 

@@ -235,17 +235,27 @@ export const formatAvailable = (available, activePremisesTab) => {
     console.log(activePremisesTab)
     console.log(available)
     if (typeof available === "number") {
-        return `Na sklade ${available} kusov`
+        if (available < 0) {
+            return <>
+                <p style={{ color: "var(--color-red)" }}>Na sklade je 0 kusov.</p>
+                <p style={{ color: "var(--color-red)" }}>Chýba {Math.abs(available)}</p>
+            </>
+        } else if (available === 0) {
+            return <p style={{ color: "var(--color-red)" }}>Na sklade je 0 kusov.</p>
+        } else {
+            return `Na sklade je ${available} kusov.`
+        }
     } else {
         if (activePremisesTab === 0) {
             return `Vo všetkých skladoch je ${available.reduce((acc, currValue) => acc + currValue)} kusov`
         } else {
-            return `Na sklade ${available[activePremisesTab]} kusov`
+            return `Na sklade je ${available[activePremisesTab]} kusov`
         }
     }
 }
 
 export const checkParameter = (parameter, idx) => {
+    if (parameter === undefined) return
     if (parameter.length === 0) {
         return ""
     }
