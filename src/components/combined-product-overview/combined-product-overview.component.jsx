@@ -24,8 +24,6 @@ const CombinedProductOverview = ({ product, handleRemoveProduct }) => {
         setProductType('')
     }
 
-    console.log(product)
-
     return (
         <CombinedProductContainer>
             {showModal && <ModelInfoContainer product={product} productType={productType} closeModal={closeModal} />}

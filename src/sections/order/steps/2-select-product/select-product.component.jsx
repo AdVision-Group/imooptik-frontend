@@ -71,8 +71,6 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
         setProductItems(response.products)
     }, [isLoading])
 
-    console.log(cart)
-
     return (
         <div>
             <BackButton onClick={back} />

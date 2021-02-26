@@ -1,6 +1,5 @@
 export const getTimefromIndex = (idx, isHalf) => {
     if (isNaN(idx)) return
-    console.log(isHalf)
     let time = ""
     if (isHalf) {
         time = idx < 10 ? `0${idx}:30` : `${idx}:30`

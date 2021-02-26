@@ -116,7 +116,6 @@ export const postUser = (token, user) => {
 }
 
 export const postAdmin = (token, user) => {
-    console.log(user)
 
     const {
         name,

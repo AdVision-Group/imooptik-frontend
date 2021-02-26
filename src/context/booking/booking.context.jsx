@@ -79,8 +79,6 @@ const BookingProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/calendars/${calendarId}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
 
             if (data.calendar) {
                 setIsLoading(false)
@@ -115,8 +113,6 @@ const BookingProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/calendars/${calendarId}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             setIsLoading(false)
             getMessage(data.messageSK)
         } catch (err) {
@@ -144,7 +140,6 @@ const BookingProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.booking) {
                 setIsLoading(false)
                 closeModal()
@@ -178,8 +173,6 @@ const BookingProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings/${bookingId}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             setIsLoading(false)
             getMessage(data.message)
         } catch (err) {
@@ -202,8 +195,6 @@ const BookingProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/bookings/${bookingId}`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             setIsLoading(false)
             getMessage(data.message)
@@ -230,9 +221,6 @@ const BookingProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/booking/userBookings`, requestOptions)
             const data = await response.json()
-
-            console.log("USERBOOKING RESPONSE")
-            console.log(data)
 
             if (data.userBooking) {
                 setIsLoading(false)

@@ -77,9 +77,7 @@ const PostSection = () => {
 
     useEffect(() => {
         if (id !== 'novy-prispevok') {
-            console.log(post)
             if (post) {
-                console.log(post)
                 setTitle(post.name)
                 setDescription(post.description)
                 setContent(post.html)

@@ -17,13 +17,12 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
     }, !dayData?.bookingDate)
     const [appointment, setAppointment] = useState(null)
     const [isValidDueTime, setIsValiDueTime] = useState(false)
-    const [isBelongToAnother, setIsBelongToAnother] = useState(false)
+    // const [isBelongToAnother, setIsBelongToAnother] = useState(false)
 
     useEffect(() => {
         if (isLoading) return
         const bookingsDueTime = response?.userBookings?.filter(booking => !booking?.cancelled).map(booking => booking?.dueTime)
 
-        // console.log(bookingsDueTime)
         if (bookingsDueTime?.length > 0) {
             const matches = stringSimilarity.findBestMatch(userBookings?.dueDate, bookingsDueTime);
 
@@ -33,7 +32,7 @@ const CalendarBookedDay = ({ dayData, calendarId, time, userBookings, open }) =>
             if (userBookings?.dueDate === exactBooking?.dueTime) {
                 setIsValiDueTime(true)
             } else if (matches?.bestMatch?.target === todayBooking?.dueTime) {
-                setIsBelongToAnother(true)
+                // setIsBelongToAnother(true)
             }
 
             setAppointment(exactBooking)

@@ -124,10 +124,6 @@ const CalendarSection = () => {
         if (isUpdating) {
             const calendarToUpdate = formatCalendarObj(calendar)
 
-            console.log("CALENDAR BEFORE UPDATE")
-            console.log(calendarToUpdate)
-
-
             updateCalendar(calendarToUpdate, calendar._id)
         } else {
             let calendarToCreate = {}
@@ -141,8 +137,6 @@ const CalendarSection = () => {
             }
 
 
-            console.log("CALENDAR BEFORE CREATE")
-            console.log(calendarToCreate)
             createCalendar(calendarToCreate)
         }
     }

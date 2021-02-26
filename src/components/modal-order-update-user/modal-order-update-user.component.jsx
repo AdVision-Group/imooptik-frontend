@@ -26,10 +26,10 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
     } = useContext(UserContext)
 
     const [userObj, setUserObj] = useState({})
-    const [hasChanges, setHasChanges] = useState(false)
+    // const [hasChanges, setHasChanges] = useState(false)
 
     const handleUserChange = (e) => {
-        setHasChanges(true)
+        // setHasChanges(true)
         const { name, value } = e.target
 
         handleChange(e)
@@ -48,7 +48,7 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
     }
 
     const handleLensesParameterChange = (e, idx) => {
-        setHasChanges(true)
+        // setHasChanges(true)
 
         const { name, value } = e.target
         let arr = user.lenses[name]
@@ -66,7 +66,7 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
     }
 
     const handleCompanyAddressChange = (e) => {
-        setHasChanges(true)
+        // setHasChanges(true)
 
         const { name, value } = e.target
         handleCompanyChange(e)
@@ -91,12 +91,8 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
 
     const handleSubmit = (e, path) => {
         e.preventDefault()
-        setHasChanges(false)
+        // setHasChanges(false)
 
-        console.log("Update existing user")
-        console.log("Update existing user")
-        console.log("Update existing user")
-        console.log(userObj)
         if (userObj.fName || userObj.lName) {
             delete userObj["fName"]
             delete userObj["lName"]

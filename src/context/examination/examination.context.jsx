@@ -38,7 +38,6 @@ const ExaminationProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
 
             if (data.exam) {
                 closeModal()
@@ -71,7 +70,6 @@ const ExaminationProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/${examId}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
 
             if (data.exam) {
                 closeModal()
@@ -101,8 +99,6 @@ const ExaminationProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/${examId}`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.exam) {
                 closeModal()

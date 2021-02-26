@@ -142,8 +142,6 @@ const OrdersSection = () => {
         }
     }, [isFetching, response, activeIndex])
 
-    console.log(response)
-
 
     useEffect(() => {
         return () => {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { CouponsContext } from '../../context/coupons/coupons.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
@@ -41,8 +41,6 @@ const CouponsSection = () => {
             getCoupons()
         }
     }, [coupons])
-
-    console.log(coupons)
 
     return (
         <section>

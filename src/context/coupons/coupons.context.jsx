@@ -55,7 +55,6 @@ const CouponsProvider = ({ children }) => {
     }
 
     const getCoupon = async (id) => {
-        console.log("Get coupon")
         setIsupdating(true)
         setIsLoading(true)
         setShowModal(true)
@@ -90,7 +89,6 @@ const CouponsProvider = ({ children }) => {
     }
 
     const getCoupons = async () => {
-        console.log("Get coupons")
         setIsLoading(true)
         setShowModal(true)
 
@@ -104,7 +102,6 @@ const CouponsProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/coupons`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.coupons) {
                 setCoupons(data.coupons)
             }
@@ -118,8 +115,6 @@ const CouponsProvider = ({ children }) => {
     }
 
     const createCoupon = async (couponToCreate) => {
-        console.log("Create coupon")
-
         setIsLoading(true)
         setShowModal(true)
 
@@ -132,8 +127,6 @@ const CouponsProvider = ({ children }) => {
             maxUsesTotal: couponToCreate.maxUsesTotal === '' || couponToCreate.maxUsesTotal === '0' ? undefined : Number(couponToCreate.maxUsesTotal)
         })
 
-        console.log(raw)
-
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -144,8 +137,6 @@ const CouponsProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/coupons/create`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.error === "format") {
                 getMessage("Kód kupónu je povinný")
@@ -196,8 +187,6 @@ const CouponsProvider = ({ children }) => {
     // }
 
     const deleteCoupon = async (id) => {
-        console.log("Delete coupon")
-
         setIsLoading(true)
         setShowModal(true)
 
@@ -210,8 +199,6 @@ const CouponsProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/coupons/${id}`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (response.ok) {
                 getCoupons()

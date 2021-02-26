@@ -102,11 +102,6 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             dueTime: formatDate(bookingDate),
             values: {}
         }
-
-        console.log("USER BOOKING BEFORE SEND")
-        console.log(bookingToAdd)
-
-
         createUserBooking(bookingToAdd, refetchCalendar, close, refetchWeekCalendar)
         // refetchCalendar()
         // close()
@@ -115,9 +110,6 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
     useEffect(() => {
         if (day) {
             const { time, dayNumber, month, year } = day
-            console.log("DAY DATA")
-            console.log(day)
-
             setStartTime(formatCalendarStartTime(calendar, day))
             setEndTime(formatCalendarEndTime(calendar, day))
             // const formatedDate = formatDate(`${dayNumber}-${month}-${year}`, time)

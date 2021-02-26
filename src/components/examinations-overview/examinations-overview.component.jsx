@@ -6,18 +6,18 @@ import { ExaminationContext } from '../../context/examination/examination.contex
 import ExaminationUser from '../examination-user/examination-user.component'
 import OptometristExaminationModal from '../modal-optometrist-examination/modal-optometrist-examination.component'
 
-import {
-    checkParameterValue
-} from '../../utils/parameters.utils'
+// import {
+//     checkParameterValue
+// } from '../../utils/parameters.utils'
 
 import {
     ExaminationsOverviewContainer,
     Header,
     ExaminationContainer,
     ExamHead,
-    ExamTableContainer,
-    HeadTableCol,
-    TableCol,
+    // ExamTableContainer,
+    // HeadTableCol,
+    // TableCol,
     ExaminationOptions,
     AddButton,
     UpdateButton,
@@ -56,8 +56,6 @@ const ExaminationsOverview = () => {
             }
         }
     }, [examinationData.isLoading])
-
-    console.log(examinationData)
 
     return (
         <ExaminationsOverviewContainer>

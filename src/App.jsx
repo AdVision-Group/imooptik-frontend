@@ -11,7 +11,6 @@ const DashboardPage = lazy(() => import('./pages/dashboard/dashboard'))
 const ResetPasswordPage = lazy(() => import('./pages/reset-password/reset-password'))
 
 const App = () => {
-  console.log("RENDER APP")
   const { currentUser } = useContext(AuthContext)
   const [currentTheme, setCurrentTheme] = useState('dark')
 

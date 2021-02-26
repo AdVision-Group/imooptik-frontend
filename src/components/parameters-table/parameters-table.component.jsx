@@ -19,8 +19,6 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
         return parameter[idx]
     }
 
-    console.log((Number(checkParameters(parameters.diopters, 0)) + Number(checkParameters(parameters.addition, 0))).toFixed(2) === 0)
-
     useEffect(() => {
         if (handleChange) {
             if (parameters.diopters && parameters.addition) {

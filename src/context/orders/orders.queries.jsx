@@ -32,8 +32,6 @@ export const postOrder = (token, orderToAdd, isDifferentAddress, overwrite, coup
         paymentType: paymentMethod
     })
 
-    console.log(raw)
-
     const requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -59,8 +57,6 @@ export const postCombinedProduct = (combinedProductToAdd) => {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
-    console.log(combinedProductToAdd)
 
     const raw = JSON.stringify({
         ...combinedProductToAdd

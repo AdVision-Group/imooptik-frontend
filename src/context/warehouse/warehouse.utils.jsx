@@ -232,8 +232,6 @@ export const formatfloatNumber = number => {
 
 export const formatAvailable = (available, activePremisesTab) => {
     if (available === undefined) return "Šosovka"
-    console.log(activePremisesTab)
-    console.log(available)
     if (typeof available === "number") {
         if (available < 0) {
             return <>

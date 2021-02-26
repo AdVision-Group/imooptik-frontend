@@ -3,7 +3,7 @@ import React from 'react'
 import { useFetchById } from '../../hooks/useFetch'
 
 import {
-    DeleteButton,
+    // DeleteButton,
     Options,
     OrderContainer,
     OrderContent,

@@ -3,7 +3,7 @@ import React from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
-import { lensesBrands } from '../../utils/warehouse.utils'
+// import { lensesBrands } from '../../utils/warehouse.utils'
 
 import {
     ContactLensesContainer,

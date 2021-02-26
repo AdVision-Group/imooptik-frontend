@@ -67,12 +67,9 @@ const SelectLensesComponent = ({ back, next }) => {
 
     useEffect(() => {
         if (isLoading) return
-        console.log("UPDATE LENSES")
 
         setLensesItems(response.lenses)
     }, [isLoading])
-
-    console.log(cart)
 
     return (
         <div>

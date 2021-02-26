@@ -234,7 +234,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/nextEanCode`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.eanCode) {
                 setEanCode(data.eanCode)
                 closeModal()
@@ -254,7 +253,6 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(query)
         const raw = JSON.stringify(query)
 
         const requestOptions = {
@@ -268,7 +266,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/filter`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.products) {
                 setProducts(data.products)
                 closeModal()
@@ -299,7 +296,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.lenses) {
                 setProducts(data.lenses)
                 setLensesProducts(data.lenses)
@@ -324,8 +320,6 @@ const WarehouseProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/products/${id}`)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.error === 'not-found') {
                 getSingleLenses(id)
@@ -416,10 +410,6 @@ const WarehouseProvider = ({ children }) => {
             }
         }
 
-        console.log("modifiedProduct")
-        console.log(modifiedProduct)
-
-
         const raw = JSON.stringify({
             ...modifiedProduct,
         })
@@ -435,7 +425,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.product) {
                 push('/dashboard/obchod')
                 getProductsByQuery({
@@ -575,8 +564,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${product._id}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.error) {
                 getMessage(data.messageSK)
                 setIsLoading(false)
@@ -616,8 +603,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/products/${id}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.product) {
                 // push('/dashboard/obchod')
                 getProductsByQuery({
@@ -643,8 +628,6 @@ const WarehouseProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/lenses/${id}`)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.lenses) {
                 setLenses(data.lenses)
@@ -681,8 +664,6 @@ const WarehouseProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.lenses) {
                 push('/dashboard/obchod')
@@ -732,8 +713,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${lenses._id}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.lenses) {
                 push('/dashboard/obchod')
                 getLenses()
@@ -764,8 +743,6 @@ const WarehouseProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${id}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.lenses) {
                 getLenses()
                 closeModal()
@@ -783,7 +760,6 @@ const WarehouseProvider = ({ children }) => {
 
     useEffect(() => {
         if (products) {
-            console.log(`GET ${productCategoryTypeTabs[activeCategoryTypeTab].name} DATA`)
             if (activeCategoryTypeTab === 0) {
                 getProductsByQuery({
                     limit: 10
@@ -795,7 +771,6 @@ const WarehouseProvider = ({ children }) => {
     }, [activeCategoryTypeTab])
 
     useEffect(() => {
-        console.log("SET PREMISES")
         if (currentUser) {
             if (isAdmin) {
                 setRetailPremisesTabs(premisesTabs)
@@ -809,7 +784,6 @@ const WarehouseProvider = ({ children }) => {
 
     useEffect(() => {
         if (stats) {
-            console.log("SET STATS")
             setTotalProducts(stats.products)
             setTotalLenses(stats.lenses)
         }

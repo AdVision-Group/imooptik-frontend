@@ -58,8 +58,6 @@ const BlogProvider = ({ children }) => {
             const response = await fetchSinglePost(id)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.blog) {
                 setPost(data.blog)
                 setIsLoading(false)

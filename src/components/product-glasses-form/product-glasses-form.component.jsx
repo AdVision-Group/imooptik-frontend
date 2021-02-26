@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
-import { brands } from '../../utils/warehouse.utils'
+// import { brands } from '../../utils/warehouse.utils'
 
 import {
     ImageContainer,
@@ -56,8 +56,6 @@ const ProductGlassesForm = ({
 
         }
     }
-    console.log(product)
-
 
     useEffect(() => {
         if (product.brand === "Neznačkové") setIsBranded(false)

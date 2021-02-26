@@ -71,7 +71,6 @@ const ModalImages = ({ close, setImage }) => {
 
         if (tab === 'images') {
             if (!images) {
-                console.log('API IMAGE CALL')
                 getImages()
             }
         }
@@ -145,7 +144,7 @@ const ModalImages = ({ close, setImage }) => {
                             {imgUrl && (
                                 <React.Fragment>
                                     <ImagePreviewContainer>
-                                        <img src={imgUrl} />
+                                        <img src={imgUrl} alt={"new img"} />
                                         {/* <Cropper
                                             src={imgUrl}
                                             style={{ height: 400, width: '100%' }}
@@ -186,7 +185,7 @@ const ModalImages = ({ close, setImage }) => {
                                     {images && images.map(img => (
                                         <ImageContainer key={img._id}>
                                             <DeleteButton onClick={(e) => handleDeleteImage(img._id, e)}>&#10005;</DeleteButton>
-                                            <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} />
+                                            <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
                                         </ImageContainer>
                                     ))}
 

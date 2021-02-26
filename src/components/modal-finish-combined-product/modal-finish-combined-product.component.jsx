@@ -39,10 +39,6 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
     const [includeLensDiscount, setIncludeLensDiscount] = useState(false)
     const [hasChanged, setHasChanged] = useState(false)
 
-    console.log(order)
-    console.log(productDiscount)
-    console.log(lenses)
-
     const handleChangeDiscount = (type) => {
         setProductDiscount({})
         setDiscountType(type)
@@ -210,10 +206,6 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             }
         }
 
-        console.log("COMBINED PRODUCT BEFORE SEND")
-        console.log(combinedProduct)
-
-
         const raw = JSON.stringify(combinedProduct)
 
         const myHeaders = new Headers();
@@ -232,7 +224,6 @@ const FinishCombinedProductModal = ({ close, order, addCombineProduct, next }) =
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/combinedProducts`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.combinedProduct) {
                 addCombineProduct(data.combinedProduct)
                 closeModal()

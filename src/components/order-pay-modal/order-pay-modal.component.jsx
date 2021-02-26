@@ -16,8 +16,6 @@ const OrderPayModal = ({ order, close }) => {
     const { token } = useContext(AuthContext)
     const [paymentMethod, setPaymentMethod] = useState('cash')
 
-    console.log(order)
-
     const {
         getMessage,
         message,
@@ -47,8 +45,6 @@ const OrderPayModal = ({ order, close }) => {
             body: raw,
             redirect: 'follow'
         };
-
-        console.log(raw)
 
         // try {
         //     const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${order._id}/delegate`, requestOptions)

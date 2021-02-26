@@ -29,13 +29,9 @@ const UserbookingDetailsModal = ({ close, userBooking, calendarId, cancelUserBoo
         if (!response) return
 
         const newBooking = response.userBookings.find(booking => booking.dueTime === userBooking.userBookings.dueDate)
-        console.log(newBooking)
         setBooking(newBooking)
 
     }, [isLoading])
-
-    console.log(booking)
-
 
     return ReactDOM.createPortal((
         <ModalContainer>

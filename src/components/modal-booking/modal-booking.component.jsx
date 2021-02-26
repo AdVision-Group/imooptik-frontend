@@ -51,19 +51,12 @@ const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
 
         if (isUpdating) {
             let bookingToUpdate = formatBookingObj(booking)
-
-            console.log("BOOKING BEFORE UPDATE")
-            console.log(bookingToUpdate)
-
             updateBooking(bookingToUpdate, booking._id)
         } else {
             let bookingToAdd = {
                 ...booking,
                 calendar: calendarId
             }
-
-            console.log("BOOKING BEFORE CREATE")
-            console.log(bookingToAdd)
             createBooking(bookingToAdd)
         }
 
@@ -85,8 +78,6 @@ const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
             setBooking({})
         }
     }, [])
-
-    console.log(booking)
 
     return ReactDOM.createPortal((
         <ModalContainer>

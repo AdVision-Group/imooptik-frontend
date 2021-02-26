@@ -46,8 +46,6 @@ const OrdersProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.orders) {
                 setOrders(data.orders)
                 closeModal()
@@ -80,8 +78,6 @@ const OrdersProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/createPdf`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.filename) {
                 setIsLoading(false)
                 getMessage(data.messageSK)
@@ -109,10 +105,6 @@ const OrdersProvider = ({ children }) => {
             ...orderToCreate
         }
 
-
-        console.log("ORDER BEFORE SEND")
-        console.log(orderObj)
-
         const raw = JSON.stringify(orderObj)
 
         const requestOptions = {
@@ -125,8 +117,6 @@ const OrdersProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.order) {
                 getOrders()
@@ -160,10 +150,6 @@ const OrdersProvider = ({ children }) => {
             ...orderToUpdate
         }
 
-
-        console.log("ORDER BEFORE SEND")
-        console.log(orderObj)
-
         const raw = JSON.stringify(orderObj)
 
         const requestOptions = {
@@ -177,8 +163,6 @@ const OrdersProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.order) {
                 getOrders()
@@ -209,8 +193,6 @@ const OrdersProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/fulfill`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.order) {
                 refetch()
                 closeModal()
@@ -239,8 +221,6 @@ const OrdersProvider = ({ children }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${orderId}/cancel`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.order) {
                 setTimeout(() => {

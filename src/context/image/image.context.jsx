@@ -44,8 +44,6 @@ const ImageProvider = ({ children }) => {
         try {
             const response = await uploadImage(token, img, imgName, imgAlt)
             const data = await response.json()
-            console.log(data)
-
             if (data.image) {
                 setSelectedImage(data.image)
                 setImage(data.image._id)

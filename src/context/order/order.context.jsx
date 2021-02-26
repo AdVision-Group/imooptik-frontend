@@ -40,9 +40,6 @@ const OrderProvider = ({ children }) => {
 
     const addCombinedProducts = (combinedProductsArr) => {
 
-        console.log("combinedProductsArr")
-        console.log(combinedProductsArr)
-        console.log("combinedProductsArr")
         setOrder({
             ...order,
             combinedProducts: [
@@ -249,8 +246,6 @@ const OrderProvider = ({ children }) => {
         if (cart.length === 0) return
         setIsLoading(true)
         setShowModal(true)
-        console.log("ORIGINAL CART")
-        console.log(cart)
 
         const combinedProductsArr = cart.map(item => ({
             product: item.product.isPseudo ? "pseudo" : item.product._id,
@@ -260,9 +255,6 @@ const OrderProvider = ({ children }) => {
             // ...(item.lens && order.user) && { lenses: order.user.lenses },
             ...(item.lenses) && { contactLenses: item.lenses }
         }))
-
-        console.log("FORMATED CART")
-        console.log(combinedProductsArr)
 
         const myHeaders = new Headers();
         myHeaders.append("auth-token", token);
@@ -284,8 +276,6 @@ const OrderProvider = ({ children }) => {
             // /api/store/combinedProducts/createMany
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/combinedProducts/createMany`, requestOptions)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.combinedProducts) {
                 addCombinedProducts(data.combinedProducts)

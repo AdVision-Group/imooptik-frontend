@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
+// import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 
 

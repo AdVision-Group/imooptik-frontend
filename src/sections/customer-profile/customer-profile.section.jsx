@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { UserContext } from '../../context/user/user.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { useParams, Prompt } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import UserForm from '../../components/user-form/user-form.component'
@@ -47,10 +47,10 @@ const CustomerProfile = () => {
     } = useContext(UserContext)
 
     const [userObj, setUserObj] = useState({})
-    const [hasChanges, setHasChanges] = useState(false)
+    // const [hasChanges, setHasChanges] = useState(false)
 
     const handleUserChange = (e) => {
-        setHasChanges(true)
+        // setHasChanges(true)
         const { name, value } = e.target
 
         handleChange(e)
@@ -69,7 +69,7 @@ const CustomerProfile = () => {
     }
 
     const handleLensesParameterChange = (e, idx) => {
-        setHasChanges(true)
+        // setHasChanges(true)
 
         const { name, value } = e.target
         let arr = user.lenses[name]
@@ -88,12 +88,10 @@ const CustomerProfile = () => {
 
 
     const handleCompanyAddressChange = (e) => {
-        setHasChanges(true)
+        // setHasChanges(true)
 
         const { name, value } = e.target
         handleCompanyChange(e)
-
-        console.log(value)
 
         if (value === '') {
             delete userObj.company[name]
@@ -115,17 +113,15 @@ const CustomerProfile = () => {
 
     const handleSubmit = (e, path) => {
         e.preventDefault()
-        setHasChanges(false)
+        // setHasChanges(false)
 
         if (id === 'novy-zakaznik') {
-            console.log("Create new user")
             if (userObj.fName || userObj.lName) {
                 delete userObj["fName"]
                 delete userObj["lName"]
             }
             createUser(userObj, path)
         } else {
-            console.log("Update existing user")
             if (userObj.fName || userObj.lName) {
                 delete userObj["fName"]
                 delete userObj["lName"]
@@ -152,7 +148,6 @@ const CustomerProfile = () => {
     //unmount
     useEffect(() => {
         return () => {
-            console.log("UNMOUNT")
             resetUser()
             handleChange({
                 target: {

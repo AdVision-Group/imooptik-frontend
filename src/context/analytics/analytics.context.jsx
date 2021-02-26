@@ -32,7 +32,6 @@ const AnalyticsProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats?timespan=${time}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.stats) {
                 setStats(data.stats)
                 closeModal()
@@ -65,7 +64,6 @@ const AnalyticsProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats/generateReport`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
 
             if (data.name) {
                 setTimeout(() => {

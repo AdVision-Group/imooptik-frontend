@@ -7,7 +7,6 @@ import {
 } from './order-lenses-overview.styles'
 
 const OrderLensesOverview = ({ product, handleClick }) => {
-    console.log(product)
     const { name, image, description, dioptersRange, cylinderRange, price } = product
 
     return (

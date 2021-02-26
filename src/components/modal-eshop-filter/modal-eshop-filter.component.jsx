@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
-import { brands } from '../../utils/warehouse.utils'
+// import { brands } from '../../utils/warehouse.utils'
 import { useFetch } from '../../hooks/useFetch'
 
 import {

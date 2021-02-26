@@ -13,7 +13,7 @@ export const WeekCalendarContext = createContext({
     getDayData: () => { },
     refetchWeekCalendar: () => { },
     cancelUserBooking: () => { },
-    fillDayData: () => { }
+    // fillDayData: () => { }
 })
 
 const WeekCalendarProvider = ({ children, calendar, month, year }) => {
@@ -23,11 +23,9 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
     const [numberOfHours, setNumberOfHours] = useState(0)
     const [timeline, setTimeline] = useState(null)
 
-    const fillDayData = (calendarDaysArr, calendarObj) => {
-        console.log(calendarObj)
-        console.log(calendarDaysArr)
+    // const fillDayData = (calendarDaysArr, calendarObj) => {
 
-    }
+    // }
 
     const getDayData = (dayNumber, dayIdx, calendar) => {
         if (!calendar) return
@@ -70,8 +68,6 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/booking/userBookings/${userBookingId}/cancel`, requestOptions)
             const data = await response.json()
 
-            console.log(refetchCalendar)
-
             if (data.userBooking) {
                 closeModal()
                 setShowBookingDetails()
@@ -104,7 +100,7 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
                 getDayData,
                 refetchWeekCalendar: refetch,
                 cancelUserBooking,
-                fillDayData
+                // fillDayData
             }}
         >
             {children}

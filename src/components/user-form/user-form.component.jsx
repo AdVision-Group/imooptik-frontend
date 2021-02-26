@@ -17,7 +17,7 @@ import {
     GridContainer,
     GridRow,
     Row,
-    ThreeColRow,
+    // ThreeColRow,
     ZeroMargin,
     Title,
     Container,
@@ -43,9 +43,6 @@ const UserForm = ({
         e.preventDefault()
         push(`/dashboard/objednavky/${user._id}`)
     }
-
-    console.log(user)
-
 
     return (
         <GridContainer>

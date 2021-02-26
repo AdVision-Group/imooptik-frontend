@@ -114,7 +114,6 @@ const UserProvider = ({ children }) => {
     const handleChange = (e) => {
         const { name, value } = e.target
 
-        console.log(name, value)
         setUser({
             ...user,
             [name]: value
@@ -225,13 +224,9 @@ const UserProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(user)
-
         try {
             const response = await patchUser(token, user, id)
             const data = await response.json()
-
-            console.log(data)
 
             if (data.error) {
                 getMessage(data.messageSK)
@@ -293,7 +288,6 @@ const UserProvider = ({ children }) => {
             if (formToShow === 0) {
                 let data = {}
                 if (!user._id) {
-                    console.log('creating new user')
                     const response = await postUser(token, user)
                     data = await response.json()
 
@@ -337,8 +331,6 @@ const UserProvider = ({ children }) => {
                 const response = await postAdmin(token, user)
                 const data = await response.json()
 
-                console.log(data)
-
                 if (data.error) {
                     getMessage(data.message)
                     setIsLoading(false)
@@ -377,7 +369,6 @@ const UserProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(filter)
         const raw = JSON.stringify(filter)
 
         const requestOptions = {
@@ -391,7 +382,6 @@ const UserProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/filter`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.users) {
                 setUsers(data.users)
                 closeModal()
@@ -412,7 +402,6 @@ const UserProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(query)
         const raw = JSON.stringify(query)
 
         const requestOptions = {
@@ -426,7 +415,6 @@ const UserProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/filter`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
             if (data.users) {
                 setUsers(data.users)
                 closeModal()

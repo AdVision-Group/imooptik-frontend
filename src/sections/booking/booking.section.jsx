@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../../context/auth/auth.context'
 
-import SectionHeader from '../../components/section-header/section-header.component'
+// import SectionHeader from '../../components/section-header/section-header.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 import BookingCalendarOverview from "../../components/booking-calendar-overview/booking-calendar-overview.component"
@@ -11,7 +11,7 @@ import WeekCalendarProvider from '../../context/week-calendar/week-calendar.cont
 
 import Calendar from '../../components/calendar/calendar.component'
 import WeekDays from '../../components/calendar-weekdays/calendar-weekdays.component'
-import BookingAppoinments from '../../components/booking-appoinments/booking-appoinment.component'
+// import BookingAppoinments from '../../components/booking-appoinments/booking-appoinment.component'
 import BookingCalendarBookings from '../../components/booking-calendar-bookings/booking-calendar-bookings.component'
 
 import { useFetch } from '../../hooks/useFetch'
@@ -59,9 +59,6 @@ const BookingSection = () => {
 
 
     const handleOpenUserBookingModal = (dayData) => {
-        console.log("dayData")
-        console.log("dayData")
-        console.log(dayData)
         if (dayData !== null) {
             setSelectedDay({
                 ...dayData,
@@ -145,7 +142,6 @@ const BookingSection = () => {
 
         // setSelectedCalendar(null)
         // setSelectedDay(dayData)
-        console.log(dayData)
         setCalendarWeekIndex(Math.ceil(dayData.dayNumber / 7) - 1)
         setActiveCalendarFormat(1)
     }
@@ -170,7 +166,6 @@ const BookingSection = () => {
     }, [isLoading])
 
     useEffect(() => {
-        console.log("unmount")
         return () => {
             setShowModal(true)
             setShowPremisesSection(true)
@@ -184,10 +179,6 @@ const BookingSection = () => {
             closeModal()
         }
     }, [])
-
-    console.log(calendars)
-    console.log(selectedCalendar)
-    console.log(showUserBooking)
 
     return (
         <section>
