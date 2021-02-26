@@ -136,6 +136,46 @@ const OrdersSection = () => {
     }
 
     useEffect(() => {
+        if (searchQuery === '') {
+            if (activeIndex === 1) {
+                setFetchQueryObj({
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    },
+                    filters: {
+                        finished: false
+                    }
+                })
+            } else if (activeIndex === 2) {
+                setFetchQueryObj({
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    },
+                    filters: {
+                        finished: true
+                    }
+                })
+            } else if (activeIndex === 3) {
+                setFetchQueryObj({
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    },
+                    filters: {
+                        status: "cancelled"
+                    }
+                })
+            }
+            handleRefetch()
+        }
+    }, [searchQuery])
+
+    useEffect(() => {
         if (!isFetching) {
             if (response) {
                 if (activeIndex === 1) {

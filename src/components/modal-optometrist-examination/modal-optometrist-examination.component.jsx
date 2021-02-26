@@ -190,6 +190,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     }
 
     useEffect(() => {
+        if (!!examinationToUpdate) return
         setExaminationObj({})
         setVlastne_okuliare({})
         setObjektivna_refrakcia({})
@@ -206,7 +207,6 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     useEffect(() => {
         if (!examinationData.isLoading) {
             if (examinationData.response) {
-                console.log(examinationData.response)
 
                 if (examinationData.response?.exam?.type === 1) {
                     let examObj = examinationData.response?.exam
@@ -241,6 +241,56 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                         ...examObj?.refrakcia
                     })
                 }
+
+                if (examinationData.response?.exam?.type === 2) {
+                    let examObj = examinationData.response?.exam
+                    setActiveExamType(examObj?.type)
+
+
+                    setVlastne_okuliare({
+                        ...examObj?.anamneza?.vlastne_okuliare
+                    })
+                    setRefraktometer({
+                        ...examObj?.anamneza?.refraktometer
+                    })
+                    setKeratometer({
+                        ...examObj?.anamneza?.keratometer
+                    })
+                    setSubjektivna_refrakciaA({
+                        ...examObj?.anamneza?.subjektivna_refrakcia
+                    })
+                    setKontaktne_sosovky({
+                        ...examObj?.anamneza?.kontaktne_sosovky
+                    })
+                    setTyp_kontaktnych_sosoviek({
+                        ...examObj?.anamneza?.typ_kontaktnych_sosoviek
+                    })
+
+                    setRecomendation(examObj?.doporucenia || "")
+
+                    delete examObj.anamneza["vlastne_okuliare"]
+                    delete examObj.anamneza["refraktometer"]
+                    delete examObj.anamneza["keratometer"]
+                    delete examObj.anamneza["subjektivna_refrakcia"]
+                    delete examObj.anamneza["kontaktne_sosovky"]
+                    delete examObj.anamneza["typ_kontaktnych_sosoviek"]
+                    delete examObj["kontrola"]
+                    delete examObj["refrakcia"]
+                    delete examObj["doneTo"]
+                    delete examObj["doneBy"]
+                    delete examObj["date"]
+                    delete examObj["_id"]
+                    delete examObj["__v"]
+                    delete examObj["doporucenia"]
+                    delete examObj["type"]
+
+                    setExaminationObj({
+                        ...examObj?.anamneza
+                    })
+
+                    console.log(examinationData.response)
+
+                }
                 // setParameters(examinationData.response?.exam?.parameters)
                 // setExaminationObj(examinationData.response?.exam)
             }
@@ -269,7 +319,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
             <CloseButton onClick={close} />
             <Modal>
                 <h3>Vyšetrenie</h3>
-                <Container>
+                {!examinationToUpdate && <Container>
                     <h4>Typ prehliadky</h4>
                     <div>
                         {examTypes.map((type, idx) => (
@@ -281,7 +331,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                             />
                         ))}
                     </div>
-                </Container>
+                </Container>}
 
                 {activeExamType === 1 && (
                     <Container>
