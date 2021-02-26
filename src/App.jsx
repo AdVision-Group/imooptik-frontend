@@ -12,7 +12,7 @@ const ResetPasswordPage = lazy(() => import('./pages/reset-password/reset-passwo
 
 const App = () => {
   const { currentUser } = useContext(AuthContext)
-  const [currentTheme, setCurrentTheme] = useState('dark')
+  const [currentTheme, setCurrentTheme] = useState('light')
 
   return (
     <React.Fragment>
