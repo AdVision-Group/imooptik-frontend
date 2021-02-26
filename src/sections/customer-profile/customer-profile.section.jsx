@@ -179,8 +179,8 @@ const CustomerProfile = () => {
                         <h1>Profil</h1>
                         <div>
                             {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
-                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a preisť na profil</SaveButton>}
-                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a preisť na objednávku</SaveButton>}
+                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a prejsť na profil</SaveButton>}
+                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a prejsť na objednávku</SaveButton>}
                             <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
                                 {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
                             </SaveButton>

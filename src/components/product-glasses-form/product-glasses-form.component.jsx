@@ -202,7 +202,7 @@ const ProductGlassesForm = ({
                             <option value=''>-</option>
                             <option value='M'>Pánske</option>
                             <option value='W'>Dámske</option>
-                            <option value='D'>Detské</option>
+                            <option value='CH'>Detské</option>
                             <option value='U'>Nezáleží</option>
                         </CustomSelect>
                     </div>

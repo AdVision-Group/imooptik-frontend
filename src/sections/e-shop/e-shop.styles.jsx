@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import CustomButton from '../../components/custom-button/custom-button.component'
 
 
 export const Filterbutton = styled.button`
@@ -15,4 +16,14 @@ export const ResetButton = styled.button`
     color: var(--color-red);
     /* font-weight: bolder; */
     padding: .5rem 2rem;
+`
+
+export const PublicButton = styled(CustomButton)`
+    font-size: 1.2rem;
+    background-color: var(--primary-color);
+    font-weight: bolder;
+
+    :not(:last-child) {
+        margin-right: 1rem;
+    }
 `

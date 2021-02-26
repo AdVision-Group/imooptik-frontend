@@ -73,18 +73,18 @@ const OrderOverview = ({ order, refetch }) => {
                 {showDropdownMenu && (
                     <DropdownMenu ref={dropdownRef} >
                         <ul>
-                            <li onClick={() => handleFinishOrder(order._id)}>
+                            {(order.status !== "fulfilled" && order.status !== "cancelled") && <li onClick={() => handleFinishOrder(order._id)}>
                                 <div>
                                     <AiOutlineCheck />
                                 </div>
                                     Vybavené
-                            </li>
-                            <li onClick={() => handleCancelOrder(order._id)}>
+                            </li>}
+                            {order.status !== "cancelled" && <li onClick={() => handleCancelOrder(order._id)}>
                                 <div>
                                     <BsTrash />
                                 </div>
                                     Odstrániť
-                            </li>
+                            </li>}
                             {/* {order.status === "fulfilled" && <li onClick={() => handleCancelOrder(order._id)}>
                                 <div>
                                     <BsTrash />

@@ -22,6 +22,7 @@ import {
 import {
     Filterbutton,
     ResetButton,
+    PublicButton,
 } from './e-shop.styles'
 
 const EshopSection = () => {
@@ -37,6 +38,22 @@ const EshopSection = () => {
     const [showFilterModal, setShowFilterModal] = useState(false)
     const [hasFilter, setHasFilter] = useState(false)
 
+    const [selectedProducts, setSelectedProducts] = useState([])
+
+    const selectProduct = (productID) => {
+        setSelectedProducts(prevValue => ([
+            ...prevValue,
+            productID
+        ]))
+    }
+
+
+
+    const deselectProduct = (selectedProductsArr, productID) => {
+        const newArr = selectedProductsArr.filter(product => product !== productID)
+
+        setSelectedProducts(newArr)
+    }
 
     const {
         activePremisesTab,
@@ -49,7 +66,17 @@ const EshopSection = () => {
         handleChangeCategoryTypeTab,
         deleteProduct,
         deleteLenses,
+        deactivateMany,
     } = useContext(WarehouseContext)
+
+    const handleDeactivateMany = (productIDs, boolean) => {
+        const dataObj = {
+            products: productIDs,
+            activate: boolean
+        }
+        deactivateMany(dataObj)
+        setSelectedProducts([])
+    }
 
     const applyFilter = filter => {
         getProductsByQuery(filter)
@@ -159,6 +186,10 @@ const EshopSection = () => {
                         activeIndex={activeCategoryTypeTab}
                         setActiveIndex={handleChangeCategoryTypeTab}
                     />
+                    {selectedProducts.length > 0 && <div>
+                        <PublicButton onClick={() => handleDeactivateMany(selectedProducts, false)}>Neverejné</PublicButton>
+                        <PublicButton onClick={() => handleDeactivateMany(selectedProducts, true)}>Verejné</PublicButton>
+                    </div>}
                     {activeCategoryTypeTab === 0 && <div>
                         {hasFilter && <ResetButton onClick={resetFilter}>reset</ResetButton>}
                         <Filterbutton onClick={() => setShowFilterModal(true)}>Filter</Filterbutton>
@@ -174,6 +205,9 @@ const EshopSection = () => {
                         activePremisesTab={activePremisesTab}
                         handleUpdateButton={() => push(`sklad/${product._id}`)}
                         handleDeleteButton={activeCategoryTypeTab === 0 ? () => handleDeleteProduct(product._id) : () => deleteLenses((product._id))}
+                        selectProduct={selectProduct}
+                        deselectProduct={deselectProduct}
+                        selectedProducts={selectedProducts}
                     />
                 ))}
 

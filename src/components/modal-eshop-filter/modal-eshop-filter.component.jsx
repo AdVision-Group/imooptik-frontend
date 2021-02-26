@@ -50,6 +50,24 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
         }))
     }
 
+    const handleChangeFilterQuery = e => {
+        const { name, value } = e.target
+
+        if (value === '') {
+            delete filter["query"]
+            setFilter({
+                ...filter
+            })
+            return
+        }
+
+        setFilter(prevValue => ({
+            ...prevValue,
+            [name]: value
+        }))
+    }
+
+
     useEffect(() => {
         if (!filter?.filters?.type) return
         setFilters(null)
@@ -122,9 +140,9 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                     <div>
                         <CustomInput
                             label='Meno produktu'
-                            name='name'
-                            value={filter?.filters?.name || ""}
-                            handleChange={handleChangeFilters}
+                            name='query'
+                            value={filter?.query || ""}
+                            handleChange={handleChangeFilterQuery}
                         />
                     </div>
                     <div>

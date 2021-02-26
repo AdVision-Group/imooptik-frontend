@@ -54,7 +54,10 @@ const CustomersSection = () => {
             setFilterQuery({
                 limit: 10,
                 skip: 0,
-                query: searchQuery
+                query: searchQuery,
+                filters: {
+                    admin: activeIndex
+                }
             })
             refetch()
         }

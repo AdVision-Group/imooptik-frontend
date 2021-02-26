@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { BlogContext } from '../../context/blog/blog.context'
 import { ImageContext } from '../../context/image/image.context'
+import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useParams, useHistory } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
@@ -41,6 +42,7 @@ const PostSection = () => {
         handlePostUpdate,
         resetBlog
     } = useContext(BlogContext)
+    const { closeModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -92,6 +94,7 @@ const PostSection = () => {
 
     useEffect(() => {
         return () => {
+            closeModal()
             resetBlog()
             setTitle('')
             setDescription('')

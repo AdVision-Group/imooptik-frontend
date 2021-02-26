@@ -27,17 +27,18 @@ const CartLensesRow = ({ idx, item }) => {
     } = useContext(OrderContext)
 
 
-    const handleSelectProduct = itemIdx => {
+    const handleSelectProduct = (itemIdx, e) => {
         if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5 || item.product.isPseudo) return
-        selectProduct(itemIdx)
+        selectProduct(itemIdx, e)
     }
 
     const handleDeleteProduct = (item) => {
+
         deleteProduct(item, handleSelectProduct)
     }
 
     return (
-        <CartTableRow isSelected={selectedProduct === idx} onClick={() => handleSelectProduct(idx)}>
+        <CartTableRow isSelected={selectedProduct === idx} onClick={(e) => handleSelectProduct(idx, e)}>
             <TableCol onClick={() => handleDeleteProduct(idx)} >{idx + 1}</TableCol>
             <TableCol>{item?.product?.name}</TableCol>
             <TableCol>{item?.lens?.name}</TableCol>
@@ -51,9 +52,9 @@ const CartLensesRow = ({ idx, item }) => {
             </TableCol>
             <TableCol>
                 {item?.lensesQuant && <QuantityContainer>
-                    <button onClick={() => decrementQuantity(item?.lensesQuant, idx)}><AiOutlineLeft /></button>
+                    <button onClick={(e) => decrementQuantity(item?.lensesQuant, idx, e)}><AiOutlineLeft /></button>
                     <p>{item?.lensesQuant}</p>
-                    <button onClick={() => incrementQuantity(item?.lensesQuant, idx)}><AiOutlineRight /></button>
+                    <button onClick={(e) => incrementQuantity(item?.lensesQuant, idx, e)}><AiOutlineRight /></button>
                 </QuantityContainer>}
             </TableCol>
             <TableCol>

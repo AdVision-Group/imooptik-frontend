@@ -102,14 +102,20 @@ const OrdersSection = () => {
         handleRefetch()
     }
 
-    // const handleSearch = () => {
-    //     if (searchQuery !== '') {
-    //         setFetchQueryObj(prevValue => ({
-    //             ...prevValue,
-    //             eanCo
-    //         }))
-    //     }
-    // }
+    const handleSearch = () => {
+        if (searchQuery !== '') {
+            setFetchQueryObj(prevValue => ({
+                // ...prevValue,
+                // sortBy: {
+                //     date: -1
+                // },
+                orderId: searchQuery
+            }))
+        }
+        refetch()
+    }
+
+    console.log(response)
 
     const getNextPage = () => {
         if (orders.length < 10) return
@@ -166,7 +172,7 @@ const OrdersSection = () => {
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             <SectionHeader
                 searchQuery={searchQuery}
-                // handleSearch={handleSearch}
+                handleSearch={handleSearch}
 
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
@@ -193,12 +199,12 @@ const OrdersSection = () => {
                             setFetchQueryObj((prevObj) => ({
                                 ...fetchQueryObj,
                                 sortBy: {
-                                    date: prevObj.sortBy.date === 1 ? -1 : 1
+                                    date: prevObj?.sortBy?.date === 1 ? -1 : 1
                                 }
                             }))
                             handleRefetch()
                         }}>
-                            Dátum {fetchQueryObj.sortBy.date === 1 ? <IconContainer>
+                            Dátum {fetchQueryObj?.sortBy?.date === 1 ? <IconContainer>
                                 <GoArrowSmallDown />
                             </IconContainer> : <IconContainer>
                                     <GoArrowSmallUp />
@@ -209,7 +215,7 @@ const OrdersSection = () => {
                         <TableCol>Status</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
-                    {orders.map((order, idx) => (
+                    {orders?.map((order, idx) => (
                         <OrderOverview key={idx} order={order} refetch={handleRefetch} />
                     ))}
                 </OrdersTable>

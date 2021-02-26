@@ -49,7 +49,7 @@ const OrderProvider = ({ children }) => {
         })
     }
 
-    const selectProduct = productIdx => {
+    const selectProduct = (productIdx, event) => {
         if (selectedProduct === productIdx) {
             setSelectedProduct(null)
         } else {
@@ -167,7 +167,8 @@ const OrderProvider = ({ children }) => {
         setSelectedProduct(null)
     }
 
-    const incrementQuantity = (prevValue, idx) => {
+    const incrementQuantity = (prevValue, idx, event) => {
+        event.stopPropagation()
         const newCart = cart.map((item, index) => {
             if (idx === index) {
                 return ({
@@ -182,7 +183,9 @@ const OrderProvider = ({ children }) => {
     }
 
 
-    const decrementQuantity = (prevValue, idx) => {
+    const decrementQuantity = (prevValue, idx, event) => {
+        event.stopPropagation()
+
         if (prevValue === 1) return
         const newCart = cart.map((item, index) => {
             if (idx === index) {
