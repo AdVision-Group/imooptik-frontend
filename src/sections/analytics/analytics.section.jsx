@@ -25,7 +25,8 @@ import {
     SubmitButton,
     TypeCheckbox,
     TwoColContainer,
-    CheckboxContainer
+    CheckboxContainer,
+    Container
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -48,6 +49,13 @@ const AnalyticsSection = () => {
     const [activeReportType, setActiveReportType] = useState(reportTypes[0].value)
     const [activeRetailType, setActiveRetailType] = useState(retailTypes[0].value)
 
+    const [fitlterQuery, setFilterQuery] = useState({})
+
+    const handleChangeActiveIndex = idx => {
+        setActiveIndex(idx)
+        setFilterQuery({})
+    }
+
     const handleChange = e => {
         const { name, value } = e.target
 
@@ -61,6 +69,22 @@ const AnalyticsSection = () => {
 
         setReportObj({
             ...reportObj,
+            [name]: value
+        })
+    }
+    const handleFitlterQueryChange = e => {
+        const { name, value } = e.target
+
+        if (value === '') {
+            delete fitlterQuery[name]
+            setFilterQuery({
+                ...fitlterQuery,
+            })
+            return
+        }
+
+        setFilterQuery({
+            ...fitlterQuery,
             [name]: value
         })
     }
@@ -82,6 +106,15 @@ const AnalyticsSection = () => {
 
         generateReport(reportQueryObj)
     }
+
+    useEffect(() => {
+        if (!fitlterQuery?.from || !fitlterQuery?.to) return
+        const formatedFrom = fitlterQuery?.from.split("-").reverse().join("/")
+        const formatedto = fitlterQuery?.to.split("-").reverse().join("/")
+        getAnalytics(`${formatedFrom}:${formatedto}`)
+
+
+    }, [fitlterQuery])
 
     useEffect(() => {
         setActiveRetailType(retailTypes[0].value)
@@ -129,13 +162,40 @@ const AnalyticsSection = () => {
                     <SectionNavbar
                         items={analyticsTabItems}
                         activeIndex={activeIndex}
-                        setActiveIndex={setActiveIndex}
+                        setActiveIndex={handleChangeActiveIndex}
                     />
                 </FixedContainer>
             </FlexContainer>
 
 
             <ScrollContainer>
+                <Container>
+                    <h3>Dátum:</h3>
+
+                    <TwoColContainer>
+                        <div>
+                            <h5>Od:</h5>
+                            <CustomInput
+                                label={''}
+                                value={fitlterQuery?.from || ""}
+                                type="date"
+                                name="from"
+                                handleChange={handleFitlterQueryChange}
+                            />
+                        </div>
+                        <div>
+                            <h5>Do:</h5>
+                            <CustomInput
+                                label={''}
+                                value={fitlterQuery?.to || ""}
+                                type="date"
+                                name="to"
+                                handleChange={handleFitlterQueryChange}
+                            />
+                        </div>
+                    </TwoColContainer>
+
+                </Container>
                 <GridContainer>
                     <div>
                         <h3>Zákazníci</h3>

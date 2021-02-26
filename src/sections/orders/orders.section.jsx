@@ -105,10 +105,10 @@ const OrdersSection = () => {
     const handleSearch = () => {
         if (searchQuery !== '') {
             setFetchQueryObj(prevValue => ({
-                // ...prevValue,
-                // sortBy: {
-                //     date: -1
-                // },
+                ...prevValue,
+                sortBy: {
+                    date: -1
+                },
                 orderId: searchQuery
             }))
         }

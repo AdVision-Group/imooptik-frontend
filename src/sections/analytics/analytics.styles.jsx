@@ -82,7 +82,13 @@ export const StatsContainer = styled.div`
 
 // `
 
+export const Container = styled.div`
+    max-width: 50rem;
+    margin-bottom: 5rem;
+`
+
 export const ReportContainer = styled.div`
+    margin-top: 5rem;
     padding: 2rem; 
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
