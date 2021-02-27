@@ -122,7 +122,6 @@ const FinishOrderModal = ({
                 }
             }
 
-            console.log(orderObj)
             setHasChanged(false)
             createOrder(orderObj)
         }

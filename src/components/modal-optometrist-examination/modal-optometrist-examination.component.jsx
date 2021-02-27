@@ -308,7 +308,6 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                     delete examObj["__v"]
                     delete examObj["doporucenia"]
                     delete examObj["type"]
-                    console.log(examinationData.response)
 
                     setExaminationObj({
                         ...examObj?.kontrola
