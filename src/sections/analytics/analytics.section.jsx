@@ -210,7 +210,7 @@ const AnalyticsSection = () => {
                         <p>{storeData?.lenses}</p>
                     </div>
                     <div>
-                        <h3>Zákazky</h3>
+                        <h3>Zakázky</h3>
                         <p>{storeData?.orders}</p>
                     </div>
                     <div>
@@ -318,7 +318,7 @@ const reportTypes = [
         value: "products",
     },
     {
-        name: "Zákazky",
+        name: "Zákázky",
         value: "orders",
     },
 ]

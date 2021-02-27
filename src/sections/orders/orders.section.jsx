@@ -105,17 +105,17 @@ const OrdersSection = () => {
     const handleSearch = () => {
         if (searchQuery !== '') {
             setFetchQueryObj(prevValue => ({
-                ...prevValue,
-                sortBy: {
-                    date: -1
+                // ...prevValue,
+                // sortBy: {
+                //     date: -1
+                // },
+                filters: {
+                    customId: Number(searchQuery)
                 },
-                orderId: searchQuery
             }))
         }
         refetch()
     }
-
-    console.log(response)
 
     const getNextPage = () => {
         if (orders.length < 10) return
@@ -216,7 +216,7 @@ const OrdersSection = () => {
 
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
-                title="Objednávky"
+                title="Zakázky"
             />
 
             <FlexContainer>

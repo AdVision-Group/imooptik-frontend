@@ -169,20 +169,15 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
             }
         }
 
-        console.log("EXAMINATION OBJECT BEFORE SEND")
-        console.log(examObj)
+        // console.log("EXAMINATION OBJECT BEFORE SEND")
+        // console.log(examObj)
 
         if (examinationToUpdate) {
-            console.log("UPDATE EXAMINATION")
             delete examObj["doneTo"]
 
-
-            console.log(examObj)
             updateExamination(examObj, examinationToUpdate)
 
         } else {
-            console.log("CREATE EXAMINATION")
-
             createExamination(examObj)
         }
         refetch()
@@ -288,9 +283,39 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                         ...examObj?.anamneza
                     })
 
-                    console.log(examinationData.response)
 
                 }
+
+                if (examinationData.response?.exam?.type === 3) {
+                    let examObj = examinationData.response?.exam
+
+
+                    setActiveExamType(examObj?.type)
+
+                    setTabulka({
+                        ...examObj?.kontrola?.tabulka
+                    })
+
+                    setRecomendation(examObj?.doporucenia || "")
+
+                    delete examObj.kontrola["tabulka"]
+                    delete examObj["anamneza"]
+                    delete examObj["refrakcia"]
+                    delete examObj["doneTo"]
+                    delete examObj["doneBy"]
+                    delete examObj["date"]
+                    delete examObj["_id"]
+                    delete examObj["__v"]
+                    delete examObj["doporucenia"]
+                    delete examObj["type"]
+                    console.log(examinationData.response)
+
+                    setExaminationObj({
+                        ...examObj?.kontrola
+                    })
+                }
+
+
                 // setParameters(examinationData.response?.exam?.parameters)
                 // setExaminationObj(examinationData.response?.exam)
             }
