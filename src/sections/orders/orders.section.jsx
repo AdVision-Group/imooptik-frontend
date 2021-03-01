@@ -216,7 +216,7 @@ const OrdersSection = () => {
 
                 handleChange={e => setSearchQuery(e.target.value)}
                 handleAddButton={() => push("/dashboard/objednavky/nova-objednavka")}
-                title="Zakázky"
+                title="Zákazky"
             />
 
             <FlexContainer>

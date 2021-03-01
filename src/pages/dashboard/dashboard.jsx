@@ -54,7 +54,7 @@ const Dashboard = () => {
             icon: AiOutlineUser
         },
         {
-            name: 'Zakázky',
+            name: 'Zákazky',
             path: '/objednavky',
             permission: 0,
             icon: AiOutlineInbox
