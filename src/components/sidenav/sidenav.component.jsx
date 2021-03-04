@@ -17,7 +17,7 @@ import {
 } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
-    const { logOut } = useContext(AuthContext)
+    const { logOut, currentUser } = useContext(AuthContext)
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -32,6 +32,8 @@ const Sidenav = ({ routes, match }) => {
         // push(path)
     }
 
+    console.log(currentUser)
+
     return (
         <React.Fragment>
 
@@ -43,6 +45,8 @@ const Sidenav = ({ routes, match }) => {
             <AsideContainer isOpen={isOpen}>
                 <LogoContainer isOpen={isOpen}>
                     <img src={logo} alt='imooptik logo' />
+                    <p>Prihlásený</p>
+                    <p>{currentUser?.name}</p>
                 </LogoContainer>
                 <NavLinksContainer>
                     {routes.map((route, idx) => (

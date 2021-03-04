@@ -40,6 +40,18 @@ export const LogoContainer = styled.div`
 
     img {
         width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    p {
+        font-size: 1.6rem;
+        white-space: nowrap;
+
+        :nth-of-type(1) {
+            font-weight: lighter;
+            font-size: 1.4rem;
+            opacity: .5;
+        }
     }
 
     @media all and (max-width: 1150px) {
@@ -82,7 +94,7 @@ export const NavLinksContainer = styled.ul`
         position: relative;
         display: flex;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
 
 
             &:hover {
@@ -95,8 +107,8 @@ export const NavLinksContainer = styled.ul`
 `
 
 export const IconContainer = styled.div`
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     /* background-color: #3E3E3E; */
     margin-right: 3rem;
     border-radius: 50%;
