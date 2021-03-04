@@ -63,6 +63,16 @@ export const DropdownMenu = styled.div`
     ul {
         list-style: none;
 
+        button {
+            width: 100%;
+            display: block;
+            margin-bottom: 1rem;
+
+            &:hover {
+                /* background-color: var(--dropdown-hover-background-color); */
+            }
+        }
+
         li {
             cursor: pointer;
             display: flex;
