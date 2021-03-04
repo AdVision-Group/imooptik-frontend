@@ -20,8 +20,13 @@ export const DefaultThemeColors = createGlobalStyle`
         --container-shadow: 0 0 1.5rem 0 rgba(0,0,0,.08);
         --container-background-color: #fff;
 
+        --container-background-table-row: #f5f5f5;
+        --container-background-table-row-odd: #fff;
+
+
         --backbutton-color: #ebac01;
         --dropdownbutton-background-color: #f5f5f5;
+        --dropdownbutton-background-color-odd: #fff;
         --dropdownbutton-color: #ebac01;
         --dropdown-background-color: #fff;
         --dropdown-hover-background-color: #f5f5f5;
@@ -63,9 +68,14 @@ export const DarkThemeColors = createGlobalStyle`
 
         --container-shadow: none;
         --container-background-color: #252525;
+        
+        --container-background-table-row: #252525;
+        --container-background-table-row-odd: #2c2c2c;
 
         --backbutton-color: #c28e01;
         --dropdownbutton-background-color: #121212;
+        --dropdownbutton-background-color-odd: #121212;
+
         --dropdownbutton-color: #c28e01;
         --dropdown-background-color: #121212;
         --dropdown-hover-background-color: #181818;

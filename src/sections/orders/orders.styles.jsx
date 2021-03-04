@@ -1,46 +1,95 @@
 import styled from 'styled-components'
+import OrderOverview from '../../components/order-overview/order-overview.component'
+import { IconContainer as IconDiv, DeligateButton } from '../../components/order-overview/order-overview.styles'
 
-export const OrdersTable = styled.div`
-    min-width: 65rem;
-    /* margin-bottom: 10rem; */
-`
-
-export const TableHead = styled.div`
-    display: grid;
-    grid-template-columns: 10rem 2fr 2fr 1fr 10rem;
-    border-bottom: 1px solid var(--secondary-text-color);
-    font-weight: bolder;
-`
-
-export const OrderOverviewRow = styled.div`
-    width: 100%;
-    display: grid;
-    grid-template-columns: 10rem 2fr 2fr 1fr 10rem;
-    align-content: center;
-    margin-bottom: 1rem;
-    box-shadow: var(--container-shadow);
-    background-color: var(--container-background-color);
-`
 
 export const TableCol = styled.div`
     cursor:  ${({ clickable }) => clickable ? "pointer" : "default"};
     position: relative;
+    width: 30rem;
+    display: table-cell;
     padding: 2rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-`
-
-export const IconContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
+     
+    p {
+        display: flex;
+    }
 `
 
 export const DeligateCol = styled(TableCol)`
     cursor: pointer;
     padding: 1rem;
     transition: background-color .3s ease-out; 
+    width: 30rem;
+    display: table-cell;
 `
+
+
+
+
+
+export const TableHead = styled.div`
+    display: table-row;
+
+    font-weight: bolder;
+    position: sticky;
+    top: -1.5rem;
+    background-color: var(--background-primary-color);
+
+    ${TableCol} {
+        background-color: var(--background-primary-color);
+        border-bottom: 1px solid var(--secondary-text-color);
+    }
+
+    @media all and (max-width: 920px) {
+        font-size: 1.2rem
+    }
+`
+
+export const OrderOverviewRow = styled(OrderOverview)`
+`
+
+export const OrdersTable = styled.div`
+    min-width: 100%;
+    display: table;
+    overflow-x: scroll;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    ${OrderOverviewRow} {
+        :nth-child(even) {
+            background-color: var(--container-background-table-row-odd);
+            ${IconDiv} {
+                background-color: var(--dropdownbutton-background-color);
+            }
+
+            ${DeligateButton} {
+                &:hover {
+                    background-color: var(--dropdownbutton-background-color);
+                }
+            }
+
+        }   
+        :nth-child(odd) {
+            ${IconDiv} {
+                background-color: var(--dropdownbutton-background-color-odd);
+            }
+
+            ${DeligateButton} {
+                &:hover {
+                    background-color: var(--dropdownbutton-background-color-odd);
+                }
+            }
+        }
+    }
+`
+
+
+export const IconContainer = styled.div`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+`
+
+
 

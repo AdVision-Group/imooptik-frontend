@@ -42,4 +42,5 @@ export const Container = styled.div`
 
 export const FixedContainer = styled.div`
     max-width: 125rem;
+    width: 100%;
 `

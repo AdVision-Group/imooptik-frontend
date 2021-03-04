@@ -2,26 +2,21 @@ import styled from 'styled-components'
 import CustomButton from '../../components/custom-button/custom-button.component'
 
 export const Container = styled.div`
-    width: 100%;
+    /* width: 100%; */
+    /* overflow-x: scroll; */
 `
 
-export const TableContainer = styled.table`
-    width: 100%;
-
-`
 
 export const TableCol = styled.div`
+    width: 30rem;
+    display: table-cell;
     padding: 2rem;
-    /* text-align: center; */
 `
 
 export const TableHead = styled.div`
-    /* min-width: 65rem; */
-    width:100%;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 2fr 25rem;
-    border-bottom: 1px solid var(--secondary-text-color);
+
+    display: table-row;
+    
     font-weight: bolder;
     position: sticky;
     top: -1.5rem;
@@ -29,6 +24,8 @@ export const TableHead = styled.div`
 
     ${TableCol} {
         background-color: var(--background-primary-color);
+        border-bottom: 1px solid var(--secondary-text-color);
+
     }
 
     @media all and (max-width: 920px) {
@@ -37,18 +34,32 @@ export const TableHead = styled.div`
 `
 
 export const TableRow = styled.div`
-    /* min-width: 70rem; */
+    display: table-row;
 
-    display: grid;
-    grid-template-columns: 1fr 2fr 25rem;
-    align-items: center;
-
-    margin-bottom: 1rem;
-    box-shadow: var(--container-shadow);
-    background-color: var(--container-background-color);
+    /* box-shadow: var(--container-shadow); */
+    background-color: var(--container-background-table-row);
 
     @media all and (max-width: 920px) {
         font-size: 1.2rem
+    }
+
+`
+
+export const TableContainer = styled.table`
+    width: 100%;
+    /* min-width: 60rem; */
+
+    display: table;
+    overflow-x: scroll;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    /* var(--container-background-table-row-odd) */
+
+    ${TableRow} {
+        :nth-child(even) {
+            background-color: var(--container-background-table-row-odd);
+        }
     }
 
 `

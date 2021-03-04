@@ -26,7 +26,7 @@ import {
     TableCol
 } from './order-overview.styles'
 
-const OrderOverview = ({ order, refetch }) => {
+const OrderOverview = ({ order, refetch, ...otherProps }) => {
     const { finishOrder, cancelOrder, getPDF } = useContext(OrdersContext)
     const [showDropdownMenu, setShowDropdownMenu] = useState(false)
     const date = new Date(order.date)
@@ -56,7 +56,7 @@ const OrderOverview = ({ order, refetch }) => {
     const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
 
     return (
-        <OrderOverviewRow>
+        <OrderOverviewRow {...otherProps}>
             <TableCol>{order.customId}</TableCol>
             <TableCol>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</TableCol>
             <DeligateCol>

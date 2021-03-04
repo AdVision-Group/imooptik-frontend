@@ -6,7 +6,6 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 import SectionHeader from '../../components/section-header/section-header.component'
 import SectionNavbar from '../../components/section-navbar/section-navbar.component'
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import OrderOverview from '../../components/order-overview/order-overview.component'
 // import OrderDeligateModal from '../../components/order-deligate-modal/order-deligate-modal.component'
 import Popup from '../../components/popup/pop-up.component'
 import ListArrows from '../../components/list-arrows/list-arrows.component'
@@ -31,7 +30,8 @@ import {
     TableHead,
     OrdersTable,
     TableCol,
-    IconContainer
+    IconContainer,
+    OrderOverviewRow
 } from './orders.styles'
 
 const OrdersSection = () => {
@@ -244,19 +244,21 @@ const OrdersSection = () => {
                             }))
                             handleRefetch()
                         }}>
-                            Dátum {fetchQueryObj?.sortBy?.date === 1 ? <IconContainer>
-                                <GoArrowSmallDown />
-                            </IconContainer> : <IconContainer>
-                                    <GoArrowSmallUp />
-                                </IconContainer>
-                            }
+                            <p>
+                                Dátum {fetchQueryObj?.sortBy?.date === 1 ? <IconContainer>
+                                    <GoArrowSmallDown />
+                                </IconContainer> : <IconContainer>
+                                        <GoArrowSmallUp />
+                                    </IconContainer>
+                                }
+                            </p>
                         </TableCol>
                         <TableCol>Prevádzka</TableCol>
                         <TableCol>Status</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>
                     {orders?.map((order, idx) => (
-                        <OrderOverview key={idx} order={order} refetch={handleRefetch} />
+                        <OrderOverviewRow key={idx} order={order} refetch={handleRefetch} />
                     ))}
                 </OrdersTable>
 

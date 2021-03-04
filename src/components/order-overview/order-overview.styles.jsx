@@ -1,27 +1,23 @@
 import styled from 'styled-components'
 
-export const OrderOverviewRow = styled.div`
-    width: 100%;
-    display: grid;
-    grid-template-columns: 10rem 2fr 2fr 1fr 10rem;
-    align-content: center;
-    margin-bottom: 1rem;
-    box-shadow: var(--container-shadow);
-    background-color: var(--container-background-color);
-
-`
-
 export const TableCol = styled.div`
-    position: relative;
+    width: 30rem;
+    display: table-cell;
     padding: 2rem;
-    text-align: center;
+    position: relative;
+
 `
 
 export const DeligateCol = styled(TableCol)`
     cursor: pointer;
     padding: 1rem;
+    width: 30rem;
+    display: table-cell;
     transition: background-color .3s ease-out; 
 `
+
+
+
 
 export const DeligateButton = styled.div`
     padding: 1rem;
@@ -38,7 +34,6 @@ export const IconContainer = styled.div`
     justify-content: center;
     padding: .5rem;
     border-radius: 50%;
-    background-color: var(--dropdownbutton-background-color);
 
     svg {
         font-size: 1.2rem;
@@ -48,6 +43,21 @@ export const IconContainer = styled.div`
     }
 `
 
+export const OrderOverviewRow = styled.div`
+    position: relative;
+    display: table-row;
+
+    /* box-shadow: var(--container-shadow); */
+    background-color: var(--container-background-table-row);
+
+    @media all and (max-width: 920px) {
+        font-size: 1.2rem
+    }
+
+
+`
+
+
 export const DropdownMenu = styled.div`
     position: absolute;
     padding: 2rem;
@@ -55,7 +65,7 @@ export const DropdownMenu = styled.div`
     border-radius: .5rem;
     background-color: var(--dropdown-background-color);
     z-index: 99;
-    right: 3rem;
+    right: 0;
     top: 6rem;
     width: 20rem;
     text-align: start;
