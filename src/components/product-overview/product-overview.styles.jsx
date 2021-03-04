@@ -4,10 +4,10 @@ import CustomButton from '../custom-button/custom-button.component'
 export const ProductContainer = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: 15rem 1fr 25rem;
-    grid-template-rows: 1fr auto;
+    grid-template-columns: 15rem 1fr 1fr 25rem;
+    /* grid-template-rows: 1fr auto;
     grid-template-areas:    "i c p"
-                            "i c o";
+                            "i c o"; */
 
 
     box-shadow: var(--container-shadow);
@@ -36,7 +36,7 @@ export const ProductImage = styled.div`
     border-radius: .5rem;
     padding: 1rem;
     margin-right: 2rem;
-    grid-area: i;
+    /* grid-area: i; */
 
     img {
         width: 100%;
@@ -59,7 +59,7 @@ export const ProductImage = styled.div`
 `
 
 export const ProductContent = styled.div`
-    grid-area: c;
+    /* grid-area: c; */
 
     h2 {
         font-size: 1.6rem;
@@ -85,17 +85,24 @@ export const Price = styled.p`
 `
 
 export const PriceContainer = styled.div`
-    grid-area: p;
+    /* grid-area: p; */
 
     text-align:end;
-    align-self: center;
+    /* align-self: center; */
+    align-self: end;
+
     justify-self: end;
 `
 export const Options = styled.div`
-    grid-area: o;
+    /* grid-area: o; */
 
-    align-self: end;
+    /* align-self: end; */
     justify-self: end;
+
+    div {
+        text-align: right;
+        margin-bottom: 1rem;
+    }
 `
 
 export const UpdateButton = styled(CustomButton)`

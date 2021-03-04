@@ -56,16 +56,16 @@ const ProductOverview = ({
                 <ProductId>{eanCode}</ProductId>
 
             </ProductContent>
-
             <PriceContainer>
-                <div>
-                    <input id="selected" name='selected' type='checkbox' checked={isSelected} onChange={() => handleSelect(product._id, isSelected)} />
-                </div>
                 <Price>{(price / 100).toFixed(2)}€</Price>
                 <StockInfo>{type === 6 ? "Služba" : formatAvailable(available, activePremisesTab)}</StockInfo>
             </PriceContainer>
 
+
             <Options>
+                <div>
+                    <input id="selected" name='selected' type='checkbox' checked={isSelected} onChange={() => handleSelect(product._id, isSelected)} />
+                </div>
                 <UpdateButton onClick={handleUpdateButton}>
                     Upraviť
                 </UpdateButton>
