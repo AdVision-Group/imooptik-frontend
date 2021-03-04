@@ -23,6 +23,7 @@ import {
     TableHead,
     TableRow,
     UpdateButton,
+    Container,
     DeleteButton
 } from './customers.styles'
 
@@ -144,23 +145,25 @@ const CustomersSection = () => {
             </FlexContainer>
 
             <ScrollContainer>
-                <TableContainer>
-                    <TableHead>
-                        <TableCol>Meno a priezvisko</TableCol>
-                        <TableCol>Email</TableCol>
-                        <TableCol>Možnosti</TableCol>
-                    </TableHead>
-                    {userItems && userItems.map((user, idx) => (
-                        <TableRow key={idx}>
-                            <TableCol>{user.name}</TableCol>
-                            <TableCol>{user.email}</TableCol>
-                            <TableCol>
-                                <UpdateButton onClick={() => push(`zakaznici/${user._id}`)}>Upraviť</UpdateButton>
-                                <DeleteButton onClick={() => alert("Pekný pokus! Tu velím zatiaľ ja :)")}>Odstrániť</DeleteButton>
-                            </TableCol>
-                        </TableRow>
-                    ))}
-                </TableContainer>
+                <Container>
+                    <TableContainer>
+                        <TableHead>
+                            <TableCol>Meno a priezvisko</TableCol>
+                            <TableCol>Email</TableCol>
+                            <TableCol>Možnosti</TableCol>
+                        </TableHead>
+                        {userItems && userItems.map((user, idx) => (
+                            <TableRow key={idx}>
+                                <TableCol>{user.name}</TableCol>
+                                <TableCol>{user.email}</TableCol>
+                                <TableCol>
+                                    <UpdateButton onClick={() => push(`zakaznici/${user._id}`)}>Upraviť</UpdateButton>
+                                    {/* <DeleteButton onClick={() => alert("Pekný pokus! Tu velím zatiaľ ja :)")}>Odstrániť</DeleteButton> */}
+                                </TableCol>
+                            </TableRow>
+                        ))}
+                    </TableContainer>
+                </Container>
 
                 <ListArrows
                     listItems={userItems}

@@ -21,17 +21,42 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
 
     useEffect(() => {
         if (handleChange) {
-            if (parameters.diopters && parameters.addition) {
+            console.log(parameters)
+
+            if (parameters.addition[0] !== 1001) {
                 handleChange({
                     target: {
                         name: "diopters",
                         value: (Number(checkParameters(parameters.diopters, 0)) + Number(checkParameters(parameters.addition, 0))) === 0 ? "" : (Number(checkParameters(parameters.diopters, 0)) + Number(checkParameters(parameters.addition, 0))).toFixed(2)
                     }
                 }, 2)
+            }
+
+            if (parameters.addition[0] === 1001) {
+                handleChange({
+                    target: {
+                        name: "diopters",
+                        value: 1001
+                    }
+                }, 2)
+            }
+
+            if (parameters.addition[1] !== 1001) {
                 handleChange({
                     target: {
                         name: "diopters",
                         value: (Number(checkParameters(parameters.diopters, 1)) + Number(checkParameters(parameters.addition, 1))) === 0 ? "" : (Number(checkParameters(parameters.diopters, 1)) + Number(checkParameters(parameters.addition, 1))).toFixed(2)
+                    }
+                }, 3)
+                return
+            }
+
+
+            if (parameters.addition[1] === 1001) {
+                handleChange({
+                    target: {
+                        name: "diopters",
+                        value: 1001
                     }
                 }, 3)
             }
