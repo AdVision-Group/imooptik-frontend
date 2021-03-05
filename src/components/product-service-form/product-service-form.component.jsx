@@ -23,6 +23,14 @@ const ProductServiceForm = ({
             <ServiceContainer>
                 <h3>Základné informácie</h3>
                 <CustomInput
+                    label="eanCode*"
+                    type='text'
+                    name='name'
+                    value={product.eanCode.toString() ?? ""}
+                    handleChange={(e) => handleChange(e)}
+                />
+
+                <CustomInput
                     label="Názov služby*"
                     type='text'
                     name='name'

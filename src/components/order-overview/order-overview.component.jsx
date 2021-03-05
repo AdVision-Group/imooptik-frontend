@@ -3,6 +3,7 @@ import { OrdersContext } from '../../context/orders/orders.context'
 import { Link } from 'react-router-dom'
 import OrderDeligateModal from '../order-deligate-modal/order-deligate-modal.component'
 // import OrderPayModal from '../order-pay-modal/order-pay-modal.component'
+import FinishDepositedOrderModal from '../modal-finish-deposited-order/modal-finish-deposited-order.component'
 
 import { retailNames } from '../../context/warehouse/warehouse.utils'
 import { useOutsideHandler } from '../../hooks/useOutsideAlerter'
@@ -13,6 +14,8 @@ import {
     AiOutlineFolderOpen,
     AiOutlineCheck
 } from 'react-icons/ai'
+
+import { GiMoneyStack } from 'react-icons/gi'
 
 import { BsTrash } from 'react-icons/bs'
 
@@ -33,6 +36,7 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
     const dropdownRef = useRef(null)
     useOutsideHandler(dropdownRef, () => setShowDropdownMenu(false))
     const [showOrderDeligateModal, setShowOrderDeligateModal] = useState(false)
+    const [showFinishDepositedOrderModal, setShowFinishDepositedOrderModal] = useState(false)
 
     const translateStatus = status => {
         if (status === 'finished') return "Dokončené"
@@ -55,8 +59,11 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
 
     const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
 
+    console.log(order.status)
+
     return (
         <OrderOverviewRow {...otherProps}>
+            {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} />}
             <TableCol>{order.customId}</TableCol>
             <TableCol>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</TableCol>
             <DeligateCol>
@@ -73,7 +80,13 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
                 {showDropdownMenu && (
                     <DropdownMenu ref={dropdownRef} >
                         <ul>
-                            {(order.status !== "fulfilled" && order.status !== "cancelled") && <li onClick={() => handleFinishOrder(order._id)}>
+                            {(order.status === "half-paid") && <li onClick={() => setShowFinishDepositedOrderModal(true)}>
+                                <div>
+                                    <GiMoneyStack />
+                                </div>
+                                    Zaplatiť
+                            </li>}
+                            {(order.status !== "half-paid" && order.status !== "fulfilled" && order.status !== "cancelled") && <li onClick={() => handleFinishOrder(order._id)}>
                                 <div>
                                     <AiOutlineCheck />
                                 </div>

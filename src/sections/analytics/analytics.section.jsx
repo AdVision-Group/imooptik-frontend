@@ -90,21 +90,37 @@ const AnalyticsSection = () => {
     }
 
     const handleSubmitReport = () => {
-        if (!reportObj?.from && !reportObj?.to) return
-        const formatedFrom = reportObj?.from.split("-").reverse().join("/")
-        const formatedto = reportObj?.to.split("-").reverse().join("/")
-
-        const reportQueryObj = {
-            type: activeReportType,
-            timespan: `${formatedFrom}:${formatedto}`,
-            ...(activeRetailType !== null) && {
-                filters: {
-                    premises: activeRetailType
+        if (!reportObj?.from && !reportObj?.to) {
+            const reportQueryObj = {
+                type: activeReportType,
+                timespan: "all",
+                ...(activeRetailType !== null) && {
+                    filters: {
+                        premises: activeRetailType
+                    }
                 }
             }
+
+            generateReport(reportQueryObj)
+        } else {
+            const formatedFrom = reportObj?.from.split("-").reverse().join("/")
+            const formatedto = reportObj?.to.split("-").reverse().join("/")
+
+            const reportQueryObj = {
+                type: activeReportType,
+                timespan: activeReportType === 'users' ? "all" : `${formatedFrom}:${formatedto}`,
+                ...(activeRetailType !== null) && {
+                    filters: {
+                        premises: activeRetailType
+                    }
+                }
+            }
+
+
+            generateReport(reportQueryObj)
+
         }
 
-        generateReport(reportQueryObj)
     }
 
     useEffect(() => {
@@ -242,10 +258,10 @@ const AnalyticsSection = () => {
                                     </div>
                                 </StatsContainer>
                             ) : (
-                                    <StatsContainer>
-                                        <p>Žiadné štatistiky</p>
-                                    </StatsContainer>
-                                )
+                                <StatsContainer>
+                                    <p>Žiadné štatistiky</p>
+                                </StatsContainer>
+                            )
                         }
                     </StatsGrid>
                 )}
@@ -276,7 +292,7 @@ const AnalyticsSection = () => {
                         ))}
                     </CheckboxContainer>}
 
-                    <TwoColContainer>
+                    {activeReportType !== 'users' ? <TwoColContainer>
                         <div>
                             <h5>Od:</h5>
                             <CustomInput
@@ -297,7 +313,7 @@ const AnalyticsSection = () => {
                                 handleChange={handleChange}
                             />
                         </div>
-                    </TwoColContainer>
+                    </TwoColContainer> : <div style={{ marginBottom: "2rem" }}><p>Žiadne možnosti</p></div>}
 
                     <SubmitButton onClick={handleSubmitReport}>Generovať</SubmitButton>
                 </ReportContainer>}

@@ -163,6 +163,8 @@ export const Col = styled.div`
     text-align: center;
     margin: 1rem;
     height: 4rem;
+    color: ${({ isActive }) => isActive ? "var(--primary-color)" : "var(--input-color)"};
+
 
     input {
         display:block;
@@ -183,6 +185,16 @@ export const Col = styled.div`
             opacity: .83;
         }
     }
+
+    /* clickable */
+
+    ${({ clickable }) => clickable && `
+        cursor: pointer;
+        
+        &:hover {
+            color: var(--primary-color);
+        }
+    `}
 `
 
 export const TableBlock = styled.div`

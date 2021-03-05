@@ -73,6 +73,21 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         })
     }
 
+    const handleDomEye = (num, paramObj, handleChange) => {
+        console.log(paramObj)
+        if (paramObj?.domoko === num) {
+            handleChange(prevValue => ({
+                ...prevValue,
+                domoko: 0,
+            }))
+        } else {
+            handleChange(prevValue => ({
+                ...prevValue,
+                domoko: num,
+            }))
+        }
+    }
+
     const handleChange = e => {
         const { name, value } = e.target
 
@@ -613,8 +628,8 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                         <SubjectiveRefTable>
                             <TableTitleCol>
                                 <Col>{"-"}</Col>
-                                <Col>P.</Col>
-                                <Col>L.</Col>
+                                <Col isActive={subjektivna_refrakcia?.domoko === 1} clickable onClick={() => handleDomEye(1, subjektivna_refrakcia, setSubjektivna_refrakcia)}>P.</Col>
+                                <Col isActive={subjektivna_refrakcia?.domoko === 2} clickable onClick={() => handleDomEye(2, subjektivna_refrakcia, setSubjektivna_refrakcia)}>L.</Col>
                             </TableTitleCol>
 
                             <TableCol>
