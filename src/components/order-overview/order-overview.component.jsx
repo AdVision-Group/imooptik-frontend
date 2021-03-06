@@ -59,8 +59,6 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
 
     const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
 
-    console.log(order.status)
-
     return (
         <OrderOverviewRow {...otherProps}>
             {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} />}

@@ -21,8 +21,6 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
 
     useEffect(() => {
         if (handleChange) {
-            console.log(parameters)
-
             if (parameters.addition[0] !== 1001) {
                 handleChange({
                     target: {

@@ -74,7 +74,6 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     }
 
     const handleDomEye = (num, paramObj, handleChange) => {
-        console.log(paramObj)
         if (paramObj?.domoko === num) {
             handleChange(prevValue => ({
                 ...prevValue,

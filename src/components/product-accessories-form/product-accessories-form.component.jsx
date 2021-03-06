@@ -124,17 +124,17 @@ const ProductAccessoriesForm = ({
                     })}
                 </StockContainer>
             ) : (
-                    <StockContainer>
-                        <h3>Skladové zásoby</h3>
-                        <CustomInput
-                            label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[currentUser.premises]}
-                            type='number'
-                            name={"available"}
-                            value={checkParameter(product.available, currentUser.premises)}
-                            handleChange={e => handleAvailableChange(e, currentUser.premises)}
-                        />
-                    </StockContainer>
-                )}
+                <StockContainer>
+                    <h3>Skladové zásoby</h3>
+                    <CustomInput
+                        label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[currentUser.premises]}
+                        type='number'
+                        name={"available"}
+                        value={checkParameter(product.available, currentUser.premises)}
+                        handleChange={e => handleAvailableChange(e, currentUser.premises)}
+                    />
+                </StockContainer>
+            )}
         </AccessoriesFormContainer>
     )
 }

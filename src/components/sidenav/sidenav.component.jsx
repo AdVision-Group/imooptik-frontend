@@ -32,8 +32,6 @@ const Sidenav = ({ routes, match }) => {
         // push(path)
     }
 
-    console.log(currentUser)
-
     return (
         <React.Fragment>
 
