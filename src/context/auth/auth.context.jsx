@@ -220,9 +220,11 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
+            console.log("GET USER")
             const getUserProfile = async () => {
                 const response = await fetchUser(token)
                 const data = await response.json()
+                console.log(data)
                 if (data.user) {
                     setCurrentUser(data.user)
                     checkIfAdmin(data.user)
