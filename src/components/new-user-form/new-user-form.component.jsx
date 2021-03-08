@@ -210,90 +210,87 @@ const NewUserForm = ({
 
                     </CustomerForm>
                 ) : (
-                        <CustomerForm>
+                    <CustomerForm>
 
-                            <ColContainer>
-                                <h2>Informácie</h2>
-                                <CustomInput
-                                    label="Meno*"
-                                    type='text'
-                                    name='fName'
-                                    value={user.fName ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                                <CustomInput
-                                    label="Priezvisko*"
-                                    type='text'
-                                    name='lName'
-                                    value={user.lName ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                                <CustomInput
-                                    label="E-mail*"
-                                    type='email'
-                                    name='email'
-                                    value={user.email ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                                <CustomInput
-                                    label="Heslo*"
-                                    type='password'
-                                    name='password'
-                                    value={user.password ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                                <CustomInput
-                                    label="Potvrď heslo*"
-                                    type='password'
-                                    name='confirmPassword'
-                                    value={user.confirmPassword ?? ""}
-                                    handleChange={(e) => handleChange(e)}
-                                />
-                            </ColContainer>
+                        <ColContainer>
+                            <h2>Informácie</h2>
+                            <CustomInput
+                                label="Meno*"
+                                type='text'
+                                name='fName'
+                                value={user.fName ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="Priezvisko*"
+                                type='text'
+                                name='lName'
+                                value={user.lName ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="E-mail*"
+                                type='email'
+                                name='email'
+                                value={user.email ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="Heslo*"
+                                type='password'
+                                name='password'
+                                value={user.password ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                            <CustomInput
+                                label="Potvrď heslo*"
+                                type='password'
+                                name='confirmPassword'
+                                value={user.confirmPassword ?? ""}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </ColContainer>
 
-                            <ColContainer>
-                                <SectionTitle>Admin privilégia</SectionTitle>
-                                <div>
-                                    <h4>Predajňa na ktorej uživatel pracuje</h4>
-                                    <CustomSelect name='premises' value={user.premises} onChange={(e) => handleChange(e)}>
-                                        <option value={0}>Nezadané</option>
+                        <ColContainer>
+                            <SectionTitle>Admin privilégia</SectionTitle>
+                            <div>
+                                <h4>Predajňa na ktorej uživatel pracuje</h4>
+                                <CustomSelect name='premises' value={user.premises} onChange={(e) => handleChange(e)}>
+                                    <option value={0}>Nezadané</option>
+                                    {retailNames.map((name, idx) => {
+                                        if (idx === 0) return
+                                        return (
+                                            <option key={idx} value={idx}>{name}</option>
 
-                                        {
-                                            retailNames.map((name, idx) => {
-                                                if (idx === 4) return
-                                                return (
-                                                    <option key={idx} value={idx + 1}>{name}</option>
+                                        )
+                                    })}
+                                </CustomSelect>
 
-                                                )
-                                            })
+                            </div>
+                            <div>
+                                <h4>Výška administrativných práv</h4>
+                                <CustomSelect name='admin' value={user.admin} onChange={(e) => handleChange(e)}>
+                                    <option value={0}>Zákaznik</option>
+                                    <option value={1}>Predavač</option>
+                                    <option value={2}>Vedúci</option>
+                                </CustomSelect>
+
+                            </div>
+                            <Container>
+                                <CustomCheckbox
+                                    label='Optometrista'
+                                    handleClick={() => handleChange({
+                                        target: {
+                                            name: "optometrist",
+                                            value: !user.optometrist
                                         }
-                                    </CustomSelect>
-
-                                </div>
-                                <div>
-                                    <h4>Výška administrativných práv</h4>
-                                    <CustomSelect name='admin' value={user.admin} onChange={(e) => handleChange(e)}>
-                                        <option value={0}>Zákaznik</option>
-                                        <option value={1}>Predavač</option>
-                                        <option value={2}>Vedúci</option>
-                                    </CustomSelect>
-
-                                </div>
-                                <Container>
-                                    <CustomCheckbox
-                                        label='Optometrista'
-                                        handleClick={() => handleChange({
-                                            target: {
-                                                name: "optometrist",
-                                                value: !user.optometrist
-                                            }
-                                        })}
-                                        isActive={user.optometrist}
-                                    />
-                                </Container>
-                            </ColContainer>
-                        </CustomerForm>
-                    )
+                                    })}
+                                    isActive={user.optometrist}
+                                />
+                            </Container>
+                        </ColContainer>
+                    </CustomerForm>
+                )
             }
         </div>
     )

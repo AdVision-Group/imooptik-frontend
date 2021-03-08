@@ -31,13 +31,15 @@ export const TableHead = styled.div`
     display: table-row;
 
     font-weight: bolder;
-    position: sticky;
-    top: -1.5rem;
-    background-color: var(--background-primary-color);
+
+    /* background-color: var(--background-primary-color); */
 
     ${TableCol} {
         background-color: var(--background-primary-color);
         border-bottom: 1px solid var(--secondary-text-color);
+        position: sticky;
+        top: -1.5rem;
+        z-index: 999;
     }
 
     @media all and (max-width: 920px) {
@@ -49,7 +51,8 @@ export const OrderOverviewRow = styled(OrderOverview)`
 `
 
 export const OrdersTable = styled.div`
-    min-width: 100%;
+    /* min-width: 100%; */
+    /* position: relative; */
     display: table;
     overflow-x: scroll;
     border-collapse: collapse;

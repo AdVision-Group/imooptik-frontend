@@ -57,9 +57,9 @@ const UserForm = ({
                             <option value={0}>Nezadané</option>
                             {
                                 retailNames.map((name, idx) => {
-                                    if (idx === 4) return
+                                    if (idx === 0) return
                                     return (
-                                        <option key={idx} value={idx + 1}>{name}</option>
+                                        <option key={idx} value={idx}>{name}</option>
                                     )
                                 })
                             }
@@ -280,8 +280,8 @@ const UserForm = ({
                             handleUpdateClick={() => push(`/dashboard/objednavky/${user._id}/${order}`)}
                         />
                     )).reverse().slice(0, 5) : (
-                            <p>Žiadné objednávky</p>
-                        )}
+                        <p>Žiadné objednávky</p>
+                    )}
                 </div>
                 {isOptometrist && <ExaminationsOverview />}
             </div>}

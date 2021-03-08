@@ -118,6 +118,12 @@ const OrdersProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders`, requestOptions)
             const data = await response.json()
 
+            if (data.error) {
+                getMessage(data.messageSK)
+                setIsLoading(false)
+                return
+            }
+
             if (data.order) {
                 getOrders()
                 closeModal()
