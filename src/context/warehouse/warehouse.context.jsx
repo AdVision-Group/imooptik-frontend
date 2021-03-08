@@ -173,7 +173,7 @@ const WarehouseProvider = ({ children }) => {
     const resetProduct = () => {
         setProduct({
             ...initProductObj,
-            available: [0, 1001, 1001, 1001, 1001],
+            available: [0, 1001, 1001, 1001, 1001, 1001],
         })
         setEanCode(null)
     }
@@ -469,7 +469,7 @@ const WarehouseProvider = ({ children }) => {
             } else {
                 modifiedProduct = {
                     ...modifiedProduct,
-                    available: productToUpdate.available ? productToUpdate.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+                    available: productToUpdate.available ? productToUpdate.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0, 0]
                 }
             }
         }

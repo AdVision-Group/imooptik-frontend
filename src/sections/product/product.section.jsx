@@ -9,15 +9,11 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import ModalImage from '../../components/modal-images/modal-images.component'
 import Popup from '../../components/popup/pop-up.component'
 
-// import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox.component'
-// import CustomFormSwitch from '../../components/custom-form-switch/custom-form-switch.component'
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
 import ProductLensesForm from '../../components/product-lenses-form/product-lenses-form.component'
 import ProductAccessoriesForm from '../../components/product-accessories-form/product-accessories-form.component'
 import ProductContactLensesForm from '../../components/product-contact-lenses-form/product-contact-lenses-form.component'
 import ProductServiceForm from '../../components/product-service-form/product-service-form.component'
-
-// import { useFetch } from '../../hooks/useFetch'
 
 import { productCategories, checkParameter, formatLink } from '../../context/warehouse/warehouse.utils'
 import { retailNames } from '../../utils/warehouse.utils'
@@ -341,7 +337,7 @@ const ProductSection = () => {
             if (newProductObj.available) {
                 newProductObj = {
                     ...productObj,
-                    available: newProductObj.available ? newProductObj.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0]
+                    available: newProductObj.available ? newProductObj.available.map(value => value === 1001 ? 0 : value) : [0, 0, 0, 0, 0, 0]
                 }
             }
         }

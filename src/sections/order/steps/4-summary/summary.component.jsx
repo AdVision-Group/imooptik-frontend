@@ -194,7 +194,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         </div>
                         <div>
                             <h4>Vybavuje prevádzka</h4>
-                            <StyledParagraph>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises - 1]}</StyledParagraph>
+                            <StyledParagraph>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises]}</StyledParagraph>
                         </div>
                         <div>
                             <h4>PDF</h4>

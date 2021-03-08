@@ -5,7 +5,7 @@ export const initProductObj = {
     type: 0,
     brand: "",
     soldAmount: 0,
-    available: [0, 1001, 1001, 1001, 1001],
+    available: [0, 1001, 1001, 1001, 1001, 1001],
     eanCode: "",
     image: "",
     eshop: true,
@@ -44,10 +44,12 @@ export const initLensesObj = {
 
 export const retailNames = [
     "Obchodná 57, Bratislava",
+    "Obchodná 57, Bratislava",
     "Miletičova 38, Bratislava",
     "Vajnory, Bratislava",
     "Senica, OC Branč",
-    "Trnava, City Aréna"
+    "Nová prevadzka",
+    // "Trnava, City Aréna"
 ]
 
 // Category variables
@@ -108,6 +110,10 @@ export const premisesTabs = [
         id: 4,
         name: "Senica, OC Branč",
         premises: 4,
+    },
+    {
+        id: 5,
+        name: "Nová prevadzka",
     },
 
     // {

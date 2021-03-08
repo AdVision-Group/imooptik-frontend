@@ -61,12 +61,12 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
 
     return (
         <OrderOverviewRow {...otherProps}>
-            {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} />}
+            {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} refetch={refetch} id={order._id} />}
             <TableCol>{order.customId}</TableCol>
             <TableCol>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</TableCol>
             <DeligateCol>
                 <DeligateButton onClick={() => setShowOrderDeligateModal(true)} >
-                    {order.premises === 0 ? "Neuvedené" : retailNames[order.premises - 1]}
+                    {order.premises === 0 ? "Neuvedené" : retailNames[order.premises]}
                 </DeligateButton>
                 {showOrderDeligateModal && <OrderDeligateModal refetch={refetch} close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
             </DeligateCol>

@@ -46,12 +46,12 @@ const OrderDeligateModal = ({ close, premise, id, refetch }) => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/delegate`, requestOptions)
-            if (response.status === 400) {
-                getMessage("Faktúra musí byt zaplatená, aby mohla byť priradená prevádzke")
-            }
-            if (response.status === 401) {
-                getMessage("Musíš byt vedúci, aby si mohol manipulovať s priradovanim")
-            }
+            // if (response.status === 400) {
+            //     getMessage("Faktúra musí byt zaplatená, aby mohla byť priradená prevádzke")
+            // }
+            // if (response.status === 401) {
+            //     getMessage("Musíš byt vedúci, aby si mohol manipulovať s priradovanim")
+            // }
             const data = await response.json()
 
             if (data.order) {
@@ -61,7 +61,7 @@ const OrderDeligateModal = ({ close, premise, id, refetch }) => {
                 return
             }
 
-            // getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
         } catch (err) {
             console.log(err)
@@ -79,9 +79,9 @@ const OrderDeligateModal = ({ close, premise, id, refetch }) => {
                 <CustomSelect value={value} onChange={(e) => setValue(e.target.value)}>
                     <option value={0}>Nezadané</option>
                     {retailNames.map((name, idx) => {
-                        if (idx === 4) return
+                        if (idx === 0) return
                         return (
-                            <option key={idx} value={idx + 1}>{name}</option>
+                            <option key={idx} value={idx}>{name}</option>
                         )
                     })}
                 </CustomSelect>
