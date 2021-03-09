@@ -6,6 +6,7 @@ import OrderDeligateModal from '../order-deligate-modal/order-deligate-modal.com
 import FinishDepositedOrderModal from '../modal-finish-deposited-order/modal-finish-deposited-order.component'
 
 import { retailNames } from '../../context/warehouse/warehouse.utils'
+import { translateStatus } from '../../utils/orders.utils'
 import { useOutsideHandler } from '../../hooks/useOutsideAlerter'
 
 import {
@@ -38,14 +39,6 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
     const [showOrderDeligateModal, setShowOrderDeligateModal] = useState(false)
     const [showFinishDepositedOrderModal, setShowFinishDepositedOrderModal] = useState(false)
 
-    const translateStatus = status => {
-        if (status === 'finished') return "Dokončené"
-        if (status === 'fulfilled') return "Vybavené"
-        if (status === 'pending') return "Čaká na vybavenie"
-        if (status === 'paid') return "Zaplatené"
-        if (status === 'half-paid') return "Zálohované"
-        if (status === 'cancelled') return "Zrušené"
-    }
 
     const handleFinishOrder = (id) => {
         finishOrder(id, refetch)

@@ -25,3 +25,12 @@ export const translatePaymentMethod = value => {
     if (value === 'coupon') return "Kupón"
     return value
 }
+
+export const translateStatus = status => {
+    if (status === 'finished') return "Dokončené"
+    if (status === 'fulfilled') return "Vybavené"
+    if (status === 'pending') return "Čaká na vybavenie"
+    if (status === 'paid') return "Zaplatené"
+    if (status === 'half-paid') return "Zálohované"
+    if (status === 'cancelled') return "Zrušené"
+}

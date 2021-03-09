@@ -10,7 +10,7 @@ import OrderUpdateUserModal from '../../../../components/modal-order-update-user
 
 
 import { retailNames } from '../../../../context/warehouse/warehouse.utils'
-import { translatePaymentMethod } from '../../../../utils/orders.utils'
+import { translatePaymentMethod, translateStatus } from '../../../../utils/orders.utils'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
@@ -182,13 +182,17 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                             <StyledParagraph>{order.order.buyingAsCompany ? "Áno" : "Nie"}</StyledParagraph>
                         </div>
                         <div>
+                            <h4>Stav objednávky</h4>
+                            <StyledParagraph>{translateStatus(order.order.status)}</StyledParagraph>
+                        </div>
+                        {order?.order?.advancePaymentType && <div>
+                            <h4>Záloha</h4>
+                            <StyledParagraph>{`Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€ (${translatePaymentMethod(order.order.advancePaymentType)})`}</StyledParagraph>
+                        </div>}
+                        {order.order.status !== 'half-paid' && <div>
                             <h4>Spôsob úhrady</h4>
                             <StyledParagraph>{translatePaymentMethod(order.order.paymentType)}</StyledParagraph>
-                        </div>
-                        <div>
-                            <h4>Stav objednávky</h4>
-                            <StyledParagraph>{order.order.status === 'half-paid' ? `Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€` : "Zaplatené"}</StyledParagraph>
-                        </div>
+                        </div>}
                         <div>
                             <h4>Vybavuje prevádzka</h4>
                             <StyledParagraph>{order.order.premises === 0 ? "Neuvedené" : retailNames[order.order.premises]}</StyledParagraph>

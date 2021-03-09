@@ -36,13 +36,6 @@ export const Modal = styled.div`
         text-align: center;
     }
 
-    h3 {
-        text-align: center;
-        font-weight: lighter;
-        font-size: 5rem;
-        opacity: .5;
-    }
-
     ::-webkit-scrollbar {
         width: 10px;
     }
@@ -100,4 +93,32 @@ export const SubmitButton = styled(CustomButton)`
     margin: 0 auto;
     background-color: var(--primary-color);
     font-weight: bolder;
+`
+
+export const GridContainer = styled.div`
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 3rem;
+
+    div {
+        width: 15rem;
+        text-align: center;
+        padding: 2rem;
+        border-radius: .3rem;
+        background-color: var(--body-background-primary-color);
+
+        h3 {
+            font-weight: lighter;
+        }
+
+        p {
+            font-size: 3rem;
+        }
+
+        span {
+            opacity: .63;
+            font-size: 1.4rem;
+        }
+    }
 `
