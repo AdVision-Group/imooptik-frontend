@@ -10,6 +10,7 @@ import OrderUpdateUserModal from '../../../../components/modal-order-update-user
 
 
 import { retailNames } from '../../../../context/warehouse/warehouse.utils'
+import { translatePaymentMethod } from '../../../../utils/orders.utils'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
@@ -47,12 +48,8 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
         }
     }, [order.combinedProducts])
 
-    const translatePaymentMethod = value => {
-        if (value === 'cash') return "Hotovosť"
-        if (value === 'card') return "Karta"
-        if (value === 'coupon') return "Kupón"
-        return value
-    }
+
+    console.log(order)
 
     return (
         <div>

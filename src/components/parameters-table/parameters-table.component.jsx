@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import { formatfloatNumber } from '../../utils/warehouse.utils'
+
 import {
     TableContainer,
     TitleCol,
@@ -17,6 +19,16 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
         }
 
         return parameter[idx]
+    }
+
+    const formatParameter = (e, idx) => {
+        const value = formatfloatNumber(e.target.value)
+        handleChange({
+            target: {
+                value: value,
+                name: e.target.name
+            }
+        }, idx)
     }
 
     useEffect(() => {
@@ -92,6 +104,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="diopters"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
                             />
                         </div>
                     )
@@ -109,6 +122,8 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="cylinder"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
+
 
                             />
                         </div>
@@ -127,6 +142,8 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
+
 
                             />
                         </OsContainer>
@@ -145,6 +162,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="distance"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
 
                             />
                         </div>

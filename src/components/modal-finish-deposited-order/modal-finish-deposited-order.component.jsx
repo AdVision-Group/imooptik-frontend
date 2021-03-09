@@ -3,6 +3,8 @@ import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import ReactDOM from 'react-dom'
 
+import { translatePaymentMethod } from '../../utils/orders.utils'
+
 import {
     ModalContainer,
     Modal,
@@ -12,7 +14,7 @@ import {
 } from './modal-finish-deposited-order.styles'
 
 
-const FinishDepositedOrderModal = ({ close, id, refetch }) => {
+const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
     const { token } = useContext(AuthContext)
     const {
         getMessage,
@@ -60,11 +62,19 @@ const FinishDepositedOrderModal = ({ close, id, refetch }) => {
         }
     }
 
+    console.log(order)
+
     return ReactDOM.createPortal((
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
                 <h2>Spôsob úhrady</h2>
+                <div>
+                    <h3>Záloha</h3>
+                    <p>{(order?.paidAlready / 100).toFixed(2)}€</p>
+                    <span>{translatePaymentMethod(order?.advancePaymentType)}</span>
+                </div>
+
                 <CustomSelect value={value} onChange={(e) => setValue(e.target.value)}>
                     <option value={''}>Neuvedené</option>
                     <option value={'card'}>Karta</option>

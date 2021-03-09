@@ -126,3 +126,16 @@ export const formatPrice = (price = "") => {
         return Number(price * 100)
     }
 }
+
+export const formatfloatNumber = number => {
+    let value = 0
+
+    console.log(number)
+
+    if (number.includes(',')) {
+        value = number.split(',')[0] + '.' + number.split(',')[1]
+        return Number(value)
+    } else {
+        return Number(number)
+    }
+}

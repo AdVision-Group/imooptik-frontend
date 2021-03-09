@@ -61,7 +61,7 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
 
     return (
         <OrderOverviewRow {...otherProps}>
-            {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} refetch={refetch} id={order._id} />}
+            {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} refetch={refetch} id={order._id} order={order} />}
             <TableCol>{order.customId}</TableCol>
             <TableCol>{date.toLocaleDateString("sk-SK", { weekday: 'long', month: 'long', day: 'numeric' })}</TableCol>
             <DeligateCol>

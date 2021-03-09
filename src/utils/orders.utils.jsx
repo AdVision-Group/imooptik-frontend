@@ -17,5 +17,11 @@ export const formatAvailable = (available) => {
         const totalCount = available.reduce((acc, currValue) => acc + currValue)
         return totalCount > 0 ? `${totalCount}ks` : "Nedostupné"
     }
+}
 
+export const translatePaymentMethod = value => {
+    if (value === 'cash') return "Hotovosť"
+    if (value === 'card') return "Karta"
+    if (value === 'coupon') return "Kupón"
+    return value
 }
