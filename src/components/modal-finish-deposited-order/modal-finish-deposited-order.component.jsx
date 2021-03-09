@@ -69,11 +69,11 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
             <CloseButton onClick={close} />
             <Modal>
                 <h2>Spôsob úhrady</h2>
-                <div>
+                {/* <div>
                     <h3>Záloha</h3>
                     <p>{(order?.paidAlready / 100).toFixed(2)}€</p>
                     <span>{translatePaymentMethod(order?.advancePaymentType)}</span>
-                </div>
+                </div> */}
 
                 <CustomSelect value={value} onChange={(e) => setValue(e.target.value)}>
                     <option value={''}>Neuvedené</option>

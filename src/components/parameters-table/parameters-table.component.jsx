@@ -181,6 +181,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="prism"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
 
                             />
                         </div>
@@ -199,6 +200,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="basis"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
 
                             />
                         </div>
@@ -217,6 +219,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                                 name="addition"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
+                                onBlur={e => formatParameter(e, idx)}
 
                             />
                         </div>
