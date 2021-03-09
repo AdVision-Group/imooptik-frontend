@@ -73,7 +73,7 @@ const ProductGlassesForm = ({
                     handleChange={(e) => handleChange(e)}
                 />
                 <CustomInput
-                    label="Názov doplnku*"
+                    label="Názov produktu*"
                     type='text'
                     name='name'
                     value={product.name ?? ""}
@@ -104,7 +104,7 @@ const ProductGlassesForm = ({
                     </React.Fragment>
                 )}
 
-                <CustomInput
+                {/* <CustomInput
                     label="Kategória"
                     type='text'
                     name='category'
@@ -112,13 +112,13 @@ const ProductGlassesForm = ({
                     handleChange={(e) => handleChange(e)}
                     list="categories"
 
-                />
+                /> */}
 
-                <datalist id="categories">
+                {/* <datalist id="categories">
                     {filters?.categories && filters?.categories.map((brand, idx) => (
                         <option key={idx} value={brand} />
                     ))}
-                </datalist>
+                </datalist> */}
 
                 {isUpdating && <CustomInput
                     label="Link"

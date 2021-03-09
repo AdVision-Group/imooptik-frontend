@@ -160,7 +160,7 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                             ))}
                         </datalist>
                     </div>
-                    <div>
+                    {/* <div>
                         <CustomInput
                             label='Kategoria produktu'
                             name='category'
@@ -175,7 +175,7 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                             ))}
                         </datalist>
 
-                    </div>
+                    </div> */}
                     <div>
                         <CustomInput
                             label='Eankód produktu'

@@ -57,7 +57,7 @@ const ProductAccessoriesForm = ({
                     ))}
                 </datalist>
 
-                <CustomInput
+                {/* <CustomInput
                     label="Kategória"
                     type='text'
                     name='category'
@@ -71,7 +71,7 @@ const ProductAccessoriesForm = ({
                     {filters?.categories && filters?.categories.map((brand, idx) => (
                         <option key={idx} value={brand} />
                     ))}
-                </datalist>
+                </datalist> */}
 
                 {isUpdating && <CustomInput
                     label="Link"

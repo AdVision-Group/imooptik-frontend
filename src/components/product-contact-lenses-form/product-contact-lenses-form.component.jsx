@@ -62,7 +62,7 @@ const ProductContactLensesForm = ({
                         <option key={idx} value={brand} />
                     ))}
                 </datalist>
-
+                {/* 
                 <CustomInput
                     label="Kategória"
                     type='text'
@@ -76,7 +76,7 @@ const ProductContactLensesForm = ({
                     {filters?.categories && filters?.categories.map((brand, idx) => (
                         <option key={idx} value={brand} />
                     ))}
-                </datalist>
+                </datalist> */}
 
                 {isUpdating && <CustomInput
                     label="Link"
@@ -192,17 +192,17 @@ const ProductContactLensesForm = ({
                         })}
                     </StockContainer>
                 ) : (
-                        <StockContainer>
-                            <h3>Skladové zásoby</h3>
-                            <CustomInput
-                                label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[currentUser.premises]}
-                                type='number'
-                                name={"available"}
-                                value={checkParameter(product.available, currentUser.premises)}
-                                handleChange={e => handleAvailableChange(e, currentUser.premises)}
-                            />
-                        </StockContainer>
-                    )}
+                    <StockContainer>
+                        <h3>Skladové zásoby</h3>
+                        <CustomInput
+                            label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[currentUser.premises]}
+                            type='number'
+                            name={"available"}
+                            value={checkParameter(product.available, currentUser.premises)}
+                            handleChange={e => handleAvailableChange(e, currentUser.premises)}
+                        />
+                    </StockContainer>
+                )}
             </div>
         </ContactLensesFormContainer>
     )
