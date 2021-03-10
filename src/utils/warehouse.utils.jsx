@@ -134,8 +134,8 @@ export const formatfloatNumber = number => {
 
     if (number.includes(',')) {
         value = number.split(',')[0] + '.' + number.split(',')[1]
-        return Number(value)
+        return value
     } else {
-        return Number(number)
+        return number
     }
 }
