@@ -190,7 +190,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                             <StyledParagraph>{`Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€ (${translatePaymentMethod(order.order.advancePaymentType)})`}</StyledParagraph>
                         </div>}
                         {order.order.status !== 'half-paid' && <div>
-                            <h4>Spôsob úhrady</h4>
+                            <h4>Spôsob úhrady doplatku</h4>
                             <StyledParagraph>{translatePaymentMethod(order.order.paymentType)}</StyledParagraph>
                         </div>}
                         <div>

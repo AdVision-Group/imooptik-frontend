@@ -80,7 +80,7 @@ export const retailNames = [
     "Miletičova 38, Bratislava",
     "Vajnory, Bratislava",
     "Senica, OC Branč",
-    "Nová prevadzka",
+    "Vajnorská 53, Bratislava",
     // "Trnava, City Aréna"
 ]
 
@@ -107,7 +107,7 @@ export const retailNamesTabs = [
     },
     {
         id: 5,
-        name: "Nová prevadzka",
+        name: "Vajnorská 53, Bratislava",
     },
 ]
 

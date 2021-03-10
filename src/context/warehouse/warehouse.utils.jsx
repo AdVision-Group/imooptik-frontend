@@ -43,12 +43,12 @@ export const initLensesObj = {
 }
 
 export const retailNames = [
-    "Obchodná 57, Bratislava",
+    // "-",
     "Obchodná 57, Bratislava",
     "Miletičova 38, Bratislava",
     "Vajnory, Bratislava",
     "Senica, OC Branč",
-    "Nová prevadzka",
+    "Vajnorská 53, Bratislava",
     // "Trnava, City Aréna"
 ]
 
@@ -113,7 +113,7 @@ export const premisesTabs = [
     },
     {
         id: 5,
-        name: "Nová prevadzka",
+        name: "Vajnorská 53, Bratislava",
     },
 
     // {
