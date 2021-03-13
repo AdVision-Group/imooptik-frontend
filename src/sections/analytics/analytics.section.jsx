@@ -40,7 +40,7 @@ const AnalyticsSection = () => {
     const { stats, getAnalytics, generateReport } = useContext(AnalyticsContext)
     const premisesTabs = isAdmin ? retailNamesTabs : retailNamesTabs.filter(tab => tab.id === currentUser.premises || tab.id === 0)
 
-    const [activePremiseIndex, setActivePremiseIndex] = useState(0)
+    const [activePremiseIndex, setActivePremiseIndex] = useState(currentUser.premises || 0)
     const [activeIndex, setActiveIndex] = useState(2)
 
     const [activeTabStats, setActiveTabStats] = useState(null)
@@ -115,10 +115,7 @@ const AnalyticsSection = () => {
                     }
                 }
             }
-
-
             generateReport(reportQueryObj)
-
         }
 
     }
@@ -212,7 +209,7 @@ const AnalyticsSection = () => {
                     </TwoColContainer>
 
                 </Container>
-                <GridContainer>
+                {isAdmin && <GridContainer>
                     <div>
                         <h3>Zákazníci</h3>
                         <p>{storeData?.users}</p>
@@ -233,7 +230,7 @@ const AnalyticsSection = () => {
                         <h3>Vyšetrenia</h3>
                         <p>{storeData?.bookings}</p>
                     </div>
-                </GridContainer>
+                </GridContainer>}
 
                 {stats && (
                     <StatsGrid>

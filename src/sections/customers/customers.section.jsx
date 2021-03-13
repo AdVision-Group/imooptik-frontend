@@ -38,6 +38,9 @@ const CustomersSection = () => {
         skip: 0,
         filters: {
             admin: activeIndex
+        },
+        sortBy: {
+            date: -1
         }
     })
 
@@ -58,6 +61,9 @@ const CustomersSection = () => {
                 query: searchQuery,
                 filters: {
                     admin: activeIndex
+                },
+                sortBy: {
+                    date: -1
                 }
             })
             refetch()
@@ -71,6 +77,9 @@ const CustomersSection = () => {
             skip: 0,
             filters: {
                 admin: index
+            },
+            sortBy: {
+                date: -1
             }
         })
         refetch()
@@ -111,6 +120,9 @@ const CustomersSection = () => {
                 skip: 0,
                 filters: {
                     admin: activeIndex
+                },
+                sortBy: {
+                    date: -1
                 }
             })
             refetch()

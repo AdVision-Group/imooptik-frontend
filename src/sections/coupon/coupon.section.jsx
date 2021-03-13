@@ -122,7 +122,7 @@ const CouponSection = () => {
                             />
                         </InputRow>
                         <InputRow
-                            label="Minimálna hodnota objednávky v centoch, aby bol tento kupón aplikovateľný."
+                            label="Minimálna hodnota objednávky v eurách, aby bol tento kupón aplikovateľný."
                             example=""
                         >
                             <CustomInput

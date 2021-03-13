@@ -9,6 +9,8 @@ import ScrollContainer from '../../components/scroll-container/scroll-container.
 import Popup from '../../components/popup/pop-up.component'
 import ListArrows from '../../components/list-arrows/list-arrows.component'
 
+import { formatPrice } from '../../utils/warehouse.utils'
+
 import {
     // CouponOverviewContainer,
     DeleteButton,
@@ -67,7 +69,7 @@ const CouponsSection = () => {
                             <TableCol>{idx + 1}</TableCol>
                             <TableCol>{coupon.code}</TableCol>
                             <TableCol>{coupon.type === "percentage" ? "Percentá" : "Fixná suma"}</TableCol>
-                            <TableCol>{coupon.value}</TableCol>
+                            <TableCol>{coupon.type === "percentage" ? `${coupon.value}%` : `${(coupon.value / 100).toFixed(2)}€`}</TableCol>
                             <TableCol>
                                 <OpenButton onClick={() => push(`kupony/${coupon._id}`)}>Zobraziť</OpenButton>
                                 <DeleteButton onClick={() => deleteCoupon(coupon._id)}>Ostrániť</DeleteButton>

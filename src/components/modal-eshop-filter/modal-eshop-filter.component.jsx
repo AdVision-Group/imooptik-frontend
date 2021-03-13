@@ -135,6 +135,26 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                                 }
                             })}
                         />
+                        <CustomCheckbox
+                            label="Doplnky"
+                            isActive={filter?.filters?.type === 5}
+                            handleClick={() => handleChangeFilters({
+                                target: {
+                                    name: 'type',
+                                    value: filter?.filters?.type ? filter?.filters?.type === 5 ? '' : 5 : 5
+                                }
+                            })}
+                        />
+                        <CustomCheckbox
+                            label="Služby"
+                            isActive={filter?.filters?.type === 6}
+                            handleClick={() => handleChangeFilters({
+                                target: {
+                                    name: 'type',
+                                    value: filter?.filters?.type ? filter?.filters?.type === 6 ? '' : 6 : 6
+                                }
+                            })}
+                        />
                     </div>
                     <h3>Filtovat podla:</h3>
                     <div>

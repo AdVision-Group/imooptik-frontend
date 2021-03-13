@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
 import { useHistory } from 'react-router-dom'
+import { formatPrice } from '../../utils/warehouse.utils'
 
 export const CouponsContext = createContext({
     coupon: null,
@@ -118,12 +119,15 @@ const CouponsProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+        console.log(couponToCreate.value)
+
         const raw = JSON.stringify({
             code: couponToCreate.code,
             type: couponToCreate.type, // flat
-            value: couponToCreate.value === '' || couponToCreate.value === '0' ? undefined : Number(couponToCreate.value),
+            ...(couponToCreate.value) && { value: couponToCreate.type === "flat" ? formatPrice(couponToCreate.value) : Number(couponToCreate.value) },
+            // value: couponToCreate.value === '' || couponToCreate.value === '0' ? undefined : Number(couponToCreate.value),
             maxUses: couponToCreate.maxUses === '' || couponToCreate.maxUses === '0' ? undefined : Number(couponToCreate.maxUses),
-            minValue: couponToCreate.minValue === '' || couponToCreate.minValue === '0' ? undefined : Number(couponToCreate.minValue),
+            ...(couponToCreate.minValue) && { minValue: formatPrice(couponToCreate.minValue) },
             maxUsesTotal: couponToCreate.maxUsesTotal === '' || couponToCreate.maxUsesTotal === '0' ? undefined : Number(couponToCreate.maxUsesTotal)
         })
 

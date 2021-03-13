@@ -129,6 +129,10 @@ export const categoryTabs = [
         name: "Okuliare",
     },
     {
+        id: 2,
+        name: "Kontaktné šosovky",
+    },
+    {
         id: 1,
         name: "Šosovky",
     },

@@ -25,7 +25,8 @@ import {
     TableHead,
     HourBlockContainer,
     EmptyContainer,
-    HourTime
+    HourTime,
+    EmptyHourBlock
 } from './calendar-weekdays.styles'
 
 const WeekDays = ({
@@ -111,11 +112,11 @@ const WeekDays = ({
                                     <p>{dayNumber} </p>
                                 </React.Fragment>
                             ) : (
-                                        <React.Fragment>
-                                            <p>{dayNames[new Date(year, month, dayNumber - 1).getDay()]}</p>
-                                            <p>{dayNumber} </p>
-                                        </React.Fragment>
-                                    )}
+                                <React.Fragment>
+                                    <p>{dayNames[new Date(year, month, dayNumber - 1).getDay()]}</p>
+                                    <p>{dayNumber} </p>
+                                </React.Fragment>
+                            )}
                         </HeaderBlock>
                     ))}
                 </TableHead>
@@ -135,21 +136,26 @@ const WeekDays = ({
                         const day = getDayData(dayData?.dayNumber, idx, response.calendar)
                         return (
                             < HourBlock key={idx} >
-                                { day && day.map((interval, idx) => (
-                                    <HourBlockContainer style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })} key={idx}>
-                                        {interval?.userBookings && <CalendarBookedDay
-                                            dayData={dayData}
-                                            calendarId={calendar}
-                                            time={interval.time}
-                                            userBookings={interval.userBookings}
-                                            open={() => handleOpenDetailsModal(interval)}
-                                        />}
-                                        <EmptyContainer onClick={dayData.isDisable ? () => { } : () => handleOpenUserBookingModal({
-                                            ...dayData, time: interval.time, year,
-                                            month,
-                                        })} />
-                                    </HourBlockContainer>
-                                ))}
+                                { day && day.map((interval, idx) => {
+                                    if (interval?.empty) return (
+                                        <EmptyHourBlock style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })} />
+                                    )
+                                    return (
+                                        <HourBlockContainer style={response?.calendar?.interval === 60 ? ({ height: "10rem" }) : ({ height: "5rem" })} key={idx}>
+                                            {interval?.userBookings && <CalendarBookedDay
+                                                dayData={dayData}
+                                                calendarId={calendar}
+                                                time={interval.time}
+                                                userBookings={interval.userBookings}
+                                                open={() => handleOpenDetailsModal(interval)}
+                                            />}
+                                            <EmptyContainer onClick={dayData.isDisable ? () => { } : () => handleOpenUserBookingModal({
+                                                ...dayData, time: interval.time, year,
+                                                month,
+                                            })} />
+                                        </HourBlockContainer>
+                                    )
+                                })}
                             </HourBlock >
                         )
                     })}

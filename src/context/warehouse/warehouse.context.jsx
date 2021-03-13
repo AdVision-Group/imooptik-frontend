@@ -792,8 +792,15 @@ const WarehouseProvider = ({ children }) => {
                 getProductsByQuery({
                     limit: 10
                 })
-            } else {
+            } else if (activeCategoryTypeTab === 1) {
                 getLenses()
+            } else {
+                getProductsByQuery({
+                    limit: 10,
+                    filters: {
+                        type: 3
+                    }
+                })
             }
         }
     }, [activeCategoryTypeTab])

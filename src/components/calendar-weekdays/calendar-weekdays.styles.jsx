@@ -76,6 +76,12 @@ export const HourBlock = styled.div`
 
 `
 
+export const EmptyHourBlock = styled.div`
+    background-color: transparent;
+    height: 10rem;
+
+`
+
 export const HourTime = styled.div`
     display: block;
     /* position: relative; */

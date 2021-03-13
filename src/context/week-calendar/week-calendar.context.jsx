@@ -23,18 +23,19 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
     const [numberOfHours, setNumberOfHours] = useState(0)
     const [timeline, setTimeline] = useState(null)
 
-    // const fillDayData = (calendarDaysArr, calendarObj) => {
-
-    // }
-
     const getDayData = (dayNumber, dayIdx, calendar) => {
         if (!calendar) return
+        const numberedStartTimes = calendar.startTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
+        const startTime = Math.min(...numberedStartTimes)
+
         const hourblock = [...Array(numberOfHours)].map((value, idx) => {
             const splitedStartTime = calendar.startTimes[dayIdx]?.split("/").map(value => Number(value))
             const splitedEndTime = calendar.endTimes[dayIdx]?.split("/").map(value => Number(value))
             const time = getHourTime(idx, calendar.interval)
             const splitedTime = time.split('/').map(value => Number(value))
-            if (splitedStartTime[0] > splitedTime[0]) return
+
+            if (startTime > splitedTime[0]) return
+            if (splitedStartTime[0] > startTime && splitedStartTime[0] > splitedTime[0]) return ({ empty: true })
             if (splitedEndTime[0] < splitedTime[0]) return
             if (calendar.startTimes[dayIdx] === 'X') return
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 30) return

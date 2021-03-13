@@ -60,7 +60,7 @@ export const getTimeline = (startTimes, endTimes, interval) => {
     const numberedStartTimes = startTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
     const numberedEndTimes = endTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
     const numberedEndMinutes = endTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[1])))
-    const startTime = Math.max(...numberedStartTimes)
+    const startTime = Math.min(...numberedStartTimes)
     const endTime = Math.max(...numberedEndTimes)
     const endMinutes = Math.max(...numberedEndMinutes)
 
