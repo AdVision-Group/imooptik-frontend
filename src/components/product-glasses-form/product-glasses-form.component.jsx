@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
-// import { brands } from '../../utils/warehouse.utils'
+import { glassesColors, glassesMaterials, glassesShapes } from '../../utils/warehouse.utils'
 
 import {
     ImageContainer,
@@ -170,21 +170,41 @@ const ProductGlassesForm = ({
                             name='frameColor'
                             value={glassesParameters.specs.frameColor ?? ""}
                             handleChange={(e) => handleSpecsChange(e)}
+                            list="colors"
+
                         />
+                        <datalist id="colors">
+                            {glassesColors.map((color, idx) => (
+                                <option key={idx} value={color} />
+                            ))}
+                        </datalist>
                         <CustomInput
                             label="Materiál rámu"
                             type='text'
                             name='frameMaterial'
                             value={glassesParameters.specs.frameMaterial ?? ""}
                             handleChange={(e) => handleSpecsChange(e)}
+                            list="materials"
+
                         />
+                        <datalist id="materials">
+                            {glassesMaterials.map((material, idx) => (
+                                <option key={idx} value={material} />
+                            ))}
+                        </datalist>
                         <CustomInput
                             label="Tvar rámu"
                             type='text'
                             name='frameStyle'
                             value={glassesParameters.specs.frameStyle ?? ""}
                             handleChange={(e) => handleSpecsChange(e)}
+                            list="shapes"
                         />
+                        <datalist id="shapes">
+                            {glassesShapes.map((shape, idx) => (
+                                <option key={idx} value={shape} />
+                            ))}
+                        </datalist>
                         <CustomInput
                             label="Farba šošovky"
                             type='text'

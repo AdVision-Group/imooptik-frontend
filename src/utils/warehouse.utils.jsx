@@ -111,6 +111,43 @@ export const retailNamesTabs = [
     },
 ]
 
+export const glassesColors = [
+    "Čierná",
+    "Modrá",
+    "Červená",
+    "Sivá",
+    "Zlatá",
+    "Strieborná",
+    "Hnedá",
+    "Fialová",
+    "Zelená",
+    "Sedá",
+    "Bordová",
+]
+
+export const glassesMaterials = [
+    "Acetát",
+    "Kov",
+    "Titán",
+    "TR90",
+    "Patent",
+    "Optyl",
+]
+
+export const glassesShapes = [
+    "Pilot",
+    "Squared",
+    "Browline",
+    "Cat eye",
+    "Tiny",
+    "Oversize",
+    "Okrúhle",
+    "Oválne",
+    "Obdĺžnikové",
+    "Flat top",
+    "Špeciálne"
+]
+
 export const formatPrice = (price = "") => {
     price.toString()
     let value = 0

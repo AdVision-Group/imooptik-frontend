@@ -36,6 +36,8 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
 
             if (startTime > splitedTime[0]) return
             if (splitedStartTime[0] > startTime && splitedStartTime[0] > splitedTime[0]) return ({ empty: true })
+            if (splitedStartTime[0] > startTime && splitedStartTime[0] > splitedTime[0] && !(splitedStartTime[1] === splitedTime[1]) && splitedTime[1] === 30) return ({ empty: true })
+
             if (splitedEndTime[0] < splitedTime[0]) return
             if (calendar.startTimes[dayIdx] === 'X') return
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 30) return
