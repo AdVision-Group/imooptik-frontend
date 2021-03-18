@@ -178,11 +178,12 @@ const ProductContactLensesForm = ({
                     <StockContainer>
                         <h3>Skladové zásoby</h3>
                         {product.available.map((value, idx) => {
+                            console.log(product.available)
                             if (idx === 0) return
                             return (
                                 <CustomInput
                                     key={idx}
-                                    label={currentUser.admin === 1 ? retailNames[currentUser.premises - 1] : retailNames[idx]}
+                                    label={currentUser.admin === 1 ? retailNames[currentUser.premises] : retailNames[idx]}
                                     type='number'
                                     name={"available"}
                                     value={checkParameter(product.available, idx)}

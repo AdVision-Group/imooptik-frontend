@@ -75,13 +75,13 @@ export const lensesBrands = [
 ]
 
 export const retailNames = [
-    "Obchodná 57, Bratislava",
-    "Obchodná 57, Bratislava",
-    "Miletičova 38, Bratislava",
+    "eshop",
+    "Centrálny sklad",
+    "Obchodná, Bratislava",
+    "Miletičova, Bratislava",
     "Vajnory, Bratislava",
-    "Senica, OC Branč",
     "Vajnorská 53, Bratislava",
-    // "Trnava, City Aréna"
+    "OC Branč, Senica"
 ]
 
 export const retailNamesTabs = [
@@ -91,23 +91,27 @@ export const retailNamesTabs = [
     },
     {
         id: 1,
-        name: "Obchodná 57, Bratislava",
+        name: "Centrálny sklad",
     },
     {
         id: 2,
-        name: "Miletičova 38, Bratislava",
+        name: "Obchodná, Bratislava",
     },
     {
         id: 3,
-        name: "Vajnory, Bratislava",
+        name: "Miletičova, Bratislava",
     },
     {
         id: 4,
-        name: "Senica, OC Branč",
+        name: "Vajnory, Bratislava",
     },
     {
         id: 5,
         name: "Vajnorská 53, Bratislava",
+    },
+    {
+        id: 6,
+        name: "OC Branč, Senica",
     },
 ]
 

@@ -12,12 +12,17 @@ export const Container = styled.div`
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     color: var(--primary-text-color);
+    /* border: 1px solid red; */
 
 
 
 
     @media all and (max-width: 1150px) {
         margin-bottom: 8rem;
+
+        @media all and (max-width: 700px) {
+            overflow-x: scroll;
+        }
     }
 
     ::-webkit-scrollbar {

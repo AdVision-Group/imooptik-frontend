@@ -5,7 +5,7 @@ export const initProductObj = {
     type: 0,
     brand: "",
     soldAmount: 0,
-    available: [0, 1001, 1001, 1001, 1001, 1001],
+    available: [0, 1001, 1001, 1001, 1001, 1001, 1001],
     eanCode: "",
     image: "",
     eshop: true,
