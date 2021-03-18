@@ -39,8 +39,16 @@ export const initLensesObj = {
     cylinderRange: [1001, 1001],
     price: 0,
     brand: "",
-    image: ''
+    image: '',
+    lensType: "číre",
+    dioptric: false
 }
+
+export const lensesTypes = [
+    "číre",
+    'slnečné',
+    'fotochromatické'
+]
 
 export const retailNames = [
     // "-",

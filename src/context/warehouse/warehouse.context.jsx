@@ -13,7 +13,7 @@ import {
     initContactLensesObj,
     initGlassesObj,
     formatfloatNumber,
-    formatLink
+    formatLink,
 } from './warehouse.utils'
 
 import {
@@ -687,7 +687,7 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
-    const updateLenses = async (lensesToUpdate) => {
+    const updateLenses = async (lensesToUpdate, id) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -715,7 +715,7 @@ const WarehouseProvider = ({ children }) => {
 
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${lenses._id}`, requestOptions)
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/${id}`, requestOptions)
             const data = await response.json()
 
             if (data.lenses) {

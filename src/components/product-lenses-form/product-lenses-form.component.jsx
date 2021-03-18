@@ -3,12 +3,17 @@ import React from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
+import { lensesTypes } from '../../context/warehouse/warehouse.utils'
+
 import {
     LensesFormContainer,
     LensesContainer,
     LensesParametersContainer,
     ProductImage,
     ImageContainer,
+    TypesContainer,
+    SubGridContainer,
+    TypeCheckbox
 } from './product-lenses-form.styles'
 
 const ProductLensesForm = ({
@@ -21,6 +26,8 @@ const ProductLensesForm = ({
     filters
 
 }) => {
+    console.log(lenses)
+
     return (
         <LensesFormContainer>
             <LensesContainer>
@@ -80,43 +87,81 @@ const ProductLensesForm = ({
                     </ProductImage>
                 </ImageContainer>
             </LensesContainer>
-            <LensesParametersContainer>
-                <h3>Parametre</h3>
+            <SubGridContainer>
+                <TypesContainer>
+                    <h3>Druh</h3>
 
-                <h4>Dioptrie</h4>
-                {[...Array(2)].map((value, idx) => {
-                    const inputLabel = idx === 0 ? "minimum*" : "maximum*"
-
-                    return (
-                        <div key={idx}>
-                            <CustomInput
-                                label={inputLabel}
-                                type='number'
-                                name='dioptersRange'
-                                value={checkParameter(lenses.dioptersRange, idx)}
-                                handleChange={(e) => handleParameterChange(e, idx)}
+                    <div>
+                        {lensesTypes.map((type, idx) => (
+                            <TypeCheckbox
+                                key={idx}
+                                label={type}
+                                value={type}
+                                name='lensType'
+                                isActive={type === lenses?.lensType}
+                                handleClick={() => handleChange({
+                                    target: {
+                                        name: "lensType",
+                                        value: type
+                                    }
+                                })}
                             />
-                        </div>
-                    )
-                })}
+                        ))}
+                    </div>
 
-                <h4>Cylinder</h4>
-                {[...Array(2)].map((value, idx) => {
-                    const inputLabel = idx === 0 ? "minimum*" : "maximum*"
+                    <div>
+                        <TypeCheckbox
+                            label="Dioptrické"
+                            value={lenses.dioptric}
+                            name='dioptric'
+                            isActive={lenses.dioptric}
+                            handleClick={() => handleChange({
+                                target: {
+                                    name: "dioptric",
+                                    value: !lenses.dioptric
+                                }
+                            })}
+                        />
+                    </div>
+                </TypesContainer>
+                <LensesParametersContainer>
+                    <h3>Parametre</h3>
 
-                    return (
-                        <div key={idx}>
-                            <CustomInput
-                                label={inputLabel}
-                                type='number'
-                                name='cylinderRange'
-                                value={checkParameter(lenses.cylinderRange, idx)}
-                                handleChange={(e) => handleParameterChange(e, idx)}
-                            />
-                        </div>
-                    )
-                })}
-            </LensesParametersContainer>
+                    <h4>Dioptrie</h4>
+                    {[...Array(2)].map((value, idx) => {
+                        const inputLabel = idx === 0 ? "minimum*" : "maximum*"
+
+                        return (
+                            <div key={idx}>
+                                <CustomInput
+                                    label={inputLabel}
+                                    type='number'
+                                    name='dioptersRange'
+                                    value={checkParameter(lenses.dioptersRange, idx)}
+                                    handleChange={(e) => handleParameterChange(e, idx)}
+                                />
+                            </div>
+                        )
+                    })}
+
+                    <h4>Cylinder</h4>
+                    {[...Array(2)].map((value, idx) => {
+                        const inputLabel = idx === 0 ? "minimum*" : "maximum*"
+
+                        return (
+                            <div key={idx}>
+                                <CustomInput
+                                    label={inputLabel}
+                                    type='number'
+                                    name='cylinderRange'
+                                    value={checkParameter(lenses.cylinderRange, idx)}
+                                    handleChange={(e) => handleParameterChange(e, idx)}
+                                />
+                            </div>
+                        )
+                    })}
+                </LensesParametersContainer>
+            </SubGridContainer>
         </LensesFormContainer>
     )
 }

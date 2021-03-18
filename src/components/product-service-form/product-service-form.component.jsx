@@ -13,7 +13,7 @@ import {
 
 const ProductServiceForm = ({
     product,
-    isUpdating,
+    // isUpdating,
     handleChange,
     selectedImage,
     setImageModal,
@@ -56,12 +56,12 @@ const ProductServiceForm = ({
                     required
                 />
 
-                <ImageContainer>
+                {/* <ImageContainer>
                     <ProductImage onClick={() => setImageModal(true)} hasImage={selectedImage}>
                         {!selectedImage && "Vybrať obrázok"}
                         {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                     </ProductImage>
-                </ImageContainer>
+                </ImageContainer> */}
             </ServiceContainer>
         </ServiceFormContainer>
     )

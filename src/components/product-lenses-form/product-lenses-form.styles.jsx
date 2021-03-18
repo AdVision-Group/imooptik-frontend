@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 
 export const LensesFormContainer = styled.div`
@@ -23,7 +24,6 @@ export const LensesParametersContainer = styled.div`
     padding: 2rem; 
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
-
 
     h3 {
         /* margin-bottom: 1rem; */
@@ -56,5 +56,35 @@ export const ProductImage = styled.div`
         object-position:center;
         left: 0;
         top: 0;
+    }
+`
+export const SubGridContainer = styled.div`
+
+`
+
+export const TypesContainer = styled.div`
+    padding: 2rem;
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+    margin-bottom: 3rem;
+
+    h3 {
+        /* margin-bottom: 1rem; */
+    }
+
+    h4 {
+        margin-top: 2rem;
+    }
+
+    div {
+        :not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+`
+
+export const TypeCheckbox = styled(CustomCheckbox)`
+    &:not(:last-child) {
+        margin-right: 2rem;
     }
 `

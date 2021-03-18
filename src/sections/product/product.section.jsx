@@ -323,8 +323,14 @@ const ProductSection = () => {
         e.preventDefault()
 
         let newProductObj = {
-            ...productObj
+            ...productObj,
+            ...(productObj.type === 0) && { type: lenses.lensType },
+            ...(productObj.type === 0) && { dioptric: lenses.dioptric }
         }
+
+        // console.log(productObj.type)
+        // console.log(newProductObj)
+
 
         if (currentUser.admin < 2) {
             if (newProductObj.available) {
@@ -343,11 +349,19 @@ const ProductSection = () => {
         }
 
         if (isUpdating) {
-            if (newProductObj.type === 0) {
+            console.log(newProductObj)
+            if (newProductObj.type === 0 || typeof newProductObj.type === 'string') {
                 setHasChanged(false)
                 delete newProductObj['link']
-                delete newProductObj['type']
-                updateLenses(newProductObj)
+                // delete newProductObj['type']
+                const updatedObj = {
+                    ...newProductObj,
+                    type: newProductObj.lensType,
+                    eanCode: lenses.eanCode
+                }
+                delete updatedObj['lensType']
+                console.log(id)
+                updateLenses(updatedObj, id)
                 return
             } else if (newProductObj.type === 3) {
                 setHasChanged(false)
@@ -361,19 +375,25 @@ const ProductSection = () => {
                 return
             }
         } else {
-            if (newProductObj.type === 0) {
+            if (productObj.type === 0) {
                 if (!newProductObj.name || !newProductObj.brand || !newProductObj.description || !newProductObj.price || !newProductObj.image || !newProductObj.dioptersRange || !newProductObj.cylinderRange) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
                     return
                 } else {
                     setHasChanged(false)
-                    delete newProductObj['type']
-                    createLenses(newProductObj)
+                    // delete newProductObj['type']
+                    const updatedObg = {
+                        ...newProductObj,
+                        type: newProductObj.lensType
+                    }
+                    delete updatedObg['lensType']
+
+                    createLenses(updatedObg)
                 }
             }
             if (newProductObj.type === 6 || newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
-                if (!newProductObj.name || !newProductObj.price || !newProductObj.image) {
+                if (!newProductObj.name || !newProductObj.price) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
                     return
@@ -392,6 +412,20 @@ const ProductSection = () => {
         setFilters(null)
         refetch()
     }, [productObj?.type])
+
+    useEffect(() => {
+        if (productObj.type === 0) {
+            if (productObj.lensType) return
+            console.log("SET LENS TYPE")
+            console.log(lenses)
+            handleChange({
+                target: {
+                    name: "lensType",
+                    value: lenses?.type
+                }
+            })
+        }
+    }, [lenses.lensType])
 
     useEffect(() => {
         if (isLoadingFilters) return
@@ -432,6 +466,8 @@ const ProductSection = () => {
             }
         }
     }, [id, product.type])
+
+    // console.log(productObj)
 
     useEffect(() => {
         if (product.image) {
