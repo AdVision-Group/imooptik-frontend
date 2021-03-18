@@ -87,7 +87,7 @@ export const retailNames = [
 export const retailNamesTabs = [
     {
         id: 0,
-        name: "E-shop",
+        name: "Všetky",
     },
     {
         id: 1,

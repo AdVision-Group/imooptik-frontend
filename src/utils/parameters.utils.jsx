@@ -4,7 +4,7 @@ export const checkParameter = (parametersArr, idx) => {
         if (parametersArr.length === 0) {
             return ""
         }
-        if (parametersArr[idx] === 1001) {
+        if (parametersArr[idx] === 1001 || parametersArr[idx] === "1001") {
             return ""
         }
         return parametersArr[idx]
@@ -31,6 +31,6 @@ export const checkParameterValue = (value) => {
 export const formatParameter = parameter => {
     if (parameter) {
         const changeNumber = parameter.toString().replace(',', '.')
-        return isNaN(changeNumber) ? 1001 : Number(changeNumber)
+        return isNaN(changeNumber) ? 1001 : changeNumber
     }
 }

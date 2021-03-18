@@ -114,6 +114,16 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         }
     }
 
+    const formatStringParameters = (e, newParameters, parameterObj, updateParameter) => {
+        if (newParameters) {
+            const { name } = e.target
+            updateParameter({
+                ...parameterObj,
+                [name]: newParameters.map(value => value)
+            })
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -506,7 +516,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
                             </TableCol>
                             <TableCol>
-                                <Col>ADD</Col>
+                                <Col>ADICIA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -674,7 +684,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 ))}
                             </TableCol>
                             <TableCol>
-                                <Col>ADD</Col>
+                                <Col>ADICIA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -734,7 +744,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 ))}
                             </TableCol>
                             <TableCol>
-                                <Col>BASIS</Col>
+                                <Col>BÁZA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -909,7 +919,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
                             </TableCol>
                             <TableCol>
-                                <Col>ADD</Col>
+                                <Col>ADICIA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -1118,7 +1128,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 ))}
                             </TableCol>
                             <TableCol>
-                                <Col>ADD</Col>
+                                <Col>ADICIA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -1218,7 +1228,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 ))}
                             </TableCol>
                             <TableCol>
-                                <Col>ADD</Col>
+                                <Col>ADICIA</Col>
                                 {[...Array(2)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
@@ -1247,7 +1257,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                             </TableCol>
                             <TableCol>
                                 <Col>BINO1</Col>
-                                {[...Array(2)].map((value, idx) => (
+                                {[...Array(1)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
                                             name='bino1'
@@ -1275,7 +1285,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                             </TableCol>
                             <TableCol>
                                 <Col>BINO2</Col>
-                                {[...Array(2)].map((value, idx) => (
+                                {[...Array(1)].map((value, idx) => (
                                     <Col key={idx}>
                                         <input
                                             name='bino2'
@@ -1308,7 +1318,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(typ_kontaktnych_sosoviek?.prvy, idx)}
                                             onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
-                                            onBlur={(e) => formatParameters(e, typ_kontaktnych_sosoviek?.prvy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                                            onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.prvy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
                                         />
                                     </Col>
                                 ))}
@@ -1322,7 +1332,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(typ_kontaktnych_sosoviek?.druhy, idx)}
                                             onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
-                                            onBlur={(e) => formatParameters(e, typ_kontaktnych_sosoviek?.druhy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                                            onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.druhy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
                                         />
                                     </Col>
                                 ))}

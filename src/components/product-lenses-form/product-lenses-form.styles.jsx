@@ -7,6 +7,10 @@ export const LensesFormContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-gap: 3rem;
     align-items: start;
+
+    @media all and (max-width: 1000px) {
+        grid-template-columns: 1fr;
+    }
 `
 
 export const LensesContainer = styled.div`
@@ -69,7 +73,7 @@ export const TypesContainer = styled.div`
     margin-bottom: 3rem;
 
     h3 {
-        /* margin-bottom: 1rem; */
+        margin-bottom: 1rem;
     }
 
     h4 {

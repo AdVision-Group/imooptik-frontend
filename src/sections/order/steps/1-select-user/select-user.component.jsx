@@ -34,7 +34,11 @@ const SelectUserComponent = ({ next, addToOrder }) => {
         if (searchQuery !== '') {
             if (e.key === 'Enter') {
                 getUserByQuery({
-                    query: searchQuery
+                    query: searchQuery,
+                    filters: {
+                        admin: 0
+                    }
+
                 })
             }
         }
@@ -42,14 +46,21 @@ const SelectUserComponent = ({ next, addToOrder }) => {
     const handleSearch = () => {
         if (searchQuery === '') return
         getUserByQuery({
-            query: searchQuery
+            query: searchQuery,
+            filters: {
+                admin: 0
+            }
+
         })
     }
 
     useEffect(() => {
         if (!users) {
             getFilteredUsers({
-                limit: 5
+                limit: 5,
+                filters: {
+                    admin: 0
+                }
             })
         }
         if (users) {
@@ -61,7 +72,10 @@ const SelectUserComponent = ({ next, addToOrder }) => {
         if (users) {
             if (searchQuery === '') {
                 getFilteredUsers({
-                    limit: 5
+                    limit: 5,
+                    filters: {
+                        admin: 0
+                    }
                 })
                 setUserItems(users)
             }

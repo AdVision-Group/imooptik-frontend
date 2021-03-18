@@ -7,6 +7,10 @@ export const HeaderContainer = styled.div`
     grid-gap: 3rem;
     align-items: start;
 
+    @media all and (max-width: 1000px) { 
+        grid-template-columns: 1fr;
+    }
+
 `
 
 export const CartContainer = styled.div`
@@ -17,6 +21,10 @@ export const CartContainer = styled.div`
         padding: 2rem;
         font-size: 2.5rem;
 
+    }
+
+    @media all and (max-width: 1000px) {
+        grid-row: 1/2;
     }
 `
 

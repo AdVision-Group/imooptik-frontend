@@ -6,6 +6,10 @@ export const HeaderContainer = styled.div`
     grid-template-columns: 1fr 2fr;
     grid-gap: 3rem;
     align-items: start;
+
+    @media all and (max-width: 1000px) {
+        grid-template-columns: 1fr;
+    }
 `
 
 export const SearchContainer = styled.div`
@@ -100,6 +104,11 @@ export const CartContainer = styled.div`
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
 
+    @media all and (max-width: 1000px) {
+        grid-row: 1/2;
+        grid-column: unset;
+
+    }
 
 `
 

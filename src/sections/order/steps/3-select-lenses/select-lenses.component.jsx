@@ -76,7 +76,7 @@ const SelectLensesComponent = ({ back, next }) => {
             <BackButton onClick={back} />
             <HeaderContainer>
                 <SearchContainer>
-                    <h3>Vyhľadať produkt</h3>
+                    <h3>Vyhľadať šošovky</h3>
                     <div>
                         <CustomInput
                             label='Vyhladať šošovky'
