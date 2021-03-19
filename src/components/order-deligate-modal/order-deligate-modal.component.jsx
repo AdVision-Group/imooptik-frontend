@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 
 import Popup from '../popup/pop-up.component'
 
-import { retailNames } from '../../context/warehouse/warehouse.utils'
+import { retailNames } from '../../utils/warehouse.utils'
 
 import {
     ModalContainer,

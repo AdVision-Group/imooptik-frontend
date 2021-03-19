@@ -327,7 +327,7 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
 
             if (data.error === 'not-found') {
-                getSingleLenses(id)
+                getSingleLenses(id, () => { })
             }
 
             if (data.product) {

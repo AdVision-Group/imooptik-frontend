@@ -9,7 +9,7 @@ import OrderSummaryLensesName from '../../../../components/order-summary-lenses-
 import OrderUpdateUserModal from '../../../../components/modal-order-update-user/modal-order-update-user.component'
 
 
-import { retailNames } from '../../../../context/warehouse/warehouse.utils'
+import { retailNames } from '../../../../utils/warehouse.utils'
 import { translatePaymentMethod, translateStatus } from '../../../../utils/orders.utils'
 
 import { AiOutlineEdit } from 'react-icons/ai'

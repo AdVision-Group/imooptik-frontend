@@ -10,7 +10,7 @@ import ExaminationsOverview from '../examinations-overview/examinations-overview
 
 import {
     retailNames
-} from '../../context/warehouse/warehouse.utils'
+} from '../../utils/warehouse.utils'
 
 import {
     Profile,
@@ -110,7 +110,7 @@ const UserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
-                        <div>
+                        {(user.admin === 0) && <div>
                             <CustomInput
                                 // label="Priezvisko*"
                                 type='date'
@@ -118,7 +118,7 @@ const UserForm = ({
                                 value={user.birthDate}
                                 handleChange={(e) => handleChange(e)}
                             />
-                        </div>
+                        </div>}
                     </GridRow>
                 </div>
 
@@ -134,7 +134,7 @@ const UserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
-                        <div>
+                        {(user.admin === 0) && <div>
                             <CustomInput
                                 label="Telefónne číslo"
                                 type='text'
@@ -142,11 +142,11 @@ const UserForm = ({
                                 value={user.phone ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
-                        </div>
+                        </div>}
                     </Row>
                 </Container>
 
-                <Container>
+                {(user.admin === 0) && <Container>
                     <h2>Fakturačné údaje</h2>
                     <GridRow>
                         <ZeroMargin>
@@ -188,8 +188,8 @@ const UserForm = ({
                             />
                         </div>
                     </GridRow>
-                </Container>
-                <Container>
+                </Container>}
+                {(user.admin === 0) && <Container>
                     <h2>Firemné údaje</h2>
                     <GridRow>
                         <ZeroMargin>
@@ -251,41 +251,43 @@ const UserForm = ({
                             />
                         </div>
                     </GridRow>
-                </Container>
+                </Container>}
 
-                <Container>
+                {(user.admin === 0) && <Container>
                     <h2>Parametre</h2>
 
                     <ParametersTable
                         parameters={user.lenses}
                         handleChange={handleParameterChange}
                     />
-                </Container>
+                </Container>}
 
 
             </Profile>
 
-            {!isOrder && isUpdating && <div>
-                <OrderHeader>
-                    <Title>
-                        Objednávky
+            {
+                (user.admin === 0) && !isOrder && isUpdating && <div>
+                    <OrderHeader>
+                        <Title>
+                            Objednávky
                     </Title>
-                    <OrderButton onClick={e => handleAddOrderButtonClick(e)}>Pridať objednávku</OrderButton>
-                </OrderHeader>
-                <div>
-                    {user.orders.length > 0 ? user.orders.map((order, idx) => (
-                        <ProfileOrderOverview
-                            key={idx}
-                            id={order}
-                            handleUpdateClick={() => push(`/dashboard/objednavky/${user._id}/${order}`)}
-                        />
-                    )).reverse().slice(0, 5) : (
-                        <p>Žiadné objednávky</p>
-                    )}
+                        <OrderButton onClick={e => handleAddOrderButtonClick(e)}>Pridať objednávku</OrderButton>
+                    </OrderHeader>
+                    <div>
+                        {user.orders.length > 0 ? user.orders.map((order, idx) => (
+                            <ProfileOrderOverview
+                                key={idx}
+                                id={order}
+                                handleUpdateClick={() => push(`/dashboard/objednavky/${user._id}/${order}`)}
+                            />
+                        )).reverse().slice(0, 5) : (
+                            <p>Žiadné objednávky</p>
+                        )}
+                    </div>
+                    {isOptometrist && <ExaminationsOverview />}
                 </div>
-                {isOptometrist && <ExaminationsOverview />}
-            </div>}
-        </GridContainer>
+            }
+        </GridContainer >
     )
 }
 

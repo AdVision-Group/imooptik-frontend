@@ -346,9 +346,9 @@ const ProductSection = () => {
             ...(productObj.type === 0) && { dioptric: lenses.dioptric }
         }
 
-        console.log("PRODUCT OBJECT")
-        console.log(lensObj)
-        console.log(productObj)
+        // console.log("PRODUCT OBJECT")
+        // console.log(lensObj)
+        // console.log(productObj)
 
 
 
@@ -495,7 +495,7 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (id !== 'novy-produkt') {
-            getSingleProduct(id)
+            getSingleProduct(id, () => { })
             setIsUpdating(true)
             if (!productObj.type) {
                 handleChangeType({

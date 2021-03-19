@@ -5,7 +5,7 @@ import OrderDeligateModal from '../order-deligate-modal/order-deligate-modal.com
 // import OrderPayModal from '../order-pay-modal/order-pay-modal.component'
 import FinishDepositedOrderModal from '../modal-finish-deposited-order/modal-finish-deposited-order.component'
 
-import { retailNames } from '../../context/warehouse/warehouse.utils'
+import { retailNames } from '../../utils/warehouse.utils'
 import { translateStatus } from '../../utils/orders.utils'
 import { useOutsideHandler } from '../../hooks/useOutsideAlerter'
 
@@ -51,6 +51,10 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
     }
 
     const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
+
+    console.log("order")
+    console.log("order")
+    console.log(order)
 
     return (
         <OrderOverviewRow {...otherProps}>
