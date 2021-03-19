@@ -2,19 +2,18 @@ import styled from 'styled-components'
 import CustomButton from '../../components/custom-button/custom-button.component'
 
 export const Container = styled.div`
-    /* width: 100%; */
-    /* overflow-x: scroll; */
+    /* width: 100%;
+    overflow-x: scroll; */
 `
 
 
 export const TableCol = styled.div`
-    width: 30rem;
+    min-width: 20rem;
     display: table-cell;
     padding: 2rem;
 `
 
 export const TableHead = styled.div`
-
     display: table-row;
     
     font-weight: bolder;

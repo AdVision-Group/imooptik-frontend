@@ -162,12 +162,14 @@ const CustomersSection = () => {
                         <TableHead>
                             <TableCol>Meno a priezvisko</TableCol>
                             <TableCol>Email</TableCol>
+                            <TableCol>Tel. číslo</TableCol>
                             <TableCol>Možnosti</TableCol>
                         </TableHead>
                         {userItems && userItems.map((user, idx) => (
                             <TableRow key={idx}>
                                 <TableCol>{user.name}</TableCol>
                                 <TableCol>{user.email}</TableCol>
+                                <TableCol>{user.phone}</TableCol>
                                 <TableCol>
                                     <UpdateButton onClick={() => push(`zakaznici/${user._id}`)}>Upraviť</UpdateButton>
                                     {/* <DeleteButton onClick={() => alert("Pekný pokus! Tu velím zatiaľ ja :)")}>Odstrániť</DeleteButton> */}

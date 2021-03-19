@@ -248,12 +248,14 @@ const OrdersSection = () => {
                                 Dátum {fetchQueryObj?.sortBy?.date === 1 ? <IconContainer>
                                     <GoArrowSmallDown />
                                 </IconContainer> : <IconContainer>
-                                        <GoArrowSmallUp />
-                                    </IconContainer>
+                                    <GoArrowSmallUp />
+                                </IconContainer>
                                 }
                             </p>
                         </TableCol>
                         <TableCol>Prevádzka</TableCol>
+                        <TableCol>Meno</TableCol>
+                        <TableCol>Tel. číslo</TableCol>
                         <TableCol>Status</TableCol>
                         <TableCol>Možnosti</TableCol>
                     </TableHead>

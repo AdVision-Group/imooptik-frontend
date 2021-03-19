@@ -52,10 +52,6 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
 
     const orderedByID = order?.orderedBy?._id ? order?.orderedBy?._id : order?.orderedBy
 
-    console.log("order")
-    console.log("order")
-    console.log(order)
-
     return (
         <OrderOverviewRow {...otherProps}>
             {showFinishDepositedOrderModal && <FinishDepositedOrderModal close={() => setShowFinishDepositedOrderModal(false)} refetch={refetch} id={order._id} order={order} />}
@@ -67,6 +63,8 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
                 </DeligateButton>
                 {showOrderDeligateModal && <OrderDeligateModal refetch={refetch} close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
             </DeligateCol>
+            <TableCol>{order.orderedBy.name}</TableCol>
+            <TableCol>{order.orderedBy.phone}</TableCol>
             <TableCol>{translateStatus(order.status)}</TableCol>
             <TableCol>
                 <IconContainer onClick={() => setShowDropdownMenu(!showDropdownMenu)}>

@@ -238,6 +238,10 @@ const AnalyticsSection = () => {
                             activeTabStats ? (
                                 <StatsContainer>
                                     <div>
+                                        <h3>Dohromady</h3>
+                                        <p>{((activeTabStats?.cash + activeTabStats?.card) / 100).toFixed(2)}€</p>
+                                    </div>
+                                    <div>
                                         <h3>Hotovosť</h3>
                                         <p>{(activeTabStats?.cash / 100).toFixed(2)}€</p>
                                     </div>
