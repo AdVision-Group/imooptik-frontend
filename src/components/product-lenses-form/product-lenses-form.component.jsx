@@ -5,6 +5,8 @@ import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
 import { lensesTypes } from '../../context/warehouse/warehouse.utils'
 
+import { AiOutlineCopy } from 'react-icons/ai'
+
 import {
     LensesFormContainer,
     LensesContainer,
@@ -13,7 +15,8 @@ import {
     ImageContainer,
     TypesContainer,
     SubGridContainer,
-    TypeCheckbox
+    TypeCheckbox,
+    CopyButton
 } from './product-lenses-form.styles'
 
 const ProductLensesForm = ({
@@ -23,14 +26,13 @@ const ProductLensesForm = ({
     handleChange,
     handleParameterChange,
     checkParameter,
-    filters
-
+    filters,
+    handleGetProductData
 }) => {
-    console.log(lenses)
-
     return (
         <LensesFormContainer>
             <LensesContainer>
+                <CopyButton onClick={() => handleGetProductData(true)}><AiOutlineCopy /></CopyButton>
                 <h3>Základné informácie</h3>
                 <CustomInput
                     label="eanCode*"

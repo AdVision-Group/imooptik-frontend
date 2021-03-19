@@ -238,12 +238,13 @@ export const formatPrice = price => {
 }
 
 export const formatfloatNumber = number => {
+    const stringValue = number.toString()
     let value = 0
-    if (number.includes(',')) {
-        value = number.split(',')[0] + '.' + number.split(',')[1]
+    if (stringValue.includes(',')) {
+        value = stringValue.split(',')[0] + '.' + stringValue.split(',')[1]
         return Number(value)
     } else {
-        return Number(number)
+        return Number(stringValue)
 
     }
 }

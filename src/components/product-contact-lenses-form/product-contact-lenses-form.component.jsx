@@ -4,6 +4,9 @@ import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
 // import { lensesBrands } from '../../utils/warehouse.utils'
+import {
+    AiOutlineCopy
+} from 'react-icons/ai'
 
 import {
     ContactLensesContainer,
@@ -13,6 +16,7 @@ import {
     IncreaseButton,
     ImageContainer,
     ProductImage,
+    CopyButton,
 } from './product-contact-lenses-form.styles'
 
 const ProductContactLensesForm = ({
@@ -28,11 +32,13 @@ const ProductContactLensesForm = ({
     currentUser,
     handleAvailableChange,
     isUpdating,
-    filters
+    filters,
+    handleGetProductData
 }) => {
     return (
         <ContactLensesFormContainer>
             <ContactLensesContainer>
+                <CopyButton onClick={() => handleGetProductData(true)}><AiOutlineCopy /></CopyButton>
                 <h3>Základné informácie</h3>
                 <CustomInput
                     label="eanCode*"
@@ -178,7 +184,6 @@ const ProductContactLensesForm = ({
                     <StockContainer>
                         <h3>Skladové zásoby</h3>
                         {product.available.map((value, idx) => {
-                            console.log(product.available)
                             if (idx === 0) return
                             return (
                                 <CustomInput

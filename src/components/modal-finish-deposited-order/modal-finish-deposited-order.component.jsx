@@ -19,10 +19,10 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
     const { token } = useContext(AuthContext)
     const {
         getMessage,
-        message,
-        isLoading,
+        // message,
+        // isLoading,
         setIsLoading,
-        closeModal
+        // closeModal
     } = useContext(LoadingModalContext)
 
     const [value, setValue] = useState("")
@@ -47,11 +47,7 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/orders/${id}/fulfill`, requestOptions)
 
-            console.log(response)
-
             const data = await response.json()
-
-            console.log(data)
 
             if (data.order) {
                 refetch()

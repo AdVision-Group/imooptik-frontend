@@ -318,7 +318,7 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
-    const getSingleProduct = async (id) => {
+    const getSingleProduct = async (id, callback) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -348,6 +348,7 @@ const WarehouseProvider = ({ children }) => {
                         }
                     })
                 }
+                callback(data)
                 closeModal()
                 return
             }
@@ -372,6 +373,11 @@ const WarehouseProvider = ({ children }) => {
             price: formatPrice(productToAdd.price.toString()),
             link: slug,
         }
+
+        console.log("productToAdd")
+        console.log("productToAdd")
+        console.log("productToAdd")
+        console.log(productToAdd)
 
         if (productToAdd.specs) {
             if (productToAdd.specs.size) {
@@ -626,7 +632,7 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
-    const getSingleLenses = async (id) => {
+    const getSingleLenses = async (id, callback) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -636,6 +642,7 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.lenses) {
                 setLenses(data.lenses)
+                callback(data)
                 closeModal()
                 return
             }

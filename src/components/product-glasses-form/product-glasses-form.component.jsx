@@ -5,6 +5,8 @@ import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
 import { glassesColors, glassesMaterials, glassesShapes } from '../../utils/warehouse.utils'
 
+import { AiOutlineCopy } from 'react-icons/ai'
+
 import {
     ImageContainer,
     ProductImage,
@@ -13,7 +15,8 @@ import {
     GlassesParameterContainer,
     StockContainer,
     CustomSelect,
-    BrandedCheckbox
+    BrandedCheckbox,
+    CopyButton
 } from './product-glasses-form.styles.jsx'
 
 const ProductGlassesForm = ({
@@ -30,7 +33,8 @@ const ProductGlassesForm = ({
     glassesParameters,
     setImageModal,
     isUpdating,
-    filters
+    filters,
+    handleGetProductData
 }) => {
     const [isBranded, setIsBranded] = useState(true)
 
@@ -64,6 +68,7 @@ const ProductGlassesForm = ({
     return (
         <GlassesContainerForm>
             <GlassesContainer>
+                <CopyButton onClick={() => handleGetProductData(true)}><AiOutlineCopy /></CopyButton>
                 <h3>Základné informácie</h3>
                 <CustomInput
                     label="eanCode*"

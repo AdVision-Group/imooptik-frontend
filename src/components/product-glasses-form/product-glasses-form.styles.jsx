@@ -38,6 +38,7 @@ export const GlassesContainerForm = styled.div`
 `
 
 export const GlassesContainer = styled.div`
+    position: relative;
     padding: 2rem; 
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
@@ -77,4 +78,12 @@ export const CustomSelect = styled.select`
     font-size: inherit;
     font-family: inherit;
     display: block;
+`
+
+export const CopyButton = styled.button`
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    color: var(--primary-color);
 `

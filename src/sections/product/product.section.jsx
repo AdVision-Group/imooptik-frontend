@@ -7,6 +7,8 @@ import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import ModalImage from '../../components/modal-images/modal-images.component'
+import GetProductDataModal from '../../components/modal-get-product-data/modal-get-product-data.component'
+import GetLensesDataModal from '../../components/modal-get-lenses-data/modal-get-lenses-data.component'
 import Popup from '../../components/popup/pop-up.component'
 
 import ProductGlassesForm from '../../components/product-glasses-form/product-glasses-form.component'
@@ -38,6 +40,8 @@ const ProductSection = () => {
     const { closeModal, message, isLoading, showModal, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [showImageModal, setImageModal] = useState(false)
+    const [isGetProductDataModalVisible, setIsGetProductDataModalVisible] = useState(false)
+    const [isGetLensesDataModalVisible, setIsGetLensesDataModalVisible] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
 
     const {
@@ -64,7 +68,8 @@ const ProductSection = () => {
         handleGlassesParameterChange,
         handleGlassesParameterSpecsChange,
         handleGlassesSizeChange,
-        getSingleProduct
+        getSingleProduct,
+        getSingleLenses
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
@@ -73,6 +78,14 @@ const ProductSection = () => {
 
     const { response, isLoading: isLoadingFilters, refetch } = useFetch(`api/store/products/${productObj?.type}/filters`, !productObj?.type, "GET")
     const [filters, setFilters] = useState(null)
+
+    const handleGetProductData = (boolean) => {
+        setIsGetProductDataModalVisible(boolean)
+    }
+
+    const handleGetLensesData = (boolean) => {
+        setIsGetLensesDataModalVisible(boolean)
+    }
 
     const handleChangeType = e => {
         setHasChanged(true)
@@ -84,6 +97,7 @@ const ProductSection = () => {
                     const confirm = window.confirm("Rozpisane polia budú vymazane")
                     if (confirm) {
                         resetLenses()
+                        setSelectedImage('')
                     } else {
                         return
                     }
@@ -95,6 +109,7 @@ const ProductSection = () => {
                         resetProduct()
                         resetContactLenses()
                         resetGlassesParameters()
+                        setSelectedImage('')
                     } else {
                         return
                     }
@@ -106,6 +121,9 @@ const ProductSection = () => {
         })
 
     }
+    console.count("PRODUCT OBJ")
+    console.log(productObj)
+    // console.count("PRODUCT OBJ")
 
     const handleChange = (e) => {
         setHasChanged(true)
@@ -328,8 +346,10 @@ const ProductSection = () => {
             ...(productObj.type === 0) && { dioptric: lenses.dioptric }
         }
 
-        // console.log(productObj.type)
-        // console.log(newProductObj)
+        console.log("PRODUCT OBJECT")
+        console.log(lensObj)
+        console.log(productObj)
+
 
 
         if (currentUser.admin < 2) {
@@ -376,6 +396,8 @@ const ProductSection = () => {
             }
         } else {
             if (productObj.type === 0) {
+                console.log("NEW LENSES OBJ")
+                console.log(newProductObj)
                 if (!newProductObj.name || !newProductObj.brand || !newProductObj.description || !newProductObj.price || !newProductObj.image || !newProductObj.dioptersRange || !newProductObj.cylinderRange) {
                     setShowModal(true)
                     getMessage("Povinné údaje sú prázdne")
@@ -399,12 +421,32 @@ const ProductSection = () => {
                     return
                 } else {
                     setHasChanged(false)
+                    delete newProductObj['_id']
+
                     createProduct(newProductObj)
                 }
             }
         }
 
 
+    }
+
+    const [lensObj, setLensObj] = useState(null)
+
+    const fillProductData = (productData) => {
+        console.log("productData")
+        console.log("productData")
+        console.log(productData)
+
+        setLensObj({
+            ...productObj,
+            ...productData
+        })
+
+        setProductObj({
+            ...productObj,
+            ...productData
+        })
     }
 
     useEffect(() => {
@@ -496,6 +538,9 @@ const ProductSection = () => {
                 when={hasChanged}
                 message="Chcete opustiť formulár?"
             />
+
+            {isGetLensesDataModalVisible && <GetLensesDataModal close={() => handleGetLensesData(false)} getSingleProduct={getSingleProduct} productObj={productObj} setProductObj={setProductObj} getSingleLenses={getSingleLenses} fillProductData={fillProductData} />}
+            {isGetProductDataModalVisible && <GetProductDataModal close={() => setIsGetProductDataModalVisible(false)} getSingleProduct={getSingleProduct} productObj={productObj} setProductObj={setProductObj} />}
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={handleSelectImage} />}
             <Header>
@@ -551,6 +596,7 @@ const ProductSection = () => {
                         handleParameterChange={handleParameterChange}
                         checkParameter={checkParameter}
                         filters={filters}
+                        handleGetProductData={handleGetLensesData}
                     />
                 )}
 
@@ -595,6 +641,7 @@ const ProductSection = () => {
                         handleAvailableChange={handleAvailableChange}
                         handleContactLensesChange={handleContactLensesChange}
                         filters={filters}
+                        handleGetProductData={handleGetProductData}
                     />
                 )}
 
@@ -614,6 +661,7 @@ const ProductSection = () => {
                         handleGlassesSpecsSizeChange={handleGlassesSpecsSizeChange}
                         handleGlassesParametersChange={handleGlassesParametersChange}
                         filters={filters}
+                        handleGetProductData={handleGetProductData}
                     />
                 )}
 

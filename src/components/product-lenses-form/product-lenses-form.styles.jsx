@@ -14,6 +14,7 @@ export const LensesFormContainer = styled.div`
 `
 
 export const LensesContainer = styled.div`
+    position: relative;
     /* width: 45rem; */
     padding: 2rem; 
     box-shadow: var(--container-shadow);
@@ -91,4 +92,12 @@ export const TypeCheckbox = styled(CustomCheckbox)`
     &:not(:last-child) {
         margin-right: 2rem;
     }
+`
+
+export const CopyButton = styled.button`
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    color: var(--primary-color);
 `

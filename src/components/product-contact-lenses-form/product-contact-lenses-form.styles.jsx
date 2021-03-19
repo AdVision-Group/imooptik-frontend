@@ -38,6 +38,8 @@ export const ContactLensesContainer = styled.div`
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
     border-radius: .5rem;
+    position: relative;
+
 `
 
 export const ContactLensesParametersContainer = styled.div`
@@ -65,4 +67,12 @@ export const StockContainer = styled.div`
     background-color: var(--container-background-color);
 
     border-radius: .5rem;
+`
+
+export const CopyButton = styled.button`
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    color: var(--primary-color);
 `
