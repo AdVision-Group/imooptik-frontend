@@ -66,12 +66,14 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
                 delete product['contactLenses']
                 delete product['date']
 
+                console.log(product)
+
                 setProductObj({
                     ...product,
                     // id: product._id,
                     ...(!product._id) && { _id: product._id },
                     price: (product.price / 100).toFixed(2),
-                    colorCode: product.colorCode ?? "",
+                    eanCode: product.eanCode,
                     image: product.image._id,
                     specs: {
                         ...product.specs,

@@ -481,7 +481,9 @@ const ProductSection = () => {
             if (!eanCode) {
                 getEanCode()
             } else {
-                if (productObj.type !== undefined) {
+                if (productObj.type !== undefined && !productObj.eanCode) {
+                    console.log("SET EANCODE")
+                    console.log(productObj)
                     handleChange({
                         target: {
                             name: "eanCode",

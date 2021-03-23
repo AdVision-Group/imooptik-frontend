@@ -801,7 +801,11 @@ const WarehouseProvider = ({ children }) => {
         if (products) {
             if (activeCategoryTypeTab === 0) {
                 getProductsByQuery({
-                    limit: 10
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    }
                 })
             } else if (activeCategoryTypeTab === 1) {
                 getLenses()
