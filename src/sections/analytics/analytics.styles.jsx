@@ -44,7 +44,7 @@ export const StatsGrid = styled.div`
 
 export const StatsContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 2rem;
     margin-bottom: 4rem;
 
@@ -67,6 +67,42 @@ export const StatsContainer = styled.div`
     }
 
 `
+export const PaymentsContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+    margin-bottom: 4rem;
+
+    div {
+        background-color: var(--body-background-primary-color);
+        padding: 2rem;
+        border-radius: .5rem;
+        text-align: center;
+
+        h3 {
+            font-weight: lighter;
+            /* margin-bottom: 1rem; */
+            opacity: .6;
+
+            span {
+                display: block;
+                font-size: 1.2rem
+            }
+        }
+
+        p {
+            font-size: 4rem;
+        }
+
+        :nth-of-type(1) {
+            h3 {
+                margin-bottom: 1.8rem;
+            }
+        }
+    }
+`
+
+
 // export const StatsContainer = styled.div`
 //     padding: 2rem;
 //     border-radius: .5rem;

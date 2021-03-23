@@ -111,6 +111,24 @@ const ProductLensesForm = ({
                         ))}
                     </div>
 
+                    {console.log(lenses)}
+                    {lenses.lensType === "slnečné" && (
+                        <div>
+                            <TypeCheckbox
+                                label="Fotochromatické"
+                                value={lenses.photochromic}
+                                name='photochromic'
+                                isActive={lenses.photochromic}
+                                handleClick={() => handleChange({
+                                    target: {
+                                        name: "photochromic",
+                                        value: !lenses.photochromic
+                                    }
+                                })}
+                            />
+                        </div>
+                    )}
+
                     <div>
                         <TypeCheckbox
                             label="Dioptrické"

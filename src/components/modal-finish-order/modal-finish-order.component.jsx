@@ -12,7 +12,8 @@ import {
     CustomSelect,
     OptionsCheckbox,
     OverwriteAddressCheckbox,
-    DiscountCheckboxContainer
+    DiscountCheckboxContainer,
+    CouponValueContainer
 } from './modal-finish-order.styles'
 
 const FinishOrderModal = ({
@@ -27,6 +28,7 @@ const FinishOrderModal = ({
         paymentType: "cash"
     })
     const [hasDeposit, setHasDeposit] = useState(false)
+    const [hasCoupon, setHasCoupon] = useState(false)
     const [overwrite, setOverwrite] = useState(false)
 
     const toggleDeposit = prevValue => {
@@ -40,6 +42,20 @@ const FinishOrderModal = ({
             }
         } else {
             setHasDeposit(true)
+        }
+    }
+
+    const toggleCoupon = prevValue => {
+        if (prevValue) {
+            setHasCoupon(false)
+            if (orderDetail.couponValue) {
+                delete orderDetail["couponValue"]
+                setOrderDetails({
+                    ...orderDetail
+                })
+            }
+        } else {
+            setHasCoupon(true)
         }
     }
 
@@ -115,6 +131,12 @@ const FinishOrderModal = ({
                 status: hasDeposit ? "half-paid" : "paid"
             }
 
+            if (orderDetail.couponValue) {
+                orderObj = {
+                    ...orderObj,
+                    couponValue: formatPrice(orderDetail.couponValue)
+                }
+            }
             if (orderDetail.paidAlready) {
                 orderObj = {
                     ...orderObj,
@@ -170,8 +192,24 @@ const FinishOrderModal = ({
                 >
                     <option value={"cash"}>Hotovosť</option>
                     <option value={"card"}>Karta</option>
-                    <option value={"coupon"}>Kupón</option>
                 </CustomSelect>
+
+                <DiscountCheckboxContainer>
+                    <input id="hasCoupon" name='hasCoupon' type='checkbox' value={hasCoupon} onChange={() => toggleCoupon(hasCoupon)} />
+                    <label htmlFor='hasCoupon'>Pridať kupón</label>
+                </DiscountCheckboxContainer>
+
+                {hasCoupon && (
+                    <CouponValueContainer>
+                        <CustomInput
+                            label="Hodnota kupónu"
+                            name="couponValue"
+                            type='text'
+                            value={orderDetail?.couponValue || ""}
+                            onChange={e => handleOrderDetailChange(e)}
+                        />
+                    </CouponValueContainer>
+                )}
 
                 <DiscountCheckboxContainer>
                     <input id="hasDeposit" name='hasDeposit' type='checkbox' value={hasDeposit} onChange={() => toggleDeposit(hasDeposit)} />

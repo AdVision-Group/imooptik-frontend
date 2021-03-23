@@ -33,6 +33,9 @@ const EshopSection = () => {
     const [queryFilter, setQueryFilter] = useState({
         limit: 10,
         skip: 0,
+        sortBy: {
+            date: -1
+        }
     })
 
     const [showFilterModal, setShowFilterModal] = useState(false)
@@ -88,6 +91,9 @@ const EshopSection = () => {
         getProductsByQuery({
             limit: 10,
             skip: 0,
+            sortBy: {
+                date: -1
+            }
         })
         setShowFilterModal(false)
         setHasFilter(false)
@@ -97,7 +103,10 @@ const EshopSection = () => {
         if (searchQuery !== '') {
             if (activeCategoryTypeTab === 0) {
                 getProductsByQuery({
-                    query: searchQuery
+                    query: searchQuery,
+                    sortBy: {
+                        date: -1
+                    }
                 })
             }
         }
@@ -110,7 +119,10 @@ const EshopSection = () => {
     useEffect(() => {
         if (!products) {
             getProductsByQuery({
-                limit: 10
+                limit: 10,
+                sortBy: {
+                    date: -1
+                }
             })
         }
         if (products) {
@@ -122,7 +134,10 @@ const EshopSection = () => {
         if (!searchQuery && products) {
             if (activeCategoryTypeTab === 0) {
                 getProductsByQuery({
-                    limit: 10
+                    limit: 10,
+                    sortBy: {
+                        date: -1
+                    }
                 })
             }
         }

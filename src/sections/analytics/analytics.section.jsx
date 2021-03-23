@@ -26,7 +26,8 @@ import {
     TypeCheckbox,
     TwoColContainer,
     CheckboxContainer,
-    Container
+    Container,
+    PaymentsContainer
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -38,7 +39,7 @@ const AnalyticsSection = () => {
     } = useContext(LoadingModalContext)
     const { stats: storeData, isAdmin, currentUser } = useContext(AuthContext)
     const { stats, getAnalytics, generateReport } = useContext(AnalyticsContext)
-    const premisesTabs = isAdmin ? retailNamesTabs : retailNamesTabs.filter(tab => tab.id === currentUser.premises || tab.id === 0)
+    const premisesTabs = isAdmin ? analyticsRetailNames : analyticsRetailNames.filter(tab => tab.id === currentUser.premises || tab.id === 0)
 
     const [activePremiseIndex, setActivePremiseIndex] = useState(currentUser.premises || 0)
     const [activeIndex, setActiveIndex] = useState(2)
@@ -154,6 +155,8 @@ const AnalyticsSection = () => {
         }
     }, [])
 
+    console.log(stats)
+
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
@@ -232,38 +235,53 @@ const AnalyticsSection = () => {
                     </div>
                 </GridContainer>}
 
+
+
                 {stats && (
                     <StatsGrid>
                         {
                             activeTabStats ? (
-                                <StatsContainer>
+                                <PaymentsContainer>
                                     <div>
-                                        <h3>Dohromady</h3>
-                                        <p>{((activeTabStats?.cash + activeTabStats?.card) / 100).toFixed(2)}€</p>
+                                        <h3>Tržba</h3>
+                                        <p>{((activeTabStats?.cash + activeTabStats?.card + activeTabStats?.coupons + activeTabStats?.eshopPickupPayments) / 100).toFixed(2)}€</p>
                                     </div>
                                     <div>
-                                        <h3>Hotovosť</h3>
-                                        <p>{(activeTabStats?.cash / 100).toFixed(2)}€</p>
+                                        <h3>Tržba <span>(potenciálna)</span></h3>
+                                        <p>{(activeTabStats?.potential / 100).toFixed(2)}€</p>
                                     </div>
-                                    <div>
-                                        <h3>Karta</h3>
-                                        <p>{(activeTabStats?.card / 100).toFixed(2)}€</p>
-                                    </div>
-                                    <div>
-                                        <h3>Kupóny</h3>
-                                        <p>{activeTabStats?.coupons}</p>
-                                    </div>
-                                    <div>
-                                        <h3>Objednávky</h3>
-                                        <p>{activeTabStats?.orders}</p>
-                                    </div>
-                                </StatsContainer>
+                                </PaymentsContainer>
                             ) : (
-                                <StatsContainer>
+                                <PaymentsContainer>
                                     <p>Žiadné štatistiky</p>
-                                </StatsContainer>
+                                </PaymentsContainer>
                             )
                         }
+                    </StatsGrid>
+                )}
+
+                {stats && (
+                    <StatsGrid>
+                        {activeTabStats && (
+                            <StatsContainer>
+                                <div>
+                                    <h3>Hotovosť</h3>
+                                    <p>{(activeTabStats?.cash / 100).toFixed(2)}€</p>
+                                </div>
+                                <div>
+                                    <h3>Karta</h3>
+                                    <p>{(activeTabStats?.card / 100).toFixed(2)}€</p>
+                                </div>
+                                <div>
+                                    <h3>Kupóny</h3>
+                                    <p>{(activeTabStats?.coupons / 100).toFixed(2)}€</p>
+                                </div>
+                                <div>
+                                    <h3>Objednávky</h3>
+                                    <p>{activeTabStats?.orders}</p>
+                                </div>
+                            </StatsContainer>
+                        )}
                     </StatsGrid>
                 )}
 
@@ -342,23 +360,73 @@ const reportTypes = [
 
 const retailTypes = [
     {
-        name: "Všetko",
-        value: null,
+        name: "E-shop",
+        value: 0,
     },
     {
-        name: "Obchodná 57, Bratislava",
+        name: "Centrálny sklad",
         value: 1,
     },
     {
-        name: "Miletičova 38, Bratislava",
+        name: "Obchodná, Bratislava",
         value: 2,
     },
     {
-        name: "Vajnory, Bratislava",
+        name: "Miletičova, Bratislava",
         value: 3,
     },
     {
-        name: "Senica, OC Branč",
+        name: "Vajnory, Bratislava",
         value: 4,
     },
+    {
+        name: "Vajnorská 53, Bratislava",
+        value: 5,
+    },
+    {
+        name: "OC Branč, Senica",
+        value: 6,
+    },
 ]
+
+
+export const analyticsRetailNames = [
+    {
+        id: 0,
+        name: "E-shop",
+    },
+    {
+        id: 1,
+        name: "Centrálny sklad",
+    },
+    {
+        id: 2,
+        name: "Obchodná, Bratislava",
+    },
+    {
+        id: 3,
+        name: "Miletičova, Bratislava",
+    },
+    {
+        id: 4,
+        name: "Vajnory, Bratislava",
+    },
+    {
+        id: 5,
+        name: "Vajnorská 53, Bratislava",
+    },
+    {
+        id: 6,
+        name: "OC Branč, Senica",
+    },
+]
+
+// export const retailNames = [
+//     "eshop",
+//     "Centrálny sklad",
+//     "Obchodná, Bratislava",
+//     "Miletičova, Bratislava",
+//     "Vajnory, Bratislava",
+//     "Vajnorská 53, Bratislava",
+//     "OC Branč, Senica"
+// ]

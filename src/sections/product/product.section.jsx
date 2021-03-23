@@ -121,8 +121,8 @@ const ProductSection = () => {
         })
 
     }
-    console.count("PRODUCT OBJ")
-    console.log(productObj)
+    // console.count("PRODUCT OBJ")
+    // console.log(productObj)
     // console.count("PRODUCT OBJ")
 
     const handleChange = (e) => {

@@ -88,3 +88,7 @@ export const DiscountCheckboxContainer = styled.div`
         display: block;
     }
 `
+
+export const CouponValueContainer = styled.div`
+    margin-bottom: 2rem;
+`
