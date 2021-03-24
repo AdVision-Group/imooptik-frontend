@@ -161,13 +161,13 @@ const ProductGlassesForm = ({
             <div>
                 <GlassesParameterContainer>
                     <h3>Parametre</h3>
-                    {/* <CustomInput
+                    <CustomInput
                         label="Farebný kód"
                         type='text'
                         name='colorCode'
                         value={glassesParameters.colorCode ?? ""}
                         handleChange={(e) => handleGlassesParametersChange(e)}
-                    /> */}
+                    />
                     <div>
                         <CustomInput
                             label="Farba rámu"

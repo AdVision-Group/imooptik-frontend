@@ -134,7 +134,8 @@ const FinishOrderModal = ({
             if (orderDetail.couponValue) {
                 orderObj = {
                     ...orderObj,
-                    couponValue: formatPrice(orderDetail.couponValue)
+                    couponValue: formatPrice(orderDetail.couponValue),
+                    paidAlready: orderObj.paidAlready + orderDetail.couponValue
                 }
             }
             if (orderDetail.paidAlready) {
