@@ -117,8 +117,12 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                         <span>{translatePaymentMethod(order?.advancePaymentType)}</span>
                     </div>
                     <div>
+                        <h3>Kupón</h3>
+                        <p>{(order?.couponValue1 / 100).toFixed(2)}€</p>
+                    </div>
+                    <div>
                         <h3>Doplatiť</h3>
-                        <p>{((order?.discountedValue - order?.paidAlready) / 100).toFixed(2)}€</p>
+                        <p>{((order?.discountedValue - order?.paidAlready - order?.couponValue1) / 100).toFixed(2)}€</p>
                         {/* <span>{translatePaymentMethod(order?.advancePaymentType)}</span> */}
                     </div>
                 </GridContainer>

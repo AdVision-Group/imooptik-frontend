@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
 
 export const Modal = styled.div`
     width:100%;
-    max-width: 65rem;
+    max-width: 75rem;
     max-height: 60rem;
 
     overflow-y: scroll;
@@ -98,13 +98,14 @@ export const SubmitButton = styled(CustomButton)`
 export const GridContainer = styled.div`
     display: grid;
     justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-bottom: 3rem;
+    grid-gap: 1rem;
 
     div {
         width: 15rem;
         text-align: center;
-        padding: 2rem;
+        padding: 2rem 1rem;
         border-radius: .3rem;
         background-color: var(--body-background-primary-color);
 
@@ -113,7 +114,7 @@ export const GridContainer = styled.div`
         }
 
         p {
-            font-size: 3rem;
+            font-size: 2.5rem;
         }
 
         span {
