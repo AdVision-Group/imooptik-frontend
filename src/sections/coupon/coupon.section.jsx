@@ -110,7 +110,7 @@ const CouponSection = () => {
                             />
                         </InputRow>
                         <InputRow
-                            label="Koľko maximálne krát môže tento kupón byt použitý jedným človek."
+                            label="Počet použití jedným používateľom"
                             example=""
                         >
                             <CustomInput
@@ -122,7 +122,7 @@ const CouponSection = () => {
                             />
                         </InputRow>
                         <InputRow
-                            label="Minimálna hodnota objednávky v eurách, aby bol tento kupón aplikovateľný."
+                            label="Minimálna hodnota objednávky pre použitie kupónu"
                             example=""
                         >
                             <CustomInput
@@ -134,7 +134,7 @@ const CouponSection = () => {
                             />
                         </InputRow>
                         <InputRow
-                            label="Koľko maximálne krát môže tento kupón byt použitý dohromady všetkými užívateľmi."
+                            label="Počet celkových použití kupónu"
                             example=""
                         >
                             <CustomInput

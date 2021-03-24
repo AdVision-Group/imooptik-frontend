@@ -2,8 +2,10 @@ import styled from 'styled-components'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 export const TableCol = styled.div`
-    padding: 2rem;
+    min-width: 10rem;
+    display: table-cell;
     text-align: center;
+    padding: 1rem;
 
     input {
         text-align: end;
@@ -24,6 +26,7 @@ export const TableCol = styled.div`
 export const QuantityContainer = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
 
     button {
         cursor: pointer;
@@ -31,7 +34,6 @@ export const QuantityContainer = styled.div`
         align-items: center;
         justify-content: center;
         padding: .5rem;
-        color: var(--primary-color);
     }
 
     p {
@@ -41,13 +43,29 @@ export const QuantityContainer = styled.div`
 
 export const CartTableRow = styled.div`
     cursor: pointer;
-    display:grid; 
-    align-items: center;
-    grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr;
-    background-color: var(--background-primary-color);
+    /* display:grid;  */
+    /* align-items: center; */
+    /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
+    /* background-color: var(--background-primary-color); */
     /* border: .05rem solid var(--secondary-text-color); */
 
     border: ${({ isSelected }) => isSelected ? ".05rem solid var(--primary-color)" : ".05rem solid transparent"};
+    background-color: ${({ isSelected }) => isSelected ? "var(--primary-color)" : "var(--container-background-table-row)"};
+    font-weight: ${({ isSelected }) => isSelected ? "bolder" : "normal"};
+    display: table-row;
+
+    ${QuantityContainer} {
+        button {
+            color: ${({ isSelected }) => isSelected ? "var(--container-background-table-row)" : "var(--primary-color)"};
+        }
+    }
+
+    /* box-shadow: var(--container-shadow); */
+    /* background-color: var(--container-background-table-row); */
+
+    @media all and (max-width: 920px) {
+        font-size: 1.2rem
+    }
 
     &:hover  ${TableCol}{
         position: relative;

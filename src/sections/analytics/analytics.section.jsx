@@ -353,7 +353,7 @@ const reportTypes = [
         value: "products",
     },
     {
-        name: "Zákázky",
+        name: "Zákazky",
         value: "orders",
     },
 ]

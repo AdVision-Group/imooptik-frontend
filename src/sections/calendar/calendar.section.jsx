@@ -176,8 +176,8 @@ const CalendarSection = () => {
                         {isUpdating ? (
                             <h1>Kalendár: {calendar?.name}</h1>
                         ) : (
-                                <h1>Nový kalendár</h1>
-                            )}
+                            <h1>Nový kalendár</h1>
+                        )}
                     </div>
                     <div>
                         {isUpdating && <DeleteCalendarButton onClick={() => deleteCalendar(calendar?._id)}>Vymazať</DeleteCalendarButton>}
@@ -192,7 +192,7 @@ const CalendarSection = () => {
                         {isAdmin && <Container>
                             <h3>Základné informácie</h3>
                             <div>
-                                <h4>Kalendar je pre prevádzku</h4>
+                                <h4>Kalendár je pre prevádzku</h4>
                                 <CustomRetailSelect
                                     name='premises'
                                     value={calendar?.premises || "0"}
@@ -215,7 +215,7 @@ const CalendarSection = () => {
                             </div>
                         </Container>}
                         <Container>
-                            <h3>Dni kedy sa nerobia prehliadky</h3>
+                            <h3>Dovolenka</h3>
                             {calendar?.exceptDays && calendar?.exceptDays?.map((value, idx) => (
                                 <div key={idx}>
                                     <CustomInput
@@ -272,7 +272,7 @@ const CalendarSection = () => {
                         <h3>Ordinačné hodiny</h3>
                         <TableHead>
                             <TableCol isFirst>
-                                Čas \ Den
+                                Čas \ Deň
                             </TableCol>
                             {dayNames.map((name, idx) => (
                                 <TableCol key={idx}>
@@ -287,7 +287,7 @@ const CalendarSection = () => {
                             {[...Array(7)].map((value, idx) => (
                                 <TableCol key={idx}>
                                     <select name='startTimes' value={calendar?.startTimes ? calendar?.startTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
-                                        <option value={"X"}>Žiadný</option>
+                                        <option value={"X"}>Žiadny</option>
                                         {calendarTimes.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}
@@ -302,7 +302,7 @@ const CalendarSection = () => {
                             {[...Array(7)].map((value, idx) => (
                                 <TableCol key={idx}>
                                     <select name='endTimes' value={calendar?.endTimes ? calendar?.endTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
-                                        <option value={"X"}>Žiadný</option>
+                                        <option value={"X"}>Žiadny</option>
                                         {calendarTimes.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}

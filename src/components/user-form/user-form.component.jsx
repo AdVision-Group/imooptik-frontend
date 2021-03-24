@@ -47,7 +47,7 @@ const UserForm = ({
     return (
         <GridContainer>
             <Profile>
-                {isAdmin && <AdminPanelContainer>
+                {isAdmin && user.admin !== 0 && <AdminPanelContainer>
                     <h2>Admin panel</h2>
                     <InputRow
                         label="Predajňa na ktorej uživatel pracuje"
@@ -209,6 +209,24 @@ const UserForm = ({
                                 value={user.company.dic ?? ""}
                                 handleChange={(e) => handleCompanyChange(e)}
                             />
+                        </ZeroMargin>
+                        <ZeroMargin>
+                            <CustomInput
+                                label="IČ DPH"
+                                type='text'
+                                name='icdph'
+                                value={user.company.icdph ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            />
+                        </ZeroMargin>
+                        <ZeroMargin>
+                            {/* <CustomInput
+                                label="IČ DPH"
+                                type='text'
+                                name='icdph'
+                                value={user.company.icdph ?? ""}
+                                handleChange={(e) => handleCompanyChange(e)}
+                            /> */}
                         </ZeroMargin>
                     </GridRow>
                     <GridRow>

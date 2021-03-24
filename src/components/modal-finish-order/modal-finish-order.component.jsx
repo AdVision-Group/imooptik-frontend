@@ -180,7 +180,7 @@ const FinishOrderModal = ({
 
     return (
         <Modal>
-            <h2>{isUpdating ? "Upraviť objednávku" : 'Dokončeniť objednávky'}</h2>
+            <h2>{isUpdating ? "Upraviť objednávku" : 'Dokončiť objednávku'}</h2>
 
             {!isUpdating && <div>
                 <h4>Spôsob platby</h4>

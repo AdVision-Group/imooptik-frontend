@@ -55,24 +55,24 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
         <div>
             {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} refetchUser={refetchUser} addUser={addUser} />}
             <ProductsOverviewContainer>
-                <SummaryTableTitle>Prehĺad objednávky</SummaryTableTitle>
+                <SummaryTableTitle>Prehľad objednávky</SummaryTableTitle>
                 <SummaryTableHead>
                     <TableCol>#</TableCol>
                     <TableCol>
                         <span>Eankód</span>
-                        <span>ProduktID</span>
+                        <span>Názov produktu</span>
                     </TableCol>
                     <TableCol>Cena</TableCol>
-                    <TableCol>Po zlave</TableCol>
+                    <TableCol>Po zľave</TableCol>
                     <TableCol>
                         <span>Eankód</span>
-                        <span>ŠosovkyID</span>
+                        <span>Názov šošovky</span>
                     </TableCol>
                     <TableCol>Cena</TableCol>
-                    <TableCol>Po zlave</TableCol>
+                    <TableCol>Po zľave</TableCol>
                     <TableCol>Ks</TableCol>
-                    <TableCol>Dohromady</TableCol>
-                    <TableCol>Po zlave</TableCol>
+                    <TableCol>Spolu</TableCol>
+                    <TableCol>Po zľave</TableCol>
                 </SummaryTableHead>
 
                 {order.combinedProducts && order.combinedProducts.map((combinedProduct, idx) => (
@@ -80,11 +80,10 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         <TableCol>{idx + 1}</TableCol>
                         <TableCol>{combinedProduct?.product ? <OrderSummaryProductName productId={combinedProduct?.product} /> : ""}</TableCol>
                         <TableCol>{combinedProduct?.productPrice?.full !== 0 ? `${(combinedProduct?.productPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
-                        <TableCol>{combinedProduct?.productPrice?.discounted !== 0 ? `${(combinedProduct?.productPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
-
+                        <TableCol>{combinedProduct?.productPrice?.discounted !== 0 ? `${(combinedProduct?.productPrice?.discounted / 100).toFixed(2)}€` : ""} {combinedProduct?.discount?.product?.percent && `(${combinedProduct?.discount?.product?.percent}%)`}</TableCol>
                         <TableCol>{combinedProduct?.lens ? <OrderSummaryLensesName lensesId={combinedProduct?.lens} /> : ""}</TableCol>
                         <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
-                        <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.discounted / 100).toFixed(2)}€` : ""}</TableCol>
+                        <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.discounted / 100).toFixed(2)}€` : ""} {combinedProduct?.discount?.lenses?.percent && `(${combinedProduct?.discount?.lenses?.percent}%)`}</TableCol>
                         <TableCol>{combinedProduct?.lensesQuant}</TableCol>
                         <TableCol>{combinedProduct?.price ? `${(combinedProduct?.price / 100).toFixed(2)}€` : ""}</TableCol>
                         <TableCol>{(combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol>
@@ -103,7 +102,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                     </EditButton>
                     <h3>Zákaznik</h3>
                     <div>
-                        <h4>Meno a prizvisko</h4>
+                        <h4>Meno a priezvisko</h4>
                         <StyledParagraph>{order?.user?.name}</StyledParagraph>
                     </div>
                     <div>
@@ -188,6 +187,11 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         {order?.order?.advancePaymentType && <div>
                             <h4>Záloha</h4>
                             <StyledParagraph>{`Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€ (${translatePaymentMethod(order.order.advancePaymentType)})`}</StyledParagraph>
+                        </div>}
+                        {order?.order?.couponValue1 > 0 && <div>
+                            <h4>Kupón</h4>
+                            <StyledParagraph>{`Hodnota: ${(order.order.couponValue1 / 100).toFixed(2)}€`}</StyledParagraph>
+                            {order?.order?.couponValue2 > 0 && <StyledParagraph>{`Hodnota: ${(order.order.couponValue2 / 100).toFixed(2)}€`}</StyledParagraph>}
                         </div>}
                         {order.order.status !== 'half-paid' && <div>
                             <h4>Spôsob úhrady doplatku</h4>

@@ -8,7 +8,7 @@ import CustomCheckbox from "../custom-checkbox/custom-checkbox.component"
 
 import {
     retailNames
-} from '../../context/warehouse/warehouse.utils'
+} from '../../utils/warehouse.utils'
 
 import {
     CustomSelect,
@@ -37,7 +37,7 @@ const NewUserForm = ({
             {/* Akého uživatela chcete vytvoriť? */}
             {isAdmin && <CustomFormSwitch
                 items={switchFormButtons}
-                title="Akého uživatela chcete vytvoriť?"
+                title="Akého uživatela chcete vytvoriť ?"
                 activeIndex={formToShow}
                 handleClick={toggleUserForm}
             />}
@@ -252,9 +252,9 @@ const NewUserForm = ({
                         </ColContainer>
 
                         <ColContainer>
-                            <SectionTitle>Admin privilégia</SectionTitle>
+                            <SectionTitle>Admin privilégiá</SectionTitle>
                             <div>
-                                <h4>Predajňa na ktorej uživatel pracuje</h4>
+                                <h4>Predajňa na ktorej zamestnanec pracuje</h4>
                                 <CustomSelect name='premises' value={user.premises} onChange={(e) => handleChange(e)}>
                                     <option value={0}>Nezadané</option>
                                     {retailNames.map((name, idx) => {
@@ -270,8 +270,8 @@ const NewUserForm = ({
                             <div>
                                 <h4>Výška administrativných práv</h4>
                                 <CustomSelect name='admin' value={user.admin} onChange={(e) => handleChange(e)}>
-                                    <option value={0}>Zákaznik</option>
-                                    <option value={1}>Predavač</option>
+                                    {/* <option value={0}>Zákaznik</option> */}
+                                    <option value={1}>Zamestnanec</option>
                                     <option value={2}>Vedúci</option>
                                 </CustomSelect>
 

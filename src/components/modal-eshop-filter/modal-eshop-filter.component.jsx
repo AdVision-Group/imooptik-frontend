@@ -126,7 +126,7 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                             })}
                         />
                         <CustomCheckbox
-                            label="Kontaktné šosovky"
+                            label="Kontaktné šošovky"
                             isActive={filter?.filters?.type === 3}
                             handleClick={() => handleChangeFilters({
                                 target: {

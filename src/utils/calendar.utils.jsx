@@ -212,7 +212,7 @@ export const months = [
 
 export const calendarFormat = [
     'Mesiac',
-    'Týžden'
+    'Týždeň'
 ]
 
 export const getMonday = (d) => {

@@ -170,103 +170,103 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
                                     <TableCol>{phone}</TableCol>
                                 </Tablebody>
                             )) : (
-                                    <div>
-                                        <p>Žiaden výsledok</p>
-                                    </div>
-                                )}
+                                <div>
+                                    <p>Žiaden výsledok</p>
+                                </div>
+                            )}
                         </UserTable>
                     </SearchTab>
                 ) : (
-                        <React.Fragment>
-                            <div>
-                                <h3>Dátum vyšetrenia</h3>
-                                <DateContainer>
+                    <React.Fragment>
+                        <div>
+                            <h3>Dátum vyšetrenia</h3>
+                            <DateContainer>
+                                <CustomInput
+                                    label=''
+                                    type='date'
+                                    name='date'
+                                    handleChange={handleChangeDate}
+                                    value={bookingDate?.date}
+
+                                />
+                                <div>
                                     <CustomInput
-                                        label=''
-                                        type='date'
-                                        name='date'
+                                        label='Čas'
+                                        type='number'
+                                        name='hour'
+                                        value={bookingDate?.hour?.toString()}
+                                        min={startTime?.split(":")[0]}
+                                        max={endTime?.split(":")[0]}
                                         handleChange={handleChangeDate}
-                                        value={bookingDate?.date}
-
+                                        step="1"
                                     />
-                                    <div>
-                                        <CustomInput
-                                            label='Čas'
-                                            type='number'
-                                            name='hour'
-                                            value={bookingDate?.hour?.toString()}
-                                            min={startTime?.split(":")[0]}
-                                            max={endTime?.split(":")[0]}
-                                            handleChange={handleChangeDate}
-                                            step="1"
-                                        />
-                                    </div>
-                                    <p>:</p>
-                                    <div>
-                                        <CustomSelect
-                                            name='min'
-                                            value={bookingDate?.min?.toString()}
-                                            onChange={handleChangeDate}
-                                        >
-                                            <option value={0}>00</option>
-                                            {calendar?.interval === 30 && <option value={30}>30</option>}
-                                        </CustomSelect>
-                                    </div>
-                                </DateContainer>
-                            </div>
-                            <div>
-                                <CustomInput
-                                    label='Meno*'
-                                    name='name'
-                                    value={userBooking?.name || ""}
-                                    handleChange={handleUserBookingChange}
-                                />
-                            </div>
-                            <div>
-                                <CustomInput
-                                    label='E-mail*'
-                                    name='email'
-                                    value={userBooking?.email || ""}
-                                    handleChange={handleUserBookingChange}
-                                />
-                            </div>
-                            <div>
-                                <CustomInput
-                                    label='Tel. číslo*'
-                                    name='phone'
-                                    value={userBooking?.phone || ""}
-                                    handleChange={handleUserBookingChange}
-                                />
-                            </div>
+                                </div>
+                                <p>:</p>
+                                <div>
+                                    <CustomSelect
+                                        name='min'
+                                        value={bookingDate?.min?.toString()}
+                                        onChange={handleChangeDate}
+                                    >
+                                        <option value={0}>00</option>
+                                        {calendar?.interval === 30 && <option value={30}>30</option>}
+                                    </CustomSelect>
+                                </div>
+                            </DateContainer>
+                        </div>
+                        <div>
+                            <CustomInput
+                                label='Meno*'
+                                name='name'
+                                value={userBooking?.name || ""}
+                                handleChange={handleUserBookingChange}
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label='E-mail*'
+                                name='email'
+                                value={userBooking?.email || ""}
+                                handleChange={handleUserBookingChange}
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label='Tel. číslo*'
+                                name='phone'
+                                value={userBooking?.phone || ""}
+                                handleChange={handleUserBookingChange}
+                            />
+                        </div>
 
-                            <div>
-                                <CustomTextarea
-                                    label='Poznámka'
-                                    name='note'
-                                    rows="5"
-                                    value={userBooking?.note || ""}
-                                    handleChange={handleUserBookingChange}
-                                />
-                            </div>
+                        <div>
+                            <CustomTextarea
+                                label='Poznámka'
+                                name='note'
+                                rows="5"
+                                value={userBooking?.note || ""}
+                                handleChange={handleUserBookingChange}
+                            />
+                        </div>
 
-                            <div>
-                                <h3>Vyšetrenie</h3>
-                                <CustomSelect
-                                    name='booking'
-                                    value={userBooking?.booking || ""}
-                                    onChange={handleUserBookingChange}
-                                >
-                                    <option value={''}>Nezvolené</option>
-                                    {calendar?.bookings.map((booking, idx) => {
-                                        if (booking.active === false) return
-                                        return (
-                                            <option key={idx} value={booking._id}>{booking.name}</option>
-                                        )
-                                    })}
-                                </CustomSelect>
-                            </div>
-                        </React.Fragment>
-                    )}
+                        <div>
+                            <h3>Vyšetrenie</h3>
+                            <CustomSelect
+                                name='booking'
+                                value={userBooking?.booking || ""}
+                                onChange={handleUserBookingChange}
+                            >
+                                <option value={''}>Nezvolené</option>
+                                {calendar?.bookings.map((booking, idx) => {
+                                    if (booking.active === false) return
+                                    return (
+                                        <option key={idx} value={booking._id}>{booking.name}</option>
+                                    )
+                                })}
+                            </CustomSelect>
+                        </div>
+                    </React.Fragment>
+                )}
 
                 {activeTab === 0 && <SubmitButton onClick={handleSubmit}>Vytvoriť</SubmitButton>}
             </Modal>
@@ -283,6 +283,6 @@ const optionTabs = [
     },
     {
         id: 1,
-        name: "Vyhladať zákazníka",
+        name: "Vyhľadať zákazníka",
     },
 ]

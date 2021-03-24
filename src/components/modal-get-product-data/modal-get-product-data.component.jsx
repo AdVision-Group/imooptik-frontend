@@ -117,7 +117,7 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
-                <h2>Vyhladat produkt</h2>
+                <h2>Vyhľadať produkt</h2>
                 <div>
                     <CustomInput
                         label='Názov produktu, eanCode alebo popis'

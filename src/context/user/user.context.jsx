@@ -62,7 +62,7 @@ const UserProvider = ({ children }) => {
     const filterItems = [
         {
             id: 0,
-            name: "Zákaznici",
+            name: "Zákazníci",
             filter: 0,
         },
         {

@@ -1,9 +1,14 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import ReactDOM from 'react-dom'
 
 import { translatePaymentMethod } from '../../utils/orders.utils'
+import {
+    formatPrice
+} from '../../utils/warehouse.utils'
+
+import CustomInput from '../custom-input/custom-input.component'
 
 import {
     ModalContainer,
@@ -11,7 +16,10 @@ import {
     CloseButton,
     SubmitButton,
     CustomSelect,
-    GridContainer
+    GridContainer,
+    CouponValueContainer,
+    DiscountCheckboxContainer,
+
 } from './modal-finish-deposited-order.styles'
 
 
@@ -25,7 +33,12 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
         // closeModal
     } = useContext(LoadingModalContext)
 
+
+
     const [value, setValue] = useState("")
+    const [hasCoupon, setHasCoupon] = useState(false)
+    const [couponValue, setCouponValue] = useState('')
+
 
     const handleClick = async () => {
         setIsLoading(true)
@@ -35,6 +48,7 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
 
         const raw = JSON.stringify({
             paymentType: value,
+            ...(hasCoupon) && { couponValue: formatPrice(couponValue) }
         })
 
         const requestOptions = {
@@ -64,6 +78,28 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
         }
     }
 
+    const toggleCoupon = prevValue => {
+        if (prevValue) {
+            setHasCoupon(false)
+            // if (orderDetail.couponValue) {
+            //     delete orderDetail["couponValue"]
+            //     setOrderDetails({
+            //         ...orderDetail
+            //     })
+            // }
+        } else {
+            setHasCoupon(true)
+        }
+    }
+
+    useEffect(() => {
+        return () => {
+            setHasCoupon(false)
+            setCouponValue('')
+            setValue('')
+        }
+    }, [])
+
     return ReactDOM.createPortal((
         <ModalContainer>
             <CloseButton onClick={close} />
@@ -91,9 +127,24 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                     <option value={''}>Neuvedené</option>
                     <option value={'card'}>Karta</option>
                     <option value={'cash'}>Hotovosť</option>
-                    <option value={'coupon'}>Kupón</option>
-
                 </CustomSelect>
+
+                <DiscountCheckboxContainer>
+                    <input id="hasCoupon" name='hasCoupon' type='checkbox' value={hasCoupon} onChange={() => toggleCoupon(hasCoupon)} />
+                    <label htmlFor='hasCoupon'>Pridať kupón</label>
+                </DiscountCheckboxContainer>
+
+                {hasCoupon && (
+                    <CouponValueContainer>
+                        <CustomInput
+                            label="Hodnota kupónu"
+                            name="couponValue"
+                            type='text'
+                            value={couponValue}
+                            onChange={e => setCouponValue(e.target.value)}
+                        />
+                    </CouponValueContainer>
+                )}
                 <SubmitButton onClick={handleClick}>Zaplatiť</SubmitButton>
             </Modal>
         </ModalContainer>

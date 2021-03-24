@@ -103,6 +103,8 @@ export const CartContainer = styled.div`
     grid-column: 2/3;
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);
+    padding-left: 2rem;
+    padding-right: 2rem;
 
     @media all and (max-width: 1000px) {
         grid-row: 1/2;
@@ -131,7 +133,7 @@ export const UnselectButton = styled(CustomButton)`
 export const CartTable = styled.div`
     max-height: 30rem;
     overflow-y: scroll;
-    padding: 2rem 2rem 0 2rem;
+    /* padding: 2rem 2rem 0 2rem; */
     padding-top: 0;
     font-size: 1.4rem;
 
@@ -156,23 +158,39 @@ export const CartTable = styled.div`
     }
 `
 export const TableCol = styled.div`
+    min-width: 10rem;
+    display: table-cell;
     padding: 2rem;
     text-align: center;
-
 `
 
 export const CartTableHead = styled.div`
-    display:grid; 
-    grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr;
-    background-color: var(--background-primary-color);
+    /* display:grid;  */
+    /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
+    /* background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
-    margin: 2rem;
-    margin-right: calc(2rem + 10px);
-    margin-bottom: 0;
+    margin-bottom: 0; */
+
+    display: table-row;
+
+    font-weight: bolder;
+    position: sticky;
+    top: -1.5rem;
+    background-color: var(--background-primary-color);
+
+    ${TableCol} {
+        background-color: var(--background-primary-color);
+        border-bottom: 1px solid var(--secondary-text-color);
+
+    }
+
+    @media all and (max-width: 920px) {
+        font-size: 1.2rem
+    }
 `
 export const CartParagraph = styled.p`
     padding-top: 2rem;
-    padding-left: 2rem;
+    /* padding-left: 2rem; */
     opacity: .6;
 `
 

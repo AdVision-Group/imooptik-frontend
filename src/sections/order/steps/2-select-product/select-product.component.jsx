@@ -88,7 +88,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                     <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
                 </SearchContainer>
                 <CartContainer>
-                    <h3>Vybraté položky</h3>
+                    <h3>Vybranépoložky</h3>
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
@@ -109,7 +109,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                     </CartTable>
                     <ButtonOptions>
                         <NextLensesButton onClick={() => next("select-lenses")}>
-                            Preisť na šosovky
+                            Preisť na šošovky
                         </NextLensesButton>
                         <NextButton onClick={createCombinedProducts}>
                             Dokončiť objednávku

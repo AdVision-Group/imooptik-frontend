@@ -122,3 +122,29 @@ export const GridContainer = styled.div`
         }
     }
 `
+
+export const DiscountCheckboxContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+
+    label {
+        display: block;
+        outline: none;
+        margin-left: 1rem;
+
+        &:focus {
+            outline: none;
+
+        }
+    }
+
+    input: {
+        display: block;
+    }
+`
+
+export const CouponValueContainer = styled.div`
+    margin-bottom: 2rem;
+`

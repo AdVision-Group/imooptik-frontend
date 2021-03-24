@@ -79,7 +79,7 @@ const SelectLensesComponent = ({ back, next }) => {
                     <h3>Vyhľadať šošovky</h3>
                     <div>
                         <CustomInput
-                            label='Vyhladať šošovky'
+                            label='Vyhľadať šošovky'
                             value={searchQuery}
                             handleChange={(e) => setSearchQuery(e.target.value)}
                             onKeyPress={handleSearchOnEnter}
@@ -89,13 +89,13 @@ const SelectLensesComponent = ({ back, next }) => {
                 </SearchContainer>
                 <CartContainer>
                     <HeadingContainer>
-                        <h3>Vybraté položky</h3>
+                        <h3>Vybrané položky</h3>
                         {selectedProduct !== null && <UnselectButton onClick={() => selectProduct(null)}>Odznačiť</UnselectButton>}
                     </HeadingContainer>
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
-                        <TableCol>Šosovky</TableCol>
+                        <TableCol>šošovky</TableCol>
                         <TableCol>Cena</TableCol>
                         <TableCol>Ks</TableCol>
                         <TableCol>Zľava v %</TableCol>

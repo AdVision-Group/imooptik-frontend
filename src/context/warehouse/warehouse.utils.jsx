@@ -138,11 +138,11 @@ export const categoryTabs = [
     },
     {
         id: 2,
-        name: "Kontaktné šosovky",
+        name: "Kontaktné šošovky",
     },
     {
         id: 1,
-        name: "Šosovky",
+        name: "Šošovky",
     },
 ]
 
@@ -250,7 +250,7 @@ export const formatfloatNumber = number => {
 }
 
 export const formatAvailable = (available, activePremisesTab) => {
-    if (available === undefined) return "Šosovka"
+    if (available === undefined) return "Šošovka"
     if (typeof available === "number") {
         if (available < 0) {
             return <>

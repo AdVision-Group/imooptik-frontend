@@ -120,6 +120,15 @@ const CustomerProfile = () => {
                 delete userObj["fName"]
                 delete userObj["lName"]
             }
+
+            if (formToShow === 1) {
+                const newUserObj = {
+                    ...userObj,
+                    admin: userObj.admin || 1
+                }
+                createUser(newUserObj, path)
+                return
+            }
             createUser(userObj, path)
         } else {
             if (userObj.fName || userObj.lName) {
@@ -127,6 +136,18 @@ const CustomerProfile = () => {
                 delete userObj["lName"]
             } else if (!userObj.fName || !userObj.lName) {
                 delete userObj["name"]
+            }
+
+            if (userObj.company) {
+                const newUserObj = {
+                    ...userObj,
+                    company: {
+                        ...user.company,
+                        ...userObj.company
+                    }
+                }
+                updateUser(newUserObj, user._id)
+                return
             }
             updateUser(userObj, user._id)
         }
@@ -180,7 +201,7 @@ const CustomerProfile = () => {
                         <div>
                             {isUpdating && <DeleteProfileButton type='button'>Vymazať</DeleteProfileButton>}
                             {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a prejsť na profil</SaveButton>}
-                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a prejsť na objednávku</SaveButton>}
+                            {!isUpdating && !(formToShow === 1) && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a prejsť na objednávku</SaveButton>}
                             <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
                                 {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
                             </SaveButton>
@@ -202,19 +223,19 @@ const CustomerProfile = () => {
                                 handleCompanyChange={handleCompanyAddressChange}
                             />
                         ) : (
-                                <NewUserForm
-                                    isAdmin={isAdmin}
-                                    handleParameterChange={handleLensesParameterChange}
-                                    formToShow={formToShow}
-                                    switchFormButtons={switchFormButtons}
-                                    toggleUserForm={toggleUserForm}
-                                    user={user}
-                                    handleChange={handleUserChange}
-                                    handleCompanyChange={handleCompanyAddressChange}
-                                    resetUser={resetUser}
+                            <NewUserForm
+                                isAdmin={isAdmin}
+                                handleParameterChange={handleLensesParameterChange}
+                                formToShow={formToShow}
+                                switchFormButtons={switchFormButtons}
+                                toggleUserForm={toggleUserForm}
+                                user={user}
+                                handleChange={handleUserChange}
+                                handleCompanyChange={handleCompanyAddressChange}
+                                resetUser={resetUser}
 
-                                />
-                            )
+                            />
+                        )
                     }
 
 

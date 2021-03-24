@@ -11,7 +11,7 @@ export const analyticsTabItems = [
     },
     {
         id: 3,
-        name: "Týžden",
+        name: "Týždeň",
         value: "week"
     },
     {
