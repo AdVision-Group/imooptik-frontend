@@ -91,17 +91,17 @@ const AnalyticsSection = () => {
     }
 
     const handleSubmitReport = () => {
+
         if (!reportObj?.from && !reportObj?.to) {
             const reportQueryObj = {
                 type: activeReportType,
                 timespan: "all",
-                ...(activeRetailType !== 0) && {
+                ...(activeReportType !== "users") && {
                     filters: {
                         premises: activeRetailType
                     }
                 }
             }
-
             generateReport(reportQueryObj)
         } else {
             const formatedFrom = reportObj?.from.split("-").reverse().join("/")
@@ -110,12 +110,13 @@ const AnalyticsSection = () => {
             const reportQueryObj = {
                 type: activeReportType,
                 timespan: activeReportType === 'users' ? "all" : `${formatedFrom}:${formatedto}`,
-                ...(activeRetailType !== null) && {
+                ...(activeReportType !== "users") && {
                     filters: {
                         premises: activeRetailType
                     }
                 }
             }
+
             generateReport(reportQueryObj)
         }
 
@@ -359,10 +360,10 @@ const reportTypes = [
 ]
 
 const retailTypes = [
-    {
-        name: "E-shop",
-        value: 0,
-    },
+    // {
+    //     name: "E-shop",
+    //     value: 0,
+    // },
     {
         name: "Centrálny sklad",
         value: 1,
@@ -391,10 +392,10 @@ const retailTypes = [
 
 
 export const analyticsRetailNames = [
-    {
-        id: 0,
-        name: "E-shop",
-    },
+    // {
+    //     id: 0,
+    //     name: "E-shop",
+    // },
     {
         id: 1,
         name: "Centrálny sklad",
