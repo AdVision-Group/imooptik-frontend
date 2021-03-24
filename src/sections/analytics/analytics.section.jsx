@@ -95,7 +95,7 @@ const AnalyticsSection = () => {
             const reportQueryObj = {
                 type: activeReportType,
                 timespan: "all",
-                ...(activeRetailType !== null) && {
+                ...(activeRetailType !== 0) && {
                     filters: {
                         premises: activeRetailType
                     }

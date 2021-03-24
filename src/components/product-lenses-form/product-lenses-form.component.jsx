@@ -115,7 +115,7 @@ const ProductLensesForm = ({
                     {lenses.lensType === "slnečné" && (
                         <div>
                             <TypeCheckbox
-                                label="Fotochromatické"
+                                label="Polarizované"
                                 value={lenses.photochromic}
                                 name='photochromic'
                                 isActive={lenses.photochromic}
@@ -143,6 +143,14 @@ const ProductLensesForm = ({
                             })}
                         />
                     </div>
+
+                    <CustomInput
+                        label="Farba šošovky"
+                        type='text'
+                        name='color'
+                        value={lenses.color ?? ""}
+                        handleChange={(e) => handleChange(e)}
+                    />
                 </TypesContainer>
                 <LensesParametersContainer>
                     <h3>Parametre</h3>

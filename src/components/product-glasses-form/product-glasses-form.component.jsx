@@ -210,13 +210,13 @@ const ProductGlassesForm = ({
                                 <option key={idx} value={shape} />
                             ))}
                         </datalist>
-                        <CustomInput
+                        {/* <CustomInput
                             label="Farba šošovky"
                             type='text'
                             name='lensColor'
                             value={glassesParameters.specs.lensColor ?? ""}
                             handleChange={(e) => handleSpecsChange(e)}
-                        />
+                        /> */}
                         <CustomSelect
                             label="Pohlavie"
                             type='text'
