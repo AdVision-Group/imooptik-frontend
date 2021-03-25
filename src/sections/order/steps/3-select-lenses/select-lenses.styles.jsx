@@ -131,11 +131,14 @@ export const UnselectButton = styled(CustomButton)`
 `
 
 export const CartTable = styled.div`
+    position: relative;
     max-height: 30rem;
     overflow-y: scroll;
+    overflow-x: hidden;
     /* padding: 2rem 2rem 0 2rem; */
     padding-top: 0;
     font-size: 1.4rem;
+    border-collapse: collapse;
 
 
     ::-webkit-scrollbar {
@@ -162,17 +165,19 @@ export const TableCol = styled.div`
     display: table-cell;
     padding: 2rem;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 9;
 
     p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `
 
 export const CartTableHead = styled.div`
-    width: 100%;
+    /* width: 100%; */
     /* display:grid;  */
     /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
     /* background-color: var(--background-primary-color);
@@ -182,8 +187,7 @@ export const CartTableHead = styled.div`
     display: table-row;
 
     font-weight: bolder;
-    position: sticky;
-    top: -1.5rem;
+
     background-color: var(--background-primary-color);
 
     ${TableCol} {

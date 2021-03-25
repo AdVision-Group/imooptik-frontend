@@ -113,7 +113,7 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                     </div>
                     <div>
                         <h3>Záloha</h3>
-                        <p>{(order?.paidAlready / 100).toFixed(2)}€</p>
+                        <p>{((order?.paidAlready - order?.couponValue1) / 100).toFixed(2)}€</p>
                         <span>{translatePaymentMethod(order?.advancePaymentType)}</span>
                     </div>
                     <div>
@@ -122,7 +122,7 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                     </div>
                     <div>
                         <h3>Doplatiť</h3>
-                        <p>{((order?.discountedValue - order?.paidAlready - order?.couponValue1) / 100).toFixed(2)}€</p>
+                        <p>{((order?.discountedValue - order?.paidAlready) / 100).toFixed(2)}€</p>
                         {/* <span>{translatePaymentMethod(order?.advancePaymentType)}</span> */}
                     </div>
                 </GridContainer>

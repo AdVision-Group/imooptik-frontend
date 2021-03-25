@@ -186,7 +186,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         </div>
                         {order?.order?.advancePaymentType && <div>
                             <h4>Záloha</h4>
-                            <StyledParagraph>{`Záloha: ${(order.order.paidAlready / 100).toFixed(2)}€ (${translatePaymentMethod(order.order.advancePaymentType)})`}</StyledParagraph>
+                            <StyledParagraph>{`Záloha: ${((order.order.paidAlready - order.order.couponValue1 - order.order.couponValue2) / 100).toFixed(2)}€ (${translatePaymentMethod(order.order.advancePaymentType)})`}</StyledParagraph>
                         </div>}
                         {order?.order?.couponValue1 > 0 && <div>
                             <h4>Kupón</h4>

@@ -92,16 +92,17 @@ const SelectLensesComponent = ({ back, next }) => {
                         <h3>Vybrané položky</h3>
                         {selectedProduct !== null && <UnselectButton onClick={() => selectProduct(null)}>Odznačiť</UnselectButton>}
                     </HeadingContainer>
-                    <CartTableHead>
-                        <TableCol>#</TableCol>
-                        <TableCol>Produkt</TableCol>
-                        <TableCol>šošovky</TableCol>
-                        <TableCol>Cena</TableCol>
-                        <TableCol>Ks</TableCol>
-                        <TableCol>Zľava v %</TableCol>
-                        {/* <TableCol>Možnosti</TableCol> */}
-                    </CartTableHead>
                     <CartTable>
+
+                        <CartTableHead>
+                            <TableCol>#</TableCol>
+                            <TableCol>Produkt</TableCol>
+                            <TableCol>šošovky</TableCol>
+                            <TableCol>Cena</TableCol>
+                            <TableCol>Ks</TableCol>
+                            <TableCol>Zľava v %</TableCol>
+                            {/* <TableCol>Možnosti</TableCol> */}
+                        </CartTableHead>
                         {cart.map((item, idx) => {
                             if (item.product.type === 3 || item.product.type === 4 || item.product.type === 5 || item.product.type === 6) return false
                             return (
