@@ -374,11 +374,6 @@ const WarehouseProvider = ({ children }) => {
             link: slug,
         }
 
-        console.log("productToAdd")
-        console.log("productToAdd")
-        console.log("productToAdd")
-        console.log(productToAdd)
-
         if (productToAdd.specs) {
             if (productToAdd.specs.size) {
                 modifiedProduct = {

@@ -132,10 +132,12 @@ const FinishOrderModal = ({
             }
 
             if (orderDetail.couponValue) {
+                console.log(orderObj.paidAlready)
+
                 orderObj = {
                     ...orderObj,
                     couponValue: formatPrice(orderDetail.couponValue),
-                    paidAlready: orderObj.paidAlready + orderDetail.couponValue
+                    // paidAlready: orderObj.paidAlready + orderDetail.couponValue
                 }
             }
             if (orderDetail.paidAlready) {
