@@ -375,10 +375,10 @@ const WarehouseProvider = ({ children }) => {
         let linkSize4 = null
 
         if (productToAdd?.specs?.size) {
-            linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
-            linkSize2 = diaConvert(productToAdd?.specs?.size[1].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
-            linkSize3 = diaConvert(productToAdd?.specs?.size[2].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
-            linkSize4 = diaConvert(productToAdd?.specs?.size[3].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
+            linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize2 = diaConvert(productToAdd?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize3 = diaConvert(productToAdd?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize4 = diaConvert(productToAdd?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
         }
 
         const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
