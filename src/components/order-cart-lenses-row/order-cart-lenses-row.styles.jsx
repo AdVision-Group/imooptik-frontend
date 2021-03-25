@@ -2,10 +2,15 @@ import styled from 'styled-components'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 export const TableCol = styled.div`
-    min-width: 10rem;
+    min-width: 12rem;
+    /* width: 12rem; */
     display: table-cell;
     text-align: center;
     padding: 1rem;
+
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
 
     input {
         text-align: end;

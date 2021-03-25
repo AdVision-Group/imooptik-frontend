@@ -88,6 +88,7 @@ const FinishOrderModal = ({
             ...orderDetail,
             [name]: value
         })
+
     }
 
     const handleAddressOverwriteChange = e => {
@@ -117,6 +118,10 @@ const FinishOrderModal = ({
             let orderObj = {
                 ...orderDetail,
             }
+
+            // console.log(orderObj)
+
+
             delete orderObj['paymentType']
             delete orderObj['shouldDeliver']
 
@@ -232,7 +237,7 @@ const FinishOrderModal = ({
             }
             <div>
                 <h4>Informácie o doručení</h4>
-                <OptionsCheckbox
+                {!isUpdating && <OptionsCheckbox
                     label={"Doručiť na adresu"}
                     isActive={orderDetail?.shouldDeliver}
                     handleClick={() => handleOrderDetailChange({
@@ -241,7 +246,7 @@ const FinishOrderModal = ({
                             value: orderDetail?.shouldDeliver ? !orderDetail?.shouldDeliver : true
                         }
                     })}
-                />
+                />}
                 <OptionsCheckbox
                     label={"Nákup na firmu"}
                     isActive={orderDetail?.buyingAsCompany}

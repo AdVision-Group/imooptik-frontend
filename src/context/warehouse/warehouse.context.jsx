@@ -363,14 +363,18 @@ const WarehouseProvider = ({ children }) => {
     }
 
     const createProduct = async (productToAdd) => {
-        setIsLoading(true)
-        setShowModal(true)
+        // setIsLoading(true)
+        // setShowModal(true)
 
-        const slug = diaConvert(productToAdd.name).replaceAll(" ", "-").toLowerCase().trim()
+        const linkName = diaConvert(productToAdd?.name || '').replaceAll(" ", "-").toLowerCase().trim()
+        const linkColor = diaConvert(productToAdd?.colorCode || '').replaceAll(" ", "-").toLowerCase().trim()
+        const linkFrameColor = diaConvert(productToAdd?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
+
+        const slug = linkName + (linkColor ? `-${linkColor}` : "") + (linkFrameColor ? `-${linkFrameColor}` : "")
 
         let modifiedProduct = {
             ...productToAdd,
-            price: formatPrice(productToAdd.price.toString()),
+            price: formatPrice(productToAdd?.price?.toString() || ""),
             link: slug,
         }
 

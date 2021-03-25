@@ -7,7 +7,7 @@ const CustomRetailSelect = ({ name, value, handleChange, listItems, defaultOptio
         <CustomSelectContainer name={name} value={value} onChange={(e) => handleChange(e)}>
             {defaultOption && <option value={defaultValue}>{defaultLabel}</option>}
             {listItems.map((name, idx) => {
-                if (idx === 4) return
+                if (idx === 0) return
                 return (
                     <option key={idx} value={idx}>{name}</option>
                 )

@@ -158,13 +158,21 @@ export const CartTable = styled.div`
     }
 `
 export const TableCol = styled.div`
-    min-width: 10rem;
+    min-width: 12rem;
     display: table-cell;
     padding: 2rem;
     text-align: center;
+
+    p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    }
 `
 
 export const CartTableHead = styled.div`
+    width: 100%;
     /* display:grid;  */
     /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
     /* background-color: var(--background-primary-color);
