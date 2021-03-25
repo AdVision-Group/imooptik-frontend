@@ -363,14 +363,26 @@ const WarehouseProvider = ({ children }) => {
     }
 
     const createProduct = async (productToAdd) => {
-        // setIsLoading(true)
-        // setShowModal(true)
+        setIsLoading(true)
+        setShowModal(true)
 
         const linkName = diaConvert(productToAdd?.name || '').replaceAll(" ", "-").toLowerCase().trim()
-        const linkColor = diaConvert(productToAdd?.colorCode || '').replaceAll(" ", "-").toLowerCase().trim()
         const linkFrameColor = diaConvert(productToAdd?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
 
-        const slug = linkName + (linkColor ? `-${linkColor}` : "") + (linkFrameColor ? `-${linkFrameColor}` : "")
+        let linkSize1 = null
+        let linkSize2 = null
+        let linkSize3 = null
+        let linkSize4 = null
+
+        if (productToAdd?.specs?.size) {
+            linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
+            linkSize2 = diaConvert(productToAdd?.specs?.size[1].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
+            linkSize3 = diaConvert(productToAdd?.specs?.size[2].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
+            linkSize4 = diaConvert(productToAdd?.specs?.size[3].toString() || '').replaceAll(" ", "-").toLowerCase().trim()
+        }
+
+        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
+
 
         let modifiedProduct = {
             ...productToAdd,
