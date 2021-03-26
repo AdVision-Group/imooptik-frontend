@@ -99,7 +99,20 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
         } else if (!userObj.fName || !userObj.lName) {
             delete userObj["name"]
         }
-        updateUser(userObj, user._id, "isOrder", refetchUser, close, addUser)
+
+        let newUserObj = {}
+
+        if (userObj.company) {
+            newUserObj = {
+                ...userObj,
+                company: {
+                    ...user.company,
+                    ...userObj.company
+                }
+            }
+        }
+
+        updateUser(newUserObj, user._id, "isOrder", refetchUser, close, addUser)
     }
 
     useEffect(() => {
