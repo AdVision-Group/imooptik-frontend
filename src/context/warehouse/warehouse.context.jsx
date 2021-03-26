@@ -500,29 +500,29 @@ const WarehouseProvider = ({ children }) => {
             }
         }
 
-        // if (productToUpdate.name || productToUpdate?.specs?.frameColor || productToUpdate?.specs?.size) {
-        const linkName = diaConvert(product?.name || '').replaceAll(" ", "-").toLowerCase().trim()
-        const linkFrameColor = diaConvert(product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
+        if (productToUpdate.name || productToUpdate?.specs?.frameColor || productToUpdate?.specs?.size) {
+            const linkName = diaConvert(productToUpdate?.name || product?.name || "").replaceAll(" ", "-").toLowerCase().trim()
+            const linkFrameColor = diaConvert(productToUpdate?.specs?.frameColor || product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
 
-        let linkSize1 = null
-        let linkSize2 = null
-        let linkSize3 = null
-        let linkSize4 = null
+            let linkSize1 = null
+            let linkSize2 = null
+            let linkSize3 = null
+            let linkSize4 = null
 
-        if (product?.specs?.size) {
-            linkSize1 = diaConvert(product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize2 = diaConvert(product?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize3 = diaConvert(product?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize4 = diaConvert(product?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            if (product?.specs?.size) {
+                linkSize1 = diaConvert(productToUpdate?.specs?.size[0].toString() || product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+                linkSize2 = diaConvert(productToUpdate?.specs?.size[1].toString() || product?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+                linkSize3 = diaConvert(productToUpdate?.specs?.size[2].toString() || product?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+                linkSize4 = diaConvert(productToUpdate?.specs?.size[3].toString() || product?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            }
+
+            const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
+
+            modifiedProduct = {
+                ...modifiedProduct,
+                link: slug
+            }
         }
-
-        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
-
-        modifiedProduct = {
-            ...modifiedProduct,
-            link: slug
-        }
-        // }
 
         if (productToUpdate.specs) {
             if (productToUpdate.specs.size) {
