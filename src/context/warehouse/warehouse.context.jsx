@@ -470,9 +470,14 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+
+
         let modifiedProduct = {
             ...productToUpdate,
         }
+
+
+        // return
 
         if (modifiedProduct.price) {
             modifiedProduct = {
@@ -495,13 +500,29 @@ const WarehouseProvider = ({ children }) => {
             }
         }
 
-        if (productToUpdate.link) {
-            const slug = diaConvert(productToUpdate.link).replaceAll(" ", "-").toLowerCase().trim()
-            modifiedProduct = {
-                ...modifiedProduct,
-                link: slug
-            }
+        // if (productToUpdate.name || productToUpdate?.specs?.frameColor || productToUpdate?.specs?.size) {
+        const linkName = diaConvert(product?.name || '').replaceAll(" ", "-").toLowerCase().trim()
+        const linkFrameColor = diaConvert(product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
+
+        let linkSize1 = null
+        let linkSize2 = null
+        let linkSize3 = null
+        let linkSize4 = null
+
+        if (product?.specs?.size) {
+            linkSize1 = diaConvert(product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize2 = diaConvert(product?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize3 = diaConvert(product?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+            linkSize4 = diaConvert(product?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
         }
+
+        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
+
+        modifiedProduct = {
+            ...modifiedProduct,
+            link: slug
+        }
+        // }
 
         if (productToUpdate.specs) {
             if (productToUpdate.specs.size) {

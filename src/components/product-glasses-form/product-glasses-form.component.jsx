@@ -130,13 +130,13 @@ const ProductGlassesForm = ({
                     ))}
                 </datalist> */}
 
-                {isUpdating && <CustomInput
+                <CustomInput
                     label="Link"
                     type='text'
                     name='link'
                     value={product.link ?? ""}
                     handleChange={(e) => handleChange(e)}
-                />}
+                />
 
                 <CustomTextarea
                     label="Popis"
@@ -164,8 +164,8 @@ const ProductGlassesForm = ({
                 </ImageContainer>
 
                 <NewImagesContainer>
-                    {productObj?.bonusImages && productObj?.bonusImages.map((img) => (
-                        <NewImageContainer key={img._id}>
+                    {productObj?.bonusImages && productObj?.bonusImages.map((img, idx) => (
+                        <NewImageContainer key={idx}>
                             {/* <DeleteButton >&#10005;</DeleteButton> */}
                             <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
                         </NewImageContainer>

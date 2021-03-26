@@ -525,15 +525,15 @@ const ProductSection = () => {
                 }))
             })
             setIsUpdating(true)
-            // if (!productObj.type) {
-            //     handleChangeType({
-            //         target: {
-            //             name: "type",
-            //             value: product.type
-            //         }
-            //     })
+            if (!productObj.type) {
+                handleChangeType({
+                    target: {
+                        name: "type",
+                        value: product.type
+                    }
+                })
 
-            // }
+            }
         }
     }, [id,])
 
