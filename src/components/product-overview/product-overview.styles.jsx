@@ -114,3 +114,7 @@ export const DeleteButton = styled(CustomButton)`
     font-size: 1.2rem;
     background-color: var(--primary-color);
 `
+
+export const DescP = styled.p`
+    font-size: 1.2rem;
+`

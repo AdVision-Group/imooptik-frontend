@@ -14,7 +14,8 @@ import {
     Options,
     UpdateButton,
     DeleteButton,
-    PriceContainer
+    PriceContainer,
+    DescP
 } from './product-overview.styles'
 
 const ProductOverview = ({
@@ -53,6 +54,8 @@ const ProductOverview = ({
 
             <ProductContent>
                 <h2>{name}</h2>
+                {console.log(product)}
+                {(product.type === 1 || product.type === 2 || product.type === 4) && <DescP>{`${product?.specs?.frameColor} ${product?.specs?.frameMaterial} ${product?.specs?.size[0]}-${product?.specs?.size[1]}-${product?.specs?.size[2]}-${product?.specs?.size[3]}`}</DescP>}
                 <ProductId>{eanCode}</ProductId>
 
             </ProductContent>
