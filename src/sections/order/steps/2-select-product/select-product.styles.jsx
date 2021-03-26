@@ -135,7 +135,7 @@ export const TableCol = styled.div`
 export const ProductTableHead = styled.div`
     display: grid;
     align-items: center;
-    grid-template-columns: 10rem 15rem 1fr 1fr 10rem 1fr;
+    grid-template-columns: 10rem 15rem 1fr 1fr 1fr 1fr 10rem 1fr;
     border-bottom: 1px solid var(--secondary-text-color);
     font-weight: bolder;
 
@@ -145,7 +145,7 @@ export const ProductTableRow = styled.div`
     cursor: pointer;
     display: grid;
     align-items: center;
-    grid-template-columns: 10rem 15rem 1fr 1fr 10rem 1fr;
+    grid-template-columns: 10rem 15rem 1fr 1fr 1fr 1fr 10rem 1fr;
     margin-bottom: 1rem;
     box-shadow: var(--container-shadow);
     background-color: var(--container-background-color);

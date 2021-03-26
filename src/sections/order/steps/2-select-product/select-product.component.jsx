@@ -92,6 +92,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
+
                         <TableCol>Cena</TableCol>
                         <TableCol>Zlava v %</TableCol>
                         <TableCol>Viac</TableCol>
@@ -123,6 +124,8 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                     <TableCol>eanKód</TableCol>
                     <TableCol>Obrázok</TableCol>
                     <TableCol>Názov</TableCol>
+                    <TableCol>Farba</TableCol>
+                    <TableCol>Veľkosť</TableCol>
                     <TableCol>Značka</TableCol>
                     <TableCol>Cena</TableCol>
                     <TableCol>Na sklade</TableCol>
@@ -134,6 +137,8 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                             {product?.image && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${product.image.imagePath}`} alt={product.image.alt} />}
                         </TableCol>
                         <TableCol>{product.name}</TableCol>
+                        <TableCol>{product.specs.frameColor}</TableCol>
+                        <TableCol>{(product.type === 1 || product.type === 2 || product.type === 4) && `${product.specs.size[0]}-${product.specs.size[1]}-${product.specs.size[2]}-${product.specs.size[3]}`}</TableCol>
                         <TableCol>{product.brand}</TableCol>
                         <TableCol>{(product.price / 100).toFixed(2)}€</TableCol>
                         <TableCol>{product.type === 6 ? 'Služba' : formatAvailable(product.available)}</TableCol>
