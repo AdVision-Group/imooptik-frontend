@@ -77,13 +77,13 @@ const ProductAccessoriesForm = ({
                     ))}
                 </datalist> */}
 
-                {isUpdating && <CustomInput
+                {/* {isUpdating && <CustomInput
                     label="Link"
                     type='text'
                     name='link'
                     value={product.link ?? ""}
                     handleChange={(e) => handleChange(e)}
-                />}
+                />} */}
 
                 <CustomTextarea
                     label="Popis"
