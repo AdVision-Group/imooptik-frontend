@@ -331,7 +331,7 @@ const ProductSection = () => {
         })
     }
 
-    const handleSelectImage = (imgId, bonusImages, img) => {
+    const handleSelectImage = (imgId = '', bonusImages, img) => {
         setHasChanged(true)
         setSelectedImage(img)
         setProductObj({
@@ -518,7 +518,7 @@ const ProductSection = () => {
         if (id !== 'novy-produkt') {
             getSingleProduct(id, (data) => {
 
-                handleSelectImage(data.product.image._id, data.product.bonusImages, data.product.image)
+                handleSelectImage(data?.product?.image?._id, data.product.bonusImages, data.product.image)
                 setProductObj(prevValue => ({
                     ...prevValue,
                     type: data.product.type,
