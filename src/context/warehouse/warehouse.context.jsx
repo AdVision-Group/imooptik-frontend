@@ -846,6 +846,9 @@ const WarehouseProvider = ({ children }) => {
                     limit: 10,
                     filters: {
                         type: 3
+                    },
+                    sortBy: {
+                        date: -1
                     }
                 })
             }

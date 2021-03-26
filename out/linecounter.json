@@ -1,0 +1,1908 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "/home/darken141/work/imooptik/imooptik-frontend",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2021-03-26 20:13:38",
+            "filesum": 306,
+            "codesum": 38391,
+            "commentsum": 1024,
+            "blanksum": 3741,
+            "statistics": {
+                ".json": {
+                    "code": 17211,
+                    "comment": 0,
+                    "blank": 4
+                },
+                "": {
+                    "code": 30,
+                    "comment": 2,
+                    "blank": 9
+                },
+                ".html": {
+                    "code": 25,
+                    "comment": 23,
+                    "blank": 0
+                },
+                ".txt": {
+                    "code": 6,
+                    "comment": 68,
+                    "blank": 8
+                },
+                ".md": {
+                    "code": 38,
+                    "comment": 12,
+                    "blank": 32
+                },
+                ".js": {
+                    "code": 75,
+                    "comment": 49,
+                    "blank": 4
+                },
+                ".map": {
+                    "code": 38,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".jsx": {
+                    "code": 20966,
+                    "comment": 870,
+                    "blank": 3684
+                },
+                ".svg": {
+                    "code": 2,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": ".dockerignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 1,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": ".eslintcache"
+                },
+                {
+                    "blank": 5,
+                    "code": 19,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 1,
+                    "code": 89,
+                    "comment": 0,
+                    "filename": "build/asset-manifest.json"
+                },
+                {
+                    "filename": "build/favicon.ico",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/index.html"
+                },
+                {
+                    "filename": "build/logo192.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "build/logo512.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "build/manifest.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 1,
+                    "filename": "build/robots.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/0.cc3dd4bb.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/0.cc3dd4bb.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/1.ff2b390c.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/1.ff2b390c.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/10.49af5e07.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/10.49af5e07.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/11.74a576d1.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/11.74a576d1.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/12.9f350120.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/12.9f350120.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/13.cf71eedb.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/13.cf71eedb.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/14.c869f031.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/14.c869f031.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/15.15cbf15e.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/15.15cbf15e.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/16.d01924d7.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/16.d01924d7.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/17.7266321a.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/17.7266321a.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/18.c9ea11c0.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/18.c9ea11c0.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/19.7caecb9a.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/19.7caecb9a.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/2.313eb1c5.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/2.313eb1c5.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/20.14e8655a.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/20.14e8655a.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/21.c961e3b6.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/21.c961e3b6.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/22.34be6490.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/22.34be6490.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/23.e91456b0.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/23.e91456b0.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/24.dce6c604.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/24.dce6c604.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/25.fa1b4155.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/25.fa1b4155.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/26.87c14133.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/26.87c14133.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/27.ef8ce8d9.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/27.ef8ce8d9.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/28.bc5b5dcf.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/28.bc5b5dcf.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/29.3bb3525f.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/29.3bb3525f.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/3.7550e6e4.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/3.7550e6e4.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/30.ae1e9013.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/30.ae1e9013.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/31.8c6d99f8.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/31.8c6d99f8.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/32.02cf5907.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/32.02cf5907.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/33.71715747.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/33.71715747.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/34.9dadba3c.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/34.9dadba3c.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/35.78034dae.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/35.78034dae.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/36.e79ad9f5.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/36.e79ad9f5.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/37.875a2911.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/37.875a2911.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 3,
+                    "filename": "build/static/js/6.b79d1a95.chunk.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 0,
+                    "comment": 21,
+                    "filename": "build/static/js/6.b79d1a95.chunk.js.LICENSE.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/6.b79d1a95.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 3,
+                    "filename": "build/static/js/7.6c10c714.chunk.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 0,
+                    "comment": 45,
+                    "filename": "build/static/js/7.6c10c714.chunk.js.LICENSE.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/7.6c10c714.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/8.27defeb3.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/8.27defeb3.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/9.29bff802.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/9.29bff802.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/main.d122368f.chunk.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/main.d122368f.chunk.js.map"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "build/static/js/runtime-main.8b4e383d.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/js/runtime-main.8b4e383d.js.map"
+                },
+                {
+                    "filename": "build/static/media/logo.361eddbd.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "build/static/media/undraw_security_o890.95a3670a.svg"
+                },
+                {
+                    "blank": 4,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "Dockerfile"
+                },
+                {
+                    "blank": 0,
+                    "code": 17021,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 3,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "filename": "public/favicon.ico",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 24,
+                    "comment": 23,
+                    "filename": "public/index.html"
+                },
+                {
+                    "filename": "public/logo192.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "public/logo512.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "public/manifest.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 1,
+                    "filename": "public/robots.txt"
+                },
+                {
+                    "blank": 32,
+                    "code": 38,
+                    "comment": 12,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 5,
+                    "code": 32,
+                    "comment": 0,
+                    "filename": "src/App.jsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/App.test.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/components/booking-appoinment/booking-appoinment.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 43,
+                    "comment": 0,
+                    "filename": "src/components/booking-appoinments/booking-appoinment.component.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/components/booking-appoinments/booking-appoinment.styles.jsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 85,
+                    "comment": 0,
+                    "filename": "src/components/booking-calendar-bookings/booking-calendar-bookings.component.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 66,
+                    "comment": 0,
+                    "filename": "src/components/booking-calendar-bookings/booking-calendar-bookings.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/components/booking-calendar-overview/booking-calendar-overview.component.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 36,
+                    "comment": 1,
+                    "filename": "src/components/booking-calendar-overview/booking-calendar-overview.styles.jsx"
+                },
+                {
+                    "blank": 18,
+                    "code": 51,
+                    "comment": 5,
+                    "filename": "src/components/calendar-booked-day/calendar-booked-day.component.jsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/components/calendar-booked-day/calendar-booked-day.styles.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 142,
+                    "comment": 6,
+                    "filename": "src/components/calendar-weekdays/calendar-weekdays.component.jsx"
+                },
+                {
+                    "blank": 26,
+                    "code": 94,
+                    "comment": 22,
+                    "filename": "src/components/calendar-weekdays/calendar-weekdays.styles.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 103,
+                    "comment": 0,
+                    "filename": "src/components/calendar/calendar.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 47,
+                    "comment": 0,
+                    "filename": "src/components/calendar/calendar.styles.jsx"
+                },
+                {
+                    "blank": 12,
+                    "code": 95,
+                    "comment": 0,
+                    "filename": "src/components/combined-product-overview/combined-product-overview.component.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 43,
+                    "comment": 2,
+                    "filename": "src/components/combined-product-overview/combined-product-overview.styles.jsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/components/custom-back-button/custom-back-button.component.jsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/components/custom-back-button/custom-back-button.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/components/custom-button/custom-button.component.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/components/custom-button/custom-button.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/components/custom-checkbox/custom-checkbox.component.jsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 16,
+                    "comment": 2,
+                    "filename": "src/components/custom-checkbox/custom-checkbox.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/components/custom-form-switch/custom-form-switch.component.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 14,
+                    "comment": 1,
+                    "filename": "src/components/custom-form-switch/custom-form-switch.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/components/custom-input/custom-input.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 49,
+                    "comment": 4,
+                    "filename": "src/components/custom-input/custom-input.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/components/custom-radiobutton/custom-radiobutton.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 49,
+                    "comment": 7,
+                    "filename": "src/components/custom-radiobutton/custom-radiobutton.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "src/components/custom-select/custom-select.component.jsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/components/custom-select/custom-select.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/components/custom-textarea/custom-textarea.component.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 43,
+                    "comment": 2,
+                    "filename": "src/components/custom-textarea/custom-textarea.styles.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/components/examination-user/examination-user.component.jsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/components/examination-user/examination-user.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 97,
+                    "comment": 6,
+                    "filename": "src/components/examinations-overview/examinations-overview.component.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 73,
+                    "comment": 1,
+                    "filename": "src/components/examinations-overview/examinations-overview.styles.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 42,
+                    "comment": 0,
+                    "filename": "src/components/forgot-password/forgot-password.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/components/forgot-password/forgot-password.styles.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 59,
+                    "comment": 2,
+                    "filename": "src/components/list-arrows/list-arrows.component.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "src/components/list-arrows/list-arrows.styles.jsx"
+                },
+                {
+                    "blank": 16,
+                    "code": 140,
+                    "comment": 0,
+                    "filename": "src/components/modal-booking/modal-booking.component.jsx"
+                },
+                {
+                    "blank": 21,
+                    "code": 78,
+                    "comment": 6,
+                    "filename": "src/components/modal-booking/modal-booking.styles.jsx"
+                },
+                {
+                    "blank": 22,
+                    "code": 183,
+                    "comment": 16,
+                    "filename": "src/components/modal-eshop-filter/modal-eshop-filter.component.jsx"
+                },
+                {
+                    "blank": 23,
+                    "code": 83,
+                    "comment": 3,
+                    "filename": "src/components/modal-eshop-filter/modal-eshop-filter.styles.jsx"
+                },
+                {
+                    "blank": 49,
+                    "code": 409,
+                    "comment": 4,
+                    "filename": "src/components/modal-finish-combined-product/modal-finish-combined-product.component.jsx"
+                },
+                {
+                    "blank": 40,
+                    "code": 168,
+                    "comment": 8,
+                    "filename": "src/components/modal-finish-combined-product/modal-finish-combined-product.styles.jsx"
+                },
+                {
+                    "blank": 24,
+                    "code": 132,
+                    "comment": 9,
+                    "filename": "src/components/modal-finish-deposited-order/modal-finish-deposited-order.component.jsx"
+                },
+                {
+                    "blank": 30,
+                    "code": 118,
+                    "comment": 3,
+                    "filename": "src/components/modal-finish-deposited-order/modal-finish-deposited-order.styles.jsx"
+                },
+                {
+                    "blank": 40,
+                    "code": 288,
+                    "comment": 2,
+                    "filename": "src/components/modal-finish-order/modal-finish-order.component.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 73,
+                    "comment": 1,
+                    "filename": "src/components/modal-finish-order/modal-finish-order.styles.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 109,
+                    "comment": 0,
+                    "filename": "src/components/modal-get-lenses-data/modal-get-lenses-data.component.jsx"
+                },
+                {
+                    "blank": 34,
+                    "code": 112,
+                    "comment": 6,
+                    "filename": "src/components/modal-get-lenses-data/modal-get-lenses-data.styles.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 134,
+                    "comment": 7,
+                    "filename": "src/components/modal-get-product-data/modal-get-product-data.component.jsx"
+                },
+                {
+                    "blank": 34,
+                    "code": 112,
+                    "comment": 6,
+                    "filename": "src/components/modal-get-product-data/modal-get-product-data.styles.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 149,
+                    "comment": 53,
+                    "filename": "src/components/modal-images/modal-images.component.jsx"
+                },
+                {
+                    "blank": 40,
+                    "code": 176,
+                    "comment": 13,
+                    "filename": "src/components/modal-images/modal-images.styles.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/components/modal-info-container/modal-info-container.component.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 28,
+                    "comment": 3,
+                    "filename": "src/components/modal-info-container/modal-info-container.styles.jsx"
+                },
+                {
+                    "blank": 107,
+                    "code": 1434,
+                    "comment": 20,
+                    "filename": "src/components/modal-optometrist-examination/modal-optometrist-examination.component.jsx"
+                },
+                {
+                    "blank": 40,
+                    "code": 158,
+                    "comment": 4,
+                    "filename": "src/components/modal-optometrist-examination/modal-optometrist-examination.styles.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 117,
+                    "comment": 7,
+                    "filename": "src/components/modal-order-update-user/modal-order-update-user.component.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 65,
+                    "comment": 6,
+                    "filename": "src/components/modal-order-update-user/modal-order-update-user.styles.jsx"
+                },
+                {
+                    "blank": 31,
+                    "code": 108,
+                    "comment": 28,
+                    "filename": "src/components/modal-product-image-gallery/modal-product-image-gallery.component.jsx"
+                },
+                {
+                    "blank": 38,
+                    "code": 133,
+                    "comment": 6,
+                    "filename": "src/components/modal-product-image-gallery/modal-product-image-gallery.styles.jsx"
+                },
+                {
+                    "blank": 34,
+                    "code": 247,
+                    "comment": 7,
+                    "filename": "src/components/modal-user-bookings/modal-user-booking.component.jsx"
+                },
+                {
+                    "blank": 32,
+                    "code": 123,
+                    "comment": 4,
+                    "filename": "src/components/modal-user-bookings/modal-user-booking.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 81,
+                    "comment": 0,
+                    "filename": "src/components/modal-userbookings-details/modal-userbookings-details.component.jsx"
+                },
+                {
+                    "blank": 24,
+                    "code": 92,
+                    "comment": 4,
+                    "filename": "src/components/modal-userbookings-details/modal-userbookings-details.styles.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 292,
+                    "comment": 7,
+                    "filename": "src/components/new-user-form/new-user-form.component.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "src/components/new-user-form/new-user-form.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 144,
+                    "comment": 0,
+                    "filename": "src/components/order-address-form/order-address-form.component.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 45,
+                    "comment": 4,
+                    "filename": "src/components/order-address-form/order-address-form.styles.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 56,
+                    "comment": 5,
+                    "filename": "src/components/order-cart-lenses-row/order-cart-lenses-row.component.jsx"
+                },
+                {
+                    "blank": 24,
+                    "code": 91,
+                    "comment": 13,
+                    "filename": "src/components/order-cart-lenses-row/order-cart-lenses-row.styles.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 144,
+                    "comment": 0,
+                    "filename": "src/components/order-cart-row/order-cart-row.component.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 79,
+                    "comment": 3,
+                    "filename": "src/components/order-cart-row/order-cart-row.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 74,
+                    "comment": 6,
+                    "filename": "src/components/order-deligate-modal/order-deligate-modal.component.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 58,
+                    "comment": 3,
+                    "filename": "src/components/order-deligate-modal/order-deligate-modal.styles.jsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/components/order-lenses-overview/order-lenses-overview.component.jsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src/components/order-lenses-overview/order-lenses-overview.styles.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 109,
+                    "comment": 6,
+                    "filename": "src/components/order-overview/order-overview.component.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 105,
+                    "comment": 2,
+                    "filename": "src/components/order-overview/order-overview.styles.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 57,
+                    "comment": 24,
+                    "filename": "src/components/order-pay-modal/order-pay-modal.component.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 59,
+                    "comment": 3,
+                    "filename": "src/components/order-pay-modal/order-pay-modal.styles.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/components/order-product-overview/order-product-overview.component.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 54,
+                    "comment": 1,
+                    "filename": "src/components/order-product-overview/order-product-overview.styles.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 22,
+                    "comment": 1,
+                    "filename": "src/components/order-summary-lenses-name/order-summary-lenses-name.component.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 37,
+                    "comment": 1,
+                    "filename": "src/components/order-summary-product-name/order-summary-product-name.component.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/components/pagination/pagination.component.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "src/components/pagination/pagination.styles.jsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/components/pagination/popup/pop-up.component.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src/components/pagination/popup/pop.up.styles.jsx"
+                },
+                {
+                    "blank": 31,
+                    "code": 204,
+                    "comment": 0,
+                    "filename": "src/components/parameters-table/parameters-table.component.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 79,
+                    "comment": 0,
+                    "filename": "src/components/parameters-table/parameters-table.styles.jsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/components/popup/pop-up.component.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src/components/popup/pop.up.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 123,
+                    "comment": 20,
+                    "filename": "src/components/product-accessories-form/product-accessories-form.component.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 80,
+                    "comment": 2,
+                    "filename": "src/components/product-accessories-form/product-accessories-form.styles.jsx"
+                },
+                {
+                    "blank": 16,
+                    "code": 195,
+                    "comment": 21,
+                    "filename": "src/components/product-contact-lenses-form/product-contact-lenses-form.component.jsx"
+                },
+                {
+                    "blank": 27,
+                    "code": 103,
+                    "comment": 2,
+                    "filename": "src/components/product-contact-lenses-form/product-contact-lenses-form.styles.jsx"
+                },
+                {
+                    "blank": 27,
+                    "code": 249,
+                    "comment": 24,
+                    "filename": "src/components/product-glasses-form/product-glasses-form.component.jsx"
+                },
+                {
+                    "blank": 26,
+                    "code": 114,
+                    "comment": 2,
+                    "filename": "src/components/product-glasses-form/product-glasses-form.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/components/product-input-row/product-input-row.component.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/components/product-input-row/product-input-row.styles.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 178,
+                    "comment": 0,
+                    "filename": "src/components/product-lenses-form/product-lenses-form.component.jsx"
+                },
+                {
+                    "blank": 19,
+                    "code": 81,
+                    "comment": 5,
+                    "filename": "src/components/product-lenses-form/product-lenses-form.styles.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 70,
+                    "comment": 0,
+                    "filename": "src/components/product-overview/product-overview.component.jsx"
+                },
+                {
+                    "blank": 25,
+                    "code": 84,
+                    "comment": 11,
+                    "filename": "src/components/product-overview/product-overview.styles.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 55,
+                    "comment": 6,
+                    "filename": "src/components/product-service-form/product-service-form.component.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 34,
+                    "comment": 1,
+                    "filename": "src/components/product-service-form/product-service-form.styles.jsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 39,
+                    "comment": 3,
+                    "filename": "src/components/profile-order-overview/profile-order-overview.component.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 42,
+                    "comment": 11,
+                    "filename": "src/components/profile-order-overview/profile-order-overview.styles.jsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/components/scroll-container/scroll-container.component.jsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 35,
+                    "comment": 5,
+                    "filename": "src/components/scroll-container/scroll-container.styles.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 44,
+                    "comment": 1,
+                    "filename": "src/components/section-header/section-header.component.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 43,
+                    "comment": 1,
+                    "filename": "src/components/section-header/section-header.styles.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/components/section-navbar/section-navbar.component.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/components/section-navbar/section-navbar.styles.jsx"
+                },
+                {
+                    "blank": 10,
+                    "code": 65,
+                    "comment": 2,
+                    "filename": "src/components/sidenav/sidenav.component.jsx"
+                },
+                {
+                    "blank": 44,
+                    "code": 189,
+                    "comment": 4,
+                    "filename": "src/components/sidenav/sidenav.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 52,
+                    "comment": 0,
+                    "filename": "src/components/sign-in/sign-in.component.jsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src/components/sign-in/sign-in.styles.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/components/spinner/spinner.component.jsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/components/spinner/spinner.styles.jsx"
+                },
+                {
+                    "blank": 16,
+                    "code": 289,
+                    "comment": 8,
+                    "filename": "src/components/user-form/user-form.component.jsx"
+                },
+                {
+                    "blank": 25,
+                    "code": 91,
+                    "comment": 0,
+                    "filename": "src/components/user-form/user.form-styles.jsx"
+                },
+                {
+                    "blank": 18,
+                    "code": 79,
+                    "comment": 0,
+                    "filename": "src/context/analytics/analytics.context.jsx"
+                },
+                {
+                    "blank": 38,
+                    "code": 219,
+                    "comment": 2,
+                    "filename": "src/context/auth/auth.context.jsx"
+                },
+                {
+                    "blank": 21,
+                    "code": 61,
+                    "comment": 0,
+                    "filename": "src/context/auth/auth.queries.jsx"
+                },
+                {
+                    "blank": 29,
+                    "code": 130,
+                    "comment": 2,
+                    "filename": "src/context/blog/blog.context.jsx"
+                },
+                {
+                    "blank": 18,
+                    "code": 43,
+                    "comment": 0,
+                    "filename": "src/context/blog/blog.queries.jsx"
+                },
+                {
+                    "blank": 52,
+                    "code": 209,
+                    "comment": 1,
+                    "filename": "src/context/booking/booking.context.jsx"
+                },
+                {
+                    "blank": 41,
+                    "code": 179,
+                    "comment": 27,
+                    "filename": "src/context/coupons/coupons.context.jsx"
+                },
+                {
+                    "blank": 25,
+                    "code": 105,
+                    "comment": 0,
+                    "filename": "src/context/examination/examination.context.jsx"
+                },
+                {
+                    "blank": 30,
+                    "code": 138,
+                    "comment": 2,
+                    "filename": "src/context/image/image.context.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 44,
+                    "comment": 1,
+                    "filename": "src/context/image/image.queries.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 39,
+                    "comment": 0,
+                    "filename": "src/context/loading-modal/loading-modal.contenxt.jsx"
+                },
+                {
+                    "blank": 32,
+                    "code": 292,
+                    "comment": 3,
+                    "filename": "src/context/order/order.context.jsx"
+                },
+                {
+                    "blank": 57,
+                    "code": 203,
+                    "comment": 7,
+                    "filename": "src/context/orders/orders.context.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 79,
+                    "comment": 24,
+                    "filename": "src/context/orders/orders.queries.jsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 47,
+                    "comment": 2,
+                    "filename": "src/context/orders/orders.utils.jsx"
+                },
+                {
+                    "blank": 81,
+                    "code": 361,
+                    "comment": 59,
+                    "filename": "src/context/user/user.context.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 82,
+                    "comment": 39,
+                    "filename": "src/context/user/user.queries.jsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "src/context/user/user.utils.jsx"
+                },
+                {
+                    "blank": 134,
+                    "code": 795,
+                    "comment": 4,
+                    "filename": "src/context/warehouse/warehouse.context.jsx"
+                },
+                {
+                    "blank": 23,
+                    "code": 288,
+                    "comment": 8,
+                    "filename": "src/context/warehouse/warehouse.utils.jsx"
+                },
+                {
+                    "blank": 17,
+                    "code": 94,
+                    "comment": 3,
+                    "filename": "src/context/week-calendar/week-calendar.context.jsx"
+                },
+                {
+                    "blank": 45,
+                    "code": 149,
+                    "comment": 2,
+                    "filename": "src/global.styles.jsx"
+                },
+                {
+                    "blank": 21,
+                    "code": 98,
+                    "comment": 2,
+                    "filename": "src/hooks/useFetch.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 33,
+                    "comment": 11,
+                    "filename": "src/hooks/useOutsideAlerter.jsx"
+                },
+                {
+                    "filename": "src/images/logo.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "src/images/undraw_security_o890.svg"
+                },
+                {
+                    "blank": 2,
+                    "code": 17,
+                    "comment": 3,
+                    "filename": "src/index.js"
+                },
+                {
+                    "blank": 26,
+                    "code": 189,
+                    "comment": 0,
+                    "filename": "src/pages/dashboard/dashboard.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 1,
+                    "filename": "src/pages/dashboard/dashboard.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "src/pages/reset-password/reset-password.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src/pages/reset-password/reset.password.styles.jsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/pages/sign-in-and-sign-up/sign-in-and-sign-up.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/pages/sign-in-and-sign-up/sign-in-and-sign-up.styles.jsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/reportWebVitals.js"
+                },
+                {
+                    "blank": 48,
+                    "code": 368,
+                    "comment": 17,
+                    "filename": "src/sections/analytics/analytics.section.jsx"
+                },
+                {
+                    "blank": 31,
+                    "code": 112,
+                    "comment": 15,
+                    "filename": "src/sections/analytics/analytics.styles.jsx"
+                },
+                {
+                    "blank": 25,
+                    "code": 164,
+                    "comment": 3,
+                    "filename": "src/sections/blog-posts/blog-posts.section.jsx"
+                },
+                {
+                    "blank": 16,
+                    "code": 64,
+                    "comment": 2,
+                    "filename": "src/sections/blog-posts/blog-posts.styles.jsx"
+                },
+                {
+                    "blank": 44,
+                    "code": 283,
+                    "comment": 12,
+                    "filename": "src/sections/booking/booking.section.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 81,
+                    "comment": 2,
+                    "filename": "src/sections/booking/booking.styles.jsx"
+                },
+                {
+                    "blank": 28,
+                    "code": 291,
+                    "comment": 1,
+                    "filename": "src/sections/calendar/calendar.section.jsx"
+                },
+                {
+                    "blank": 21,
+                    "code": 95,
+                    "comment": 17,
+                    "filename": "src/sections/calendar/calendar.styles.jsx"
+                },
+                {
+                    "blank": 14,
+                    "code": 143,
+                    "comment": 0,
+                    "filename": "src/sections/coupon/coupon.section.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 40,
+                    "comment": 0,
+                    "filename": "src/sections/coupon/coupon.styles.jsx"
+                },
+                {
+                    "blank": 12,
+                    "code": 72,
+                    "comment": 4,
+                    "filename": "src/sections/coupons/coupons.section.jsx"
+                },
+                {
+                    "blank": 21,
+                    "code": 60,
+                    "comment": 4,
+                    "filename": "src/sections/coupons/coupons.styles.jsx"
+                },
+                {
+                    "blank": 37,
+                    "code": 202,
+                    "comment": 12,
+                    "filename": "src/sections/customer-profile/customer-profile.section.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/sections/customer-profile/customer-profile.styles.jsx"
+                },
+                {
+                    "blank": 22,
+                    "code": 170,
+                    "comment": 1,
+                    "filename": "src/sections/customers/customers.section.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 54,
+                    "comment": 6,
+                    "filename": "src/sections/customers/customers.styles.jsx"
+                },
+                {
+                    "blank": 34,
+                    "code": 204,
+                    "comment": 1,
+                    "filename": "src/sections/e-shop/e-shop.section.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 23,
+                    "comment": 1,
+                    "filename": "src/sections/e-shop/e-shop.styles.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/sections/no-permission/no-permission.section.jsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "src/sections/no-permission/no-permission.styles.jsx"
+                },
+                {
+                    "blank": 23,
+                    "code": 140,
+                    "comment": 2,
+                    "filename": "src/sections/order/order.section.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src/sections/order/order.styles.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 111,
+                    "comment": 0,
+                    "filename": "src/sections/order/steps/1-select-user/select-user.component.jsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 55,
+                    "comment": 0,
+                    "filename": "src/sections/order/steps/1-select-user/select-user.styles.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 137,
+                    "comment": 0,
+                    "filename": "src/sections/order/steps/2-select-product/select-product.component.jsx"
+                },
+                {
+                    "blank": 33,
+                    "code": 120,
+                    "comment": 7,
+                    "filename": "src/sections/order/steps/2-select-product/select-product.styles.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 159,
+                    "comment": 0,
+                    "filename": "src/sections/order/steps/3-select-lenses/select-lenses.component.jsx"
+                },
+                {
+                    "blank": 44,
+                    "code": 166,
+                    "comment": 20,
+                    "filename": "src/sections/order/steps/3-select-lenses/select-lenses.styles.jsx"
+                },
+                {
+                    "blank": 20,
+                    "code": 197,
+                    "comment": 0,
+                    "filename": "src/sections/order/steps/4-summary/summary.component.jsx"
+                },
+                {
+                    "blank": 43,
+                    "code": 149,
+                    "comment": 4,
+                    "filename": "src/sections/order/steps/4-summary/summary.styles.jsx"
+                },
+                {
+                    "blank": 29,
+                    "code": 245,
+                    "comment": 5,
+                    "filename": "src/sections/orders/orders.section.jsx"
+                },
+                {
+                    "blank": 24,
+                    "code": 71,
+                    "comment": 3,
+                    "filename": "src/sections/orders/orders.styles.jsx"
+                },
+                {
+                    "blank": 34,
+                    "code": 282,
+                    "comment": 7,
+                    "filename": "src/sections/post/post.section.jsx"
+                },
+                {
+                    "blank": 15,
+                    "code": 68,
+                    "comment": 1,
+                    "filename": "src/sections/post/post.styles.jsx"
+                },
+                {
+                    "blank": 94,
+                    "code": 599,
+                    "comment": 14,
+                    "filename": "src/sections/product/product.section.jsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/sections/product/product.styles.jsx"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 4,
+                    "filename": "src/setupTests.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/utils/analytics.utils.jsx"
+                },
+                {
+                    "blank": 29,
+                    "code": 360,
+                    "comment": 2,
+                    "filename": "src/utils/calendar.utils.jsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/utils/orders.utils.jsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 32,
+                    "comment": 1,
+                    "filename": "src/utils/parameters.utils.jsx"
+                },
+                {
+                    "blank": 0,
+                    "code": 17,
+                    "comment": 10,
+                    "filename": "src/utils/user.utils.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 169,
+                    "comment": 0,
+                    "filename": "src/utils/warehouse.utils.jsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 64,
+                    "comment": 0,
+                    "filename": "src/utils/week-calendar.utils.jsx"
+                }
+            ]
+        }
+    ]
+}

@@ -24,6 +24,7 @@ import {
 
 
 const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
+    const [isDisabled, setIsDisabled] = useState(false)
     const { token } = useContext(AuthContext)
     const {
         getMessage,
@@ -41,6 +42,10 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
 
 
     const handleClick = async () => {
+        if (isDisabled) {
+            return;
+        }
+        setIsDisabled(true);
         setIsLoading(true)
         const myHeaders = new Headers();
         myHeaders.append("auth-token", token);
@@ -149,7 +154,9 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                         />
                     </CouponValueContainer>
                 )}
-                <SubmitButton onClick={handleClick}>Zaplatiť</SubmitButton>
+                <SubmitButton disabled={isDisabled} onClick={handleClick}>
+                    {isDisabled ? 'Platím...' : 'Zaplatiť'}
+                </SubmitButton>
             </Modal>
         </ModalContainer>
     ), document.getElementById('portal'))

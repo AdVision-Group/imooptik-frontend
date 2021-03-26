@@ -27,6 +27,9 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
         skip: 0,
         filters: {
             type: productObj.type
+        },
+        sortBy: {
+            date: -1
         }
     })
     const { response, isLoading, refetch } = useFetchByQuery("api/admin/products/filter", query)
@@ -44,7 +47,7 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
             if (e.key === 'Enter') {
                 setQuery({
                     ...query,
-                    query: searchQuery
+                    query: searchQuery,
                 })
                 refetch()
             }

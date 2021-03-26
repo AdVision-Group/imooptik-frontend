@@ -32,6 +32,9 @@ const ExaminationsOverview = () => {
     const [examinations, setExaminations] = useState([])
     const [examinationToUpdate, setExaminationToUpdate] = useState(null)
 
+    const [isDisabled, setIsDisabled] = useState(false)
+
+
     const handleUpdateClick = (e, id) => {
         e.preventDefault()
         setExaminationToUpdate(id)
@@ -40,8 +43,16 @@ const ExaminationsOverview = () => {
 
     const handleDelete = (e, id) => {
         e.preventDefault()
+        if (isDisabled) {
+            return;
+        }
+        setIsDisabled(true);
         deleteExamination(id)
-        examinationData.refetch()
+
+        setTimeout(() => {
+            examinationData.refetch()
+            setIsDisabled(false);
+        }, 100)
     }
 
     const handleCloseModal = () => {
@@ -89,7 +100,10 @@ const ExaminationsOverview = () => {
                             <ExaminationUser userId={examination.doneBy} />
                             <div>
                                 <UpdateButton onClick={e => handleUpdateClick(e, examination._id)}>Upraviť</UpdateButton>
-                                <DeleteButton onClick={e => handleDelete(e, examination._id)}>Vymazať</DeleteButton>
+
+                                <DeleteButton disabled={isDisabled} onClick={e => handleDelete(e, examination._id)}>
+                                    {isDisabled ? 'Mažem...' : 'Vymazať'}
+                                </DeleteButton>
                             </div>
                         </ExaminationOptions>
                     </ExaminationContainer>

@@ -1,0 +1,331 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2021-03-26 20:13:38
+count workspace : /home/darken141/work/imooptik/imooptik-frontend
+total files : 306
+total code lines : 38391
+total comment lines : 1024
+total blank lines : 3741
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |          .json|          17211|              0|              4|     45|
+   |               |             30|              2|              9|  0.078|
+   |          .html|             25|             23|              0|  0.065|
+   |           .txt|              6|             68|              8|  0.016|
+   |            .md|             38|             12|             32|  0.099|
+   |            .js|             75|             49|              4|   0.20|
+   |           .map|             38|              0|              0|  0.099|
+   |           .jsx|          20966|            870|           3684|     55|
+   |           .svg|              2|              0|              0| 0.0052|
+   -------------------------------------------------------------------------
+.dockerignore, code is 1, comment is 0, blank is 0.
+.env, code is 2, comment is 1, blank is 0.
+.eslintcache, code is 1, comment is 0, blank is 0.
+.gitignore, code is 19, comment is 1, blank is 5.
+build/asset-manifest.json, code is 89, comment is 0, blank is 1.
+build/favicon.ico, it is a binary file.
+build/index.html, code is 1, comment is 0, blank is 0.
+build/logo192.png, it is a binary file.
+build/logo512.png, it is a binary file.
+build/manifest.json, code is 25, comment is 0, blank is 0.
+build/robots.txt, code is 3, comment is 1, blank is 0.
+build/static/js/0.cc3dd4bb.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/0.cc3dd4bb.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/1.ff2b390c.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/1.ff2b390c.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/10.49af5e07.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/10.49af5e07.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/11.74a576d1.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/11.74a576d1.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/12.9f350120.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/12.9f350120.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/13.cf71eedb.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/13.cf71eedb.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/14.c869f031.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/14.c869f031.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/15.15cbf15e.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/15.15cbf15e.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/16.d01924d7.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/16.d01924d7.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/17.7266321a.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/17.7266321a.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/18.c9ea11c0.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/18.c9ea11c0.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/19.7caecb9a.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/19.7caecb9a.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/2.313eb1c5.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/2.313eb1c5.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/20.14e8655a.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/20.14e8655a.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/21.c961e3b6.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/21.c961e3b6.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/22.34be6490.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/22.34be6490.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/23.e91456b0.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/23.e91456b0.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/24.dce6c604.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/24.dce6c604.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/25.fa1b4155.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/25.fa1b4155.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/26.87c14133.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/26.87c14133.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/27.ef8ce8d9.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/27.ef8ce8d9.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/28.bc5b5dcf.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/28.bc5b5dcf.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/29.3bb3525f.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/29.3bb3525f.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/3.7550e6e4.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/3.7550e6e4.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/30.ae1e9013.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/30.ae1e9013.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/31.8c6d99f8.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/31.8c6d99f8.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/32.02cf5907.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/32.02cf5907.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/33.71715747.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/33.71715747.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/34.9dadba3c.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/34.9dadba3c.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/35.78034dae.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/35.78034dae.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/36.e79ad9f5.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/36.e79ad9f5.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/37.875a2911.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/37.875a2911.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/6.b79d1a95.chunk.js, code is 1, comment is 3, blank is 0.
+build/static/js/6.b79d1a95.chunk.js.LICENSE.txt, code is 0, comment is 21, blank is 3.
+build/static/js/6.b79d1a95.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/7.6c10c714.chunk.js, code is 1, comment is 3, blank is 0.
+build/static/js/7.6c10c714.chunk.js.LICENSE.txt, code is 0, comment is 45, blank is 5.
+build/static/js/7.6c10c714.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/8.27defeb3.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/8.27defeb3.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/9.29bff802.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/9.29bff802.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/main.d122368f.chunk.js, code is 1, comment is 1, blank is 0.
+build/static/js/main.d122368f.chunk.js.map, code is 1, comment is 0, blank is 0.
+build/static/js/runtime-main.8b4e383d.js, code is 1, comment is 1, blank is 0.
+build/static/js/runtime-main.8b4e383d.js.map, code is 1, comment is 0, blank is 0.
+build/static/media/logo.361eddbd.png, it is a binary file.
+build/static/media/undraw_security_o890.95a3670a.svg, code is 1, comment is 0, blank is 0.
+Dockerfile, code is 7, comment is 0, blank is 4.
+package-lock.json, code is 17021, comment is 0, blank is 0.
+package.json, code is 51, comment is 0, blank is 3.
+public/favicon.ico, it is a binary file.
+public/index.html, code is 24, comment is 23, blank is 0.
+public/logo192.png, it is a binary file.
+public/logo512.png, it is a binary file.
+public/manifest.json, code is 25, comment is 0, blank is 0.
+public/robots.txt, code is 3, comment is 1, blank is 0.
+README.md, code is 38, comment is 12, blank is 32.
+src/App.jsx, code is 32, comment is 0, blank is 5.
+src/App.test.js, code is 7, comment is 0, blank is 1.
+src/components/booking-appoinment/booking-appoinment.component.jsx, code is 12, comment is 0, blank is 4.
+src/components/booking-appoinments/booking-appoinment.component.jsx, code is 43, comment is 0, blank is 9.
+src/components/booking-appoinments/booking-appoinment.styles.jsx, code is 20, comment is 0, blank is 5.
+src/components/booking-calendar-bookings/booking-calendar-bookings.component.jsx, code is 85, comment is 0, blank is 11.
+src/components/booking-calendar-bookings/booking-calendar-bookings.styles.jsx, code is 66, comment is 0, blank is 13.
+src/components/booking-calendar-overview/booking-calendar-overview.component.jsx, code is 27, comment is 0, blank is 3.
+src/components/booking-calendar-overview/booking-calendar-overview.styles.jsx, code is 36, comment is 1, blank is 7.
+src/components/calendar-booked-day/calendar-booked-day.component.jsx, code is 51, comment is 5, blank is 18.
+src/components/calendar-booked-day/calendar-booked-day.styles.jsx, code is 22, comment is 0, blank is 2.
+src/components/calendar-weekdays/calendar-weekdays.component.jsx, code is 142, comment is 6, blank is 20.
+src/components/calendar-weekdays/calendar-weekdays.styles.jsx, code is 94, comment is 22, blank is 26.
+src/components/calendar/calendar.component.jsx, code is 103, comment is 0, blank is 19.
+src/components/calendar/calendar.styles.jsx, code is 47, comment is 0, blank is 9.
+src/components/combined-product-overview/combined-product-overview.component.jsx, code is 95, comment is 0, blank is 12.
+src/components/combined-product-overview/combined-product-overview.styles.jsx, code is 43, comment is 2, blank is 15.
+src/components/custom-back-button/custom-back-button.component.jsx, code is 13, comment is 0, blank is 4.
+src/components/custom-back-button/custom-back-button.styles.jsx, code is 12, comment is 0, blank is 1.
+src/components/custom-button/custom-button.component.jsx, code is 10, comment is 0, blank is 3.
+src/components/custom-button/custom-button.styles.jsx, code is 19, comment is 0, blank is 3.
+src/components/custom-checkbox/custom-checkbox.component.jsx, code is 10, comment is 0, blank is 3.
+src/components/custom-checkbox/custom-checkbox.styles.jsx, code is 16, comment is 2, blank is 2.
+src/components/custom-form-switch/custom-form-switch.component.jsx, code is 21, comment is 0, blank is 3.
+src/components/custom-form-switch/custom-form-switch.styles.jsx, code is 14, comment is 1, blank is 3.
+src/components/custom-input/custom-input.component.jsx, code is 21, comment is 0, blank is 3.
+src/components/custom-input/custom-input.styles.jsx, code is 49, comment is 4, blank is 9.
+src/components/custom-radiobutton/custom-radiobutton.component.jsx, code is 11, comment is 0, blank is 3.
+src/components/custom-radiobutton/custom-radiobutton.styles.jsx, code is 49, comment is 7, blank is 9.
+src/components/custom-select/custom-select.component.jsx, code is 16, comment is 0, blank is 3.
+src/components/custom-select/custom-select.styles.jsx, code is 13, comment is 0, blank is 1.
+src/components/custom-textarea/custom-textarea.component.jsx, code is 21, comment is 0, blank is 3.
+src/components/custom-textarea/custom-textarea.styles.jsx, code is 43, comment is 2, blank is 7.
+src/components/examination-user/examination-user.component.jsx, code is 14, comment is 0, blank is 5.
+src/components/examination-user/examination-user.styles.jsx, code is 7, comment is 0, blank is 2.
+src/components/examinations-overview/examinations-overview.component.jsx, code is 97, comment is 6, blank is 14.
+src/components/examinations-overview/examinations-overview.styles.jsx, code is 73, comment is 1, blank is 17.
+src/components/forgot-password/forgot-password.component.jsx, code is 42, comment is 0, blank is 10.
+src/components/forgot-password/forgot-password.styles.jsx, code is 36, comment is 0, blank is 9.
+src/components/list-arrows/list-arrows.component.jsx, code is 59, comment is 2, blank is 9.
+src/components/list-arrows/list-arrows.styles.jsx, code is 26, comment is 0, blank is 5.
+src/components/modal-booking/modal-booking.component.jsx, code is 140, comment is 0, blank is 16.
+src/components/modal-booking/modal-booking.styles.jsx, code is 78, comment is 6, blank is 21.
+src/components/modal-eshop-filter/modal-eshop-filter.component.jsx, code is 183, comment is 16, blank is 22.
+src/components/modal-eshop-filter/modal-eshop-filter.styles.jsx, code is 83, comment is 3, blank is 23.
+src/components/modal-finish-combined-product/modal-finish-combined-product.component.jsx, code is 409, comment is 4, blank is 49.
+src/components/modal-finish-combined-product/modal-finish-combined-product.styles.jsx, code is 168, comment is 8, blank is 40.
+src/components/modal-finish-deposited-order/modal-finish-deposited-order.component.jsx, code is 132, comment is 9, blank is 24.
+src/components/modal-finish-deposited-order/modal-finish-deposited-order.styles.jsx, code is 118, comment is 3, blank is 30.
+src/components/modal-finish-order/modal-finish-order.component.jsx, code is 288, comment is 2, blank is 40.
+src/components/modal-finish-order/modal-finish-order.styles.jsx, code is 73, comment is 1, blank is 20.
+src/components/modal-get-lenses-data/modal-get-lenses-data.component.jsx, code is 109, comment is 0, blank is 20.
+src/components/modal-get-lenses-data/modal-get-lenses-data.styles.jsx, code is 112, comment is 6, blank is 34.
+src/components/modal-get-product-data/modal-get-product-data.component.jsx, code is 134, comment is 7, blank is 17.
+src/components/modal-get-product-data/modal-get-product-data.styles.jsx, code is 112, comment is 6, blank is 34.
+src/components/modal-images/modal-images.component.jsx, code is 149, comment is 53, blank is 28.
+src/components/modal-images/modal-images.styles.jsx, code is 176, comment is 13, blank is 40.
+src/components/modal-info-container/modal-info-container.component.jsx, code is 31, comment is 0, blank is 10.
+src/components/modal-info-container/modal-info-container.styles.jsx, code is 28, comment is 3, blank is 6.
+src/components/modal-optometrist-examination/modal-optometrist-examination.component.jsx, code is 1434, comment is 20, blank is 107.
+src/components/modal-optometrist-examination/modal-optometrist-examination.styles.jsx, code is 158, comment is 4, blank is 40.
+src/components/modal-order-update-user/modal-order-update-user.component.jsx, code is 117, comment is 7, blank is 28.
+src/components/modal-order-update-user/modal-order-update-user.styles.jsx, code is 65, comment is 6, blank is 19.
+src/components/modal-product-image-gallery/modal-product-image-gallery.component.jsx, code is 108, comment is 28, blank is 31.
+src/components/modal-product-image-gallery/modal-product-image-gallery.styles.jsx, code is 133, comment is 6, blank is 38.
+src/components/modal-user-bookings/modal-user-booking.component.jsx, code is 247, comment is 7, blank is 34.
+src/components/modal-user-bookings/modal-user-booking.styles.jsx, code is 123, comment is 4, blank is 32.
+src/components/modal-userbookings-details/modal-userbookings-details.component.jsx, code is 81, comment is 0, blank is 14.
+src/components/modal-userbookings-details/modal-userbookings-details.styles.jsx, code is 92, comment is 4, blank is 24.
+src/components/new-user-form/new-user-form.component.jsx, code is 292, comment is 7, blank is 19.
+src/components/new-user-form/new-user-form.styles.jsx, code is 44, comment is 0, blank is 10.
+src/components/order-address-form/order-address-form.component.jsx, code is 144, comment is 0, blank is 14.
+src/components/order-address-form/order-address-form.styles.jsx, code is 45, comment is 4, blank is 15.
+src/components/order-cart-lenses-row/order-cart-lenses-row.component.jsx, code is 56, comment is 5, blank is 10.
+src/components/order-cart-lenses-row/order-cart-lenses-row.styles.jsx, code is 91, comment is 13, blank is 24.
+src/components/order-cart-row/order-cart-row.component.jsx, code is 144, comment is 0, blank is 15.
+src/components/order-cart-row/order-cart-row.styles.jsx, code is 79, comment is 3, blank is 14.
+src/components/order-deligate-modal/order-deligate-modal.component.jsx, code is 74, comment is 6, blank is 14.
+src/components/order-deligate-modal/order-deligate-modal.styles.jsx, code is 58, comment is 3, blank is 17.
+src/components/order-lenses-overview/order-lenses-overview.component.jsx, code is 23, comment is 0, blank is 8.
+src/components/order-lenses-overview/order-lenses-overview.styles.jsx, code is 37, comment is 0, blank is 11.
+src/components/order-overview/order-overview.component.jsx, code is 109, comment is 6, blank is 13.
+src/components/order-overview/order-overview.styles.jsx, code is 105, comment is 2, blank is 28.
+src/components/order-pay-modal/order-pay-modal.component.jsx, code is 57, comment is 24, blank is 15.
+src/components/order-pay-modal/order-pay-modal.styles.jsx, code is 59, comment is 3, blank is 17.
+src/components/order-product-overview/order-product-overview.component.jsx, code is 23, comment is 0, blank is 7.
+src/components/order-product-overview/order-product-overview.styles.jsx, code is 54, comment is 1, blank is 17.
+src/components/order-summary-lenses-name/order-summary-lenses-name.component.jsx, code is 22, comment is 1, blank is 5.
+src/components/order-summary-product-name/order-summary-product-name.component.jsx, code is 37, comment is 1, blank is 6.
+src/components/pagination/pagination.component.jsx, code is 24, comment is 0, blank is 6.
+src/components/pagination/pagination.styles.jsx, code is 26, comment is 0, blank is 6.
+src/components/pagination/popup/pop-up.component.jsx, code is 22, comment is 0, blank is 4.
+src/components/pagination/popup/pop.up.styles.jsx, code is 30, comment is 0, blank is 10.
+src/components/parameters-table/parameters-table.component.jsx, code is 204, comment is 0, blank is 31.
+src/components/parameters-table/parameters-table.styles.jsx, code is 79, comment is 0, blank is 17.
+src/components/popup/pop-up.component.jsx, code is 22, comment is 0, blank is 4.
+src/components/popup/pop.up.styles.jsx, code is 30, comment is 0, blank is 10.
+src/components/product-accessories-form/product-accessories-form.component.jsx, code is 123, comment is 20, blank is 14.
+src/components/product-accessories-form/product-accessories-form.styles.jsx, code is 80, comment is 2, blank is 19.
+src/components/product-contact-lenses-form/product-contact-lenses-form.component.jsx, code is 195, comment is 21, blank is 16.
+src/components/product-contact-lenses-form/product-contact-lenses-form.styles.jsx, code is 103, comment is 2, blank is 27.
+src/components/product-glasses-form/product-glasses-form.component.jsx, code is 249, comment is 24, blank is 27.
+src/components/product-glasses-form/product-glasses-form.styles.jsx, code is 114, comment is 2, blank is 26.
+src/components/product-input-row/product-input-row.component.jsx, code is 15, comment is 0, blank is 3.
+src/components/product-input-row/product-input-row.styles.jsx, code is 20, comment is 0, blank is 5.
+src/components/product-lenses-form/product-lenses-form.component.jsx, code is 178, comment is 0, blank is 19.
+src/components/product-lenses-form/product-lenses-form.styles.jsx, code is 81, comment is 5, blank is 19.
+src/components/product-overview/product-overview.component.jsx, code is 70, comment is 0, blank is 13.
+src/components/product-overview/product-overview.styles.jsx, code is 84, comment is 11, blank is 25.
+src/components/product-service-form/product-service-form.component.jsx, code is 55, comment is 6, blank is 10.
+src/components/product-service-form/product-service-form.styles.jsx, code is 34, comment is 1, blank is 7.
+src/components/profile-order-overview/profile-order-overview.component.jsx, code is 39, comment is 3, blank is 11.
+src/components/profile-order-overview/profile-order-overview.styles.jsx, code is 42, comment is 11, blank is 13.
+src/components/scroll-container/scroll-container.component.jsx, code is 12, comment is 0, blank is 2.
+src/components/scroll-container/scroll-container.styles.jsx, code is 35, comment is 5, blank is 11.
+src/components/section-header/section-header.component.jsx, code is 44, comment is 1, blank is 6.
+src/components/section-header/section-header.styles.jsx, code is 43, comment is 1, blank is 13.
+src/components/section-navbar/section-navbar.component.jsx, code is 21, comment is 0, blank is 5.
+src/components/section-navbar/section-navbar.styles.jsx, code is 21, comment is 1, blank is 5.
+src/components/sidenav/sidenav.component.jsx, code is 65, comment is 2, blank is 10.
+src/components/sidenav/sidenav.styles.jsx, code is 189, comment is 4, blank is 44.
+src/components/sign-in/sign-in.component.jsx, code is 52, comment is 0, blank is 14.
+src/components/sign-in/sign-in.styles.jsx, code is 37, comment is 0, blank is 9.
+src/components/spinner/spinner.component.jsx, code is 8, comment is 0, blank is 3.
+src/components/spinner/spinner.styles.jsx, code is 13, comment is 0, blank is 2.
+src/components/user-form/user-form.component.jsx, code is 289, comment is 8, blank is 16.
+src/components/user-form/user.form-styles.jsx, code is 91, comment is 0, blank is 25.
+src/context/analytics/analytics.context.jsx, code is 79, comment is 0, blank is 18.
+src/context/auth/auth.context.jsx, code is 219, comment is 2, blank is 38.
+src/context/auth/auth.queries.jsx, code is 61, comment is 0, blank is 21.
+src/context/blog/blog.context.jsx, code is 130, comment is 2, blank is 29.
+src/context/blog/blog.queries.jsx, code is 43, comment is 0, blank is 18.
+src/context/booking/booking.context.jsx, code is 209, comment is 1, blank is 52.
+src/context/coupons/coupons.context.jsx, code is 179, comment is 27, blank is 41.
+src/context/examination/examination.context.jsx, code is 105, comment is 0, blank is 25.
+src/context/image/image.context.jsx, code is 138, comment is 2, blank is 30.
+src/context/image/image.queries.jsx, code is 44, comment is 1, blank is 13.
+src/context/loading-modal/loading-modal.contenxt.jsx, code is 39, comment is 0, blank is 7.
+src/context/order/order.context.jsx, code is 292, comment is 3, blank is 32.
+src/context/orders/orders.context.jsx, code is 203, comment is 7, blank is 57.
+src/context/orders/orders.queries.jsx, code is 79, comment is 24, blank is 28.
+src/context/orders/orders.utils.jsx, code is 47, comment is 2, blank is 4.
+src/context/user/user.context.jsx, code is 361, comment is 59, blank is 81.
+src/context/user/user.queries.jsx, code is 82, comment is 39, blank is 28.
+src/context/user/user.utils.jsx, code is 41, comment is 0, blank is 1.
+src/context/warehouse/warehouse.context.jsx, code is 795, comment is 4, blank is 134.
+src/context/warehouse/warehouse.utils.jsx, code is 288, comment is 8, blank is 23.
+src/context/week-calendar/week-calendar.context.jsx, code is 94, comment is 3, blank is 17.
+src/global.styles.jsx, code is 149, comment is 2, blank is 45.
+src/hooks/useFetch.jsx, code is 98, comment is 2, blank is 21.
+src/hooks/useOutsideAlerter.jsx, code is 33, comment is 11, blank is 6.
+src/images/logo.png, it is a binary file.
+src/images/undraw_security_o890.svg, code is 1, comment is 0, blank is 0.
+src/index.js, code is 17, comment is 3, blank is 2.
+src/pages/dashboard/dashboard.jsx, code is 189, comment is 0, blank is 26.
+src/pages/dashboard/dashboard.styles.jsx, code is 24, comment is 1, blank is 7.
+src/pages/reset-password/reset-password.jsx, code is 44, comment is 0, blank is 14.
+src/pages/reset-password/reset.password.styles.jsx, code is 30, comment is 0, blank is 7.
+src/pages/sign-in-and-sign-up/sign-in-and-sign-up.jsx, code is 22, comment is 0, blank is 7.
+src/pages/sign-in-and-sign-up/sign-in-and-sign-up.styles.jsx, code is 21, comment is 0, blank is 6.
+src/reportWebVitals.js, code is 12, comment is 0, blank is 1.
+src/sections/analytics/analytics.section.jsx, code is 368, comment is 17, blank is 48.
+src/sections/analytics/analytics.styles.jsx, code is 112, comment is 15, blank is 31.
+src/sections/blog-posts/blog-posts.section.jsx, code is 164, comment is 3, blank is 25.
+src/sections/blog-posts/blog-posts.styles.jsx, code is 64, comment is 2, blank is 16.
+src/sections/booking/booking.section.jsx, code is 283, comment is 12, blank is 44.
+src/sections/booking/booking.styles.jsx, code is 81, comment is 2, blank is 20.
+src/sections/calendar/calendar.section.jsx, code is 291, comment is 1, blank is 28.
+src/sections/calendar/calendar.styles.jsx, code is 95, comment is 17, blank is 21.
+src/sections/coupon/coupon.section.jsx, code is 143, comment is 0, blank is 14.
+src/sections/coupon/coupon.styles.jsx, code is 40, comment is 0, blank is 6.
+src/sections/coupons/coupons.section.jsx, code is 72, comment is 4, blank is 12.
+src/sections/coupons/coupons.styles.jsx, code is 60, comment is 4, blank is 21.
+src/sections/customer-profile/customer-profile.section.jsx, code is 202, comment is 12, blank is 37.
+src/sections/customer-profile/customer-profile.styles.jsx, code is 20, comment is 0, blank is 6.
+src/sections/customers/customers.section.jsx, code is 170, comment is 1, blank is 22.
+src/sections/customers/customers.styles.jsx, code is 54, comment is 6, blank is 20.
+src/sections/e-shop/e-shop.section.jsx, code is 204, comment is 1, blank is 34.
+src/sections/e-shop/e-shop.styles.jsx, code is 23, comment is 1, blank is 5.
+src/sections/no-permission/no-permission.section.jsx, code is 23, comment is 0, blank is 5.
+src/sections/no-permission/no-permission.styles.jsx, code is 28, comment is 0, blank is 6.
+src/sections/order/order.section.jsx, code is 140, comment is 2, blank is 23.
+src/sections/order/order.styles.jsx, code is 18, comment is 0, blank is 5.
+src/sections/order/steps/1-select-user/select-user.component.jsx, code is 111, comment is 0, blank is 15.
+src/sections/order/steps/1-select-user/select-user.styles.jsx, code is 55, comment is 0, blank is 11.
+src/sections/order/steps/2-select-product/select-product.component.jsx, code is 137, comment is 0, blank is 15.
+src/sections/order/steps/2-select-product/select-product.styles.jsx, code is 120, comment is 7, blank is 33.
+src/sections/order/steps/3-select-lenses/select-lenses.component.jsx, code is 159, comment is 0, blank is 15.
+src/sections/order/steps/3-select-lenses/select-lenses.styles.jsx, code is 166, comment is 20, blank is 44.
+src/sections/order/steps/4-summary/summary.component.jsx, code is 197, comment is 0, blank is 20.
+src/sections/order/steps/4-summary/summary.styles.jsx, code is 149, comment is 4, blank is 43.
+src/sections/orders/orders.section.jsx, code is 245, comment is 5, blank is 29.
+src/sections/orders/orders.styles.jsx, code is 71, comment is 3, blank is 24.
+src/sections/post/post.section.jsx, code is 282, comment is 7, blank is 34.
+src/sections/post/post.styles.jsx, code is 68, comment is 1, blank is 15.
+src/sections/product/product.section.jsx, code is 599, comment is 14, blank is 94.
+src/sections/product/product.styles.jsx, code is 31, comment is 0, blank is 8.
+src/setupTests.js, code is 1, comment is 4, blank is 0.
+src/utils/analytics.utils.jsx, code is 27, comment is 0, blank is 0.
+src/utils/calendar.utils.jsx, code is 360, comment is 2, blank is 29.
+src/utils/orders.utils.jsx, code is 31, comment is 0, blank is 5.
+src/utils/parameters.utils.jsx, code is 32, comment is 1, blank is 3.
+src/utils/user.utils.jsx, code is 17, comment is 10, blank is 0.
+src/utils/warehouse.utils.jsx, code is 169, comment is 0, blank is 13.
+src/utils/week-calendar.utils.jsx, code is 64, comment is 0, blank is 13.
+===============================================================================

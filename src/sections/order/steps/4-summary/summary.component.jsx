@@ -84,7 +84,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         <TableCol>{combinedProduct?.lens ? <OrderSummaryLensesName lensesId={combinedProduct?.lens} /> : ""}</TableCol>
                         <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.full / 100).toFixed(2)}€` : ''}</TableCol>
                         <TableCol>{combinedProduct?.lensPrice ? `${(combinedProduct?.lensPrice?.discounted / 100).toFixed(2)}€` : ""} {combinedProduct?.discount?.lenses?.percent && `(${combinedProduct?.discount?.lenses?.percent}%)`}</TableCol>
-                        <TableCol>{combinedProduct?.lensesQuant}</TableCol>
+                        <TableCol>{combinedProduct?.lens && combinedProduct?.lensesQuant}</TableCol>
                         <TableCol>{combinedProduct?.price ? `${(combinedProduct?.price / 100).toFixed(2)}€` : ""}</TableCol>
                         <TableCol>{(combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol>
                     </SummaryTableRow>

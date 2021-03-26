@@ -131,7 +131,7 @@ export const RefractTable = styled.div`
 `
 export const KerathTable = styled.div`
     display: grid;
-    grid-template-columns: 4rem repeat(2, 1fr);
+    grid-template-columns: 4rem repeat(3, 1fr);
 `
 export const SubjectiveRefATable = styled.div`
     display: grid;

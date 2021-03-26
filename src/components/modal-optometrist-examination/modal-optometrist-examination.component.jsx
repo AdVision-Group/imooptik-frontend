@@ -44,6 +44,10 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     const [examinationObj, setExaminationObj] = useState({})
     const [recomendation, setRecomendation] = useState('')
 
+    const [pc, setPc] = useState(false)
+    const [vodic, setVodic] = useState(false)
+
+
     //REFRAKCIA
     const [vlastne_okuliare, setVlastne_okuliare] = useState({})
     const [objektivna_refrakcia, setObjektivna_refrakcia] = useState({})
@@ -128,6 +132,8 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         e.preventDefault()
 
         let examObj = {
+            vodic,
+            pc,
             doneTo: userId,
             type: activeExamType,
             ...(recomendation !== "") && { doporucenia: recomendation }
@@ -226,6 +232,9 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     useEffect(() => {
         if (!examinationData.isLoading) {
             if (examinationData.response) {
+
+                setVodic(examinationData.response.exam.vodic)
+                setPc(examinationData.response.exam.pc)
 
                 if (examinationData.response?.exam?.type === 1) {
                     let examObj = examinationData.response?.exam
@@ -1073,6 +1082,20 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                     </Col>
                                 ))}
                             </TableCol>
+                            <TableCol>
+                                <Col>AVE</Col>
+                                {[...Array(2)].map((value, idx) => (
+                                    <Col key={idx}>
+                                        <input
+                                            name='ave'
+                                            type='text'
+                                            value={checkParameter(keratometer?.ave, idx)}
+                                            onChange={e => handleParameterChange(e, idx, keratometer, setKeratometer)}
+                                            onBlur={(e) => formatParameters(e, keratometer?.ave, keratometer, setKeratometer)}
+                                        />
+                                    </Col>
+                                ))}
+                            </TableCol>
 
                         </KerathTable>
 
@@ -1490,6 +1513,21 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                         </InputContainer>
                     </Container>
                 )}
+
+                <InputContainer>
+                    <IsSuitableCheckbox
+                        label={"Šofer"}
+                        isActive={vodic}
+                        handleClick={() => setVodic(prevValue => !prevValue)}
+                    />
+                </InputContainer>
+                <InputContainer>
+                    <IsSuitableCheckbox
+                        label={"PC"}
+                        isActive={pc}
+                        handleClick={() => setPc(prevValue => !prevValue)}
+                    />
+                </InputContainer>
 
                 <InputContainer>
                     <CustomTextarea

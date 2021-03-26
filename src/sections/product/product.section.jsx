@@ -346,7 +346,7 @@ const ProductSection = () => {
 
         let newProductObj = {
             ...productObj,
-            ...(productObj.type === 0) && { type: lenses.lensType },
+            ...(productObj.type === 0) && { lensType: lenses.lensType },
             ...(productObj.type === 0) && { dioptric: lenses.dioptric }
         }
 
@@ -374,16 +374,16 @@ const ProductSection = () => {
 
         if (isUpdating) {
             console.log(newProductObj)
-            if (newProductObj.type === 0 || typeof newProductObj.type === 'string') {
+            if (newProductObj.type === 0) {
                 setHasChanged(false)
                 delete newProductObj['link']
-                // delete newProductObj['type']
+                delete newProductObj['type']
                 const updatedObj = {
                     ...newProductObj,
-                    type: newProductObj.lensType,
+                    // type: newProductObj.lensType,
                     eanCode: lenses.eanCode
                 }
-                delete updatedObj['lensType']
+                // delete updatedObj['lensType']
                 console.log(id)
                 updateLenses(updatedObj, id)
                 return
@@ -410,21 +410,15 @@ const ProductSection = () => {
             if (productObj.type === 0) {
                 console.log("NEW LENSES OBJ")
                 console.log(newProductObj)
-                if (!newProductObj.name || !newProductObj.brand || !newProductObj.description || !newProductObj.price || !newProductObj.image || !newProductObj.dioptersRange || !newProductObj.cylinderRange) {
-                    setShowModal(true)
-                    getMessage("Povinné údaje sú prázdne")
-                    return
-                } else {
-                    setHasChanged(false)
-                    // delete newProductObj['type']
-                    const updatedObg = {
-                        ...newProductObj,
-                        type: newProductObj.lensType
-                    }
-                    delete updatedObg['lensType']
+                setHasChanged(false)
+                delete newProductObj['type']
+                // const updatedObg = {
+                //     ...newProductObj,
+                //     type: newProductObj.lensType
+                // }
+                // delete updatedObg['lensType']
 
-                    createLenses(updatedObg)
-                }
+                createLenses(newProductObj)
             }
             if (newProductObj.type === 6 || newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
                 if (!newProductObj.name || !newProductObj.price) {
@@ -482,7 +476,7 @@ const ProductSection = () => {
             handleChange({
                 target: {
                     name: "lensType",
-                    value: lenses?.type
+                    value: lenses?.lensType
                 }
             })
         }
