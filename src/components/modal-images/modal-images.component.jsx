@@ -179,27 +179,27 @@ const ModalImages = ({ close, setImage }) => {
                             )}
                         </div>
                     ) : (
-                            <div>
-                                <h2>Nahrane obrazky</h2>
-                                <FlexContainer>
-                                    {images && images.map(img => (
-                                        <ImageContainer key={img._id}>
-                                            <DeleteButton onClick={(e) => handleDeleteImage(img._id, e)}>&#10005;</DeleteButton>
-                                            <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
-                                        </ImageContainer>
-                                    ))}
+                        <div>
+                            <h2>Nahrane obrazky</h2>
+                            <FlexContainer>
+                                {images && images.map(img => (
+                                    <ImageContainer key={img._id}>
+                                        <DeleteButton onClick={(e) => handleDeleteImage(img._id, e)}>&#10005;</DeleteButton>
+                                        <img onClick={() => selectImage(img)} src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
+                                    </ImageContainer>
+                                ))}
 
-                                </FlexContainer>
-                                <ButtonOptions>
-                                    <FetchButtons onClick={() => getPrevImage(2)}>
-                                        {"<"}
-                                    </FetchButtons>
-                                    <FetchButtons onClick={() => getNextImages(2)}>
-                                        {">"}
-                                    </FetchButtons>
-                                </ButtonOptions>
-                            </div>
-                        )
+                            </FlexContainer>
+                            <ButtonOptions>
+                                <FetchButtons onClick={() => getPrevImage(2)}>
+                                    {"<"}
+                                </FetchButtons>
+                                <FetchButtons onClick={() => getNextImages(2)}>
+                                    {">"}
+                                </FetchButtons>
+                            </ButtonOptions>
+                        </div>
+                    )
                 }
 
 

@@ -16,7 +16,11 @@ import {
     StockContainer,
     CustomSelect,
     BrandedCheckbox,
-    CopyButton
+    CopyButton,
+    UploadButton,
+    DeleteButton,
+    NewImageContainer,
+    NewImagesContainer
 } from './product-glasses-form.styles.jsx'
 
 const ProductGlassesForm = ({
@@ -34,7 +38,8 @@ const ProductGlassesForm = ({
     setImageModal,
     isUpdating,
     filters,
-    handleGetProductData
+    handleGetProductData,
+    productObj
 }) => {
     const [isBranded, setIsBranded] = useState(true)
 
@@ -157,6 +162,15 @@ const ProductGlassesForm = ({
                         {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                     </ProductImage>
                 </ImageContainer>
+
+                <NewImagesContainer>
+                    {productObj?.bonusImages && productObj?.bonusImages.map((img) => (
+                        <NewImageContainer key={img._id}>
+                            {/* <DeleteButton >&#10005;</DeleteButton> */}
+                            <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
+                        </NewImageContainer>
+                    ))}
+                </NewImagesContainer>
             </GlassesContainer>
             <div>
                 <GlassesParameterContainer>

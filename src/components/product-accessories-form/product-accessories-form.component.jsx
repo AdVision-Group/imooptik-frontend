@@ -9,6 +9,9 @@ import {
     StockContainer,
     ImageContainer,
     ProductImage,
+    DeleteButton,
+    NewImageContainer,
+    NewImagesContainer,
 } from './product-accessories-form.styles'
 
 const ProductAccessoriesForm = ({
@@ -21,7 +24,8 @@ const ProductAccessoriesForm = ({
     retailNames,
     currentUser,
     isUpdating,
-    filters
+    filters,
+    productObj
 }) => {
     return (
         <AccessoriesFormContainer>
@@ -105,6 +109,15 @@ const ProductAccessoriesForm = ({
                         {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                     </ProductImage>
                 </ImageContainer>
+
+                <NewImagesContainer>
+                    {productObj?.bonusImages && productObj?.bonusImages.map((img) => (
+                        <NewImageContainer key={img._id}>
+                            {/* <DeleteButton >&#10005;</DeleteButton> */}
+                            <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
+                        </NewImageContainer>
+                    ))}
+                </NewImagesContainer>
             </AccessoriesContainer>
             {currentUser.admin >= 2 ? (
                 <StockContainer>

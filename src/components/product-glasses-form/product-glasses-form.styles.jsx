@@ -87,3 +87,55 @@ export const CopyButton = styled.button`
     top: 2rem;
     color: var(--primary-color);
 `
+
+export const DeleteButton = styled.button`
+    cursor: pointer;
+    display:none;
+    border-radius:50%;
+    position: absolute;
+    border: none;
+    background-color: var(--color-red);
+    color: #fff;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    right: .5rem;
+    top: .5rem;
+
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+export const NewImageContainer = styled.div`
+    position: relative;
+    min-width: 15rem;
+    width: 15rem;
+    height: 15rem;
+
+
+    ${({ isPrimary }) => console.log(isPrimary)}
+
+    border: ${({ isPrimary }) => isPrimary ? '1px solid var(--primary-color)' : 'unset'};
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    &:hover ${DeleteButton} {
+        display: block
+    }
+`
+
+export const NewImagesContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    /* overflow-x: auto; */
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+
+`

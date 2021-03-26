@@ -6,7 +6,8 @@ import { LoadingModalContext } from '../../context/loading-modal/loading-modal.c
 import { useParams, Prompt } from 'react-router-dom'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import ModalImage from '../../components/modal-images/modal-images.component'
+import ModalImage from '../../components/modal-product-image-gallery/modal-product-image-gallery.component'
+import OldModalImage from '../../components/modal-images/modal-images.component'
 import GetProductDataModal from '../../components/modal-get-product-data/modal-get-product-data.component'
 import GetLensesDataModal from '../../components/modal-get-lenses-data/modal-get-lenses-data.component'
 import Popup from '../../components/popup/pop-up.component'
@@ -40,6 +41,7 @@ const ProductSection = () => {
     const { closeModal, message, isLoading, showModal, getMessage, setShowModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
     const [showImageModal, setImageModal] = useState(false)
+    const [showOldImageModal, setOldImageModal] = useState(false)
     const [isGetProductDataModalVisible, setIsGetProductDataModalVisible] = useState(false)
     const [isGetLensesDataModalVisible, setIsGetLensesDataModalVisible] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -329,11 +331,13 @@ const ProductSection = () => {
         })
     }
 
-    const handleSelectImage = (imgId) => {
+    const handleSelectImage = (imgId, bonusImages, img) => {
         setHasChanged(true)
+        setSelectedImage(img)
         setProductObj({
             ...productObj,
-            image: imgId
+            image: imgId,
+            ...(bonusImages) && { bonusImages }
         })
     }
 
@@ -391,7 +395,15 @@ const ProductSection = () => {
             } else {
                 setHasChanged(false)
                 delete newProductObj['type']
-                updateProduct(newProductObj)
+
+                const obj = {
+                    ...newProductObj,
+                    ...(newProductObj.bonusImages) && { bonusImages: newProductObj.bonusImages.map(img => img._id) }
+                }
+
+                console.log(obj)
+
+                updateProduct(obj)
                 return
             }
         } else {
@@ -423,7 +435,14 @@ const ProductSection = () => {
                     setHasChanged(false)
                     delete newProductObj['_id']
 
-                    createProduct(newProductObj)
+                    const obj = {
+                        ...newProductObj,
+                        ...(newProductObj.bonusImages) && { bonusImages: newProductObj.bonusImages.map(img => img._id) }
+                    }
+
+                    console.log(obj)
+
+                    createProduct(obj)
                 }
             }
         }
@@ -497,30 +516,37 @@ const ProductSection = () => {
 
     useEffect(() => {
         if (id !== 'novy-produkt') {
-            getSingleProduct(id, () => { })
+            getSingleProduct(id, (data) => {
+
+                handleSelectImage(data.product.image._id, data.product.bonusImages, data.product.image)
+                setProductObj(prevValue => ({
+                    ...prevValue,
+                    type: data.product.type,
+                }))
+            })
             setIsUpdating(true)
-            if (!productObj.type) {
-                handleChangeType({
-                    target: {
-                        name: "type",
-                        value: product.type
-                    }
-                })
+            // if (!productObj.type) {
+            //     handleChangeType({
+            //         target: {
+            //             name: "type",
+            //             value: product.type
+            //         }
+            //     })
 
-            }
+            // }
         }
-    }, [id, product.type])
+    }, [id,])
 
-    // console.log(productObj)
+    console.log(productObj)
 
     useEffect(() => {
-        if (product.image) {
-            setSelectedImage(product.image)
-        }
+        // if (product.image) {
+        //     setSelectedImage(product.image)
+        // }
         if (lenses.image) {
             setSelectedImage(lenses.image)
         }
-    }, [product.image, lenses.image])
+    }, [lenses.image])
 
     useEffect(() => {
         return () => {
@@ -545,6 +571,7 @@ const ProductSection = () => {
             {isGetProductDataModalVisible && <GetProductDataModal close={() => setIsGetProductDataModalVisible(false)} getSingleProduct={getSingleProduct} productObj={productObj} setProductObj={setProductObj} />}
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
             {showImageModal && <ModalImage close={() => setImageModal(false)} setImage={handleSelectImage} />}
+            {showOldImageModal && <OldModalImage close={() => setOldImageModal(false)} setImage={handleSelectImage} />}
             <Header>
                 <FixedContainer>
 
@@ -593,7 +620,7 @@ const ProductSection = () => {
                     <ProductLensesForm
                         lenses={lenses}
                         selectedImage={selectedImage}
-                        setImageModal={setImageModal}
+                        setImageModal={setOldImageModal}
                         handleChange={handleChange}
                         handleParameterChange={handleParameterChange}
                         checkParameter={checkParameter}
@@ -616,6 +643,7 @@ const ProductSection = () => {
                 {productObj.type === 5 && (
                     <ProductAccessoriesForm
                         product={product}
+                        productObj={productObj}
                         isUpdating={isUpdating}
                         currentUser={currentUser}
                         retailNames={retailNames}
@@ -631,6 +659,8 @@ const ProductSection = () => {
                 {productObj.type === 3 && (
                     <ProductContactLensesForm
                         product={product}
+                        productObj={productObj}
+
                         isUpdating={isUpdating}
                         retailNames={retailNames}
                         currentUser={currentUser}
@@ -650,6 +680,7 @@ const ProductSection = () => {
                 {(productObj.type === 1 || productObj.type === 2 || productObj.type === 4) && (
                     <ProductGlassesForm
                         product={product}
+                        productObj={productObj}
                         isUpdating={isUpdating}
                         retailNames={retailNames}
                         currentUser={currentUser}

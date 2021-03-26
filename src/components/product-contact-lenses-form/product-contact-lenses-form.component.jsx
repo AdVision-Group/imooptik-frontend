@@ -17,6 +17,9 @@ import {
     ImageContainer,
     ProductImage,
     CopyButton,
+    DeleteButton,
+    NewImageContainer,
+    NewImagesContainer
 } from './product-contact-lenses-form.styles'
 
 const ProductContactLensesForm = ({
@@ -33,6 +36,7 @@ const ProductContactLensesForm = ({
     handleAvailableChange,
     isUpdating,
     filters,
+    productObj,
     handleGetProductData
 }) => {
     return (
@@ -116,6 +120,15 @@ const ProductContactLensesForm = ({
                         {selectedImage && <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${selectedImage.imagePath}`} alt={selectedImage.alt} />}
                     </ProductImage>
                 </ImageContainer>
+
+                <NewImagesContainer>
+                    {productObj?.bonusImages && productObj?.bonusImages.map((img) => (
+                        <NewImageContainer key={img._id}>
+                            {/* <DeleteButton >&#10005;</DeleteButton> */}
+                            <img src={`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/${img.imagePath}`} alt={img.alt} />
+                        </NewImageContainer>
+                    ))}
+                </NewImagesContainer>
             </ContactLensesContainer>
             <div>
                 <ContactLensesParametersContainer>
