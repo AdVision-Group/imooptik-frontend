@@ -37,6 +37,7 @@ export const UserContext = createContext({
     createUser: () => { },
     getFilteredUsers: () => { },
     getUserByQuery: () => { },
+    deleteUser: () => { },
 })
 
 const UserProvider = ({ children }) => {
@@ -350,10 +351,12 @@ const UserProvider = ({ children }) => {
 
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
+
+
 
     // ----------------------------------------------
     // ----------------------------------------------
@@ -363,7 +366,40 @@ const UserProvider = ({ children }) => {
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
 
+    const deleteUser = async (id) => {
+        setIsLoading(true)
+        setShowModal(true)
 
+        const requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            // body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/${id}`, requestOptions)
+            const data = await response.json()
+
+            console.log(data)
+
+            if (data.user) {
+
+                push("/dashboard/zakaznici")
+                setIsLoading(false)
+                closeModal()
+                return
+            }
+
+            getMessage(data.messageSK)
+            setIsLoading(false)
+
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
 
     const getFilteredUsers = async (filter) => {
         setIsLoading(true)
@@ -388,7 +424,7 @@ const UserProvider = ({ children }) => {
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
 
         } catch (err) {
@@ -454,6 +490,7 @@ const UserProvider = ({ children }) => {
                 createUser,
                 getFilteredUsers,
                 getUserByQuery,
+                deleteUser
             }}
         >
             {children}

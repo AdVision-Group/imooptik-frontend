@@ -7,6 +7,8 @@ export const LensesFormContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-gap: 3rem;
     align-items: start;
+    padding-bottom: 10rem;
+
 
     @media all and (max-width: 1000px) {
         grid-template-columns: 1fr;

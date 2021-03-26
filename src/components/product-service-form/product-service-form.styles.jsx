@@ -5,6 +5,8 @@ export const ServiceFormContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-gap: 3rem;
     align-items: start;
+    padding-bottom: 10rem;
+
 `
 
 export const ServiceContainer = styled.div`
