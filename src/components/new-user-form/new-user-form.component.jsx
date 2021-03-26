@@ -164,6 +164,24 @@ const NewUserForm = ({
                                             handleChange={(e) => handleCompanyChange(e)}
                                         />
                                     </ZeroMargin>
+                                    <ZeroMargin>
+                                        <CustomInput
+                                            label="IČ DPH"
+                                            type='text'
+                                            name='icdph'
+                                            value={user.company.icdph ?? ""}
+                                            handleChange={(e) => handleCompanyChange(e)}
+                                        />
+                                    </ZeroMargin>
+                                    <ZeroMargin>
+                                        {/* <CustomInput
+                                            label="IČ DPH"
+                                            type='text'
+                                            name='icdph'
+                                            value={user.company.icdph ?? ""}
+                                            handleChange={(e) => handleCompanyChange(e)}
+                                        /> */}
+                                    </ZeroMargin>
                                 </GridRow>
                                 <GridRow>
                                     <ZeroMargin>
