@@ -54,7 +54,7 @@ const ProductOverview = ({
 
             <ProductContent>
                 <h2>{name}</h2>
-                {(product.type === 1 || product.type === 2 || product.type === 4) && <DescP>{`${product?.specs?.frameColor} ${product?.specs?.frameMaterial} ${product?.specs?.size[0]}-${product?.specs?.size[1]}-${product?.specs?.size[2]}-${product?.specs?.size[3]}`}</DescP>}
+                {(product.type === 1 || product.type === 2 || product.type === 4) && <DescP>{`${product?.specs?.frameColor || "Neuvedené"} ${product?.specs?.frameMaterial || "Neuvedené"} ${product?.specs?.size[0]}-${product?.specs?.size[1]}-${product?.specs?.size[2]}-${product?.specs?.size[3]}`}</DescP>}
                 <ProductId>{eanCode}</ProductId>
 
             </ProductContent>

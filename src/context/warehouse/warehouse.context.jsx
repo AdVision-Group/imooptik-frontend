@@ -368,18 +368,20 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const linkName = diaConvert(productToAdd?.name || '').replaceAll(" ", "-").toLowerCase().trim()
-        const linkFrameColor = diaConvert(productToAdd?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
-
         let linkSize1 = null
 
         if (productToAdd?.specs?.size) {
             linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
         }
 
-        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "")
+        console.log(productToAdd?.name)
+        console.log(productToAdd?.specs?.frameColor)
+        console.log(productToAdd?.specs?.size)
 
-        const finalSlug = getSlug(slug)
+        const finalSlug = getSlug(`${productToAdd?.name || "neuvedene"}-${productToAdd?.specs?.frameColor || "neuvedene"}-${productToAdd?.specs?.size || "neuvedene"}`)
+
+        console.log(productToAdd?.name + productToAdd?.specs?.frameColor + productToAdd?.specs?.size ? productToAdd?.specs?.size[0] : '')
+        console.log(finalSlug)
 
         let modifiedProduct = {
             ...productToAdd,
@@ -447,7 +449,11 @@ const WarehouseProvider = ({ children }) => {
             if (data.product) {
                 push('/dashboard/obchod')
                 getProductsByQuery({
-                    limit: 10
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    }
                 })
                 setEanCode(null)
                 closeModal()
@@ -497,27 +503,27 @@ const WarehouseProvider = ({ children }) => {
             }
         }
 
-        if (productToUpdate.name || productToUpdate?.specs?.frameColor || productToUpdate?.specs?.size) {
-            const linkName = diaConvert(productToUpdate?.name || product?.name || "").replaceAll(" ", "-").toLowerCase().trim()
-            const linkFrameColor = diaConvert(productToUpdate?.specs?.frameColor || product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
+        // if (productToUpdate.name || productToUpdate?.specs?.frameColor || productToUpdate?.specs?.size) {
+        //     const linkName = diaConvert(productToUpdate?.name || product?.name || "").replaceAll(" ", "-").toLowerCase().trim()
+        //     const linkFrameColor = diaConvert(productToUpdate?.specs?.frameColor || product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
 
-            let linkSize1 = null
+        //     let linkSize1 = null
 
-            if (product?.specs?.size) {
-                linkSize1 = diaConvert(productToUpdate?.specs?.size[0].toString() || product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            }
+        //     if (product?.specs?.size) {
+        //         linkSize1 = diaConvert(productToUpdate?.specs?.size[0].toString() || product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
+        //     }
 
-            const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "")
+        //     const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "")
 
-            const finalSlug = getSlug(slug)
+        //     const finalSlug = getSlug(slug)
 
-            console.log(finalSlug)
+        //     console.log(finalSlug)
 
-            modifiedProduct = {
-                ...modifiedProduct,
-                link: finalSlug
-            }
-        }
+        //     modifiedProduct = {
+        //         ...modifiedProduct,
+        //         link: finalSlug
+        //     }
+        // }
 
         if (productToUpdate.specs) {
             if (productToUpdate.specs.size) {
@@ -612,7 +618,11 @@ const WarehouseProvider = ({ children }) => {
             if (data.product) {
                 push('/dashboard/obchod')
                 getProductsByQuery({
-                    limit: 10
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    }
                 })
                 closeModal()
                 return
@@ -644,7 +654,11 @@ const WarehouseProvider = ({ children }) => {
             if (data.product) {
                 // push('/dashboard/obchod')
                 getProductsByQuery({
-                    limit: 10
+                    limit: 10,
+                    skip: 0,
+                    sortBy: {
+                        date: -1
+                    }
                 })
                 closeModal()
                 return
