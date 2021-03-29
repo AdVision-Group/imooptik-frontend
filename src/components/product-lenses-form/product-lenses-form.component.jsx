@@ -111,7 +111,6 @@ const ProductLensesForm = ({
                         ))}
                     </div>
 
-                    {console.log(lenses)}
                     {lenses.lensType === "slnečné" && (
                         <div>
                             <TypeCheckbox

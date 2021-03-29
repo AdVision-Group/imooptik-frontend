@@ -156,7 +156,6 @@ const AnalyticsSection = () => {
         }
     }, [])
 
-    console.log(stats)
 
     return (
         <section>

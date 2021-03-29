@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
+import { useSlug } from '../../hooks/slug'
 
 import {
     // premisesTabs,
@@ -64,6 +65,7 @@ export const WarehouseContext = createContext({
 })
 
 const WarehouseProvider = ({ children }) => {
+    const { getSlug } = useSlug()
     const { push } = useHistory()
     const { token, isAdmin, currentUser, stats } = useContext(AuthContext)
     const { closeModal, setIsLoading, setShowModal, getMessage } = useContext(LoadingModalContext)
@@ -370,24 +372,19 @@ const WarehouseProvider = ({ children }) => {
         const linkFrameColor = diaConvert(productToAdd?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
 
         let linkSize1 = null
-        let linkSize2 = null
-        let linkSize3 = null
-        let linkSize4 = null
 
         if (productToAdd?.specs?.size) {
             linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize2 = diaConvert(productToAdd?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize3 = diaConvert(productToAdd?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-            linkSize4 = diaConvert(productToAdd?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
         }
 
-        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
+        const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "")
 
+        const finalSlug = getSlug(slug)
 
         let modifiedProduct = {
             ...productToAdd,
             price: formatPrice(productToAdd?.price?.toString() || ""),
-            link: slug,
+            link: finalSlug,
         }
 
         if (productToAdd.specs) {
@@ -505,22 +502,20 @@ const WarehouseProvider = ({ children }) => {
             const linkFrameColor = diaConvert(productToUpdate?.specs?.frameColor || product?.specs?.frameColor || '').replaceAll(" ", "-").toLowerCase().trim()
 
             let linkSize1 = null
-            let linkSize2 = null
-            let linkSize3 = null
-            let linkSize4 = null
 
             if (product?.specs?.size) {
                 linkSize1 = diaConvert(productToUpdate?.specs?.size[0].toString() || product?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-                linkSize2 = diaConvert(productToUpdate?.specs?.size[1].toString() || product?.specs?.size[1].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-                linkSize3 = diaConvert(productToUpdate?.specs?.size[2].toString() || product?.specs?.size[2].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
-                linkSize4 = diaConvert(productToUpdate?.specs?.size[3].toString() || product?.specs?.size[3].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
             }
 
-            const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "") + (linkSize2 !== null ? `-${linkSize2}` : "") + (linkSize3 !== null ? `-${linkSize3}` : "") + (linkSize4 !== null ? `-${linkSize4}` : "")
+            const slug = linkName + (linkFrameColor ? `-${linkFrameColor}` : "") + (linkSize1 !== null ? `-${linkSize1}` : "")
+
+            const finalSlug = getSlug(slug)
+
+            console.log(finalSlug)
 
             modifiedProduct = {
                 ...modifiedProduct,
-                link: slug
+                link: finalSlug
             }
         }
 

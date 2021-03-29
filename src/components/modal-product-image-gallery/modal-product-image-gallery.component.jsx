@@ -54,22 +54,17 @@ const ProductImageGalleryModal = ({ close, setImage }) => {
     }
 
     const selectPrimaryImage = img => {
-        console.log(img)
         setPrimaryImage(img)
     }
 
     const handleSubmit = (primaryImg, otherImages) => {
-        console.log(primaryImg)
-        console.log(otherImages)
 
         // console.log(primaryImg._id)
 
 
         if (primaryImg) {
             const arr = otherImages.map(img => img._id)
-            console.log(arr)
             const filteredArr = otherImages.filter(img => img._id !== primaryImg._id)
-            console.log(filteredArr)
             setImage(primaryImg._id, filteredArr, primaryImg)
             close()
         } else {
@@ -77,7 +72,6 @@ const ProductImageGalleryModal = ({ close, setImage }) => {
             // console.log(arr)
             const firstIndex = otherImages[0]
             const filteredArr = otherImages.filter(img => img._id !== firstIndex._id)
-            console.log(filteredArr)
             setImage(firstIndex._id, filteredArr, firstIndex)
             close()
         }

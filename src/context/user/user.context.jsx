@@ -381,8 +381,6 @@ const UserProvider = ({ children }) => {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/users/${id}`, requestOptions)
             const data = await response.json()
 
-            console.log(data)
-
             if (data.user) {
 
                 push("/dashboard/zakaznici")

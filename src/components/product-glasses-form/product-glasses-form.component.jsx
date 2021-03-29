@@ -36,13 +36,12 @@ const ProductGlassesForm = ({
     handleSpecsChange,
     glassesParameters,
     setImageModal,
-    isUpdating,
+    // isUpdating,
     filters,
     handleGetProductData,
     productObj
 }) => {
     const [isBranded, setIsBranded] = useState(true)
-
 
     const handleIsBrandedClick = (isBrandedBool) => {
         if (isBrandedBool) {

@@ -49,8 +49,6 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
     }, [order.combinedProducts])
 
 
-    console.log(order)
-
     return (
         <div>
             {showUpdateUserModal && <OrderUpdateUserModal close={handleClose} userId={order.user._id} refetchUser={refetchUser} addUser={addUser} />}

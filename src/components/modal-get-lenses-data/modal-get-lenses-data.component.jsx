@@ -59,11 +59,6 @@ const GetLensesDataModal = ({ close, getSingleLenses, productObj, setProductObj,
             delete lenses['soldAmount']
             delete lenses['dateCreated']
 
-            console.log("lenses")
-            console.log("lenses")
-            console.log(lenses)
-            console.log(setProductObj)
-
             fillProductData({
                 ...lenses,
                 image: lenses.image._id,

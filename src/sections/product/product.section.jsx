@@ -373,7 +373,6 @@ const ProductSection = () => {
         }
 
         if (isUpdating) {
-            console.log(newProductObj)
             if (newProductObj.type === 0) {
                 setHasChanged(false)
                 delete newProductObj['link']
@@ -384,7 +383,6 @@ const ProductSection = () => {
                     eanCode: lenses.eanCode
                 }
                 // delete updatedObj['lensType']
-                console.log(id)
                 updateLenses(updatedObj, id)
                 return
             } else if (newProductObj.type === 3) {
@@ -401,15 +399,11 @@ const ProductSection = () => {
                     ...(newProductObj.bonusImages) && { bonusImages: newProductObj.bonusImages.map(img => img._id) }
                 }
 
-                console.log(obj)
-
                 updateProduct(obj)
                 return
             }
         } else {
             if (productObj.type === 0) {
-                console.log("NEW LENSES OBJ")
-                console.log(newProductObj)
                 setHasChanged(false)
                 delete newProductObj['type']
                 // const updatedObg = {
@@ -434,7 +428,6 @@ const ProductSection = () => {
                         ...(newProductObj.bonusImages) && { bonusImages: newProductObj.bonusImages.map(img => img._id) }
                     }
 
-                    console.log(obj)
 
                     createProduct(obj)
                 }
@@ -447,9 +440,6 @@ const ProductSection = () => {
     const [lensObj, setLensObj] = useState(null)
 
     const fillProductData = (productData) => {
-        console.log("productData")
-        console.log("productData")
-        console.log(productData)
 
         setLensObj({
             ...productObj,
@@ -471,8 +461,6 @@ const ProductSection = () => {
     useEffect(() => {
         if (productObj.type === 0) {
             if (productObj.lensType) return
-            console.log("SET LENS TYPE")
-            console.log(lenses)
             handleChange({
                 target: {
                     name: "lensType",
@@ -495,8 +483,6 @@ const ProductSection = () => {
                 getEanCode()
             } else {
                 if (productObj.type !== undefined && !productObj.eanCode) {
-                    console.log("SET EANCODE")
-                    console.log(productObj)
                     handleChange({
                         target: {
                             name: "eanCode",
@@ -511,6 +497,9 @@ const ProductSection = () => {
     useEffect(() => {
         if (id !== 'novy-produkt') {
             getSingleProduct(id, (data) => {
+                console.log("PRODUCT")
+                console.log(data)
+
 
                 handleSelectImage(data?.product?.image?._id, data.product.bonusImages, data.product.image)
                 setProductObj(prevValue => ({
@@ -530,8 +519,6 @@ const ProductSection = () => {
             }
         }
     }, [id,])
-
-    console.log(productObj)
 
     useEffect(() => {
         // if (product.image) {

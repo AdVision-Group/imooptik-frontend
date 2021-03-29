@@ -75,8 +75,6 @@ export const NewImageContainer = styled.div`
     height: 15rem;
 
 
-    ${({ isPrimary }) => console.log(isPrimary)}
-
     border: ${({ isPrimary }) => isPrimary ? '1px solid var(--primary-color)' : 'unset'};
     
     img {

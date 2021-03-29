@@ -56,8 +56,6 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
 
     const handleClick = (id) => {
         getSingleProduct(id, (data) => {
-            console.log("DATA")
-            console.log(data)
             const { product } = data
 
             if (product.type === 1 || product.type === 2 || product.type === 4) {
@@ -68,8 +66,6 @@ const GetProductDataModal = ({ close, getSingleProduct, productObj, setProductOb
                 delete product['boughtTogether']
                 delete product['contactLenses']
                 delete product['date']
-
-                console.log(product)
 
                 setProductObj({
                     ...product,

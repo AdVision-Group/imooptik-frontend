@@ -137,7 +137,6 @@ const FinishOrderModal = ({
             }
 
             if (orderDetail.couponValue) {
-                console.log(orderObj.paidAlready)
 
                 orderObj = {
                     ...orderObj,
@@ -152,11 +151,6 @@ const FinishOrderModal = ({
                 } else {
                     price = formatPrice(orderDetail.paidAlready)
                 }
-
-                console.log("ZAPLATENE / KUPON")
-                console.log(orderDetail.couponValue)
-                console.log(orderDetail.paidAlready)
-                console.log(price)
 
                 orderObj = {
                     ...orderObj,
