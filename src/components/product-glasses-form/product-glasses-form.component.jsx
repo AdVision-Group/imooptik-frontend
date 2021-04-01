@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
-import { glassesColors, glassesMaterials, glassesShapes } from '../../utils/warehouse.utils'
+import { glassesColors, glassesMaterials, glassesShapes, brands } from '../../utils/warehouse.utils'
 
 import { AiOutlineCopy } from 'react-icons/ai'
 
@@ -43,6 +43,8 @@ const ProductGlassesForm = ({
 }) => {
     const [isBranded, setIsBranded] = useState(true)
 
+    const [allBrands, setAllBrands] = useState([])
+
     const handleIsBrandedClick = (isBrandedBool) => {
         if (isBrandedBool) {
             handleChange({
@@ -68,6 +70,11 @@ const ProductGlassesForm = ({
     useEffect(() => {
         if (product.brand === "Neznačkové") setIsBranded(false)
     }, [isBranded])
+
+    useEffect(() => {
+        if (!filters?.brands) return
+        setAllBrands([ ...filters?.brands , ...brands])
+    }, [brands, filters?.brands])
 
     return (
         <GlassesContainerForm>
@@ -106,7 +113,7 @@ const ProductGlassesForm = ({
                             list="brands"
                         />
                         <datalist id="brands">
-                            {filters?.brands && filters?.brands.map((brand, idx) => (
+                            {allBrands.map((brand, idx) => (
                                 <option key={idx} value={brand} />
                             ))}
                         </datalist>
