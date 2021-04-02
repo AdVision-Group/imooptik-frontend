@@ -289,18 +289,21 @@ const WarehouseProvider = ({ children }) => {
         }
     }
 
-    const getLenses = async () => {
+    const getLenses = async (query) => {
         setIsLoading(true)
         setShowModal(true)
 
+        const raw = JSON.stringify(query)
+
         const requestOptions = {
-            method: 'GET',
+            method: 'POST',
             headers: myHeaders,
+            body: raw,
             redirect: 'follow'
         };
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses`, requestOptions)
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/filter`, requestOptions)
             const data = await response.json()
 
             if (data.lenses) {
@@ -374,14 +377,7 @@ const WarehouseProvider = ({ children }) => {
             linkSize1 = diaConvert(productToAdd?.specs?.size[0].toString() || '').replaceAll(" ", "-").replaceAll(",", "-").replaceAll(".", "-").toLowerCase().trim()
         }
 
-        console.log(productToAdd?.name)
-        console.log(productToAdd?.specs?.frameColor)
-        console.log(productToAdd?.specs?.size)
-
         const finalSlug = getSlug(`${productToAdd?.name || "neuvedene"}-${productToAdd?.specs?.frameColor || "neuvedene"}-${productToAdd?.specs?.size || "neuvedene"}`)
-
-        console.log(productToAdd?.name + productToAdd?.specs?.frameColor + productToAdd?.specs?.size ? productToAdd?.specs?.size[0] : '')
-        console.log(finalSlug)
 
         let modifiedProduct = {
             ...productToAdd,
@@ -720,7 +716,11 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.lenses) {
                 push('/dashboard/obchod')
-                getLenses()
+                getLenses({
+                    sortBy: {
+                        date: -1
+                    }
+                })
                 closeModal()
                 return
             }
@@ -768,7 +768,11 @@ const WarehouseProvider = ({ children }) => {
 
             if (data.lenses) {
                 push('/dashboard/obchod')
-                getLenses()
+                getLenses({
+                    sortBy: {
+                        date: -1
+                    }
+                })
                 closeModal()
                 return
             }
@@ -797,7 +801,11 @@ const WarehouseProvider = ({ children }) => {
             const data = await response.json()
 
             if (data.lenses) {
-                getLenses()
+                getLenses({
+                    sortBy: {
+                        date: -1
+                    }
+                })
                 closeModal()
                 return
             }
@@ -849,7 +857,11 @@ const WarehouseProvider = ({ children }) => {
                     }
                 })
             } else if (activeCategoryTypeTab === 1) {
-                getLenses()
+                getLenses({
+                    sortBy: {
+                        date: -1
+                    }
+                })
             } else {
                 getProductsByQuery({
                     limit: 10,

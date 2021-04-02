@@ -497,10 +497,6 @@ const ProductSection = () => {
     useEffect(() => {
         if (id !== 'novy-produkt') {
             getSingleProduct(id, (data) => {
-                console.log("PRODUCT")
-                console.log(data)
-
-
                 handleSelectImage(data?.product?.image?._id, data.product.bonusImages, data.product.image)
                 setProductObj(prevValue => ({
                     ...prevValue,
