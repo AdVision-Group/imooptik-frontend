@@ -1,5 +1,6 @@
 export const initProductObj = {
     name: "",
+    subname: "",
     description: "",
     price: 0,
     type: 0,

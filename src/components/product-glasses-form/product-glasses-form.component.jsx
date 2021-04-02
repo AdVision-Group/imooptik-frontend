@@ -98,8 +98,8 @@ const ProductGlassesForm = ({
                 <CustomInput
                     label="Kód"
                     type='text'
-                    name='subName'
-                    value={product.subName ?? ""}
+                    name='subname'
+                    value={product.subname ?? ""}
                     handleChange={(e) => handleChange(e)}
                 />
 
