@@ -1,9 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
+
 
 import { useFetchById } from '../../hooks/useFetch'
 
 const SpanContainer = styled.span`
+    /* width: 8rem; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
+
+const LinkContainer = styled(Link)`
     /* width: 8rem; */
     white-space: nowrap;
     overflow: hidden;
@@ -18,9 +27,9 @@ const OrderSummaryLensesName = ({ lensesId }) => {
             <SpanContainer >
                 {isLoading ? "Hľadam..." : response?.lenses?.eanCode || ""}
             </SpanContainer>
-            <SpanContainer >
+            <LinkContainer to={`/dashboard/sklad/${lensesId}`}>
                 {isLoading ? "Hľadam..." : response?.lenses?.name || ""}
-            </SpanContainer>
+            </LinkContainer>
         </React.Fragment>
     )
 }
