@@ -1,6 +1,6 @@
 {
   "name": "imooptik",
-  "homepage": "http://advision-group.github.io/imooptik-frontend",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
