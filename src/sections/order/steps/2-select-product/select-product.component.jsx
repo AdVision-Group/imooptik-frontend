@@ -88,13 +88,13 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                     <SearchButton onClick={handleSearch}>Hľadať</SearchButton>
                 </SearchContainer>
                 <CartContainer>
-                    <h3>Vybranépoložky</h3>
+                    <h3>Vybrané položky</h3>
                     <CartTableHead>
                         <TableCol>#</TableCol>
                         <TableCol>Produkt</TableCol>
 
                         <TableCol>Cena</TableCol>
-                        <TableCol>Zlava v %</TableCol>
+                        <TableCol>Zľava v %</TableCol>
                         <TableCol>Viac</TableCol>
                     </CartTableHead>
                     <CartTable>

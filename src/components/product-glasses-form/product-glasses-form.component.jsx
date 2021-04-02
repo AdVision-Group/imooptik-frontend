@@ -95,6 +95,13 @@ const ProductGlassesForm = ({
                     value={product.name ?? ""}
                     handleChange={(e) => handleChange(e)}
                 />
+                <CustomInput
+                    label="Kód"
+                    type='text'
+                    name='subName'
+                    value={product.subName ?? ""}
+                    handleChange={(e) => handleChange(e)}
+                />
 
                 <BrandedCheckbox
                     label={"Značkové"}
