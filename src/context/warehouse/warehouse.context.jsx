@@ -718,7 +718,7 @@ const WarehouseProvider = ({ children }) => {
                 push('/dashboard/obchod')
                 getLenses({
                     sortBy: {
-                        date: -1
+                        dateCreated: -1
                     }
                 })
                 closeModal()
@@ -770,7 +770,7 @@ const WarehouseProvider = ({ children }) => {
                 push('/dashboard/obchod')
                 getLenses({
                     sortBy: {
-                        date: -1
+                        dateCreated: -1
                     }
                 })
                 closeModal()
@@ -803,7 +803,7 @@ const WarehouseProvider = ({ children }) => {
             if (data.lenses) {
                 getLenses({
                     sortBy: {
-                        date: -1
+                        dateCreated: -1
                     }
                 })
                 closeModal()
@@ -859,7 +859,7 @@ const WarehouseProvider = ({ children }) => {
             } else if (activeCategoryTypeTab === 1) {
                 getLenses({
                     sortBy: {
-                        date: -1
+                        dateCreated: -1
                     }
                 })
             } else {
