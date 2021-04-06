@@ -35,7 +35,8 @@ const UserForm = ({
     handleParameterChange,
     handleCompanyChange,
     isOptometrist,
-    isOrder = false
+    isOrder = false,
+    // isCustomer = true
 }) => {
     const { push } = useHistory()
 
@@ -44,10 +45,12 @@ const UserForm = ({
         push(`/dashboard/objednavky/${user._id}`)
     }
 
+    const isCustomer = user.admin === 0 ? true : false
+
     return (
         <GridContainer>
             <Profile>
-                {isAdmin && user.admin !== 0 && <AdminPanelContainer>
+                {isAdmin && !isCustomer && <AdminPanelContainer>
                     <h2>Admin panel</h2>
                     <InputRow
                         label="Predajňa na ktorej uživatel pracuje"
@@ -134,7 +137,7 @@ const UserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
-                        {(user.admin === 0) && <div>
+                        {isCustomer && <div>
                             <CustomInput
                                 label="Telefónne číslo"
                                 type='text'
@@ -146,7 +149,7 @@ const UserForm = ({
                     </Row>
                 </Container>
 
-                {(user.admin === 0) && <Container>
+                {isCustomer && <Container>
                     <h2>Fakturačné údaje</h2>
                     <GridRow>
                         <ZeroMargin>
@@ -189,7 +192,7 @@ const UserForm = ({
                         </div>
                     </GridRow>
                 </Container>}
-                {(user.admin === 0) && <Container>
+                {isCustomer && <Container>
                     <h2>Firemné údaje</h2>
                     <GridRow>
                         <ZeroMargin>
@@ -271,7 +274,7 @@ const UserForm = ({
                     </GridRow>
                 </Container>}
 
-                {(user.admin === 0) && <Container>
+                {isCustomer && <Container>
                     <h2>Parametre</h2>
 
                     <ParametersTable
@@ -284,7 +287,7 @@ const UserForm = ({
             </Profile>
 
             {
-                (user.admin === 0) && !isOrder && isUpdating && <div>
+                isCustomer && !isOrder && isUpdating && <div>
                     <OrderHeader>
                         <Title>
                             Objednávky
