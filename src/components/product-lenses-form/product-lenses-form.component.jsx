@@ -151,7 +151,7 @@ const ProductLensesForm = ({
                         handleChange={(e) => handleChange(e)}
                     />
                 </TypesContainer>
-                <LensesParametersContainer>
+                {lenses?.dioptric && <LensesParametersContainer>
                     <h3>Parametre</h3>
 
                     <h4>Dioptrie</h4>
@@ -187,7 +187,7 @@ const ProductLensesForm = ({
                             </div>
                         )
                     })}
-                </LensesParametersContainer>
+                </LensesParametersContainer>}
             </SubGridContainer>
         </LensesFormContainer>
     )

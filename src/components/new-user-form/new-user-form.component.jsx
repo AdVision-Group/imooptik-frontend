@@ -62,14 +62,14 @@ const NewUserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                             <CustomInput
-                                label="E-mail*"
+                                label="E-mail"
                                 type='email'
                                 name='email'
                                 value={user.email ?? ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                             <CustomInput
-                                label="Telefónne číslo"
+                                label="Telefónne číslo*"
                                 type='text'
                                 name='phone'
                                 value={user.phone ?? ""}
@@ -247,7 +247,7 @@ const NewUserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                             <CustomInput
-                                label="E-mail*"
+                                label="E-mail"
                                 type='email'
                                 name='email'
                                 value={user.email ?? ""}

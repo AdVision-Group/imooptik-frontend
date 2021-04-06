@@ -42,7 +42,7 @@ export const initLensesObj = {
     brand: "",
     image: '',
     lensType: "číre",
-    dioptric: false
+    dioptric: true
 }
 
 export const lensesTypes = [

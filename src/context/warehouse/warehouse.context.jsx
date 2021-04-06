@@ -469,10 +469,22 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
+        console.log(productToUpdate)
+
+        const finalSlug = getSlug(`${productToUpdate?.name || product?.name}-${productToUpdate?.specs?.frameColor || product?.specs?.frameColor}-${productToUpdate?.specs?.size || product?.specs?.size}`)
 
 
         let modifiedProduct = {
             ...productToUpdate,
+            link: finalSlug,
+            specs: {
+                frameColor: productToUpdate?.specs?.frameColor || product?.specs?.frameColor,
+                size: productToUpdate?.specs?.size || product?.specs?.size,
+                frameMaterial: productToUpdate?.specs?.frameMaterial || product?.specs.frameMaterial,
+                frameStyle: productToUpdate?.specs?.frameStyle || product?.specs.frameStyle,
+                lensColor: productToUpdate?.specs?.lensColor || product?.specs.lensColor,
+                sex: productToUpdate?.specs?.sex || product?.specs.sex,
+            }
         }
 
 

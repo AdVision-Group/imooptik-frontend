@@ -47,7 +47,7 @@ const ProductContactLensesForm = ({
                 <CustomInput
                     label="eanCode*"
                     type='text'
-                    name='name'
+                    name='eanCode'
                     value={product.eanCode.toString() ?? ""}
                     handleChange={(e) => handleChange(e)}
                 />

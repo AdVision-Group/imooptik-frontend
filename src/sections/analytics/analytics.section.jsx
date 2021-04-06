@@ -247,7 +247,7 @@ const AnalyticsSection = () => {
                                         <p>{((activeTabStats?.cash + activeTabStats?.card + activeTabStats?.coupons + activeTabStats?.eshopPickupPayments) / 100).toFixed(2)}€</p>
                                     </div>
                                     <div>
-                                        <h3>Tržba <span>(potenciálna)</span></h3>
+                                        <h3>hodnota nových zákazok</h3>
                                         <p>{(activeTabStats?.potential / 100).toFixed(2)}€</p>
                                     </div>
                                 </PaymentsContainer>
