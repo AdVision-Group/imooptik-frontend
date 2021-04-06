@@ -29,6 +29,8 @@ const CustomerProfile = () => {
         isLoading,
         message,
         showModal,
+        setShowModal,
+        getMessage,
     } = useContext(LoadingModalContext)
 
     const {
@@ -112,6 +114,8 @@ const CustomerProfile = () => {
         })
     }
 
+    console.log(userObj)
+
     const handleSubmit = (e, path) => {
         e.preventDefault()
         // setHasChanges(false)
@@ -130,6 +134,13 @@ const CustomerProfile = () => {
                 createUser(newUserObj, path)
                 return
             }
+
+            if(!userObj?.phone) {
+                setShowModal(true)
+                getMessage("Tel. číslo je povinné")
+                return
+            }
+
             createUser(userObj, path)
         } else {
             if (userObj.fName || userObj.lName) {
