@@ -224,7 +224,7 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
                         </div>
                         <div>
                             <CustomInput
-                                label='E-mail*'
+                                label='E-mail'
                                 name='email'
                                 value={userBooking?.email || ""}
                                 handleChange={handleUserBookingChange}
