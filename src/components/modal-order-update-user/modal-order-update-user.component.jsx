@@ -93,6 +93,8 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
         e.preventDefault()
         // setHasChanges(false)
 
+        console.log(userObj)
+
         if (userObj.fName || userObj.lName) {
             delete userObj["fName"]
             delete userObj["lName"]
@@ -100,7 +102,9 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
             delete userObj["name"]
         }
 
-        let newUserObj = {}
+        let newUserObj = {
+            ...userObj,
+        }
 
         if (userObj.company) {
             newUserObj = {

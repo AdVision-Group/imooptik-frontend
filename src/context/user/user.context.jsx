@@ -58,6 +58,9 @@ const UserProvider = ({ children }) => {
 
     // ------------------------
 
+    console.count("USERCONTEXT")
+    console.log(user)
+
     const [isUpdating, setIsUpdating] = useState(false)
     const [activeIndex, setActiveIndex] = useState(0)
     const filterItems = [
