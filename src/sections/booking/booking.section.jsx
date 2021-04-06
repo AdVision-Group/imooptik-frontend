@@ -86,6 +86,8 @@ const BookingSection = () => {
             } else {
                 setSelectedMonth(prevValue => prevValue - 1)
                 setCalendarWeekIndex(Math.ceil(new Date(selectedYear, selectedMonth, 0).getDate() / 7) - 1)
+                // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+
             }
         } else {
             setCalendarWeekIndex(prevValue => prevValue - 1)
@@ -132,7 +134,11 @@ const BookingSection = () => {
     const resetCalendarToDefault = () => {
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
-        setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
+        if(new Date(selectedYear, selectedMonth, 0).getDay() === 1) {
+            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
+        } else {
+            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+        }
         // setSelectedDay(null)
     }
 
@@ -145,6 +151,15 @@ const BookingSection = () => {
         setCalendarWeekIndex(Math.ceil(dayData.dayNumber / 7) - 1)
         setActiveCalendarFormat(1)
     }
+
+    // useEffect(() => {
+    //     // if(!dayData.dayNumber) return
+    //     // if()
+    //     console.log(Math.ceil(new Date(selectedYear, selectedMonth + 1, 0).getDate()  / 7))
+    //     console.log(new Date(selectedYear, selectedMonth + 1, 0).getDate())
+
+    //     setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+    // }, [])
 
     useEffect(() => {
         if (!isLoading) {
