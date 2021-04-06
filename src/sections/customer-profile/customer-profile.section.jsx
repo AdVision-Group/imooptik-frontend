@@ -200,7 +200,7 @@ const CustomerProfile = () => {
                     <FixedContainer>
                         <h1>Profil</h1>
                         <div>
-                            {/* {isUpdating && <DeleteProfileButton onClick={() => deleteUser(user._id)} type='button'>Vymazať</DeleteProfileButton>} */}
+                            {isUpdating && <DeleteProfileButton onClick={() => deleteUser(user._id)} type='button'>Vymazať</DeleteProfileButton>}
                             {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a prejsť na profil</SaveButton>}
                             {!isUpdating && !(formToShow === 1) && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a prejsť na objednávku</SaveButton>}
                             <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
