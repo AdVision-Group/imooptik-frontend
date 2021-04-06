@@ -36,7 +36,7 @@ const UserForm = ({
     handleCompanyChange,
     isOptometrist,
     isOrder = false,
-    // isCustomer = true
+    isCustomer
 }) => {
     const { push } = useHistory()
 
@@ -45,7 +45,6 @@ const UserForm = ({
         push(`/dashboard/objednavky/${user._id}`)
     }
 
-    const isCustomer = user.admin === 0 ? true : false
 
     return (
         <GridContainer>
@@ -113,7 +112,7 @@ const UserForm = ({
                                 handleChange={(e) => handleChange(e)}
                             />
                         </div>
-                        {(user.admin === 0) && <div>
+                        {isCustomer && <div>
                             <CustomInput
                                 // label="Priezvisko*"
                                 type='date'

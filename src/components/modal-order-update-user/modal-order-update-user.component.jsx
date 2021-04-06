@@ -145,6 +145,8 @@ const OrderUpdateUserModal = ({ close, userId, refetchUser, addUser }) => {
                     handleParameterChange={handleLensesParameterChange}
                     handleCompanyChange={handleCompanyAddressChange}
                     isOrder={true}
+                    isCustomer={true}
+
                 />
 
                 <UpdateButton onClick={handleSubmit}>Uložiť</UpdateButton>

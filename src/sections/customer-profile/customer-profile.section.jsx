@@ -222,6 +222,8 @@ const CustomerProfile = () => {
                                 handleChange={handleUserChange}
                                 handleParameterChange={handleLensesParameterChange}
                                 handleCompanyChange={handleCompanyAddressChange}
+                                isCustomer={user.admin === 0 ? true : false}
+
                             />
                         ) : (
                             <NewUserForm
