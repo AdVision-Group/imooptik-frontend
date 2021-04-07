@@ -70,8 +70,8 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
     const handleParameterChange = (e, idx, parameterObj, updateParameter) => {
         const { name, value } = e.target
-        let arr = parameterObj[name] || [1001, 1001]
-        arr[idx] = value === '' ? 1001 : value
+        let arr = parameterObj[name] || ["1001", "1001"]
+        arr[idx] = value === '' ? "1001" : value
 
         updateParameter({
             ...parameterObj,
