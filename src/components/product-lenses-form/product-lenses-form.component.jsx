@@ -1,7 +1,11 @@
 import React from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
-import CustomTextarea from '../custom-textarea/custom-textarea.component'
+// import CustomTextarea from '../custom-textarea/custom-textarea.component'
+
+import {
+    formatfloatNumber
+} from '../../utils/warehouse.utils'
 
 import { lensesTypes } from '../../context/warehouse/warehouse.utils'
 
@@ -29,6 +33,19 @@ const ProductLensesForm = ({
     filters,
     handleGetProductData
 }) => {
+
+    const formatParameter = (e, idx) => {
+        const value = formatfloatNumber(e.target.value)
+        handleParameterChange({
+            target: {
+                value: Number(value).toFixed(2),
+                name: e.target.name
+            }
+        }, idx)
+    }
+
+    console.log(lenses)
+
     return (
         <LensesFormContainer>
             <LensesContainer>
@@ -166,6 +183,7 @@ const ProductLensesForm = ({
                                     name='dioptersRange'
                                     value={checkParameter(lenses.dioptersRange, idx)}
                                     handleChange={(e) => handleParameterChange(e, idx)}
+                                    onBlur={(e) => formatParameter(e, idx)}
                                 />
                             </div>
                         )

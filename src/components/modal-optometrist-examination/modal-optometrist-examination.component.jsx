@@ -208,6 +208,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
             updateExamination(examObj, examinationToUpdate)
 
         } else {
+            console.log(examObj)
             createExamination(examObj)
         }
         refetch()
@@ -447,6 +448,24 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 handleChange={handleChange}
                             />
                         </InputContainer>
+
+                        <div className='checkboxes'>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"Šofer"}
+                                    isActive={vodic}
+                                    handleClick={() => setVodic(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"PC"}
+                                    isActive={pc}
+                                    handleClick={() => setPc(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                        </div>
+                        
                         <InputContainer>
                             <CustomTextarea
                                 label='Doplňujúce informácie'
@@ -475,7 +494,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.vnatur, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.vnatur, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.vnatur, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -489,7 +508,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.sph, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.sph, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -503,7 +522,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.cyl, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.cyl, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -518,7 +537,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.ax, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.ax, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -533,7 +552,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.add, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.add, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -548,7 +567,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.visus, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.visus, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.visus, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -565,10 +584,11 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             ...prevValue,
                                             [e.target.name]: e.target.value
                                         }))}
-                                        onBlur={(e) => setVlastne_okuliare(prevValue => ({
-                                            ...prevValue,
-                                            [e.target.name]: Number(e.target.value)
-                                        }))}
+                                        // onBlur={(e) => formatParameters(e, vlastne_okuliare?.vbino, vlastne_okuliare, setVlastne_okuliare)}
+                                        // onBlur={(e) => setVlastne_okuliare(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: Number(e.target.value)
+                                        // }))}
                                     />
                                 </Col>
                             </TableCol>
@@ -592,7 +612,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(objektivna_refrakcia?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, objektivna_refrakcia?.sph, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, objektivna_refrakcia?.sph, objektivna_refrakcia, setObjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -606,7 +626,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(objektivna_refrakcia?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, objektivna_refrakcia?.cyl, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, objektivna_refrakcia?.cyl, objektivna_refrakcia, setObjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -620,7 +640,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(objektivna_refrakcia?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, objektivna_refrakcia?.ax, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, objektivna_refrakcia?.ax, objektivna_refrakcia, setObjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -634,7 +654,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(objektivna_refrakcia?.se, idx)}
                                             onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, objektivna_refrakcia?.se, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, objektivna_refrakcia?.se, objektivna_refrakcia, setObjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -659,7 +679,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.sph, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.sph, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -673,7 +693,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.cyl, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.cyl, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -687,7 +707,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.ax, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.ax, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -701,7 +721,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.add, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.add, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -715,7 +735,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.visus, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.visus, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.visus, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -731,10 +751,12 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             ...prevValue,
                                             [e.target.name]: e.target.value
                                         }))}
-                                        onBlur={(e) => setSubjektivna_refrakcia(prevValue => ({
-                                            ...prevValue,
-                                            [e.target.name]: Number(e.target.value)
-                                        }))}
+                                        // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.vbino, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+
+                                        // onBlur={(e) => setSubjektivna_refrakcia(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: Number(e.target.value)
+                                        // }))}
                                     />
                                 </Col>
                             </TableCol>
@@ -747,7 +769,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.prizma, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.prizma, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.prizma, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -761,7 +783,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.basis, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.basis, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.basis, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -775,7 +797,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakcia?.os, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakcia, setSubjektivna_refrakcia)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.os, subjektivna_refrakcia, setSubjektivna_refrakcia)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.os, subjektivna_refrakcia, setSubjektivna_refrakcia)}
                                         />
                                     </Col>
                                 ))}
@@ -842,6 +864,24 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 handleChange={handleChange}
                             />
                         </InputContainer>
+
+                        <div className='checkboxes'>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"Šofer"}
+                                    isActive={vodic}
+                                    handleClick={() => setVodic(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"PC"}
+                                    isActive={pc}
+                                    handleClick={() => setPc(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                        </div>
+
                         <InputContainer>
                             <CustomTextarea
                                 label='Doplňujúce informácie'
@@ -878,7 +918,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.vnatur, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.vnatur, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.vnatur, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -892,7 +932,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.sph, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.sph, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -906,7 +946,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.cyl, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.cyl, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -921,7 +961,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.ax, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.ax, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -936,7 +976,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.add, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.add, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -951,7 +991,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(vlastne_okuliare?.visus, idx)}
                                             onChange={e => handleParameterChange(e, idx, vlastne_okuliare, setVlastne_okuliare)}
-                                            onBlur={(e) => formatParameters(e, vlastne_okuliare?.visus, vlastne_okuliare, setVlastne_okuliare)}
+                                            // onBlur={(e) => formatParameters(e, vlastne_okuliare?.visus, vlastne_okuliare, setVlastne_okuliare)}
                                         />
                                     </Col>
                                 ))}
@@ -968,10 +1008,10 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             ...prevValue,
                                             [e.target.name]: e.target.value
                                         }))}
-                                        onBlur={(e) => setVlastne_okuliare(prevValue => ({
-                                            ...prevValue,
-                                            [e.target.name]: Number(e.target.value)
-                                        }))}
+                                        // onBlur={(e) => setVlastne_okuliare(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: Number(e.target.value)
+                                        // }))}
                                     />
                                 </Col>
                             </TableCol>
@@ -995,7 +1035,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(refraktometer?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, refraktometer, setRefraktometer)}
-                                            onBlur={(e) => formatParameters(e, refraktometer?.sph, refraktometer, setRefraktometer)}
+                                            // onBlur={(e) => formatParameters(e, refraktometer?.sph, refraktometer, setRefraktometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1009,7 +1049,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(refraktometer?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, refraktometer, setRefraktometer)}
-                                            onBlur={(e) => formatParameters(e, refraktometer?.cyl, refraktometer, setRefraktometer)}
+                                            // onBlur={(e) => formatParameters(e, refraktometer?.cyl, refraktometer, setRefraktometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1023,7 +1063,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(refraktometer?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, refraktometer, setRefraktometer)}
-                                            onBlur={(e) => formatParameters(e, refraktometer?.ax, refraktometer, setRefraktometer)}
+                                            // onBlur={(e) => formatParameters(e, refraktometer?.ax, refraktometer, setRefraktometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1037,7 +1077,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(refraktometer?.se, idx)}
                                             onChange={e => handleParameterChange(e, idx, refraktometer, setRefraktometer)}
-                                            onBlur={(e) => formatParameters(e, refraktometer?.se, refraktometer, setRefraktometer)}
+                                            // onBlur={(e) => formatParameters(e, refraktometer?.se, refraktometer, setRefraktometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1063,7 +1103,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(keratometer?.hor, idx)}
                                             onChange={e => handleParameterChange(e, idx, keratometer, setKeratometer)}
-                                            onBlur={(e) => formatParameters(e, keratometer?.hor, keratometer, setKeratometer)}
+                                            // onBlur={(e) => formatParameters(e, keratometer?.hor, keratometer, setKeratometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1077,7 +1117,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(keratometer?.ver, idx)}
                                             onChange={e => handleParameterChange(e, idx, keratometer, setKeratometer)}
-                                            onBlur={(e) => formatParameters(e, keratometer?.ver, keratometer, setKeratometer)}
+                                            // onBlur={(e) => formatParameters(e, keratometer?.ver, keratometer, setKeratometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1091,7 +1131,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(keratometer?.ave, idx)}
                                             onChange={e => handleParameterChange(e, idx, keratometer, setKeratometer)}
-                                            onBlur={(e) => formatParameters(e, keratometer?.ave, keratometer, setKeratometer)}
+                                            // onBlur={(e) => formatParameters(e, keratometer?.ave, keratometer, setKeratometer)}
                                         />
                                     </Col>
                                 ))}
@@ -1117,7 +1157,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakciaA?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.sph, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.sph, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
                                         />
                                     </Col>
                                 ))}
@@ -1131,7 +1171,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakciaA?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.cyl, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.cyl, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
                                         />
                                     </Col>
                                 ))}
@@ -1145,7 +1185,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakciaA?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.ax, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.ax, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
                                         />
                                     </Col>
                                 ))}
@@ -1159,7 +1199,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakciaA?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.add, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.add, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
                                         />
                                     </Col>
                                 ))}
@@ -1173,7 +1213,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(subjektivna_refrakciaA?.visus, idx)}
                                             onChange={e => handleParameterChange(e, idx, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
-                                            onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.visus, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
+                                            // onBlur={(e) => formatParameters(e, subjektivna_refrakciaA?.visus, subjektivna_refrakciaA, setSubjektivna_refrakciaA)}
                                         />
                                     </Col>
                                 ))}
@@ -1189,10 +1229,10 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             ...prevValue,
                                             [e.target.name]: e.target.value
                                         }))}
-                                        onBlur={(e) => setSubjektivna_refrakciaA(prevValue => ({
-                                            ...prevValue,
-                                            [e.target.name]: Number(e.target.value)
-                                        }))}
+                                        // onBlur={(e) => setSubjektivna_refrakciaA(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: Number(e.target.value)
+                                        // }))}
                                     />
                                 </Col>
                             </TableCol>
@@ -1217,7 +1257,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.sph, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.sph, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1231,7 +1271,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.cyl, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.cyl, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1245,7 +1285,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.ax, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.ax, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1259,7 +1299,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.add, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.add, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1273,7 +1313,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.visd, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.visd, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.visd, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1287,7 +1327,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.bino1, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.bino1, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.bino1, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1301,7 +1341,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.visb, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.visb, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.visb, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1315,7 +1355,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(kontaktne_sosovky?.bino2, idx)}
                                             onChange={e => handleParameterChange(e, idx, kontaktne_sosovky, setKontaktne_sosovky)}
-                                            onBlur={(e) => formatParameters(e, kontaktne_sosovky?.bino2, kontaktne_sosovky, setKontaktne_sosovky)}
+                                            // onBlur={(e) => formatParameters(e, kontaktne_sosovky?.bino2, kontaktne_sosovky, setKontaktne_sosovky)}
                                         />
                                     </Col>
                                 ))}
@@ -1341,7 +1381,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(typ_kontaktnych_sosoviek?.prvy, idx)}
                                             onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
-                                            onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.prvy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                                            // onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.prvy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
                                         />
                                     </Col>
                                 ))}
@@ -1355,7 +1395,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(typ_kontaktnych_sosoviek?.druhy, idx)}
                                             onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
-                                            onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.druhy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                                            // onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.druhy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
                                         />
                                     </Col>
                                 ))}
@@ -1429,7 +1469,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(tabulka?.sph, idx)}
                                             onChange={e => handleParameterChange(e, idx, tabulka, setTabulka)}
-                                            onBlur={(e) => formatParameters(e, tabulka?.sph, tabulka, setTabulka)}
+                                            // onBlur={(e) => formatParameters(e, tabulka?.sph, tabulka, setTabulka)}
                                         />
                                     </Col>
                                 ))}
@@ -1443,7 +1483,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(tabulka?.cyl, idx)}
                                             onChange={e => handleParameterChange(e, idx, tabulka, setTabulka)}
-                                            onBlur={(e) => formatParameters(e, tabulka?.cyl, tabulka, setTabulka)}
+                                            // onBlur={(e) => formatParameters(e, tabulka?.cyl, tabulka, setTabulka)}
                                         />
                                     </Col>
                                 ))}
@@ -1457,7 +1497,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(tabulka?.ax, idx)}
                                             onChange={e => handleParameterChange(e, idx, tabulka, setTabulka)}
-                                            onBlur={(e) => formatParameters(e, tabulka?.ax, tabulka, setTabulka)}
+                                            // onBlur={(e) => formatParameters(e, tabulka?.ax, tabulka, setTabulka)}
                                         />
                                     </Col>
                                 ))}
@@ -1471,7 +1511,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(tabulka?.add, idx)}
                                             onChange={e => handleParameterChange(e, idx, tabulka, setTabulka)}
-                                            onBlur={(e) => formatParameters(e, tabulka?.add, tabulka, setTabulka)}
+                                            // onBlur={(e) => formatParameters(e, tabulka?.add, tabulka, setTabulka)}
                                         />
                                     </Col>
                                 ))}
@@ -1485,7 +1525,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             type='text'
                                             value={checkParameter(tabulka?.vis, idx)}
                                             onChange={e => handleParameterChange(e, idx, tabulka, setTabulka)}
-                                            onBlur={(e) => formatParameters(e, tabulka?.vis, tabulka, setTabulka)}
+                                            // onBlur={(e) => formatParameters(e, tabulka?.vis, tabulka, setTabulka)}
                                         />
                                     </Col>
                                 ))}
@@ -1511,23 +1551,25 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                 handleChange={handleChange}
                             />
                         </InputContainer>
+
+                        <div className='checkboxes'>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"Šofer"}
+                                    isActive={vodic}
+                                    handleClick={() => setVodic(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                            <InputContainer>
+                                <IsSuitableCheckbox
+                                    label={"PC"}
+                                    isActive={pc}
+                                    handleClick={() => setPc(prevValue => !prevValue)}
+                                />
+                            </InputContainer>
+                        </div>
                     </Container>
                 )}
-
-                <InputContainer>
-                    <IsSuitableCheckbox
-                        label={"Šofer"}
-                        isActive={vodic}
-                        handleClick={() => setVodic(prevValue => !prevValue)}
-                    />
-                </InputContainer>
-                <InputContainer>
-                    <IsSuitableCheckbox
-                        label={"PC"}
-                        isActive={pc}
-                        handleClick={() => setPc(prevValue => !prevValue)}
-                    />
-                </InputContainer>
 
                 <InputContainer>
                     <CustomTextarea

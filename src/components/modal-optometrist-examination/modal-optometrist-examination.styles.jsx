@@ -18,9 +18,11 @@ export const ModalContainer = styled.div`
     background-color: rgba(0,0,0,0.3);
 `
 
+
+
 export const Modal = styled.div`
     width:100%;
-    max-width: 65rem;
+    max-width: 85rem;
     max-height: 60rem;
     color: var(--primary-text-color);
 
@@ -35,6 +37,12 @@ export const Modal = styled.div`
 
     h3 {
         margin-bottom: 2rem;
+    }
+
+    .checkboxes {
+        width: 15rem;
+        display: flex;
+        justify-content: space-between;
     }
 
     ::-webkit-scrollbar {

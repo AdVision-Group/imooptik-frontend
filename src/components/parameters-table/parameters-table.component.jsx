@@ -25,7 +25,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
         const value = formatfloatNumber(e.target.value)
         handleChange({
             target: {
-                value: value,
+                value: Number(value).toFixed(2),
                 name: e.target.name
             }
         }, idx)

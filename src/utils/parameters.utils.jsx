@@ -31,6 +31,6 @@ export const checkParameterValue = (value) => {
 export const formatParameter = parameter => {
     if (parameter) {
         const changeNumber = parameter.toString().replace(',', '.')
-        return isNaN(changeNumber) ? 1001 : changeNumber
+        return isNaN(changeNumber) ? 1001 : changeNumber.toFixed(2)
     }
 }
