@@ -130,7 +130,7 @@ export const ObjectiveRefTable = styled.div`
 
 export const SubjectiveRefTable = styled.div`
     display: grid;
-    grid-template-columns: 4rem repeat(9, 1fr);
+    grid-template-columns: 4rem repeat(10, 1fr);
 `
 
 export const RefractTable = styled.div`

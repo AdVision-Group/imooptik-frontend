@@ -40,6 +40,8 @@ import {
 const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpdate }) => {
     const examinationData = useFetchById('api/admin/exams', examinationToUpdate, !examinationToUpdate)
 
+    console.log(examinationData)
+
     const { createExamination, updateExamination } = useContext(ExaminationContext)
     const [examinationObj, setExaminationObj] = useState({})
     const [recomendation, setRecomendation] = useState('')
@@ -232,6 +234,8 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
     useEffect(() => {
         if (!examinationData.isLoading) {
+            console.log(examinationData)
+
             if (examinationData.response) {
 
                 setVodic(examinationData.response.exam.vodic)
@@ -802,7 +806,26 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                     </Col>
                                 ))}
                             </TableCol>
+                            <TableCol>
+                                <Col>V.BL</Col>
+                                <Col>
+                                    <input
+                                        name='vbl'
+                                        type='text'
+                                        value={checkParameterValue(subjektivna_refrakcia?.vbl)}
+                                        onChange={e => setSubjektivna_refrakcia(prevValue => ({
+                                            ...prevValue,
+                                            [e.target.name]: e.target.value
+                                        }))}
+                                        // onBlur={(e) => formatParameters(e, subjektivna_refrakcia?.vbino, subjektivna_refrakcia, setSubjektivna_refrakcia)}
 
+                                        // onBlur={(e) => setSubjektivna_refrakcia(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: Number(e.target.value)
+                                        // }))}
+                                    />
+                                </Col>
+                            </TableCol>
                         </SubjectiveRefTable>
                     </Container>
                 )}
