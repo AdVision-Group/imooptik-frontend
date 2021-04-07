@@ -64,14 +64,14 @@ const ProductLensesForm = ({
                     ))}
                 </datalist>
 
-                <CustomTextarea
+                {/* <CustomTextarea
                     label="Popis*"
                     name='description'
                     rows='5'
                     value={lenses.description ?? ""}
                     handleChange={(e) => handleChange(e)}
                     required
-                />
+                /> */}
 
                 <CustomInput
                     label="Cena*"
