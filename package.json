@@ -27,9 +27,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "docker-build": "npm run build && docker build -t darken141/imooptik-admin:latest .",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "docker-start": "node index.js",
+    "docker-build-production": "npm run build && docker build -t darken141/imooptik-admin:latest .",
+    "docker-build": "docker build -t eu.gcr.io/advision-solutions/imooptik-admin .",
+    "docker-push": "docker push eu.gcr.io/advision-solutions/imooptik-admin",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build && docker build -t darken141/imooptik-admin:latest ."
   },
