@@ -37,7 +37,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
         if (parameter.length === 0) {
             return ""
         }
-        if (parameter[idx] === 1001) {
+        if (parameter[idx] === 1001 || parameter[idx] === '1001') {
             return ""
         }
 
