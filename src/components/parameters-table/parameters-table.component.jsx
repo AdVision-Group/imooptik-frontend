@@ -14,7 +14,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
         if (parameter.length === 0) {
             return ""
         }
-        if (parameter[idx] === 1001) {
+        if (parameter[idx] === 1001 || parameter[idx] === "1001") {
             return ""
         }
 
@@ -24,9 +24,32 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
     const formatParameter = (e, idx) => {
         if(e.target.value === "") return
         const value = formatfloatNumber(e.target.value)
+        console.log(value)
         handleChange({
             target: {
-                value: Number(value) < 0 ? Number(value).toFixed(2) : `+${Number(value).toFixed(2)}`,
+                value: value.includes("+") ? `+${Number(value).toFixed(2)}` : Number(value).toFixed(2) < 0 ? Number(value).toFixed(2) : `+${Number(value).toFixed(2)}`,
+                name: e.target.name
+            }
+        }, idx)
+    }
+
+    const checkaAx = (parameter, idx) => {
+        if (parameter.length === 0) {
+            return ""
+        }
+        if (parameter[idx] === 1001) {
+            return ""
+        }
+
+        return parameter[idx]
+    }
+
+    const formatAx = (e, idx) => {
+        if(e.target.value === "") return
+        const value = formatfloatNumber(e.target.value)
+        handleChange({
+            target: {
+                value: value,
                 name: e.target.name
             }
         }, idx)
@@ -139,11 +162,11 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                         <OsContainer key={idx}>
                             <input
                                 type='text'
-                                value={checkParameters(parameters.cylinderAxes, idx)}
+                                value={checkaAx(parameters.cylinderAxes, idx)}
                                 name="cylinderAxes"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
-                                onBlur={e => formatParameter(e, idx)}
+                                onBlur={e => formatAx(e, idx)}
 
 
                             />
