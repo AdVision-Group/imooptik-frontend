@@ -37,8 +37,8 @@ const ExaminationProvider = ({ children }) => {
             setIsLoading(false)
 
             if (data.exam) {
-                closeModal()
                 callback(data)
+                closeModal()
                 return
             }
 
@@ -58,8 +58,8 @@ const ExaminationProvider = ({ children }) => {
             setIsLoading(false)
 
             if (data.exam) {
-                closeModal()
                 callback(data)
+                closeModal()
                 return
             }
 
@@ -79,8 +79,8 @@ const ExaminationProvider = ({ children }) => {
             setIsLoading(false)
 
             if (data.exam) {
-                closeModal()
                 callback(data)
+                closeModal()
                 return
             }
 

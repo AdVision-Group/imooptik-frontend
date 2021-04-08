@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import lodash from 'lodash'
@@ -12,7 +12,6 @@ import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
 import {
     checkParameter,
-    formatParameter,
     checkParameterValue
 } from '../../utils/parameters.utils'
 
@@ -42,8 +41,6 @@ import {
 } from './modal-optometrist-examination.styles'
 
 const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpdate }) => {
-    console.log(examinationToUpdate)
-
     const exam = useFetchById('api/admin/exams', examinationToUpdate, !examinationToUpdate)
     const isUpdating = examinationToUpdate ? true : false
 
@@ -52,13 +49,10 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         updateExamination
     } = useExaminationContext()
 
-    const [examObj, setExamObj] = useState(examSchema)
+    const [examObj, setExamObj] = useState(null)
     
     const handleChange = (e) => {
         const {value, name} = e.target
-
-        console.log(name)
-        console.log(value)
 
         const obj = lodash.set(examObj, name, value)
 
@@ -70,6 +64,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     const handleSubmit = () => {
         const formatedObj = {
             ...removeEmpty(examObj),
+            doneTo: userId,
             refrakcia: {
                 ...removeEmpty(examObj.refrakcia)
             },
@@ -80,10 +75,6 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                 ...removeEmpty(examObj.kontrola)
             }
         }
-
-        console.log("formatedObj")
-        console.log("formatedObj")
-        console.log(formatedObj)
 
         if(examObj.type === 1) {
             delete formatedObj["anamneza"]
@@ -107,30 +98,22 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
             updateExamination(formatedObj, examinationToUpdate, () => {
                 refetch()
+                close()
             })
         } else {
             createExamination(formatedObj, () => {
                 refetch()
+                close()
             })
         }
 
     }
 
     useEffect(() => {
-        if(!userId) return
-        handleChange({
-            target: {
-                value: userId,
-                name: "doneTo"
-            }
-        })
-    }, [userId])
-
-    useEffect(() => {
+        // if(!examObj) return
+        if(!examinationToUpdate) return
         if(exam.isLoading) return
         if(!exam.response) return
-        console.log("RETRIEVED EXAM")
-        console.log(exam.response.exam)
         setExamObj(prevValue => ({
             ...prevValue,
             ...exam.response.exam,
@@ -149,6 +132,131 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
         }))
 
     }, [exam.isLoading])
+
+    useEffect(() => {
+        // if(examinationToUpdate) return
+        if(!examSchema) return
+        setExamObj({
+            date: "",
+            doneBy: "",
+            doneTo: "",
+            type: 1,
+            refrakcia:{
+                nosi_od: "",
+                posledna_korekcia: "",
+                vyhovuje: false,
+                typ_sposob: "",
+                anamneza: "",
+                dopl_info: "",
+                vlastne_okuliare:{
+                    vnatur:["1001","1001"],
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    add:["1001","1001"],
+                    visus:["1001","1001"],
+                    vbino: "1001"
+                },
+                objektivna_refrakcia:{
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    se:["1001","1001"]
+                },
+                subjektivna_refrakcia:{
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    add:["1001","1001"],
+                    visus:["1001","1001"],
+                    vbino: "1001",
+                    vbl:"1001",
+                    prizma:["1001","1001"],
+                    basis:["1001","1001"],
+                    os:["1001","1001"],
+                    domoko: "0"
+                }
+            },
+            anamneza:{
+                nosi_od: "",
+                posledna_korekcia:"",
+                vyhovuje:false,
+                typ_sposob:"",
+                stav_a_povolanie:"",
+                dopl_info:"",
+                obj_nalez:"",
+                vlastne_okuliare:{
+                    vnatur:["1001","1001"],
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    add:["1001","1001"],
+                    visus:["1001","1001"],
+                    vbino: "1001"
+                },
+                refraktometer:{
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    se:["1001","1001"]
+                },
+                keratometer:{
+                    hor:["1001","1001"],
+                    ver:["1001","1001"],
+                    ave:["1001","1001"]
+                },
+                subjektivna_refrakcia:{
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    add:["1001","1001"],
+                    visus:["1001","1001"],
+                    bino:"1001"
+                },
+                kontaktne_sosovky:{
+                    sph:["1001","1001"],
+                    cyl:["1001","1001"],
+                    ax:["1001","1001"],
+                    add:["1001","1001"],
+                    visd:["1001","1001"],
+                    bino1:["1001","1001"],
+                    visb:["1001","1001"],
+                    bino2:["1001","1001"]
+                },
+                typ_kontaktnych_sosoviek:{
+                    prvy:["1001","1001"],
+                    druhy:["1001","1001"],
+                    lkontrola:"1001",
+                    dop_roztok:"1001"
+                }
+            },
+            kontrola:{
+                typ_kontaktnych_sosoviek: "",
+                tabulka:{
+                sph:["1001","1001"],
+                cyl:["1001","1001"],
+                ax:["1001","1001"],
+                add:["1001","1001"],
+                vis:["1001","1001"]
+                },
+                subj:"",
+                obj:""
+            },
+            doporucenia: "",
+            vodic:false,
+            pc: false
+        })
+    }, [examSchema])
+
+    useEffect(() => {
+        return () => {
+            setExamObj(null)
+        }
+    }, [])
+
+    console.log(examObj)
+
+    if(!examObj) return <ModalContainer><Modal><p>Loading...</p></Modal></ModalContainer>
 
     return ReactDOM.createPortal((
         <ModalContainer>
