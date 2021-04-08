@@ -15,6 +15,9 @@ export const checkParameter = (parametersArr, idx) => {
 
 export const checkParameterValue = (value) => {
     if (value) {
+        if (value === "1001") {
+            return ""
+        }
         if (value === 0) {
             return ""
         }

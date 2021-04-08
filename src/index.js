@@ -4,16 +4,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './context/auth/auth.context'
 import LoadingModalProvider from './context/loading-modal/loading-modal.contenxt'
-
-console.log(process.env.REACT_APP_BACKEND_ENDPOINT)
+import FetchProvider from './context/fetch-context/fetch.context'
 
 ReactDOM.render(
   <React.StrictMode>
-    <LoadingModalProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </LoadingModalProvider>
+    <FetchProvider>
+      <LoadingModalProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </LoadingModalProvider>
+    </FetchProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

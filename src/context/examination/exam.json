@@ -1,0 +1,111 @@
+{
+    "date": "",
+    "doneBy": "",
+    "doneTo": "",
+    "type": 1,
+    "refrakcia":{
+        "nosi_od": "",
+        "posledna_korekcia": "",
+        "vyhovuje": false,
+        "typ_sposob": "",
+        "anamneza": "",
+        "dopl_info": "",
+        "vlastne_okuliare":{
+            "vnatur":["1001","1001"],
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "add":["1001","1001"],
+            "visus":["1001","1001"],
+            "vbino": "1001"
+        },
+        "objektivna_refrakcia":{
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "se":["1001","1001"]
+        },
+        "subjektivna_refrakcia":{
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "add":["1001","1001"],
+            "visus":["1001","1001"],
+            "vbino": "1001",
+            "vbl":"1001",
+            "prizma":["1001","1001"],
+            "basis":["1001","1001"],
+            "os":["1001","1001"],
+            "domoko": "0"
+        }
+    },
+    "anamneza":{
+        "nosi_od": "",
+        "posledna_korekcia":"",
+        "vyhovuje":false,
+        "typ_sposob":"",
+        "stav_a_povolanie":"",
+        "dopl_info":"",
+        "obj_nalez":"",
+        "vlastne_okuliare":{
+            "vnatur":["1001","1001"],
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "add":["1001","1001"],
+            "visus":["1001","1001"],
+            "vbino": "1001"
+        },
+        "refraktometer":{
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "se":["1001","1001"]
+        },
+        "keratometer":{
+            "hor":["1001","1001"],
+            "ver":["1001","1001"],
+            "ave":["1001","1001"]
+        },
+        "subjektivna_refrakcia":{
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "add":["1001","1001"],
+            "visus":["1001","1001"],
+            "bino":"1001"
+        },
+        "kontaktne_sosovky":{
+            "sph":["1001","1001"],
+            "cyl":["1001","1001"],
+            "ax":["1001","1001"],
+            "add":["1001","1001"],
+            "visd":["1001","1001"],
+            "bino1":["1001","1001"],
+            "visb":["1001","1001"],
+            "bino2":["1001","1001"]
+        },
+        "typ_kontaktnych_sosoviek":{
+            "prvy":["1001","1001"],
+            "druhy":["1001","1001"],
+            "lkontrola":"1001",
+            "dop_roztok":"1001"
+        }
+    },
+    "kontrola":{
+        "typ_kontaktnych_sosoviek": "",
+        "tabulka":{
+        "sph":["1001","1001"],
+        "cyl":["1001","1001"],
+        "ax":["1001","1001"],
+        "add":["1001","1001"],
+        "vis":["1001","1001"]
+        },
+        "subj":"",
+        "obj":""
+    },
+    "doporucenia": "",
+    "vodic":false,
+    "pc": false
+    
+}

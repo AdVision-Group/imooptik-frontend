@@ -1,6 +1,8 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
-import { AuthContext } from '../auth/auth.context'
+import {useFetchContext} from '../fetch-context/fetch.context'
+import examSchema from './exam.json'
+import lodash from 'lodash'
 
 export const ExaminationContext = createContext({
     createExamination: () => { },
@@ -8,8 +10,11 @@ export const ExaminationContext = createContext({
     deleteExamination: () => { },
 })
 
+export const useExaminationContext = () => useContext(ExaminationContext)
+
 const ExaminationProvider = ({ children }) => {
-    const { token } = useContext(AuthContext)
+    const { fetchData } = useFetchContext()
+
     const {
         closeModal,
         getMessage,
@@ -17,101 +22,71 @@ const ExaminationProvider = ({ children }) => {
         setShowModal
     } = useContext(LoadingModalContext)
 
-    const myHeaders = new Headers();
-    myHeaders.append("auth-token", token);
-    myHeaders.append("Content-Type", "application/json");
 
-    const createExamination = async (examsToAdd) => {
+
+    const createExamination = (examsToAdd, callback = () => {}) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const raw = JSON.stringify(examsToAdd)
+        console.log(examSchema)
+        console.log(examsToAdd)
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/`, requestOptions)
-            const data = await response.json()
-
+        fetchData("/api/admin/exams/", examsToAdd, (data) => {
+            console.log("CREATE new examination")
+            console.log(data)
+            setIsLoading(false)
 
             if (data.exam) {
                 closeModal()
+                callback(data)
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
+        }, "POST")
+
     }
 
-    const updateExamination = async (examToUpdate, examId) => {
+    const updateExamination = async (examToUpdate, examId, callback = () => {}) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const raw = JSON.stringify(examToUpdate)
-
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/${examId}`, requestOptions)
-            const data = await response.json()
-
+        fetchData(`/api/admin/exams/${examId}`, examToUpdate, (data) => {
+            console.log("UPDATE existed examination")
+            console.log(data)
+            setIsLoading(false)
 
             if (data.exam) {
                 closeModal()
+                callback(data)
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
+        }, "PATCH")
 
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
     }
 
-    const deleteExamination = async (examId) => {
+    const deleteExamination = async (examId, callback = () => {}) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const requestOptions = {
-            method: 'DELETE',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/exams/${examId}`, requestOptions)
-            const data = await response.json()
+        fetchData(`/api/admin/exams/${examId}`, null, (data) => {
+            console.log("DELETE existed examination")
+            console.log(data)
+            setIsLoading(false)
 
             if (data.exam) {
                 closeModal()
+                callback(data)
                 return
             }
 
-            getMessage(data.message)
+            getMessage(data.messageSK)
             setIsLoading(false)
-        } catch (err) {
-            console.log(err)
-            getMessage("Nieco sa pokazilo")
-            setIsLoading(false)
-        }
+        }, "DELETE")
     }
 
     return (
