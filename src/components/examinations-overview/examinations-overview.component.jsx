@@ -121,7 +121,7 @@ const examTypes = [
         value: 1
     },
     {
-        name: "Anamnéza",
+        name: "Apl. KŠ",
         value: 2
     },
     {
