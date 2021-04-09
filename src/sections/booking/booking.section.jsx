@@ -134,11 +134,11 @@ const BookingSection = () => {
     const resetCalendarToDefault = () => {
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
-        if(new Date(selectedYear, selectedMonth, 0).getDay() === 1) {
+        // if(new Date(selectedYear, selectedMonth, 0).getDay() === 1) {
             setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
-        } else {
-            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
-        }
+        // } else {
+            // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+        // }
         // setSelectedDay(null)
     }
 
