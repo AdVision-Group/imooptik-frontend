@@ -161,7 +161,9 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                     sph: ["1001", "1001"],
                     cyl: ["1001", "1001"],
                     ax: ["1001", "1001"],
-                    se: ["1001", "1001"]
+                    se: ["1001", "1001"],
+                    pd:["1001","1001"]
+
                 },
                 subjektivna_refrakcia: {
                     sph: ["1001", "1001"],
@@ -198,7 +200,9 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                     sph: ["1001", "1001"],
                     cyl: ["1001", "1001"],
                     ax: ["1001", "1001"],
-                    se: ["1001", "1001"]
+                    se: ["1001", "1001"],
+                    pd:["1001","1001"]
+
                 },
                 keratometer: {
                     hor: ["1001", "1001"],
@@ -211,7 +215,9 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                     ax: ["1001", "1001"],
                     add: ["1001", "1001"],
                     visus: ["1001", "1001"],
-                    bino: "1001"
+                    bino: "1001",
+                    domoko: "1001"
+
                 },
                 kontaktne_sosovky: {
                     sph: ["1001", "1001"],
@@ -231,7 +237,12 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                 }
             },
             kontrola: {
-                typ_kontaktnych_sosoviek: "",
+                typ_kontaktnych_sosoviek: {
+                    prvy: ["1001", "1001"],
+                    druhy: ["1001", "1001"],
+                    lkontrola: "1001",
+                    dop_roztok: "1001"
+                },
                 tabulka: {
                     sph: ["1001", "1001"],
                     cyl: ["1001", "1001"],
@@ -570,6 +581,22 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                             name={`refrakcia.objektivna_refrakcia.se[${idx}]`}
                                             type='text'
                                             value={checkParameter(examObj.refrakcia.objektivna_refrakcia?.se, idx)}
+                                            // onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                            onChange={handleChange}
+
+                                        // onBlur={(e) => formatParameters(e, objektivna_refrakcia?.se, objektivna_refrakcia, setObjektivna_refrakcia)}
+                                        />
+                                    </Col>
+                                ))}
+                            </TableCol>
+                            <TableCol>
+                                <Col>PD</Col>
+                                {[...Array(2)].map((value, idx) => (
+                                    <Col key={idx}>
+                                        <input
+                                            name={`refrakcia.objektivna_refrakcia.pd[${idx}]`}
+                                            type='text'
+                                            value={checkParameter(examObj.refrakcia.objektivna_refrakcia?.pd, idx)}
                                             // onChange={e => handleParameterChange(e, idx, objektivna_refrakcia, setObjektivna_refrakcia)}
                                             onChange={handleChange}
 
@@ -1086,6 +1113,22 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                     </Col>
                                 ))}
                             </TableCol>
+                            <TableCol>
+                                <Col>PD</Col>
+                                {[...Array(2)].map((value, idx) => (
+                                    <Col key={idx}>
+                                        <input
+                                            name={`anamneza.refraktometer.pd[${idx}]`}
+                                            type='text'
+                                            value={checkParameter(examObj.anamneza.refraktometer?.pd, idx)}
+                                            onChange={handleChange}
+
+                                        // onChange={e => handleParameterChange(e, idx, refraktometer, setRefraktometer)}
+                                        // onBlur={(e) => formatParameters(e, refraktometer?.se, refraktometer, setRefraktometer)}
+                                        />
+                                    </Col>
+                                ))}
+                            </TableCol>
 
                         </RefractTable>
 
@@ -1154,9 +1197,20 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                         <SubjectiveRefATable>
                             <TableTitleCol>
                                 <Col>{"-"}</Col>
-                                <Col>P.</Col>
-                                <Col>L.</Col>
+                                <Col isActive={examObj.anamneza.subjektivna_refrakcia?.domoko === "1"} clickable onClick={() => handleChange({
+                                    target: {
+                                        name: "anamneza.subjektivna_refrakcia.domoko",
+                                        value: examObj.anamneza.subjektivna_refrakcia?.domoko === "1" ? "0" : "1"
+                                    }
+                                })}>P.</Col>
+                                <Col isActive={examObj.anamneza.subjektivna_refrakcia?.domoko === "2"} clickable onClick={() => handleChange({
+                                    target: {
+                                        name: "anamneza.subjektivna_refrakcia.domoko",
+                                        value: examObj.anamneza.subjektivna_refrakcia?.domoko === "2" ? "0" : "2"
+                                    }
+                                })}>L.</Col>
                             </TableTitleCol>
+
 
                             <TableCol>
                                 <Col>SPH</Col>
@@ -1483,15 +1537,89 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                 {examObj.type === 3 && (
                     <Container>
                         <h4>Kontrola</h4>
-                        <InputContainer>
-                            <CustomInput
-                                label={'Typ kontaktných šošoviek'}
-                                value={examObj.kontrola.typ_kontaktnych_sosoviek}
-                                type="text"
-                                name="kontrola.typ_kontaktnych_sosoviek"
-                                handleChange={handleChange}
-                            />
-                        </InputContainer>
+
+                        {/* <h4>Typ Kontaktných šošoviek</h4> */}
+
+<ContactLensesTypeTable>
+    <TableTitleCol>
+        <Col>{"-"}</Col>
+        <Col>P.</Col>
+        <Col>L.</Col>
+    </TableTitleCol>
+
+    <TableCol>
+        <Col>PRVÝ TYP</Col>
+        {[...Array(2)].map((value, idx) => (
+            <Col key={idx}>
+                <input
+                    name={`kontrola.typ_kontaktnych_sosoviek.prvy[${idx}]`}
+                    type='text'
+                    value={checkParameter(examObj.kontrola.typ_kontaktnych_sosoviek?.prvy, idx)}
+                    onChange={handleChange}
+
+                // onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                // onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.prvy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                />
+            </Col>
+        ))}
+    </TableCol>
+    <TableCol>
+        <Col>DRUHÝ TYP</Col>
+        {[...Array(2)].map((value, idx) => (
+            <Col key={idx}>
+                <input
+                    // name='druhy'
+                    name={`kontrola.typ_kontaktnych_sosoviek.druhy[${idx}]`}
+                    type='text'
+                    value={checkParameter(examObj.kontrola.typ_kontaktnych_sosoviek?.druhy, idx)}
+                    // onChange={e => handleParameterChange(e, idx, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                    onChange={handleChange}
+                // onBlur={(e) => formatStringParameters(e, typ_kontaktnych_sosoviek?.druhy, typ_kontaktnych_sosoviek, setTyp_kontaktnych_sosoviek)}
+                />
+            </Col>
+        ))}
+    </TableCol>
+    <TableCol>
+        <Col>DOP.KONTROLA</Col>
+        <Col>
+            <input
+                // name='lkontrola'
+                name={`kontrola.typ_kontaktnych_sosoviek.lkontrola`}
+                type='text'
+                value={checkParameterValue(examObj.kontrola.typ_kontaktnych_sosoviek?.lkontrola)}
+                onChange={handleChange}
+            // onChange={e => setTyp_kontaktnych_sosoviek(prevValue => ({
+            //     ...prevValue,
+            //     [e.target.name]: e.target.value
+            // }))}
+            // onBlur={(e) => setTyp_kontaktnych_sosoviek(prevValue => ({
+            //     ...prevValue,
+            //     [e.target.name]: Number(e.target.value)
+            // }))}
+            />
+        </Col>
+    </TableCol>
+    <TableCol>
+        <Col>DOP.ROZTOK</Col>
+        <Col>
+            <input
+                // name='dop_roztok'
+                name={`kontrola.typ_kontaktnych_sosoviek.dop_roztok`}
+                type='text'
+                value={checkParameterValue(examObj.kontrola.typ_kontaktnych_sosoviek?.dop_roztok)}
+                onChange={handleChange}
+            // onChange={e => setTyp_kontaktnych_sosoviek(prevValue => ({
+            //     ...prevValue,
+            //     [e.target.name]: e.target.value
+            // }))}
+            // onBlur={(e) => setTyp_kontaktnych_sosoviek(prevValue => ({
+            //     ...prevValue,
+            //     [e.target.name]: Number(e.target.value)
+            // }))}
+            />
+        </Col>
+    </TableCol>
+</ContactLensesTypeTable>
 
                         <ExamTable>
                             <TableTitleCol>

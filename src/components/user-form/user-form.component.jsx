@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import InputRow from '../product-input-row/product-input-row.component'
 import CustomInput from '../custom-input/custom-input.component'
+import CustomTextarea from '../custom-textarea/custom-textarea.component'
 import ProfileOrderOverview from '../profile-order-overview/profile-order-overview.component'
 import ParametersTable from '../parameters-table/parameters-table.component'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
@@ -271,6 +272,18 @@ const UserForm = ({
                             />
                         </div>
                     </GridRow>
+
+                    {isCustomer && <div>
+                        <CustomTextarea
+                            label="Poznámka"
+                            type='text'
+                            rows="5"
+                            name='note'
+                            value={user.note ?? ""}
+                            handleChange={(e) => handleChange(e)}
+                        />
+                    </div>
+                    }
                 </Container>}
 
                 {isCustomer && <Container>

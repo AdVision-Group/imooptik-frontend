@@ -125,7 +125,7 @@ export const Table = styled.div`
 
 export const ObjectiveRefTable = styled.div`
     display: grid;
-    grid-template-columns: 4rem repeat(4, 1fr);
+    grid-template-columns: 4rem repeat(5, 1fr);
 `
 
 export const SubjectiveRefTable = styled.div`
@@ -135,7 +135,7 @@ export const SubjectiveRefTable = styled.div`
 
 export const RefractTable = styled.div`
     display: grid;
-    grid-template-columns: 4rem repeat(4, 1fr);
+    grid-template-columns: 4rem repeat(5, 1fr);
 `
 export const KerathTable = styled.div`
     display: grid;
