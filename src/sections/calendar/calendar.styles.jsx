@@ -117,7 +117,17 @@ export const TableRow = styled.div`
     }
 `
 
+export const HolidayInputContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 5rem;
 
+    button {
+        margin-top: 1.5rem;
+        display: block;
+        color: var(--primary-color);
+        align-self: center;
+    }
+`
 // export const DayTimesContainer = styled.div`
 //     --gap: 2rem;
 //     display: flex;

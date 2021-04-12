@@ -34,7 +34,8 @@ import {
     TableCol,
     TableRow,
     AddDayButton,
-    DeleteCalendarButton
+    DeleteCalendarButton,
+    HolidayInputContainer
 } from './calendar.styles'
 
 const CalendarSection = () => {
@@ -89,6 +90,16 @@ const CalendarSection = () => {
         setCalendar(prevValue => ({
             ...prevValue,
             [name]: arr
+        }))
+    }
+
+    const removeExceptDay = (value) => {
+        console.log(value)
+        const newArr = calendar.exceptDays.filter(v => v !== value)
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            exceptDays: newArr
         }))
     }
 
@@ -217,7 +228,7 @@ const CalendarSection = () => {
                         <Container>
                             <h3>Dovolenka</h3>
                             {calendar?.exceptDays && calendar?.exceptDays?.map((value, idx) => (
-                                <div key={idx}>
+                                <HolidayInputContainer key={idx}>
                                     <CustomInput
                                         type="date"
                                         // label='Dátum'
@@ -225,7 +236,8 @@ const CalendarSection = () => {
                                         value={value || ""}
                                         handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
                                     />
-                                </div>
+                                    <button onClick={() => removeExceptDay(value)}>X</button>
+                                </HolidayInputContainer >
                             ))}
                             <AddDayButton onClick={handleAddNewDay}>Pridať</AddDayButton>
                         </Container>
