@@ -62,6 +62,7 @@ export const WarehouseContext = createContext({
     handleGlassesParameterSpecsChange: () => { },
     handleGlassesSizeChange: () => { },
     deactivateMany: () => { },
+    getFilteredLenses: () => {},
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -318,7 +319,40 @@ const WarehouseProvider = ({ children }) => {
 
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const getFilteredLenses = async (filterObj) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        const raw = JSON.stringify(filterObj)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/lenses/filter`, requestOptions)
+            const data = await response.json()
+
+            if (data.lenses) {
+                setProducts(data.lenses)
+                setLensesProducts(data.lenses)
+                closeModal()
+                return
+            }
+
+            getMessage(data.messageSK)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -958,7 +992,8 @@ const WarehouseProvider = ({ children }) => {
                 handleGlassesParameterChange,
                 handleGlassesParameterSpecsChange,
                 handleGlassesSizeChange,
-                deactivateMany
+                deactivateMany,
+                getFilteredLenses
             }}
         >
             {children}

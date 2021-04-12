@@ -70,6 +70,8 @@ const EshopSection = () => {
         deleteProduct,
         deleteLenses,
         deactivateMany,
+        getFilteredLenses,
+        getLenses,
     } = useContext(WarehouseContext)
 
     const handleDeactivateMany = (productIDs, boolean) => {
@@ -109,6 +111,14 @@ const EshopSection = () => {
                     }
                 })
             }
+            if (activeCategoryTypeTab === 1) {
+                getFilteredLenses({
+                    query: searchQuery,
+                    // sortBy: {
+                    //     date: -1
+                    // }
+                })
+            }
         }
     }
 
@@ -137,6 +147,13 @@ const EshopSection = () => {
                     limit: 10,
                     sortBy: {
                         date: -1
+                    }
+                })
+            }
+            if (activeCategoryTypeTab === 1) {
+                getLenses({
+                    sortBy: {
+                        dateCreated: -1
                     }
                 })
             }
