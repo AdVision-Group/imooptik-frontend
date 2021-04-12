@@ -21,6 +21,8 @@ export const OrderContext = createContext({
     createCombinedProducts: () => { },
     incrementQuantity: () => { },
     decrementQuantity: () => { },
+    incrementProductQuantity: () => {},
+    decrementProductQuantity: () => {},
 })
 
 const OrderProvider = ({ children }) => {
@@ -60,7 +62,7 @@ const OrderProvider = ({ children }) => {
     const addProduct = (productObj) => {
         setCart(prevValue => [
             ...prevValue,
-            { product: productObj, }
+            { product: productObj, productQuant: 1 }
         ])
     }
 
@@ -167,6 +169,21 @@ const OrderProvider = ({ children }) => {
         setSelectedProduct(null)
     }
 
+    const incrementProductQuantity = (prevValue, idx, event) => {
+        event.stopPropagation()
+        const newCart = cart.map((item, index) => {
+            if (idx === index) {
+                return ({
+                    ...item,
+                    productQuant: prevValue + 1
+                })
+            } else {
+                return item
+            }
+        })
+        setCart(newCart)
+    }
+
     const incrementQuantity = (prevValue, idx, event) => {
         event.stopPropagation()
         const newCart = cart.map((item, index) => {
@@ -181,8 +198,23 @@ const OrderProvider = ({ children }) => {
         })
         setCart(newCart)
     }
+    
+    const decrementProductQuantity = (prevValue, idx, event) => {
+        event.stopPropagation()
 
-
+        if (prevValue === 1) return
+        const newCart = cart.map((item, index) => {
+            if (idx === index) {
+                return ({
+                    ...item,
+                    productQuant: prevValue - 1
+                })
+            } else {
+                return item
+            }
+        })
+        setCart(newCart)
+    }
     const decrementQuantity = (prevValue, idx, event) => {
         event.stopPropagation()
 
@@ -250,15 +282,25 @@ const OrderProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const combinedProductsArr = cart.map(item => ({
-            product: item.product.isPseudo ? "pseudo" : item.product._id,
-            ...(item.discount) && { discount: { ...item.discount } },
-            ...(item.lens) && { lens: item.lens._id },
-            ...(item.lensesQuant) && { lensesQuant: item.lensesQuant },
-            // ...(item.lens && order.user) && { lenses: order.user.lenses },
-            ...(item.lenses) && { contactLenses: item.lenses }
-        }))
+        const combinedProductsArr = []
+        
+        cart.forEach(item => {
+            [...Array(item.productQuant)].forEach(() => {
+                combinedProductsArr.push(({
+                    product: item.product.isPseudo ? "pseudo" : item.product._id,
+                    ...(item.discount) && { discount: { ...item.discount } },
+                    ...(item.lens) && { lens: item.lens._id },
+                    ...(item.lensesQuant) && { lensesQuant: item.lensesQuant },
+                    // ...(item.lens && order.user) && { lenses: order.user.lenses },
+                    ...(item.lenses) && { contactLenses: item.lenses }
+                }))
+            })
 
+        })
+
+
+        // console.log(combinedProductsArr)
+        
         const myHeaders = new Headers();
         myHeaders.append("auth-token", token);
         myHeaders.append("Content-Type", "application/json");
@@ -317,6 +359,8 @@ const OrderProvider = ({ children }) => {
                 createCombinedProducts,
                 incrementQuantity,
                 decrementQuantity,
+                incrementProductQuantity,
+                decrementProductQuantity
             }}
         >
             {children}

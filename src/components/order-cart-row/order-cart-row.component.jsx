@@ -27,7 +27,7 @@ import {
 } from './order-cart-row.styles'
 
 const CartRow = ({ item, idx }) => {
-    const { deleteProduct, addProductDiscount, addLensesParameters } = useContext(OrderContext)
+    const { deleteProduct, addProductDiscount, addLensesParameters, incrementProductQuantity, decrementProductQuantity } = useContext(OrderContext)
 
     const [showRow, setShowRow] = useState(false)
     const [contactLenses, setContactLenses] = useState({})
@@ -115,10 +115,11 @@ const CartRow = ({ item, idx }) => {
                         onChange={(e) => addProductDiscount(idx, e.target.value)}
                     />
                 </div> */}
-                {(item.product.type === 4 || item.product.type === 5) && <QuantityContainer>
-                    <button><AiOutlineLeft /></button>
-                    <p>{0}</p>
-                    <button ><AiOutlineRight /></button>
+                {console.log(item.product.type)}
+                {(item.product.type === 4 || item.product.type === 6) && <QuantityContainer>
+                    <button onClick={(e) => decrementProductQuantity(item?.productQuant, idx, e)}><AiOutlineLeft /></button>
+                    <p>{item?.productQuant}</p>
+                    <button onClick={(e) => incrementProductQuantity(item?.productQuant, idx, e)}><AiOutlineRight /></button>
                 </QuantityContainer>}
             </TableCol>
             <TableCol>
