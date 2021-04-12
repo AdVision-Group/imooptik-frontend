@@ -64,7 +64,7 @@ export const getTimeline = (startTimes, endTimes, interval) => {
     const endTime = Math.max(...numberedEndTimes)
     const endMinutes = Math.max(...numberedEndMinutes)
 
-    const timeline = [...Array(interval === 30 ? 48 : 24)].map((value, idx) => {
+    const timeline = [...Array(interval === 60 ? 24 : interval === 30 ? 48 : 96)].map((value, idx) => {
         const time = getHourTime(idx, interval)
         const splitedTime = time.split('/').map(value => Number(value))
         if (startTime > splitedTime[0]) return null

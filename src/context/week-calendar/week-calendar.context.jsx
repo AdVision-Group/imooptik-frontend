@@ -90,6 +90,7 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
 
     useEffect(() => {
         if (isLoading) return
+        if (response.calendar.interval === 15) setNumberOfHours(96)
         if (response.calendar.interval === 30) setNumberOfHours(48)
         if (response.calendar.interval === 60) setNumberOfHours(24)
         const timelineArr = getTimeline(response.calendar.startTimes, response.calendar.endTimes, response.calendar.interval)
