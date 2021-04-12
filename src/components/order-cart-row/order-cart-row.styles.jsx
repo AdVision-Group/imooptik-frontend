@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
+
 // import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 
@@ -93,4 +95,53 @@ export const ContactLensesParameterContainer = styled.div`
 export const EmptyTittle = styled.h4`
     padding: 0 2rem;
     opacity: .6;
+`
+
+export const DiscountCheckbox = styled(CustomCheckbox)`
+    margin-top: 1rem;
+    margin-right: 2rem;
+`
+
+export const DiscountCheckboxContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+
+    label {
+        display: block;
+        outline: none;
+        margin-left: 1rem;
+
+        &:focus {
+            outline: none;
+
+        }
+    }
+
+    input {
+        display: block;
+    }
+`
+
+export const DiscountContainer = styled.div`
+    margin: 0 1rem 2rem;;
+`
+
+export const QuantityContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+    }
+
+    p {
+        font-size: 1.6rem;
+    }
 `

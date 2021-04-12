@@ -4,6 +4,11 @@ import { OrderContext } from '../../context/order/order.context'
 import CustomInput from '../custom-input/custom-input.component'
 
 import {
+    AiOutlineLeft,
+    AiOutlineRight
+} from 'react-icons/ai'
+
+import {
     AiFillCaretDown
 } from 'react-icons/ai'
 
@@ -14,7 +19,11 @@ import {
     OptionsContainer,
     ContactLensesParameterContainer,
     CustomSelect,
-    EmptyTittle
+    EmptyTittle,
+    DiscountCheckbox,
+    DiscountCheckboxContainer,
+    DiscountContainer,
+    QuantityContainer
 } from './order-cart-row.styles'
 
 const CartRow = ({ item, idx }) => {
@@ -22,6 +31,41 @@ const CartRow = ({ item, idx }) => {
 
     const [showRow, setShowRow] = useState(false)
     const [contactLenses, setContactLenses] = useState({})
+
+    const [discountType, setDiscountType] = useState(item?.discount?.product['flat'] ? "flat" : "percent")
+    const [productDiscount, setProductDiscount] = useState({})
+    const [includeDiscount, setIncludeDiscount] = useState(false)
+
+
+    const handleChangeDiscount = (type) => {
+        // setProductDiscount({})
+        setDiscountType(type)
+        addProductDiscount(idx, type, "0")
+
+    }
+    // const handleChangeLensesDiscount = (type) => {
+    //     setLensesDiscount({})
+    //     setLensDiscountType(type)
+    // }
+
+    // const handleDiscountChange = (e) => {
+    //     const { name, value } = e.target
+
+
+    //     if (value === '') {
+    //         delete productDiscount[name]
+
+    //         setProductDiscount({
+    //             ...productDiscount,
+    //         })
+    //         return
+    //     }
+
+    //     setProductDiscount({
+    //         ...productDiscount,
+    //         [name]: value
+    //     })
+    // }
 
 
     const handleClick = () => {
@@ -65,12 +109,17 @@ const CartRow = ({ item, idx }) => {
                 {item?.product?.price ? `${(item?.product?.price / 100).toFixed(2)}€` : ""}
             </TableCol>
             <TableCol>
-                <div>
+                {/* <div>
                     <input
                         value={item?.discount?.product ? item?.discount.product.percent : ''}
                         onChange={(e) => addProductDiscount(idx, e.target.value)}
                     />
-                </div>
+                </div> */}
+                {(item.product.type === 4 || item.product.type === 5) && <QuantityContainer>
+                    <button><AiOutlineLeft /></button>
+                    <p>{0}</p>
+                    <button ><AiOutlineRight /></button>
+                </QuantityContainer>}
             </TableCol>
             <TableCol>
                 <IconContainer onClick={handleClick}>
@@ -79,11 +128,47 @@ const CartRow = ({ item, idx }) => {
             </TableCol>
             {showRow && (
                 <OptionsContainer>
-                    {item.product.type !== 3 && (
+                
+                         <DiscountContainer>
+                            <DiscountCheckboxContainer>
+                                <input id="discount" name='discount' type='checkbox' value={includeDiscount} onChange={() => setIncludeDiscount(!includeDiscount)} />
+                                <label htmlFor='discount'>Pridať zlavu pre produkt</label>
+                            </DiscountCheckboxContainer>
+                            {includeDiscount && <div>
+                                <h4>Zlava pre produkt</h4>
+                                <div>
+                                    <DiscountCheckbox
+                                        label={"Fixná suma"}
+                                        value={"flat"}
+                                        name='flat'
+                                        isActive={discountType === 'flat'}
+                                        handleClick={() => handleChangeDiscount('flat')}
+                                    />
+                                    <DiscountCheckbox
+                                        label={"Percertá"}
+                                        value={"percent"}
+                                        name='percent'
+                                        isActive={discountType === 'percent'}
+                                        handleClick={() => handleChangeDiscount('percent')}
+                                    />
+                                </div>
+                                <div>
+                                    <CustomInput
+                                        label='Hodnota'
+                                        value={item?.discount?.product ? item?.discount.product[discountType] : ''}
+                                        onChange={(e) => {
+                                            addProductDiscount(idx, discountType, e.target.value)
+                                        }}
+                                    />
+                                </div>
+                            </div>}
+                        </DiscountContainer>
+                
+                    {/* {(item.product.type === 1 || item.product.type === 2) && (
                         <div>
                             <EmptyTittle>Žiadne možnosti</EmptyTittle>
                         </div>
-                    )}
+                    )} */}
                     {item.product.type === 3 && (
                         <ContactLensesParameterContainer>
                             <div>

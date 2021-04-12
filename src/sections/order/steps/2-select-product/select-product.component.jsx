@@ -94,7 +94,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
                         <TableCol>Produkt</TableCol>
 
                         <TableCol>Cena</TableCol>
-                        <TableCol>Zľava v %</TableCol>
+                        <TableCol>Množstvo</TableCol>
                         <TableCol>Viac</TableCol>
                     </CartTableHead>
                     <CartTable>

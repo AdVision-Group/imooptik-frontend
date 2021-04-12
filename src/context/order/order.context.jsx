@@ -64,7 +64,7 @@ const OrderProvider = ({ children }) => {
         ])
     }
 
-    const addProductDiscount = (idx, value) => {
+    const addProductDiscount = (idx, type, value) => {
         if (value === "") {
             const newCart = cart.map((item, index) => {
                 if (idx === index) {
@@ -87,7 +87,7 @@ const OrderProvider = ({ children }) => {
                         ...item,
                         discount: {
                             product: {
-                                percent: value
+                                [type]: value
                             }
                         }
                     }

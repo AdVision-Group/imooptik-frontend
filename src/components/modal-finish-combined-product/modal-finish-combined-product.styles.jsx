@@ -132,7 +132,7 @@ export const DiscountCheckboxContainer = styled.div`
         }
     }
 
-    input: {
+    input {
         display: block;
     }
 `
