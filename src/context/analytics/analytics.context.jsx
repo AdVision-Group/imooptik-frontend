@@ -6,7 +6,10 @@ export const AnalyticsContext = createContext({
     stats: null,
     getAnalytics: () => { },
     generateReport: () => { },
+    updateRegistry: () => {}
 })
+
+export const useAnalytics = () => useContext(AnalyticsContext)
 
 const AnalyticsProvider = ({ children }) => {
     const { token } = useContext(AuthContext)
@@ -76,7 +79,34 @@ const AnalyticsProvider = ({ children }) => {
             setIsLoading(false)
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Nieo sa pokazilo")
+            setIsLoading(false)
+        }
+    }
+
+    const updateRegistry = async (dataObj, callback = () => {}) => {
+        setShowModal(true)
+        setIsLoading(true)
+
+        const raw = JSON.stringify(dataObj)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/stats/modifyRegister`, requestOptions)
+            const data = await response.json()
+
+            getMessage(data.messageSK)
+            callback(data)
+            setIsLoading(false)
+        }   catch (err) {
+            console.log(err)
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -87,6 +117,7 @@ const AnalyticsProvider = ({ children }) => {
                 stats,
                 getAnalytics,
                 generateReport,
+                updateRegistry
             }}
         >
             {children}

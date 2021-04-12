@@ -132,12 +132,18 @@ const BookingSection = () => {
     }
 
     const resetCalendarToDefault = () => {
+        Date.prototype.getWeekOfMonth = function() {
+            var firstWeekday = new Date(this.getFullYear(), this.getMonth(), 1).getDay();
+            var offsetDate = this.getDate() + firstWeekday - 1;
+            return Math.floor(offsetDate / 7);
+          }
         setSelectedMonth(new Date().getMonth())
         setSelectedYear(new Date().getFullYear())
         // if(new Date(selectedYear, selectedMonth, 0).getDay() === 1) {
-            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
+            // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
         // } else {
-            // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+            setCalendarWeekIndex(new Date().getWeekOfMonth() + 1)
+            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
         // }
         // setSelectedDay(null)
     }

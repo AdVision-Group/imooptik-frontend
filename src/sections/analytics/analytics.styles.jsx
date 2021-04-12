@@ -69,7 +69,7 @@ export const StatsContainer = styled.div`
 `
 export const PaymentsContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 2rem;
     margin-bottom: 4rem;
 
@@ -102,6 +102,9 @@ export const PaymentsContainer = styled.div`
     }
 `
 
+export const UpdateRegistryButton = styled(CustomButton)`
+    font-size: 1.2rem;
+`
 
 // export const StatsContainer = styled.div`
 //     padding: 2rem;

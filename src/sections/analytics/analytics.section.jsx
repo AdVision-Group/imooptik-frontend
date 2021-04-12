@@ -7,6 +7,7 @@ import SectionNavbar from '../../components/section-navbar/section-navbar.compon
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import Popup from '../../components/popup/pop-up.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
+import UpdateRegistryModal from '../../components/modal-update-registry/modal-update-registry.component'
 
 import { retailNamesTabs } from '../../utils/warehouse.utils'
 import { analyticsTabItems } from '../../utils/analytics.utils'
@@ -27,7 +28,8 @@ import {
     TwoColContainer,
     CheckboxContainer,
     Container,
-    PaymentsContainer
+    PaymentsContainer,
+    UpdateRegistryButton
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -51,6 +53,12 @@ const AnalyticsSection = () => {
     const [activeRetailType, setActiveRetailType] = useState(retailTypes[0].value)
 
     const [fitlterQuery, setFilterQuery] = useState({})
+
+    const [isUpdateRegistryVisible, setIsUpdateRegistryVisible] = useState(false)
+
+    const handleIsUpdateRegistryVisible = boolean => {
+        setIsUpdateRegistryVisible(boolean)
+    }
 
     const handleChangeActiveIndex = idx => {
         setActiveIndex(idx)
@@ -160,6 +168,7 @@ const AnalyticsSection = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
+            {isUpdateRegistryVisible && <UpdateRegistryModal  close={() => handleIsUpdateRegistryVisible(false)} />}
             <Header>
                 <h1>Analytiká</h1>
             </Header>
@@ -236,7 +245,6 @@ const AnalyticsSection = () => {
                 </GridContainer>}
 
 
-
                 {stats && (
                     <StatsGrid>
                         {
@@ -245,6 +253,11 @@ const AnalyticsSection = () => {
                                     <div>
                                         <h3>Tržba</h3>
                                         <p>{((activeTabStats?.cash + activeTabStats?.card + activeTabStats?.coupons + activeTabStats?.eshopPickupPayments) / 100).toFixed(2)}€</p>
+                                    </div>
+                                    <div>
+                                        <h3>Stav pokladne</h3>
+                                        <p>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</p>
+                                        <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true)}>Upraviť</UpdateRegistryButton>
                                     </div>
                                     <div>
                                         <h3>hodnota nových zákazok</h3>

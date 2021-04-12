@@ -273,17 +273,7 @@ const UserForm = ({
                         </div>
                     </GridRow>
 
-                    {isCustomer && <div>
-                        <CustomTextarea
-                            label="Poznámka"
-                            type='text'
-                            rows="5"
-                            name='note'
-                            value={user.note ?? ""}
-                            handleChange={(e) => handleChange(e)}
-                        />
-                    </div>
-                    }
+
                 </Container>}
 
                 {isCustomer && <Container>
@@ -295,6 +285,17 @@ const UserForm = ({
                     />
                 </Container>}
 
+
+                {isCustomer && <div>
+                        <CustomTextarea
+                            label="Poznámka"
+                            type='text'
+                            rows="5"
+                            name='note'
+                            value={user.note ?? ""}
+                            handleChange={(e) => handleChange(e)}
+                        />
+                </div>}
 
             </Profile>
 
