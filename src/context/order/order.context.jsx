@@ -2,6 +2,8 @@ import React, { createContext, useState, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
 
+import {formatPrice} from '../../utils/warehouse.utils'
+
 export const OrderContext = createContext({
     step: "",
     order: {},
@@ -288,7 +290,8 @@ const OrderProvider = ({ children }) => {
             [...Array(item.productQuant)].forEach(() => {
                 combinedProductsArr.push(({
                     product: item.product.isPseudo ? "pseudo" : item.product._id,
-                    ...(item.discount) && { discount: { ...item.discount } },
+                    // ...(item.discount) && { discount: { ...item.discount } },
+                    ...(item.discount) && { discount: { product: item.discount.product['flat'] ? { flat: formatPrice(item.discount.product.flat)} : {...item.discount.product} }},
                     ...(item.lens) && { lens: item.lens._id },
                     ...(item.lensesQuant) && { lensesQuant: item.lensesQuant },
                     // ...(item.lens && order.user) && { lenses: order.user.lenses },
@@ -299,7 +302,7 @@ const OrderProvider = ({ children }) => {
         })
 
 
-        // console.log(combinedProductsArr)
+        console.log(combinedProductsArr)
         
         const myHeaders = new Headers();
         myHeaders.append("auth-token", token);

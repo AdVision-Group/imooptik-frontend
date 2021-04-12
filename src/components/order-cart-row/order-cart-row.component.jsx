@@ -12,6 +12,8 @@ import {
     AiFillCaretDown
 } from 'react-icons/ai'
 
+import { formatPrice } from '../../utils/warehouse.utils'
+
 import {
     CartTableRow,
     TableCol,
