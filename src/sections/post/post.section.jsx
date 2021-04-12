@@ -3,6 +3,7 @@ import { BlogContext } from '../../context/blog/blog.context'
 import { ImageContext } from '../../context/image/image.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 import { useParams, useHistory } from 'react-router-dom'
+import {useSlug} from '../../hooks/slug'
 
 import ScrollContainer from '../../components/scroll-container/scroll-container.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
@@ -29,6 +30,7 @@ import {
 } from './post.styles'
 
 const PostSection = () => {
+    const {getSlug} = useSlug()
     const { id } = useParams()
     const { push } = useHistory()
     const {
@@ -39,8 +41,8 @@ const PostSection = () => {
         setIsLoading,
         getPost,
         post,
-        handlePostUpdate,
-        resetBlog
+        resetBlog,
+        updatePost
     } = useContext(BlogContext)
     const { closeModal } = useContext(LoadingModalContext)
     const { selectedImage, setSelectedImage } = useContext(ImageContext)
@@ -58,10 +60,25 @@ const PostSection = () => {
         if (image.length <= 0) return
         if (content.length <= 0) return
 
+        const postObj = {
+            name: title,
+            description: description,
+            draft: draft,
+            html: content,
+            image: image,
+            link: getSlug(title)
+        }
+
         if (id === 'novy-prispevok') {
-            createPost(image, title, description, draft, content)
+            createPost(postObj, (data) => {
+                console.log("CREATED NEW BLOG POST")
+                console.log(data)
+            })
         } else {
-            handlePostUpdate(title, description, draft, content, image, id)
+            updatePost(postObj, id, (data) => {
+                console.log("UPDATED BLOG POST")
+                console.log(data)
+            })
         }
 
         push('/dashboard/blog')

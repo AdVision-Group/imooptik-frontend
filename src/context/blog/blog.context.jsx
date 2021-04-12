@@ -3,9 +3,9 @@ import { AuthContext } from '../auth/auth.context'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import {
     fetchPosts,
-    createNewPost,
+    // createNewPost,
     fetchSinglePost,
-    updatePost,
+    // updatePost,
     deletePost,
 } from './blog.queries'
 
@@ -17,7 +17,7 @@ export const BlogContext = createContext({
     getPosts: () => { },
     createPost: () => { },
     getPost: () => { },
-    handlePostUpdate: () => { },
+    updatePost: () => { },
     handlePostDelete: () => { },
     resetBlog: () => { }
 })
@@ -34,6 +34,10 @@ const BlogProvider = ({ children }) => {
     const [posts, setPosts] = useState(null)
     const [post, setPost] = useState(null)
     const [postsCount, setPostsCount] = useState(0)
+
+    const myHeaders = new Headers();
+    myHeaders.append("auth-token", token);
+    myHeaders.append("Content-Type", "application/json");
 
     const getPosts = async () => {
         setShowModal(true)
@@ -80,38 +84,62 @@ const BlogProvider = ({ children }) => {
         setIsLoading(false)
     }
 
-    const createPost = async (img, name, description, draft, html) => {
+    const createPost = async (postObj, callback = () => {}) => {
         setShowModal(true)
         setIsLoading(true)
 
-        try {
-            const postResponse = await createNewPost(token, name, description, draft, html, img)
-            const postData = await postResponse.json()
+        const raw = JSON.stringify(postObj);
 
-            getMessage(postData.message)
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+    
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/blogs`, requestOptions)
+            const data = await response.json()
+            // const postResponse = await createNewPost(token, name, description, draft, html, img)
+            // const postData = await postResponse.json()
+
+            getMessage(data.messageSK)
             setIsLoading(false)
+            callback(data)
             getPosts()
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
 
-    const handlePostUpdate = async (name, description, draft, html, img, id) => {
+    const updatePost = async (postObj, blogId, callback = () => {}) => {
         setShowModal(true)
         setIsLoading(true)
 
-        try {
-            const postResponse = await updatePost(token, name, description, draft, html, img, id)
-            const postData = await postResponse.json()
+        const raw = JSON.stringify(postObj);
 
-            getMessage(postData.message)
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/blogs/${blogId}`, requestOptions)
+            const data = await response.json()
+            // const postResponse = await updatePost(token, name, description, draft, html, img, id)
+            // const postData = await postResponse.json()
+
+            getMessage(data.messageSK)
             setIsLoading(false)
+            callback(data)
             getPosts()
         } catch (err) {
             console.log(err)
-            getMessage("Nieco sa pokazilo")
+            getMessage("Niečo sa pokazilo")
             setIsLoading(false)
         }
     }
@@ -148,7 +176,7 @@ const BlogProvider = ({ children }) => {
                 getPosts,
                 createPost,
                 getPost,
-                handlePostUpdate,
+                updatePost,
                 handlePostDelete,
                 resetBlog,
             }}
