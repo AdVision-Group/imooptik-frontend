@@ -5,7 +5,7 @@ import {useAnalytics} from '../../context/analytics/analytics.context'
 
 import CustomInput from '../custom-input/custom-input.component'
 
-import {retailNames} from '../../utils/warehouse.utils'
+import {formatPrice} from '../../utils/warehouse.utils'
 
 import {
     ModalContainer,
@@ -15,12 +15,12 @@ import {
     SubmitButton,
 } from './modal-update-registry.styles'
 
-const UpdateRegistryModal = ({ close }) => {
+const UpdateRegistryModal = ({ close, premise, option, setRefetchIndex }) => {
     const {updateRegistry} = useAnalytics()
 
     const [updateObj, setUpdateObj] = useState({
         amount: 0,
-        premises: 0,
+        premises: premise,
     })
 
     const handleChange = (e) => {
@@ -36,8 +36,14 @@ const UpdateRegistryModal = ({ close }) => {
         e.preventDefault()
         if (updateObj.amount === 0) return
 
-        updateRegistry(updateObj, (data) => {
+        const obj = {
+            ...updateObj,
+            amount: option === "deposit" ? formatPrice(updateObj.amount) : (formatPrice(updateObj.amount) * (-1)) 
+        }
+
+        updateRegistry(obj, (data) => {
             console.log(data)
+            setRefetchIndex(prevValue => prevValue + 1)
         })
     }
 
@@ -47,7 +53,7 @@ const UpdateRegistryModal = ({ close }) => {
             <Modal>
                 <h2>Upraviť stav pokladne</h2>
 
-                <h3>Priradiť k prevádzke</h3>
+                {/* <h3>Priradiť k prevádzke</h3>
                 <CustomSelect value={updateObj.premises} name='premises' onChange={(e) => handleChange(e)}>
                     <option value={0}>Nezadané</option>
                     {retailNames.map((name, idx) => {
@@ -56,9 +62,13 @@ const UpdateRegistryModal = ({ close }) => {
                             <option key={idx} value={idx}>{name}</option>
                         )
                     })}
-                </CustomSelect>
+                </CustomSelect> */}
 
-                <h3>Množstvo ktoré chcete vložiť/vybrať</h3>
+                {option === 'withdraw' ? (
+                    <h3>Množstvo ktoré chcete vybrať</h3>
+                ) : (
+                    <h3>Množstvo ktoré chcete vložiť</h3>
+                )}
                 <div>
                     <CustomInput
                         label='Vložte sumu*'

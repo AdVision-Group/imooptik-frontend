@@ -65,11 +65,45 @@ export const StatsContainer = styled.div`
             font-size: 4rem;
         }
     }
+`
 
+export const HeaderContainer = styled.div`
+    width:100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+`
+
+export const RegistryContainer = styled.div`
+    background-color: var(--body-background-primary-color);
+    padding: 2rem;
+    border-radius: .5rem;
+    text-align: center;
+
+    h3 {
+        font-weight: lighter;
+        /* margin-bottom: 1rem; */
+        opacity: .6;
+
+        span {
+            display: block;
+            font-size: 1.2rem
+        }
+    }
+
+    p {
+        font-size: 4rem;
+    }
+
+    :nth-of-type(1) {
+        h3 {
+            margin-bottom: 1.8rem;
+        }
+    }
 `
 export const PaymentsContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 2rem;
     margin-bottom: 4rem;
 
@@ -122,7 +156,7 @@ export const UpdateRegistryButton = styled(CustomButton)`
 // `
 
 export const Container = styled.div`
-    max-width: 50rem;
+    /* max-width: 50rem; */
     margin-bottom: 5rem;
 `
 

@@ -29,7 +29,9 @@ import {
     CheckboxContainer,
     Container,
     PaymentsContainer,
-    UpdateRegistryButton
+    UpdateRegistryButton,
+    RegistryContainer,
+    HeaderContainer
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -43,6 +45,9 @@ const AnalyticsSection = () => {
     const { stats, getAnalytics, generateReport } = useContext(AnalyticsContext)
     const premisesTabs = isAdmin ? analyticsRetailNames : analyticsRetailNames.filter(tab => tab.id === currentUser.premises || tab.id === 0)
 
+    const [selectedPremise, setSelectedPremise] = useState(0)
+    const [registryOption, setRegistryOption] = useState('withdraw')
+
     const [activePremiseIndex, setActivePremiseIndex] = useState(currentUser.premises || 0)
     const [activeIndex, setActiveIndex] = useState(2)
 
@@ -54,10 +59,14 @@ const AnalyticsSection = () => {
 
     const [fitlterQuery, setFilterQuery] = useState({})
 
+    const [refetchIndex, setRefetchIndex] = useState(0)
+
     const [isUpdateRegistryVisible, setIsUpdateRegistryVisible] = useState(false)
 
-    const handleIsUpdateRegistryVisible = boolean => {
+    const handleIsUpdateRegistryVisible = (boolean, premise, option) => {
         setIsUpdateRegistryVisible(boolean)
+        setSelectedPremise(premise)
+        setRegistryOption(option)
     }
 
     const handleChangeActiveIndex = idx => {
@@ -145,7 +154,7 @@ const AnalyticsSection = () => {
 
     useEffect(() => {
         getAnalytics(analyticsTabItems[activeIndex - 1].value)
-    }, [activeIndex])
+    }, [activeIndex, refetchIndex])
 
     useEffect(() => {
         if (stats) {
@@ -168,7 +177,7 @@ const AnalyticsSection = () => {
     return (
         <section>
             {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-            {isUpdateRegistryVisible && <UpdateRegistryModal  close={() => handleIsUpdateRegistryVisible(false)} />}
+            {isUpdateRegistryVisible && <UpdateRegistryModal setRefetchIndex={setRefetchIndex} premise={selectedPremise} option={registryOption}  close={() => handleIsUpdateRegistryVisible(false)} />}
             <Header>
                 <h1>Analytiká</h1>
             </Header>
@@ -195,30 +204,50 @@ const AnalyticsSection = () => {
 
             <ScrollContainer>
                 <Container>
-                    <h3>Dátum:</h3>
+                    <HeaderContainer>
+                        <div>
 
-                    <TwoColContainer>
-                        <div>
-                            <h5>Od:</h5>
-                            <CustomInput
-                                label={''}
-                                value={fitlterQuery?.from || ""}
-                                type="date"
-                                name="from"
-                                handleChange={handleFitlterQueryChange}
-                            />
+                        <h3>Dátum:</h3>
+
+                        <TwoColContainer>
+                            <div>
+                                <h5>Od:</h5>
+                                <CustomInput
+                                    label={''}
+                                    value={fitlterQuery?.from || ""}
+                                    type="date"
+                                    name="from"
+                                    handleChange={handleFitlterQueryChange}
+                                />
+                            </div>
+                            <div>
+                                <h5>Do:</h5>
+                                <CustomInput
+                                    label={''}
+                                    value={fitlterQuery?.to || ""}
+                                    type="date"
+                                    name="to"
+                                    handleChange={handleFitlterQueryChange}
+                                />
+                            </div>
+                        </TwoColContainer>
+
                         </div>
-                        <div>
-                            <h5>Do:</h5>
-                            <CustomInput
-                                label={''}
-                                value={fitlterQuery?.to || ""}
-                                type="date"
-                                name="to"
-                                handleChange={handleFitlterQueryChange}
-                            />
-                        </div>
-                    </TwoColContainer>
+
+                    <div>
+                        <RegistryContainer>
+                            {console.log(activeTabStats)}
+                            <h3>Stav pokladne</h3>
+                            {activeTabStats?.cashRegistry ? (
+                                <p>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</p>
+                            ) : (
+                                <p>0€</p>
+                            )}
+                            <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "deposit")}>Vložiť</UpdateRegistryButton>
+                            <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "withdraw")}>Vybrať</UpdateRegistryButton>
+                        </RegistryContainer>
+                    </div>
+                    </HeaderContainer>
 
                 </Container>
                 {isAdmin && <GridContainer>
@@ -253,11 +282,6 @@ const AnalyticsSection = () => {
                                     <div>
                                         <h3>Tržba</h3>
                                         <p>{((activeTabStats?.cash + activeTabStats?.card + activeTabStats?.coupons + activeTabStats?.eshopPickupPayments) / 100).toFixed(2)}€</p>
-                                    </div>
-                                    <div>
-                                        <h3>Stav pokladne</h3>
-                                        <p>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</p>
-                                        <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true)}>Upraviť</UpdateRegistryButton>
                                     </div>
                                     <div>
                                         <h3>hodnota nových zákazok</h3>

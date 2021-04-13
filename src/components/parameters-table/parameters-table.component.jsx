@@ -182,11 +182,11 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                         <div key={idx}>
                             <input
                                 type='text'
-                                value={checkParameters(parameters.distance, idx)}
+                                value={checkaAx(parameters.distance, idx)}
                                 name="distance"
                                 onChange={(e) => handleChange(e, idx)}
                                 disabled={disabledInputs}
-                                onBlur={e => formatParameter(e, idx)}
+                                onBlur={e => formatAx(e, idx)}
 
                             />
                         </div>

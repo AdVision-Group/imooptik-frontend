@@ -406,13 +406,17 @@ const ProductSection = () => {
             if (productObj.type === 0) {
                 setHasChanged(false)
                 delete newProductObj['type']
-                // const updatedObg = {
-                //     ...newProductObj,
-                //     type: newProductObj.lensType
-                // }
+                const updatedObj = {
+                    ...newProductObj,
+                    ...(!lenses.dioptric) && { 
+                        dioptersRange: [0, 0],
+                        cylinderRange: [0, 0],
+                    }
+                    // type: newProductObj.lensType
+                }
                 // delete updatedObg['lensType']
 
-                createLenses(newProductObj)
+                createLenses(updatedObj)
             }
             if (newProductObj.type === 6 || newProductObj.type === 5 || newProductObj.type === 4 || newProductObj.type === 3 || newProductObj.type === 2 || newProductObj.type === 1) {
                 if (!newProductObj.name || !newProductObj.price) {
