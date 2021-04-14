@@ -70,6 +70,8 @@ export const getTimeline = (startTimes, endTimes, interval) => {
         if (startTime > splitedTime[0]) return null
         if (endTime < splitedTime[0]) return null
         if (endTime === splitedTime[0] && !(endMinutes === splitedTime[1]) && splitedTime[1] === 30) return null
+        if (endTime === splitedTime[0] && !(endMinutes === splitedTime[1]) && splitedTime[1] === 15) return null
+        if (endTime === splitedTime[0] && !(endMinutes === splitedTime[1]) && splitedTime[1] === 45) return null
         return time
     }).filter(time => time !== null)
 
