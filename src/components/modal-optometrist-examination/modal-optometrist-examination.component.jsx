@@ -54,11 +54,17 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
     const handleChange = (e) => {
         const { value, name } = e.target
 
-        const obj = lodash.set(examObj, name, value)
-
-        setExamObj({
-            ...obj
-        })
+        if(value === '') {
+            const obj = lodash.set(examObj, name, "1001")
+            setExamObj({
+                ...obj
+            })
+        } else {
+            const obj = lodash.set(examObj, name, value)
+            setExamObj({
+                ...obj
+            })
+        }
     }
 
     const handleSubmit = () => {

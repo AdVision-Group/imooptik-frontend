@@ -201,9 +201,13 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                         </div>
                         <div>
                             <h4>PDF</h4>
+                            <OptionButton onClick={() => getPDF(order.order._id, true)}>
+                                Black
+                            </OptionButton>
                             <OptionButton onClick={() => getPDF(order.order._id)}>
                                 Zobraz PDF
                             </OptionButton>
+
                         </div>
                     </OrderDetailsContainer>}
                 </div>

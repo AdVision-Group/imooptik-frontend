@@ -63,14 +63,14 @@ const OrdersProvider = ({ children }) => {
 
     }
 
-    const getPDF = async (orderId) => {
+    const getPDF = async (orderId, isBlack = false) => {
         setIsLoading(true)
         setShowModal(true)
 
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            // body: raw,
+            ...(isBlack) && {body: JSON.stringify({black: true})},
             redirect: 'follow'
         };
 

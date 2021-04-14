@@ -235,7 +235,7 @@ const AnalyticsSection = () => {
                         </div>
 
                     <div>
-                        <RegistryContainer>
+                        {activeIndex === 2 && <RegistryContainer>
                             {console.log(activeTabStats)}
                             <h3>Stav pokladne</h3>
                             {activeTabStats?.cashRegistry ? (
@@ -245,7 +245,7 @@ const AnalyticsSection = () => {
                             )}
                             <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "deposit")}>Vložiť</UpdateRegistryButton>
                             <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "withdraw")}>Vybrať</UpdateRegistryButton>
-                        </RegistryContainer>
+                        </RegistryContainer>}
                     </div>
                     </HeaderContainer>
 
