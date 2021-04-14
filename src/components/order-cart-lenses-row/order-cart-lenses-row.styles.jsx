@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
 
 export const TableCol = styled.div`
-    min-width: 12rem;
+    /* min-width: 12rem; */
     /* width: 12rem; */
     display: table-cell;
     text-align: center;
@@ -48,6 +48,12 @@ export const QuantityContainer = styled.div`
 
 export const CartTableRow = styled.div`
     cursor: pointer;
+    display:grid; 
+    align-items: center;
+    grid-template-columns: 5rem 3fr 2fr 1fr 1fr 1fr;
+    background-color: var(--background-primary-color);
+    /* border: .05rem solid var(--secondary-text-color); */
+
     /* display:grid;  */
     /* align-items: center; */
     /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
@@ -55,9 +61,9 @@ export const CartTableRow = styled.div`
     /* border: .05rem solid var(--secondary-text-color); */
 
     border: ${({ isSelected }) => isSelected ? ".05rem solid var(--primary-color)" : ".05rem solid transparent"};
-    background-color: ${({ isSelected }) => isSelected ? "var(--primary-color)" : "var(--container-background-table-row)"};
+    background-color: ${({ isSelected }) => isSelected ? "var(--primary-color)" : "var(--background-primary-color)"};
     font-weight: ${({ isSelected }) => isSelected ? "bolder" : "normal"};
-    display: table-row;
+    /* display: table-row; */
 
     ${QuantityContainer} {
         button {
@@ -108,21 +114,53 @@ export const OptionsContainer = styled.div`
 
 `
 
-export const DiscountContainer = styled.div`
-    padding: 1rem 1rem;
-    margin: 0 1rem 1rem;
-    /* background-color: red; */
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-bottom: .05rem solid var(--secondary-text-color);
+// export const DiscountContainer = styled.div`
+//     padding: 1rem 1rem;
+//     margin: 0 1rem 1rem;
+//     /* background-color: red; */
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: flex-end;
+//     border-bottom: .05rem solid var(--secondary-text-color);
 
 
-`
+// `
+
+// export const DiscountCheckbox = styled(CustomCheckbox)`
+//     margin-top: 1rem;
+//     margin-right: 2rem;
+
+
+// `
+
 
 export const DiscountCheckbox = styled(CustomCheckbox)`
     margin-top: 1rem;
     margin-right: 2rem;
+`
+
+export const DiscountCheckboxContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
 
 
+    label {
+        display: block;
+        outline: none;
+        margin-left: 1rem;
+
+        &:focus {
+            outline: none;
+
+        }
+    }
+
+    input {
+        display: block;
+    }
+`
+
+export const DiscountContainer = styled.div`
+    margin: 0 1rem 2rem;;
 `

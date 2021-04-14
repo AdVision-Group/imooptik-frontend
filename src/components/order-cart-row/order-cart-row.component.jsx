@@ -34,9 +34,9 @@ const CartRow = ({ item, idx }) => {
     const [showRow, setShowRow] = useState(false)
     const [contactLenses, setContactLenses] = useState({})
 
-    const [discountType, setDiscountType] = useState(item?.discount?.product['flat'] ? "flat" : "percent")
+    const [discountType, setDiscountType] = useState(item?.discount?.product?.flat === '' ? "flat" : "percent")
     const [productDiscount, setProductDiscount] = useState({})
-    const [includeDiscount, setIncludeDiscount] = useState(false)
+    const [includeDiscount, setIncludeDiscount] = useState(true)
 
 
     const handleChangeDiscount = (type) => {
@@ -117,8 +117,7 @@ const CartRow = ({ item, idx }) => {
                         onChange={(e) => addProductDiscount(idx, e.target.value)}
                     />
                 </div> */}
-                {console.log(item.product.type)}
-                {(item.product.type === 4 || item.product.type === 6) && <QuantityContainer>
+                {(item.product.type === 5 || item.product.type === 6) && <QuantityContainer>
                     <button onClick={(e) => decrementProductQuantity(item?.productQuant, idx, e)}><AiOutlineLeft /></button>
                     <p>{item?.productQuant}</p>
                     <button onClick={(e) => incrementProductQuantity(item?.productQuant, idx, e)}><AiOutlineRight /></button>
@@ -133,10 +132,10 @@ const CartRow = ({ item, idx }) => {
                 <OptionsContainer>
                 
                          <DiscountContainer>
-                            <DiscountCheckboxContainer>
+                            {/* <DiscountCheckboxContainer>
                                 <input id="discount" name='discount' type='checkbox' value={includeDiscount} onChange={() => setIncludeDiscount(!includeDiscount)} />
                                 <label htmlFor='discount'>Pridať zlavu pre produkt</label>
-                            </DiscountCheckboxContainer>
+                            </DiscountCheckboxContainer> */}
                             {includeDiscount && <div>
                                 <h4>Zlava pre produkt</h4>
                                 <div>

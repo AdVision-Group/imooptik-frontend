@@ -90,7 +90,46 @@ const OrderProvider = ({ children }) => {
                     return {
                         ...item,
                         discount: {
+                            ...item.discount,
                             product: {
+                                [type]: value
+                            }
+                        }
+                    }
+                } else {
+                    return item
+                }
+            })
+            setCart(newCart)
+        }
+    }
+
+console.log(cart)
+
+    const addLensesDiscount = (idx, type, value) => {
+        if (value === "") {
+            const newCart = cart.map((item, index) => {
+                if (idx === index) {
+                    if (Object.keys(item.discount).length > 1) {
+                        delete item.discount["product"]
+                        return item
+                    } else {
+                        delete item["discount"]
+                        return item
+                    }
+                } else {
+                    return item
+                }
+            })
+            setCart(newCart)
+        } else {
+            const newCart = cart.map((item, index) => {
+                if (idx === index) {
+                    return {
+                        ...item,
+                        discount: {
+                            ...item.discount,
+                            lenses: {
                                 [type]: value
                             }
                         }
@@ -234,43 +273,6 @@ const OrderProvider = ({ children }) => {
         setCart(newCart)
     }
 
-
-    const addLensesDiscount = (idx, value) => {
-        if (value === "") {
-            const newCart = cart.map((item, index) => {
-                if (idx === index) {
-                    if (Object.keys(item.discount).length > 1) {
-                        delete item.discount["lenses"]
-                        return item
-                    } else {
-                        delete item["discount"]
-                        return item
-                    }
-                } else {
-                    return item
-                }
-            })
-            setCart(newCart)
-        } else {
-            const newCart = cart.map((item, index) => {
-                if (idx === index) {
-                    return {
-                        ...item,
-                        discount: {
-                            ...item.discount,
-                            lenses: {
-                                percent: value
-                            }
-                        }
-                    }
-                } else {
-                    return item
-                }
-            })
-            setCart(newCart)
-        }
-    }
-
     const resetOrder = () => {
         setOrder({})
     }
@@ -290,8 +292,10 @@ const OrderProvider = ({ children }) => {
             [...Array(item.productQuant)].forEach(() => {
                 combinedProductsArr.push(({
                     product: item.product.isPseudo ? "pseudo" : item.product._id,
-                    // ...(item.discount) && { discount: { ...item.discount } },
-                    ...(item.discount) && { discount: { product: item.discount.product['flat'] ? { flat: formatPrice(item.discount.product.flat)} : {...item.discount.product} }},
+                    ...(item.discount) && { discount: { 
+                        ...(item.discount.product) && { product: item.discount.product['flat'] ? { flat: formatPrice(item.discount.product.flat)} : {...item.discount.product} },
+                        ...(item.discount.lenses) && { lenses: item.discount.lenses['flat'] ? { flat: formatPrice(item.discount.lenses.flat)} : {...item.discount.lenses} },
+                     } },
                     ...(item.lens) && { lens: item.lens._id },
                     ...(item.lensesQuant) && { lensesQuant: item.lensesQuant },
                     // ...(item.lens && order.user) && { lenses: order.user.lenses },
@@ -324,6 +328,8 @@ const OrderProvider = ({ children }) => {
             // /api/store/combinedProducts/createMany
             const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/store/combinedProducts/createMany`, requestOptions)
             const data = await response.json()
+
+            console.log(data)
 
             if (data.combinedProducts) {
                 addCombinedProducts(data.combinedProducts)

@@ -161,7 +161,7 @@ export const CartTable = styled.div`
     }
 `
 export const TableCol = styled.div`
-    min-width: 12rem;
+    /* min-width: 12rem; */
     display: table-cell;
     padding: 2rem;
     text-align: center;
@@ -177,14 +177,14 @@ export const TableCol = styled.div`
 `
 
 export const CartTableHead = styled.div`
-    /* width: 100%; */
-    /* display:grid;  */
-    /* grid-template-columns: 5rem 2fr 2fr 2fr 1fr 2fr; */
-    /* background-color: var(--background-primary-color);
+    width: 100%;
+    display:grid; 
+    grid-template-columns: 5rem 3fr 2fr 1fr 1fr 1fr;
+    background-color: var(--background-primary-color);
     border-bottom: 1px solid var(--secondary-text-color);
-    margin-bottom: 0; */
-
-    display: table-row;
+    margin-bottom: 0;
+/* 
+    display: table-row; */
 
     font-weight: bolder;
 
