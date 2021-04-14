@@ -209,7 +209,9 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
                                         onChange={handleChangeDate}
                                     >
                                         <option value={0}>00</option>
-                                        {calendar?.interval === 30 && <option value={30}>30</option>}
+                                        {calendar?.interval === 15 && <option value={45}>45</option>}
+                                        {(calendar?.interval === 30 || calendar?.interval === 15) && <option value={30}>30</option>}
+                                        {calendar?.interval === 15 && <option value={15}>15</option>}
                                     </CustomSelect>
                                 </div>
                             </DateContainer>

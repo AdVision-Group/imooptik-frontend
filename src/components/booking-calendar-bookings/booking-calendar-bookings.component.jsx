@@ -68,7 +68,7 @@ const BookingCalendarBookings = ({
                             <ContainerHeader>
                                 <div>
                                     <h4>{booking.name}</h4>
-                                    <ActiveSpan isActive={booking?.active}>{booking?.active ? "Aktivné" : "Neaktivné"}</ActiveSpan>
+                                    <ActiveSpan isActive={booking?.active}>{booking?.active ? "Aktívne" : "Neaktívne"}</ActiveSpan>
                                 </div>
                                 <div>
                                     <p>{booking.price}€</p>

@@ -88,7 +88,7 @@ const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
                     {isUpdating && <h2>Upraviť vyšetrenie</h2>}
                     <div>
                         <CustomCheckbox
-                            label="Aktivné"
+                            label="Aktívne"
                             isActive={booking?.active || false}
                             name='active'
                             handleClick={() => handleBookingChange({
