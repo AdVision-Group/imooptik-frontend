@@ -564,11 +564,11 @@ const ProductSection = () => {
                             label="Verejné"
                             // value={product.ehop}
                             name='eshop'
-                            isActive={product.eshop}
+                            isActive={productObj.type === 0 ? lenses.eshop : product.eshop}
                             handleClick={() => handleChange({
                                 target: {
                                     name: "eshop",
-                                    value: !product.eshop
+                                    value: productObj.type === 0 ? !lenses.eshop : !product.eshop
                                 }
                             })}
                         />
