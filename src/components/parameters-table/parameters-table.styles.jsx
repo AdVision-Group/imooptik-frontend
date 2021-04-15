@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const TableContainer = styled.div`
     display: grid;
-    grid-template-columns: 2rem repeat(7, 7.5rem);
+    grid-template-columns: 2rem repeat(8, 7rem);
     margin-bottom: 3rem;
 `
 

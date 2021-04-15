@@ -194,6 +194,25 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                 })}
             </Col>
             <Col>
+                <div>vys.</div>
+
+                {[...Array(4)].map((value, idx) => {
+                    return (
+                        <div key={idx}>
+                            <input
+                                type='text'
+                                value={checkaAx(parameters.vys, idx)}
+                                name="vys"
+                                onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+                                onBlur={e => formatAx(e, idx)}
+
+                            />
+                        </div>
+                    )
+                })}
+            </Col>
+            <Col>
                 <div>prizma</div>
 
                 {[...Array(4)].map((value, idx) => {

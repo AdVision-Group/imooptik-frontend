@@ -24,6 +24,7 @@ export const initUserObj = {
         addition: [1001, 1001, 1001, 1001],
         basis: [1001, 1001, 1001, 1001],
         prism: [1001, 1001, 1001, 1001],
+        vys: [1001, 1001, 1001, 1001],
     },
     name: "",
     orders: [],

@@ -135,6 +135,8 @@ const BookingModal = ({ close, calendarId, refetch, selectedBooking }) => {
                         <option value='DD4C4C'>Červená</option>
                         <option value='ebac01'>Žltá</option>
                         <option value='32AA5F'>Zelená</option>
+                        <option value='1e90ff'>Modrá</option>
+                        <option value='a4b0be'>Šedá</option>
                     </CustomSelect>
                 </InputContainer>
                 <InputContainer>
