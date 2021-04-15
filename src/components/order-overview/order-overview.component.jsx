@@ -63,7 +63,11 @@ const OrderOverview = ({ order, refetch, ...otherProps }) => {
                 </DeligateButton>
                 {showOrderDeligateModal && <OrderDeligateModal refetch={refetch} close={() => setShowOrderDeligateModal(false)} premise={order.premises} id={order._id} />}
             </DeligateCol>
-            <TableCol>{order?.orderedBy?.name || "Nenašiel sa"}</TableCol>
+            <TableCol>
+                <Link to={`/dashboard/zakaznici/${order?.orderedBy?._id}`}>
+                    {order?.orderedBy?.name || "Nenašiel sa"}
+                </Link>
+            </TableCol>
             <TableCol>{order?.orderedBy?.phone || ""}</TableCol>
             <TableCol>{translateStatus(order.status)}</TableCol>
             <TableCol>
