@@ -93,9 +93,9 @@ const CartLensesRow = ({ idx, item }) => {
                     value={item?.discount?.lenses ? item?.discount.lenses.percent : ''}
                     onChange={(e) => addLensesDiscount(idx, e.target.value)}
                 /> */}
-                <IconContainer onClick={handleClick}>
+                {item?.lensesQuant && <IconContainer onClick={handleClick}>
                     <AiFillCaretDown />
-                </IconContainer>
+                </IconContainer>}
             </TableCol>
             {showRow && (
                 <OptionsContainer>
