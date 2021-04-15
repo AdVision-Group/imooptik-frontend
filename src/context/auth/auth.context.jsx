@@ -15,6 +15,8 @@ export const AuthContext = createContext({
     handleCreatingNewPassword: () => { }
 })
 
+export const useAuth = () => useContext(AuthContext)
+
 const AuthProvider = ({ children }) => {
     const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
     const [currentUser, setCurrentUser] = useState(null)

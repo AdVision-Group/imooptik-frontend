@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+import {useAuth} from '../../context/auth/auth.context'
+
 import {useAnalytics} from '../../context/analytics/analytics.context'
 
 import CustomInput from '../custom-input/custom-input.component'
@@ -17,6 +19,7 @@ import {
 
 const UpdateRegistryModal = ({ close, premise, option, setRefetchIndex }) => {
     const {updateRegistry} = useAnalytics()
+    const {isAdmin} = useAuth()
 
     const [updateObj, setUpdateObj] = useState({
         amount: 0,
@@ -27,7 +30,8 @@ const UpdateRegistryModal = ({ close, premise, option, setRefetchIndex }) => {
         const {name, value} = e.target;
 
         setUpdateObj(prevValue => ({
-            ...prevValue,
+            // ...prevValue,
+            ...(isAdmin) && { premises: prevValue.premises},
             [name]: value
         }))
     }
@@ -44,6 +48,7 @@ const UpdateRegistryModal = ({ close, premise, option, setRefetchIndex }) => {
         updateRegistry(obj, (data) => {
             console.log(data)
             setRefetchIndex(prevValue => prevValue + 1)
+            close()
         })
     }
 
