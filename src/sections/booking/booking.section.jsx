@@ -142,8 +142,10 @@ const BookingSection = () => {
         // if(new Date(selectedYear, selectedMonth, 0).getDay() === 1) {
             // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
         // } else {
-            setCalendarWeekIndex(new Date().getWeekOfMonth() + 1)
-            setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
+
+        console.log(new Date().getWeekOfMonth())
+            setCalendarWeekIndex(new Date().getWeekOfMonth() )
+            // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
         // }
         // setSelectedDay(null)
     }
@@ -151,10 +153,17 @@ const BookingSection = () => {
     const handleCalendarBlockClick = (dayData) => {
         // if (!dayData.bookings) return
         // if (!dayData.bookingDate) return
+        Date.prototype.getWeekOfMonth = function() {
+            var firstWeekday = new Date(this.getFullYear(), this.getMonth(), 1).getDay();
+            var offsetDate = this.getDate() + firstWeekday - 1;
+            return Math.floor(offsetDate / 7);
+          }
 
         // setSelectedCalendar(null)
         // setSelectedDay(dayData)
-        setCalendarWeekIndex(Math.ceil(dayData.dayNumber / 7) - 1)
+        setCalendarWeekIndex(new Date().getWeekOfMonth() )
+
+        // setCalendarWeekIndex(Math.ceil(dayData.dayNumber / 7) - 1)
         setActiveCalendarFormat(1)
     }
 
