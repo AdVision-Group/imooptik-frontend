@@ -505,22 +505,24 @@ const WarehouseProvider = ({ children }) => {
 
         console.log(productToUpdate)
 
-        const finalSlug = getSlug(`${productToUpdate?.name || product?.name}-${productToUpdate?.specs?.frameColor || product?.specs?.frameColor}-${productToUpdate?.specs?.size || product?.specs?.size}`)
+        const finalSlug = getSlug(`${productToUpdate?.name || product?.name}-${productToUpdate?.specs?.frameColor || product?.specs?.frameColor || ""}-${productToUpdate?.specs?.size || product?.specs?.size}`)
 
 
         let modifiedProduct = {
             ...productToUpdate,
             link: finalSlug,
-            specs: {
+            ...(!(productToUpdate.image === "")) && { image: productToUpdate.image},
+            ...(productToUpdate.specs) && { specs: {
                 frameColor: productToUpdate?.specs?.frameColor || product?.specs?.frameColor,
                 size: productToUpdate?.specs?.size || product?.specs?.size,
                 frameMaterial: productToUpdate?.specs?.frameMaterial || product?.specs.frameMaterial,
                 frameStyle: productToUpdate?.specs?.frameStyle || product?.specs.frameStyle,
                 lensColor: productToUpdate?.specs?.lensColor || product?.specs.lensColor,
                 sex: productToUpdate?.specs?.sex || product?.specs.sex,
-            }
+            }}
         }
 
+        console.log(modifiedProduct)
 
         // return
 

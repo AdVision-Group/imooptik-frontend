@@ -203,6 +203,7 @@ const ProductSection = () => {
         handleGlassesParameterSpecsChange(e)
 
         if (value === '') {
+            if(!productObj.specs) return
             delete productObj.specs[name]
 
             if (Object.keys(productObj.specs).length === 0) {
@@ -389,6 +390,13 @@ const ProductSection = () => {
                 setHasChanged(false)
                 delete newProductObj['type']
                 updateProduct({ ...newProductObj, contactLenses: {} })
+                return
+            } else if (newProductObj.type === 6) {
+                setHasChanged(false)
+                delete newProductObj['type']
+                delete newProductObj['image']
+                delete newProductObj['bonusImages']
+                updateProduct({ ...newProductObj })
                 return
             } else {
                 setHasChanged(false)
