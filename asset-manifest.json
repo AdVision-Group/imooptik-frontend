@@ -1,7 +1,7 @@
 {
   "files": {
-    "static/js/0.eefa2984.chunk.js": "./static/js/0.eefa2984.chunk.js",
-    "static/js/0.eefa2984.chunk.js.map": "./static/js/0.eefa2984.chunk.js.map",
+    "static/js/0.53a5df65.chunk.js": "./static/js/0.53a5df65.chunk.js",
+    "static/js/0.53a5df65.chunk.js.map": "./static/js/0.53a5df65.chunk.js.map",
     "static/js/1.d12dca1b.chunk.js": "./static/js/1.d12dca1b.chunk.js",
     "static/js/1.d12dca1b.chunk.js.map": "./static/js/1.d12dca1b.chunk.js.map",
     "static/js/2.bf255274.chunk.js": "./static/js/2.bf255274.chunk.js",
@@ -12,8 +12,8 @@
     "static/js/4.7dff032e.chunk.js.map": "./static/js/4.7dff032e.chunk.js.map",
     "main.js": "./static/js/main.b3f9d18d.chunk.js",
     "main.js.map": "./static/js/main.b3f9d18d.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.90efaada.js",
-    "runtime-main.js.map": "./static/js/runtime-main.90efaada.js.map",
+    "runtime-main.js": "./static/js/runtime-main.c482f8c3.js",
+    "runtime-main.js.map": "./static/js/runtime-main.c482f8c3.js.map",
     "static/js/7.52ce0216.chunk.js": "./static/js/7.52ce0216.chunk.js",
     "static/js/7.52ce0216.chunk.js.map": "./static/js/7.52ce0216.chunk.js.map",
     "static/js/8.4ea0e982.chunk.js": "./static/js/8.4ea0e982.chunk.js",
@@ -40,8 +40,8 @@
     "static/js/18.8863a294.chunk.js.map": "./static/js/18.8863a294.chunk.js.map",
     "static/js/19.953ce6c7.chunk.js": "./static/js/19.953ce6c7.chunk.js",
     "static/js/19.953ce6c7.chunk.js.map": "./static/js/19.953ce6c7.chunk.js.map",
-    "static/js/20.669ef5c2.chunk.js": "./static/js/20.669ef5c2.chunk.js",
-    "static/js/20.669ef5c2.chunk.js.map": "./static/js/20.669ef5c2.chunk.js.map",
+    "static/js/20.841defc9.chunk.js": "./static/js/20.841defc9.chunk.js",
+    "static/js/20.841defc9.chunk.js.map": "./static/js/20.841defc9.chunk.js.map",
     "static/js/21.d1025091.chunk.js": "./static/js/21.d1025091.chunk.js",
     "static/js/21.d1025091.chunk.js.map": "./static/js/21.d1025091.chunk.js.map",
     "static/js/22.d0e52be8.chunk.js": "./static/js/22.d0e52be8.chunk.js",
@@ -86,7 +86,7 @@
     "static/media/undraw_security_o890.95a3670a.svg": "./static/media/undraw_security_o890.95a3670a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.90efaada.js",
+    "static/js/runtime-main.c482f8c3.js",
     "static/js/8.4ea0e982.chunk.js",
     "static/js/main.b3f9d18d.chunk.js"
   ]
