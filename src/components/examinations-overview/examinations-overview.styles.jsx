@@ -79,13 +79,20 @@ export const AddButton = styled(CustomButton)`
     font-size: 1.2rem;
 `
 
+export const PdfButton = styled(CustomButton)`
+    background-color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+`
+
 export const UpdateButton = styled(CustomButton)`
     font-size: 1.2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 `
 
 export const DeleteButton = styled(CustomButton)`
     font-size: 1.2rem;
     background-color: var(--color-red);
-    margin-left: 1rem;
 
 `

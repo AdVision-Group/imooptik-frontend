@@ -21,13 +21,14 @@ import {
     ExaminationOptions,
     AddButton,
     UpdateButton,
-    DeleteButton
+    DeleteButton,
+    PdfButton
 } from './examinations-overview.styles'
 
 const ExaminationsOverview = () => {
     const params = useParams()
     const examinationData = useFetchById("api/admin/exams/user", params.id)
-    const { deleteExamination } = useContext(ExaminationContext)
+    const { deleteExamination, getPDF } = useContext(ExaminationContext)
     const [showOptometristModal, setShowOptometristModal] = useState(false)
     const [examinations, setExaminations] = useState([])
     const [examinationToUpdate, setExaminationToUpdate] = useState(null)
@@ -99,6 +100,7 @@ const ExaminationsOverview = () => {
                         <ExaminationOptions>
                             <ExaminationUser userId={examination.doneBy} />
                             <div>
+                                <PdfButton onClick={e => getPDF(examination._id)}>PDF</PdfButton>
                                 <UpdateButton onClick={e => handleUpdateClick(e, examination._id)}>Upraviť</UpdateButton>
 
                                 <DeleteButton disabled={isDisabled} onClick={e => handleDelete(e, examination._id)}>

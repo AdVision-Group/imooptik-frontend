@@ -8,12 +8,14 @@ export const ExaminationContext = createContext({
     createExamination: () => { },
     updateExamination: () => { },
     deleteExamination: () => { },
+    getPDF: () => {},
 })
 
 export const useExaminationContext = () => useContext(ExaminationContext)
 
 const ExaminationProvider = ({ children }) => {
     const { fetchData } = useFetchContext()
+
 
     const {
         closeModal,
@@ -22,7 +24,30 @@ const ExaminationProvider = ({ children }) => {
         setShowModal
     } = useContext(LoadingModalContext)
 
+    const getPDF = async (examId) => {
+        setIsLoading(true)
+        setShowModal(true)
 
+        fetchData(`/api/admin/exams/${examId}/createPdf`, null, (data) => {
+            // console.log("after data fetching")
+            // console.log(data)
+    
+            if (data.filename) {
+                setIsLoading(false)
+                getMessage(data.messageSK)
+
+                setTimeout(() => {
+                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.filename}`, "_blank", "noreferrer noopener");
+                    win?.focus();
+                }, 100)
+            }
+
+            getMessage(data.messageSK)
+            setIsLoading(false)
+        
+
+        }, "POST")
+    }
 
     const createExamination = (examsToAdd, callback = () => {}) => {
         setIsLoading(true)
@@ -94,7 +119,8 @@ const ExaminationProvider = ({ children }) => {
             value={{
                 createExamination,
                 updateExamination,
-                deleteExamination
+                deleteExamination,
+                getPDF
             }}
         >
             {children}
