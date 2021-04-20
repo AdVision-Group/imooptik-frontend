@@ -37,7 +37,7 @@ export const checkBookings = (calendarDataObj, idx, day, month, year) => {
     const dates = Object.keys(calendarDataObj?.booked)
 
     const bookedDate = dates.find(date => {
-        const splitedDate = date.split("/").map(value => Number(value))
+        const splitedDate = date.split("/").map(value => Number(value))        
         if (splitedDate[0] === day && splitedDate[1] === month + 1 && splitedDate[2] === year) {
             return date
         }
@@ -76,4 +76,28 @@ export const getTimeline = (startTimes, endTimes, interval) => {
     }).filter(time => time !== null)
 
     return timeline
+}
+
+export const handleExceptionDays = (calendarDataObj) => {
+    
+    // console.log("DATUMY")
+    // console.log(dates)
+    // console.log(calendarDataObj.exceptDays)
+
+    const holidayDates = Object.keys(calendarDataObj?.exceptDays)
+
+    // console.log("holidayDates")
+    // console.log("holidayDates")
+    // console.log(holidayDates)
+
+    // let hasHoliday = false 
+
+    // dates.forEach(date => {
+    //     holidayDates.forEach(hDate => {
+    //         if(date === hDate) return hasHoliday = true
+    //         return
+    //     })
+    // } )
+
+    // console.log(hasHoliday)
 }

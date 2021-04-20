@@ -5,7 +5,8 @@ import { useFetchById } from '../../hooks/useFetch'
 import {
     getHourTime,
     checkBookings,
-    getTimeline
+    getTimeline,
+    handleExceptionDays
 } from '../../utils/week-calendar.utils'
 
 export const WeekCalendarContext = createContext({
@@ -28,12 +29,32 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
         const numberedStartTimes = calendar.startTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
         const startTime = Math.min(...numberedStartTimes)
 
+        // console.log(calendar?.exceptDays)
+
+        let holidayTime = null
+
+        if(calendar?.exceptDays) {
+            Object.keys(calendar?.exceptDays).forEach(date => {
+                const splitedDate = date.split("/") 
+    
+                console.log(`date: ${splitedDate[0]}.${splitedDate[1]}.${splitedDate[2]}`)
+                console.log(`currentDate: ${dayNumber}.${month + 1}.${year}`)
+    
+                if(Number(splitedDate[0]) === Number(dayNumber) && Number(splitedDate[1]) === Number(month) + 1 && Number(splitedDate[2]) === Number(year)) {
+                    return holidayTime = calendar.exceptDays[date]
+                }
+            })
+        }
+
+        // console.log(holidayTime)
+
         const hourblock = [...Array(numberOfHours)].map((value, idx) => {
             const splitedStartTime = calendar.startTimes[dayIdx]?.split("/").map(value => Number(value))
             const splitedEndTime = calendar.endTimes[dayIdx]?.split("/").map(value => Number(value))
             const time = getHourTime(idx, calendar.interval)
             const splitedTime = time.split('/').map(value => Number(value))
 
+            
             if (startTime > splitedTime[0]) return
             if (splitedStartTime[0] > startTime && splitedStartTime[0] > splitedTime[0]) return ({ empty: true })
             if (splitedStartTime[0] > startTime && splitedStartTime[0] > splitedTime[0] && !(splitedStartTime[1] === splitedTime[1]) && splitedTime[1] === 30) return ({ empty: true })
@@ -43,7 +64,35 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 30) return
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 15) return 
             if (splitedEndTime[0] === splitedTime[0] && !(splitedEndTime[1] === splitedTime[1]) && splitedTime[1] === 45) return 
-        
+            // if (splitedHolidayStartTime[0] > splitedTime[0] && splitedHolidayStartTime[1] > splitedTime[1]) return 
+
+
+
+            let holidayStartTime = null
+            let holidayEndTime = null
+            let splitedHolidayStartTime = null
+            let splitedHolidayEndTime = null
+
+            if(holidayTime) {
+                holidayStartTime = holidayTime.split('-')[0]
+                holidayEndTime = holidayTime.split('-')[1]
+                splitedHolidayStartTime = holidayStartTime.split('/').map(value => Number(value))
+                splitedHolidayEndTime = holidayEndTime.split('/').map(value => Number(value))
+            }
+
+
+            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] === splitedTime[1] ) return ({ empty: true })
+            // if (holidayTime && splitedHolidayEndTime[0] < splitedTime[0] ) return ({ empty: true })
+            // if (holidayTime && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1]) return ({ empty: true })
+            if (holidayTime && splitedHolidayEndTime[0] >= splitedTime[0] && splitedHolidayStartTime[0] <= splitedTime[0]) return ({ empty: true })
+            // if (holidayTime && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1]) return ({ empty: true })
+            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] === splitedTime[1]) return ({ empty: true })
+            // if (holidayTime && splitedHolidayStartTime[0] > splitedTime[0] && splitedHolidayStartTime[0] > splitedTime[0] && !(splitedHolidayStartTime[1] === splitedTime[1]) && splitedTime[1] === 30) return ({ empty: true })
+
+            // if (holidayTime && splitedHolidayEndTime[0] < splitedTime[0]) return
+            // // if (calendar.startTimes[dayIdx] === 'X') return
+            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && !(splitedHolidayEndTime[1] === splitedTime[1]) && splitedTime[1] === 30) return
+            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && !(splitedHolidayEndTime[1] === splitedTime[1]) && splitedTime[1] === 15) return 
 
             return ({
                 id: idx,
