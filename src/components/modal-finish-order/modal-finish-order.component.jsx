@@ -22,7 +22,8 @@ const FinishOrderModal = ({
     createOrder,
     setHasChanged,
     isUpdating,
-    updateOrder
+    updateOrder,
+    note
 }) => {
     const [orderDetail, setOrderDetails] = useState({
         paymentType: "cash"
@@ -117,6 +118,8 @@ const FinishOrderModal = ({
         if (isUpdating) {
             let orderObj = {
                 ...orderDetail,
+                ...(note) && { note: note }
+
             }
 
             // console.log(orderObj)
@@ -133,8 +136,12 @@ const FinishOrderModal = ({
                 ...orderDetail,
                 user: order.user._id,
                 combinedProducts: combinedProducts.map(product => product._id),
-                status: hasDeposit ? "half-paid" : "paid"
+                status: hasDeposit ? "half-paid" : "paid",
+                note: note
             }
+
+            console.log("note")
+            console.log(note)
 
             if (orderDetail.couponValue) {
 

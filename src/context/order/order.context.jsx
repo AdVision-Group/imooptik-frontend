@@ -25,6 +25,7 @@ export const OrderContext = createContext({
     decrementQuantity: () => { },
     incrementProductQuantity: () => {},
     decrementProductQuantity: () => {},
+    handleChangeNote: () => {}
 })
 
 const OrderProvider = ({ children }) => {
@@ -40,6 +41,13 @@ const OrderProvider = ({ children }) => {
             ...order,
             user: user
         })
+    }
+
+    const handleChangeNote = (note) => {
+        setOrder(prevValue => ({
+            ...prevValue,
+            note
+        }))
     }
 
     const addCombinedProducts = (combinedProductsArr) => {
@@ -369,7 +377,8 @@ console.log(cart)
                 incrementQuantity,
                 decrementQuantity,
                 incrementProductQuantity,
-                decrementProductQuantity
+                decrementProductQuantity,
+                handleChangeNote
             }}
         >
             {children}

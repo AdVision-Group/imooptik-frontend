@@ -82,7 +82,8 @@ const OrderSection = () => {
                     ...order,
                     order: orderData.response.order,
                     user: orderData.response.order.orderedBy,
-                    combinedProducts: orderData.response.order.combinedProducts
+                    combinedProducts: orderData.response.order.combinedProducts,
+                    note: orderData.response.order.note
                 })
             }
         } else if (userId !== 'nova-objednavka' && orderId === undefined) {

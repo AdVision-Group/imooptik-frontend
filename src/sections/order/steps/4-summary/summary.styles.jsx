@@ -91,6 +91,21 @@ export const SummaryGridLayout = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-gap: 3rem;
     align-items: start;
+    margin-bottom: 4rem;
+`
+
+export const NoteContainer = styled.div`
+    position: relative;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: var(--container-shadow);
+    background-color: var(--container-background-color);
+
+
+    h3 {
+        margin-bottom: .5rem;
+    }
+
 `
 
 export const UserOverviewContainer = styled.div`

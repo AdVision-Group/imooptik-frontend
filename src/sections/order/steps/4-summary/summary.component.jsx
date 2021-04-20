@@ -8,6 +8,8 @@ import OrderSummaryProductName from '../../../../components/order-summary-produc
 import OrderSummaryLensesName from '../../../../components/order-summary-lenses-name/order-summary-lenses-name.component'
 import OrderUpdateUserModal from '../../../../components/modal-order-update-user/modal-order-update-user.component'
 
+import CustomTextarea from '../../../../components/custom-textarea/custom-textarea.component'
+
 
 import { retailNames } from '../../../../utils/warehouse.utils'
 import { translatePaymentMethod, translateStatus } from '../../../../utils/orders.utils'
@@ -28,10 +30,11 @@ import {
     OptionButton,
     OrderDetailsContainer,
     EditButton,
+    NoteContainer
 } from './summary.styles'
 
 const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUser }) => {
-    const { order, changeStep, addUser } = useContext(OrderContext)
+    const { order, changeStep, addUser, handleChangeNote } = useContext(OrderContext)
     const { createOrder, updateOrder, getPDF } = useContext(OrdersContext)
     const [priceTotal, setPriceTotal] = useState(0)
     const date = new Date(order?.order?.date)
@@ -48,6 +51,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
         }
     }, [order.combinedProducts])
 
+    console.log(order)
 
     return (
         <div>
@@ -94,6 +98,25 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                 </TotalContainer>
             </ProductsOverviewContainer>
             <SummaryGridLayout>
+                <NoteContainer>
+                        <h3>Poznámka</h3>
+
+                        <div>
+                            <CustomTextarea
+                                label="Poznámka"
+                                type='text'
+                                rows="5"
+                                name='note'
+                                value={order?.note || ""}
+                                handleChange={(e) => handleChangeNote(e.target.value)}
+                            />
+                        </div>
+                </NoteContainer>
+                {/* <NoteContainer>
+                </NoteContainer> */}
+            </SummaryGridLayout>
+            <SummaryGridLayout>
+
                 <UserOverviewContainer>
                     <EditButton onClick={() => setShowUpdateUserModal(true)}>
                         <AiOutlineEdit />
@@ -135,6 +158,8 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                             setHasChanged={setHasChanged}
                             isUpdating={isUpdating}
                             updateOrder={updateOrder}
+                            note={order?.note}
+
                         />
                     </OptionsContainer>}
 
@@ -147,6 +172,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
                                 setHasChanged={setHasChanged}
                                 isUpdating={isUpdating}
                                 updateOrder={updateOrder}
+                                note={order?.note}
                             />
                         </OptionsContainer>
                     )}
