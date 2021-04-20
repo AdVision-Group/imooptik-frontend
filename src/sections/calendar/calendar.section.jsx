@@ -17,6 +17,7 @@ import { retailNames } from '../../utils/warehouse.utils'
 import {
     dayNames,
     calendarTimes,
+    calendarTimes2,
     formatCalendarObj,
     formatExceptDays,
     formatExceptDaysToObj,
@@ -368,7 +369,7 @@ const CalendarSection = () => {
                                 <TableCol key={idx}>
                                     <select name='startTimes' value={calendar?.startTimes ? calendar?.startTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
                                         <option value={"X"}>Žiadny</option>
-                                        {calendarTimes.map(({ name, value }, idx) => (
+                                        {calendarTimes2.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}
                                     </select>
@@ -383,7 +384,7 @@ const CalendarSection = () => {
                                 <TableCol key={idx}>
                                     <select name='endTimes' value={calendar?.endTimes ? calendar?.endTimes[idx] : "x"} onChange={(e) => handleCalendarTimeChange(e, idx)}>
                                         <option value={"X"}>Žiadny</option>
-                                        {calendarTimes.map(({ name, value }, idx) => (
+                                        {calendarTimes2.map(({ name, value }, idx) => (
                                             <option key={idx} value={value}>{name}</option>
                                         ))}
                                     </select>

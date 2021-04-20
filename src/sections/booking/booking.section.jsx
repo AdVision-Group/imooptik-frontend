@@ -68,6 +68,7 @@ const BookingSection = () => {
     }
 
     const { isLoading, response } = useFetch('api/booking/calendars')
+    console.log(response)
 
     const handleShowCalendarClick = (calendarId) => {
         if (!calendarId) return
