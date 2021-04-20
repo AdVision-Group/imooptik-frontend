@@ -61,6 +61,13 @@ const ExaminationsOverview = () => {
         setExaminationToUpdate(null)
     }
 
+    
+    const handleGetPDF = (e, examId) => {
+        e.preventDefault()
+
+        getPDF(examId)
+    }
+
     useEffect(() => {
         if (!examinationData.isLoading) {
             if (examinationData.response) {
@@ -100,7 +107,7 @@ const ExaminationsOverview = () => {
                         <ExaminationOptions>
                             <ExaminationUser userId={examination.doneBy} />
                             <div>
-                                <PdfButton onClick={e => getPDF(examination._id)}>PDF</PdfButton>
+                                <PdfButton onClick={e => handleGetPDF(e, examination._id)}>PDF</PdfButton>
                                 <UpdateButton onClick={e => handleUpdateClick(e, examination._id)}>Upraviť</UpdateButton>
 
                                 <DeleteButton disabled={isDisabled} onClick={e => handleDelete(e, examination._id)}>

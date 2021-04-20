@@ -29,22 +29,13 @@ const ExaminationProvider = ({ children }) => {
         setShowModal(true)
 
         fetchData(`/api/admin/exams/${examId}/createPdf`, null, (data) => {
-            // console.log("after data fetching")
-            // console.log(data)
-    
-            if (data.filename) {
-                setIsLoading(false)
-                getMessage(data.messageSK)
-
-                setTimeout(() => {
-                    const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.filename}`, "_blank", "noreferrer noopener");
-                    win?.focus();
-                }, 100)
-            }
-
             getMessage(data.messageSK)
+            
+            setTimeout(() => {
+                const win = window.open(`${process.env.REACT_APP_BACKEND_ENDPOINT}/uploads/pdf/${data.filename}`, "_blank", "noreferrer noopener");
+                win?.focus();
+            }, 100)
             setIsLoading(false)
-        
 
         }, "POST")
     }
