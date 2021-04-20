@@ -80,11 +80,43 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
                 splitedHolidayEndTime = holidayEndTime.split('/').map(value => Number(value))
             }
 
+            
+            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0]) return ({ empty: true })
+            if (holidayTime && splitedHolidayStartTime[0] <= splitedTime[0] && splitedHolidayEndTime[0] >= splitedTime[0]) {
+                console.log(splitedHolidayStartTime)
+                console.log(splitedTime)
+                // console.log()
+                if(splitedHolidayStartTime[0] < splitedTime[0] && splitedHolidayEndTime[0] > splitedTime[0]) {
+                    return ({ empty: true })
+                }
+                if(splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] <= splitedTime[1]) {
+                    return ({ empty: true })
+                    // return ({
+                    //     id: idx,
+                    //     time: time,
+                    //     userBookings: checkBookings(calendar, idx, dayNumber, month, year)
+                    // })
+                }
+                if(splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] >= splitedTime[1]) {
+                    return ({ empty: true })
+                    // return ({
+                    //     id: idx,
+                    //     time: time,
+                    //     userBookings: checkBookings(calendar, idx, dayNumber, month, year)
+                    // })
+                }
 
-            // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] === splitedTime[1] ) return ({ empty: true })
-            // if (holidayTime && splitedHolidayEndTime[0] < splitedTime[0] ) return ({ empty: true })
+
+
+                return ({
+                    id: idx,
+                    time: time,
+                    userBookings: checkBookings(calendar, idx, dayNumber, month, year)
+                })
+
+            }
             // if (holidayTime && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1]) return ({ empty: true })
-            if (holidayTime && splitedHolidayEndTime[0] >= splitedTime[0] && splitedHolidayStartTime[0] <= splitedTime[0]) return ({ empty: true })
+            // if (holidayTime && splitedHolidayStartTime[0] <= splitedTime[0] &&  splitedHolidayEndTime[1] === splitedTime[1] ) return ({ empty: true })
             // if (holidayTime && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1]) return ({ empty: true })
             // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] === splitedTime[1]) return ({ empty: true })
             // if (holidayTime && splitedHolidayStartTime[0] > splitedTime[0] && splitedHolidayStartTime[0] > splitedTime[0] && !(splitedHolidayStartTime[1] === splitedTime[1]) && splitedTime[1] === 30) return ({ empty: true })
