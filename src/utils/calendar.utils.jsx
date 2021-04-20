@@ -319,7 +319,7 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
     return result
 }
 
-export const formatCalendarObj = calendarObj => {
+export const formatCalendarObj = (calendarObj, fromTime, toTime) => {
     let obj = { ...calendarObj }
     if (obj.bookings) delete obj["bookings"]
     if (obj.booked !== undefined) delete obj["booked"]
@@ -329,27 +329,44 @@ export const formatCalendarObj = calendarObj => {
     if (obj.exceptDays) {
         obj = {
             ...obj,
-            exceptDays: formatExceptDaysToObj(obj.exceptDays)
+            exceptDays: formatExceptDaysToObj(obj.exceptDays, fromTime, toTime)
         }
     }
+    if (obj.fromTime) delete obj["fromTime"]
+    if (obj.toTime) delete obj["toTime"]
+
 
     return obj
 }
 
-export const formatExceptDays = exceptDaysObj => {
+export const formatExceptDays = (exceptDaysObj) => {
     const arr = Object.keys(exceptDaysObj)
     const formatedArr = arr.map(value => value.split('/').reverse().join('-'))
     return formatedArr
 }
+export const formatExceptHours = (exceptDaysObj) => {
+    const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
+    const formatedArr = arr.map(value => value.replaceAll('/', ":"))
+    return formatedArr
+}
 
-export const formatExceptDaysToObj = exceptDaysArr => {
+export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
     let obj = {}
     const formatedArr = exceptDaysArr.map(value => value.split('-').reverse().join('/'))
+    // const from = fromTime.replace(":", "/")
+    // const to = toTime.replace(":", "/")
+    const from = fromTime
+    const to = toTime
 
-    formatedArr.forEach(day => {
+
+    console.log("FORMAT TIME")
+    console.log(from)
+    console.log(to)
+
+    formatedArr.forEach((day, idx) => {
         obj = {
             ...obj,
-            [day]: "00/00-23/59"
+            [day]: `${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`
         }
     })
     return obj

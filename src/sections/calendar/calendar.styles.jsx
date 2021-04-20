@@ -119,7 +119,7 @@ export const TableRow = styled.div`
 
 export const HolidayInputContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 5rem;
+    grid-template-columns: 2fr 1fr 1fr 5rem;
 
     button {
         margin-top: 1.5rem;
@@ -141,3 +141,9 @@ export const HolidayInputContainer = styled.div`
 //     margin-top: 3rem;
 
 // `
+
+export const CustomTimePicker = styled.div`
+    align-self: center;
+
+    input {}
+`
