@@ -174,44 +174,8 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                     )
                 })}
             </Col>
-            <Col>
-                <div>PD</div>
 
-                {[...Array(4)].map((value, idx) => {
-                    return (
-                        <div key={idx}>
-                            <input
-                                type='text'
-                                value={checkaAx(parameters.distance, idx)}
-                                name="distance"
-                                onChange={(e) => handleChange(e, idx)}
-                                disabled={disabledInputs}
-                                onBlur={e => formatAx(e, idx)}
-
-                            />
-                        </div>
-                    )
-                })}
-            </Col>
-            <Col>
-                <div>vys.</div>
-
-                {[...Array(4)].map((value, idx) => {
-                    return (
-                        <div key={idx}>
-                            <input
-                                type='text'
-                                value={checkaAx(parameters.vys, idx)}
-                                name="vys"
-                                onChange={(e) => handleChange(e, idx)}
-                                disabled={disabledInputs}
-                                onBlur={e => formatAx(e, idx)}
-
-                            />
-                        </div>
-                    )
-                })}
-            </Col>
+            
             <Col>
                 <div>prizma</div>
 
@@ -269,8 +233,44 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
                     )
                 })}
             </Col>
+            <Col>
+                <div>PD</div>
 
+                {[...Array(4)].map((value, idx) => {
+                    return (
+                        <div key={idx}>
+                            <input
+                                type='text'
+                                value={checkaAx(parameters.distance, idx)}
+                                name="distance"
+                                onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+                                onBlur={e => formatAx(e, idx)}
 
+                            />
+                        </div>
+                    )
+                })}
+            </Col>
+            <Col>
+                <div>vys.</div>
+
+                {[...Array(4)].map((value, idx) => {
+                    return (
+                        <div key={idx}>
+                            <input
+                                type='text'
+                                value={checkaAx(parameters.vys, idx)}
+                                name="vys"
+                                onChange={(e) => handleChange(e, idx)}
+                                disabled={disabledInputs}
+                                onBlur={e => formatAx(e, idx)}
+
+                            />
+                        </div>
+                    )
+                })}
+            </Col>
         </TableContainer>
     )
 }
