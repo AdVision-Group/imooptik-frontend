@@ -1,27 +1,23 @@
-# FROM node:13.12.0-alpine
+FROM node:14 as BUILDER
 
-# WORKDIR /app
-# COPY package.json .
-# RUN npm install
+WORKDIR /app
 
-# ADD . .
+COPY package.json .
+RUN npm install
+
+ADD . .
+
+RUN npm run build
 
 # EXPOSE 3000
-
 # CMD ["npm", "start"]
-
-# production env
-# FROM node:13.12.0-alpine as build
-# WORKDIR /app
-# COPY package*.json ./
-# RUN npm ci
-# COPY . ./
-# RUN npm run build
 
 FROM nginx:stable-alpine
 
-COPY ./build /usr/share/nginx/html
-VOLUME [ "/build" ]
+WORKDIR /app
+
+COPY --from=BUILDER /app/build /usr/share/nginx/html
+# VOLUME [ "/build" ]
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

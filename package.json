@@ -33,8 +33,8 @@
     "eject": "react-scripts eject",
     "docker-start": "node index.js",
     "docker-build-production": "npm run build && docker build -t darken141/imooptik-admin:latest .",
-    "docker-build": "docker build -t eu.gcr.io/advision-solutions/imooptik-admin .",
-    "docker-push": "docker push eu.gcr.io/advision-solutions/imooptik-admin",
+    "docker-build": "docker build -t darken141/imooptik-admin:latest . && docker push darken141/imooptik-admin:latest",
+    "docker-push": "docker push darken141/imooptik-admin:latest",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build && docker build -t darken141/imooptik-admin:latest ."
   },

@@ -374,6 +374,10 @@ const ProductSection = () => {
         }
 
         if (isUpdating) {
+            if(newProductObj.image === '') delete newProductObj["image"]
+            if(newProductObj.image === '') delete newProductObj["image"]
+            if(newProductObj?.specs?.size?.length < 1) delete newProductObj?.specs["size"]
+
             if (newProductObj.type === 0) {
                 setHasChanged(false)
                 delete newProductObj['link']
