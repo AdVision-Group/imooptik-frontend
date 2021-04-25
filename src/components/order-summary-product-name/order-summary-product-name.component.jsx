@@ -18,8 +18,22 @@ const LinkContainer = styled(Link)`
     text-overflow: ellipsis;
 `
 
-const OrderSummaryProductName = ({ productId }) => {
+const OrderSummaryProductName = ({ productId, name = "", eanCode = ""}) => {
     const { isLoading, response } = useFetchById('api/store/products', productId, !productId)
+
+    if(!productId) {
+        return (
+            <React.Fragment>
+                <SpanContainer >
+                    {eanCode}
+                </SpanContainer>
+                {/* <span>{" - "}</span> */}
+                <SpanContainer >
+                    {name}
+                </SpanContainer>
+            </React.Fragment>
+        )
+    }
 
     if (response?.product?.name?.includes("Pseudo")) {
         return (

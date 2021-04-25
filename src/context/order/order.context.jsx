@@ -112,7 +112,7 @@ const OrderProvider = ({ children }) => {
         }
     }
 
-console.log(cart)
+    console.log(cart)
 
     const addLensesDiscount = (idx, type, value) => {
         if (value === "") {

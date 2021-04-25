@@ -11,17 +11,26 @@ import SelectUserComponent from './steps/1-select-user/select-user.component'
 import SelectProductComponent from "./steps/2-select-product/select-product.component"
 import SelectLensesComponent from './steps/3-select-lenses/select-lenses.component'
 import SummaryComponent from './steps/4-summary/summary.component'
+import OrderSummaryProductName from '../../components/order-summary-product-name/order-summary-product-name.component'
+import OrderSummaryLensesName from '../../components/order-summary-lenses-name/order-summary-lenses-name.component'
 
 import { useFetchById } from '../../hooks/useFetch'
 
 import {
     Header,
+    ProductsOverviewContainer,
+    SummaryTableHead,
+    SummaryTableRow,
+    SummaryTableTitle,
+    TableCol,
+    TotalContainer
 } from './order.styles'
 
 const OrderSection = () => {
     const {
         step,
         order,
+        cart,
         setOrder,
         addUser,
         resetOrder,
@@ -110,8 +119,8 @@ const OrderSection = () => {
         }
     }, [])
 
-    // console.log("ORDER OBJECT")
-    // console.log(userData.isLoading)
+    console.log("ORDER OBJECT")
+    console.log(order)
 
     return (
 
@@ -127,6 +136,49 @@ const OrderSection = () => {
                 </div>
             </Header>
             <ScrollContainer>
+                {step !== 'summary' && <ProductsOverviewContainer>
+                    <SummaryTableTitle>Prehľad objednávky</SummaryTableTitle>
+                    <SummaryTableHead>
+                        <TableCol>#</TableCol>
+                        <TableCol>
+                            <span>Eankód</span>
+                            <span>Názov produktu</span>
+                        </TableCol>
+                        <TableCol>Cena</TableCol>
+                        <TableCol>Po zľave</TableCol>
+                        <TableCol>Ks</TableCol>
+                        <TableCol>
+                            <span>Eankód</span>
+                            <span>Názov šošovky</span>
+                        </TableCol>
+                        <TableCol>Cena</TableCol>
+                        <TableCol>Po zľave</TableCol>
+                        <TableCol>Ks</TableCol>
+                        <TableCol>Spolu</TableCol>
+                        <TableCol>Po zľave</TableCol>
+                    </SummaryTableHead>
+
+                    {cart && cart.map((item, idx) => (
+                        <SummaryTableRow key={idx}>
+                            <TableCol>{idx + 1}</TableCol>
+                            <TableCol>{item?.product ? <OrderSummaryProductName name={item?.product?.name} eanCode={item?.product?.eanCode} /> : ""}</TableCol>
+                            <TableCol>{item?.product?.price ? `${(item?.product?.price / 100).toFixed(2)}€` : ''}</TableCol>
+                            <TableCol>{item?.discount?.product ? item?.discount?.product.flat ? `${((item?.product?.price - (Number(item?.discount?.product?.flat) * 100)) / 100).toFixed(2)}€` : "" : ""} {item?.discount?.product?.percent && `(${item?.discount?.product?.percent}%)`}</TableCol>
+                            <TableCol>{item?.product && item?.productQuant}</TableCol>
+                            <TableCol>{item?.lens ? <OrderSummaryLensesName name={item?.lens?.name} eanCode={item?.lens?.eanCode} /> : ""}</TableCol>
+                            <TableCol>{item?.lens?.price ? `${(item?.lens?.price / 100).toFixed(2)}€` : ''}</TableCol>
+                            <TableCol>{item?.discount?.lenses ? item?.discount?.lenses?.flat ? `${((item?.lens?.price - (Number(item?.discount?.lenses?.flat) * 100)) / 100).toFixed(2)}€` : "" : ""} {item?.discount?.lenses?.percent && `(${item?.discount?.lenses?.percent}%)`}</TableCol>
+                            <TableCol>{item?.lens && item?.lensesQuant}</TableCol>
+                            <TableCol>{`${(((item?.product?.price || 0) + (item?.lens?.price || 0)) / 100).toFixed(2)}€`}</TableCol>
+                            {/* <TableCol>{(combinedProduct?.discountedPrice / 100).toFixed(2)}€</TableCol> */}
+                        </SummaryTableRow>
+                    ))}
+
+                    <TotalContainer>
+                        {/* <p>Spolu: {(priceTotal / 100).toFixed(2)}€</p> */}
+                    </TotalContainer>
+                </ProductsOverviewContainer>}
+
                 <div>
                     {step === 'select-user' && (
                         <SelectUserComponent

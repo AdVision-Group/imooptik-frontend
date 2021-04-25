@@ -19,8 +19,21 @@ const LinkContainer = styled(Link)`
     text-overflow: ellipsis;
 `
 
-const OrderSummaryLensesName = ({ lensesId }) => {
+const OrderSummaryLensesName = ({ lensesId, name, eanCode }) => {
     const { isLoading, response } = useFetchById('api/store/lenses', lensesId, !lensesId)
+
+    if(!lensesId) {
+        return (
+            <React.Fragment>
+                <SpanContainer >
+                    {eanCode}
+                </SpanContainer>
+                <SpanContainer >
+                    {name}
+                </SpanContainer>
+            </React.Fragment>
+        )
+    }
 
     return (
         <React.Fragment>
