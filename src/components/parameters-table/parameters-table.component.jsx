@@ -24,7 +24,7 @@ const ParametersTable = ({ parameters, handleChange, disabledInputs = false }) =
     const formatParameter = (e, idx) => {
         if(e.target.value === "") return
         const value = formatfloatNumber(e.target.value)
-        console.log(value)
+        // console.log(value)
         handleChange({
             target: {
                 value: value.includes("+") ? `+${Number(value).toFixed(2)}` : Number(value).toFixed(2) < 0 ? Number(value).toFixed(2) : `+${Number(value).toFixed(2)}`,

@@ -236,7 +236,6 @@ const AnalyticsSection = () => {
 
                     <div>
                         {activeIndex === 2 && <RegistryContainer>
-                            {console.log(activeTabStats)}
                             <h3>Stav pokladne</h3>
                             {activeTabStats?.cashRegistry ? (
                                 <p>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</p>

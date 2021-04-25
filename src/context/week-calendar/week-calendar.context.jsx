@@ -37,8 +37,8 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
             Object.keys(calendar?.exceptDays).forEach(date => {
                 const splitedDate = date.split("/") 
     
-                console.log(`date: ${splitedDate[0]}.${splitedDate[1]}.${splitedDate[2]}`)
-                console.log(`currentDate: ${dayNumber}.${month + 1}.${year}`)
+                // console.log(`date: ${splitedDate[0]}.${splitedDate[1]}.${splitedDate[2]}`)
+                // console.log(`currentDate: ${dayNumber}.${month + 1}.${year}`)
     
                 if(Number(splitedDate[0]) === Number(dayNumber) && Number(splitedDate[1]) === Number(month) + 1 && Number(splitedDate[2]) === Number(year)) {
                     return holidayTime = calendar.exceptDays[date]
@@ -83,8 +83,8 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
             
             // if (holidayTime && splitedHolidayEndTime[0] === splitedTime[0]) return ({ empty: true })
             if (holidayTime && splitedHolidayStartTime[0] <= splitedTime[0] && splitedHolidayEndTime[0] >= splitedTime[0]) {
-                console.log(splitedHolidayStartTime)
-                console.log(splitedTime)
+                // console.log(splitedHolidayStartTime)
+                // console.log(splitedTime)
                 // console.log()
                 if(splitedHolidayStartTime[0] < splitedTime[0] && splitedHolidayEndTime[0] > splitedTime[0]) {
                     return ({ empty: true })

@@ -44,7 +44,7 @@ const ProductLensesForm = ({
         }, idx)
     }
 
-    console.log(lenses)
+    // console.log(lenses)
 
     return (
         <LensesFormContainer>

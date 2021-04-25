@@ -51,7 +51,7 @@ const SummaryComponent = ({ addNextProduct, setHasChanged, isUpdating, refetchUs
         }
     }, [order.combinedProducts])
 
-    console.log(order)
+    // console.log(order)
 
     return (
         <div>

@@ -44,8 +44,8 @@ const ExaminationProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(examSchema)
-        console.log(examsToAdd)
+        // console.log(examSchema)
+        // console.log(examsToAdd)
 
         fetchData("/api/admin/exams/", examsToAdd, (data) => {
             console.log("CREATE new examination")

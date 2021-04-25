@@ -768,9 +768,9 @@ export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
     const to = toTime
 
 
-    console.log("FORMAT TIME")
-    console.log(from)
-    console.log(to)
+    // console.log("FORMAT TIME")
+    // console.log(from)
+    // console.log(to)
 
     formatedArr.forEach((day, idx) => {
         obj = {

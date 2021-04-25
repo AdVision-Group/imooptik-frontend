@@ -68,7 +68,7 @@ const BookingSection = () => {
     }
 
     const { isLoading, response } = useFetch('api/booking/calendars')
-    console.log(response)
+    // console.log(response)
 
     const handleShowCalendarClick = (calendarId) => {
         if (!calendarId) return
@@ -144,7 +144,7 @@ const BookingSection = () => {
             // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7) - 1)
         // } else {
 
-        console.log(new Date().getWeekOfMonth())
+        // console.log(new Date().getWeekOfMonth())
             setCalendarWeekIndex(new Date().getWeekOfMonth() )
             // setCalendarWeekIndex(Math.ceil(new Date().getDate() / 7))
         // }

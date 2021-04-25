@@ -503,7 +503,7 @@ const WarehouseProvider = ({ children }) => {
         setIsLoading(true)
         setShowModal(true)
 
-        console.log(productToUpdate)
+        // console.log(productToUpdate)
 
         const finalSlug = getSlug(`${productToUpdate?.name || product?.name}-${productToUpdate?.specs?.frameColor || product?.specs?.frameColor || ""}-${productToUpdate?.specs?.size || product?.specs?.size}`)
 
@@ -522,7 +522,7 @@ const WarehouseProvider = ({ children }) => {
             }}
         }
 
-        console.log(modifiedProduct)
+        // console.log(modifiedProduct)
 
         // return
 

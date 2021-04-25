@@ -102,6 +102,9 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             dueTime: formatDate(bookingDate),
             values: {}
         }
+
+        console.log(bookingToAdd)
+        
         createUserBooking(bookingToAdd, refetchCalendar, close, refetchWeekCalendar)
         // refetchCalendar()
         // close()

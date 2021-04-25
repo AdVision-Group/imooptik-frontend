@@ -71,13 +71,13 @@ const PostSection = () => {
 
         if (id === 'novy-prispevok') {
             createPost(postObj, (data) => {
-                console.log("CREATED NEW BLOG POST")
-                console.log(data)
+                // console.log("CREATED NEW BLOG POST")
+                // console.log(data)
             })
         } else {
             updatePost(postObj, id, (data) => {
-                console.log("UPDATED BLOG POST")
-                console.log(data)
+                // console.log("UPDATED BLOG POST")
+                // console.log(data)
             })
         }
 

@@ -105,6 +105,11 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2rem;
+
+    div {
+        display: flex;
+        gap: 1rem;
+    }
 `
 
 export const CancelButton = styled(CustomButton)`
@@ -117,4 +122,34 @@ export const Container = styled.div`
     ${BlockContainer} {
         margin-bottom: 3rem;
     }
+`
+
+export const DateContainer = styled.div`
+    display: grid;
+    grid-template-columns: 2fr 1fr .4rem 1fr;
+    grid-gap: 1rem;
+
+    p {
+        align-self: center;
+    }
+`
+
+
+export const CustomSelect = styled.select`
+    margin-top: 2rem;
+    /* min-width: 16.5rem; */
+    width: 100%;
+    background-color: var(--input-background-color);
+    color: var(--input-color);
+    border: none;
+    padding: .8rem .5rem .8rem .5rem;
+    font-size: inherit;
+    font-family: inherit;
+    display: block;
+
+    margin-bottom: 2rem;
+`
+
+export const ReBookContainer = styled.div`
+    margin-bottom: 2rem;
 `

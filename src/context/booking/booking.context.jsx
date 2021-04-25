@@ -1,7 +1,10 @@
 import React, { createContext, useContext } from 'react'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { AuthContext } from '../auth/auth.context'
+import {useFetchContext} from '../fetch-context/fetch.context'
 import { useHistory } from 'react-router-dom'
+
+import {fetchError} from '../../utils/errors'
 
 export const BookingContext = createContext({
     createCalendar: () => { },
@@ -11,10 +14,12 @@ export const BookingContext = createContext({
     updateBooking: () => { },
     deleteBooking: () => { },
     createUserBooking: () => { },
+    reBookUserBooking: () => {}
 })
 
 const BookingProvider = ({ children }) => {
     const { push } = useHistory()
+    const {fetchData} = useFetchContext()
     const { token } = useContext(AuthContext)
     const {
         getMessage,
@@ -26,6 +31,7 @@ const BookingProvider = ({ children }) => {
     const myHeaders = new Headers();
     myHeaders.append("auth-token", token);
     myHeaders.append("Content-Type", "application/json");
+
 
     const createCalendar = async (calendarToAdd) => {
         setIsLoading(true)
@@ -121,6 +127,45 @@ const BookingProvider = ({ children }) => {
             setIsLoading(false)
         }
     }
+
+    const reBookUserBooking = async (bookingToRebook, oldBookingId, refetch = () => {}) => {
+        setIsLoading(true)
+        setShowModal(true)
+
+        try {
+            fetchData(`/api/booking/userBookings`, bookingToRebook, (data) => {
+                // getMessage(data.messageSK)
+                // console.log(data)
+                // console.log(oldBookingId)
+
+                if(data.error) {
+                    getMessage(data.messageSK)
+                    setIsLoading(false)
+                    return
+                }
+
+                if(data.userBooking) {
+                    fetchData(`/api/booking/userBookings/${oldBookingId}/cancel`, null, (deletedBookingData) => {
+                        // console.log(deletedBookingData)
+
+                        refetch()
+                        setIsLoading(false)
+                        getMessage("Úspesne prerezervované")
+                        setShowModal(true)
+
+                    }, "POST")
+                }
+                setIsLoading(false)
+
+            }, "POST")
+
+        } catch (err) {
+            fetchError(err, getMessage, () => {
+                setIsLoading(false)
+            })
+        }
+    }
+
 
     const createBooking = async (bookingToAdd) => {
         setIsLoading(true)
@@ -251,7 +296,8 @@ const BookingProvider = ({ children }) => {
                 createBooking,
                 updateBooking,
                 deleteBooking,
-                createUserBooking
+                createUserBooking,
+                reBookUserBooking
             }}
         >
             {children}

@@ -114,7 +114,7 @@ const CustomerProfile = () => {
         })
     }
 
-    console.log(userObj)
+    // console.log(userObj)
 
     const handleSubmit = (e, path) => {
         e.preventDefault()

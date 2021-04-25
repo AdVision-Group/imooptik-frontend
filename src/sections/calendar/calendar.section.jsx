@@ -106,9 +106,9 @@ const CalendarSection = () => {
     }
 
     const handleTimeChange = (value, name, idx) => {
-        console.log(value)
-        console.log(name)
-        console.log(idx)
+        // console.log(value)
+        // console.log(name)
+        // console.log(idx)
 
         let arr = calendar[name]
 
@@ -123,7 +123,7 @@ const CalendarSection = () => {
 
 
     const removeExceptDay = (value) => {
-        console.log(value)
+        // console.log(value)
         const newArr = calendar.exceptDays.filter(v => v !== value)
 
         setCalendar(prevValue => ({
@@ -189,8 +189,8 @@ const CalendarSection = () => {
                 const exceptDaysArr = formatExceptDays(response.calendar.exceptDays)
                 const exceptDaysArraaa = formatExceptHours(response.calendar.exceptDays)
 
-                console.log("exceptDaysArr")
-                console.log(exceptDaysArraaa)
+                // console.log("exceptDaysArr")
+                // console.log(exceptDaysArraaa)
 
                 setCalendar({
                     ...response.calendar,

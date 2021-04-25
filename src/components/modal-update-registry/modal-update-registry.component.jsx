@@ -46,7 +46,7 @@ const UpdateRegistryModal = ({ close, premise, option, setRefetchIndex }) => {
         }
 
         updateRegistry(obj, (data) => {
-            console.log(data)
+            // console.log(data)
             setRefetchIndex(prevValue => prevValue + 1)
             close()
         })

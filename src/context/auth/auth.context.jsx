@@ -20,7 +20,7 @@ export const useAuth = () => useContext(AuthContext)
 const AuthProvider = ({ children }) => {
     const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
     const [currentUser, setCurrentUser] = useState(null)
-    const [token, setToken] = useState(null)
+    const [token, setToken] = useState(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN) || null)
     const [isAdmin, setIsAdmin] = useState(false)
     const [isOptometrist, setIsOptometrist] = useState(false)
     const [stats, setStats] = useState(null)
@@ -214,11 +214,11 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        if (localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN)) {
-            setToken(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN))
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN)) {
+    //         setToken(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN))
+    //     }
+    // }, [])
 
     useEffect(() => {
         if (token) {

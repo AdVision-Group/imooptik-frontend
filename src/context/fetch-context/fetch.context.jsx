@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect} from 'react'
 
+import {fetchError} from '../../utils/errors'
+
 export const FetchContext = createContext({
     isLoading: false,
     response: null,
@@ -46,8 +48,9 @@ const FetchProvider = ({children}) => {
             setIsLoading(false)
         } catch (err) {
             setError(err)
-            setIsLoading(false)
-            setMessage("Niečo sa pokazilo")
+            fetchError(err, setMessage, () => {
+                setIsLoading(false)
+            })
         }
     } 
 
