@@ -728,7 +728,7 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
     return result
 }
 
-export const formatCalendarObj = (calendarObj, fromTime, toTime) => {
+export const formatCalendarObj = (calendarObj, fromTime, toTime, breakFromTime, breakToTime) => {
     let obj = { ...calendarObj }
     if (obj.bookings) delete obj["bookings"]
     if (obj.booked !== undefined) delete obj["booked"]
@@ -741,9 +741,16 @@ export const formatCalendarObj = (calendarObj, fromTime, toTime) => {
             exceptDays: formatExceptDaysToObj(obj.exceptDays, fromTime, toTime)
         }
     }
+    if (obj.breaks) {
+        obj = {
+            ...obj,
+            breaks: formatBreaksArr(obj.breaks, breakFromTime, breakToTime)
+        }
+    }
+    if (obj.breakFromTime) delete obj["breakFromTime"]
+    if (obj.breakToTime) delete obj["breakToTime"]
     if (obj.fromTime) delete obj["fromTime"]
     if (obj.toTime) delete obj["toTime"]
-
 
     return obj
 }
@@ -754,6 +761,12 @@ export const formatExceptDays = (exceptDaysObj) => {
     return formatedArr
 }
 export const formatExceptHours = (exceptDaysObj) => {
+    const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
+    const formatedArr = arr.map(value => value.replaceAll('/', ":"))
+    return formatedArr
+}
+
+export const formatBreakHours = (exceptDaysObj) => {
     const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
     const formatedArr = arr.map(value => value.replaceAll('/', ":"))
     return formatedArr
@@ -779,6 +792,30 @@ export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
         }
     })
     return obj
+}
+
+export const formatBreaksArr = (breaksArr, fromTime, toTime )=> {
+    let obj = {}
+    // const formatedArr = breaksArr.map(value => value.split('-').reverse().join('/'))
+    // const from = fromTime.replace(":", "/")
+    // const to = toTime.replace(":", "/")
+    const from = fromTime
+    const to = toTime
+
+
+    // console.log("FORMAT TIME")
+    // console.log(from)
+    // console.log(to)
+
+    const formatedArr = breaksArr.map((day, idx) => {
+
+        return `${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`
+        // obj = {
+        //     ...obj,
+        //     [day]: `${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`
+        // }
+    })
+    return formatedArr
 }
 
 export const formatBookingObj = bookingObj => {
