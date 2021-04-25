@@ -161,15 +161,15 @@ const OrderSection = () => {
                         <SummaryTableRow key={idx}>
                             <TableCol>{idx + 1}</TableCol>
                             <TableCol>{item?.product ? <OrderSummaryProductName name={item?.product?.name} eanCode={item?.product?.eanCode} /> : ""}</TableCol>
-                            <TableCol>{item?.product?.price ? `${(item?.product?.price / 100).toFixed(2)}€` : ''}</TableCol>
-                            <TableCol>{item?.discount?.product ? item?.discount?.product.flat ? `${((item?.product?.price - (Number(item?.discount?.product?.flat?.replace(",", ".")) * 100)) / 100).toFixed(2)}€` : `${getPercentageDiscount(item?.product?.price, item?.discount?.product?.percent)}€` : ""} {item?.discount?.product?.percent && `(${item?.discount?.product?.percent}%)`}</TableCol>
+                            <TableCol>{item?.product?.price ? `${((item?.product?.price * item?.productQuant) / 100).toFixed(2)}€` : ''}</TableCol>
+                            <TableCol>{item?.discount?.product ? item?.discount?.product.flat ? `${(((item?.product?.price * item?.productQuant) - (Number(item?.discount?.product?.flat?.replace(",", ".")) * 100)) / 100).toFixed(2)}€` : `${getPercentageDiscount(item?.product?.price * item?.productQuant, item?.discount?.product?.percent)}€` : ""} {item?.discount?.product?.percent && `(${item?.discount?.product?.percent}%)`}</TableCol>
                             <TableCol>{item?.product && item?.productQuant}</TableCol>
                             <TableCol>{item?.lens ? <OrderSummaryLensesName name={item?.lens?.name} eanCode={item?.lens?.eanCode} /> : ""}</TableCol>
-                            <TableCol>{item?.lens?.price ? `${(item?.lens?.price / 100).toFixed(2)}€` : ''}</TableCol>
-                            <TableCol>{item?.discount?.lenses ? item?.discount?.lenses?.flat ? `${((item?.lens?.price - (Number(item?.discount?.lenses?.flat?.replace(",", ".")) * 100)) / 100).toFixed(2)}€` : `${getPercentageDiscount(item?.lens?.price, item?.discount?.lenses?.percent)}€` : ""} {item?.discount?.lenses?.percent && `(${item?.discount?.lenses?.percent}%)`}</TableCol>
+                            <TableCol>{item?.lens?.price ? `${((item?.lens?.price * item?.lensesQuant) / 100).toFixed(2)}€` : ''}</TableCol>
+                            <TableCol>{item?.discount?.lenses ? item?.discount?.lenses?.flat ? `${(((item?.lens?.price * item?.lensesQuant) - (Number(item?.discount?.lenses?.flat?.replace(",", ".")) * 100)) / 100).toFixed(2)}€` : `${getPercentageDiscount(item?.lens?.price * item?.lensesQuant, item?.discount?.lenses?.percent)}€` : ""} {item?.discount?.lenses?.percent && `(${item?.discount?.lenses?.percent}%)`}</TableCol>
                             <TableCol>{item?.lens && item?.lensesQuant}</TableCol>
                             <TableCol>{`${((((item?.product?.price * item?.productQuant) || 0) + ((item?.lens?.price * item?.lensesQuant) || 0)) / 100).toFixed(2)}€`}</TableCol>
-                            <TableCol>{(getTotalDiscountedPrice(item?.product?.price || 0, item?.lens?.price || 0, item?.lensesQuant || 0, item?.discount) / 100).toFixed(2)}€</TableCol>
+                            <TableCol>{(getTotalDiscountedPrice(item?.product?.price || 0, item?.lens?.price || 0, item?.productQuant || 0, item?.lensesQuant || 0, item?.discount) / 100).toFixed(2)}€</TableCol>
                         </SummaryTableRow>
                     ))}
 

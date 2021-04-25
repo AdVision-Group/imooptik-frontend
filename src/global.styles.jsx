@@ -9,6 +9,8 @@ export const DefaultThemeColors = createGlobalStyle`
         --body-background-primary-color: #f5f5f5;
         --background-primary-color: #fff;
 
+        --link-color: #000;
+
         --navlink-color: #ffffff;
         --table-head-color: #ffffff;
         --table-border: 1px solid rgba(0,0,0,0.1);
@@ -56,6 +58,8 @@ export const DarkThemeColors = createGlobalStyle`
         --secondary-text-color: #a0a0a0;
         --body-background-primary-color: #252525;
         --background-primary-color: #2c2c2c;
+
+        --link-color: #fff;
 
         --navlink-color: #c7c6c6;
         --table-head-color: #c7c6c6;
@@ -138,7 +142,7 @@ export const GlobalStyles = createGlobalStyle`
 
     a {
         text-decoration: none;
-        color: #000;
+        color: var(--link-color);
         display:block;
     }
 

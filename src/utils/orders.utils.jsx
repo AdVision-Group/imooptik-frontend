@@ -18,9 +18,9 @@ const updatePrice = (price, amount, isFlat) => {
     return percDis > 0 ? percDis : 0
 }
 
-export const getTotalDiscountedPrice = (productPrice, lensesPrice, lensesQuant, discountObj) => {
+export const getTotalDiscountedPrice = (productPrice, lensesPrice, productQuant, lensesQuant, discountObj) => {
 
-    let productDiscPrice = productPrice
+    let productDiscPrice = productPrice ? productPrice * productQuant : 0
     let lensDiscPrice = lensesPrice ? lensesPrice * lensesQuant : 0
 
     if(!discountObj) return ""
