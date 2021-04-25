@@ -214,33 +214,55 @@ const CalendarSection = () => {
         if (isFetching) return
         if (response.calendar) {
             setIsUpdating(true)
+
+            let exceptDaysArr = null
+            let exceptDaysArraaa = null
+            let breakHourArr = null
+
+            setCalendar({
+                ...response.calendar,
+                fromTime: [],
+                toTime: [],
+                breaks: [],
+                breakFromTime: [],
+                breakToTime: []
+            })
+
             if (response.calendar.exceptDays) {
-                const exceptDaysArr = formatExceptDays(response.calendar.exceptDays)
-                const exceptDaysArraaa = formatExceptHours(response.calendar.exceptDays)
-                const breakHourArr = formatBreakHours(response.calendar.breaks)
+                exceptDaysArr = formatExceptDays(response.calendar.exceptDays)
+                exceptDaysArraaa = formatExceptHours(response.calendar.exceptDays)
 
                 // console.log("exceptDaysArr")
                 // console.log(exceptDaysArraaa)
 
-                setCalendar({
-                    ...response.calendar,
+                setCalendar(prevValue => ({
+                    ...prevValue,
                     exceptDays: exceptDaysArr,
                     fromTime: exceptDaysArraaa.map(time => time.split("-")[0]),
                     toTime: exceptDaysArraaa.map(time => time.split("-")[1]),
+                }))
+                // closeModal()
+                // return 
+            }
+
+            if (response.calendar.breaks) {
+                breakHourArr = formatBreakHours(response.calendar.breaks)
+
+                // console.log("exceptDaysArr")
+                // console.log(exceptDaysArraaa)
+
+                setCalendar(prevValue => ({
+                    ...prevValue,
+                    breaks: response.calendar.breaks,
                     breakFromTime: breakHourArr.map(time => time.split("-")[0]),
                     breakToTime: breakHourArr.map(time => time.split("-")[1])
-                })
-                closeModal()
-            } else {
-                setCalendar({
-                    ...response.calendar,
-                    fromTime: [],
-                    toTime: [],
-                    breakFromTime: [],
-                    breakToTime: []
-                })
-                closeModal()
+                }))
+                // closeModal()
+                // return 
             }
+
+            console.log(response.calendar)
+            closeModal()
         }
     }, [isFetching])
 

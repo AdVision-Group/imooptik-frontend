@@ -30,11 +30,11 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
         const startTime = Math.min(...numberedStartTimes)
 
         let holidayTime = null
-        let breakTime = calendar?.breaks[0] || null
-        let breakTime1 = calendar?.breaks[1] || null
-        let breakTime2 = calendar?.breaks[2] || null
-        let breakTime3 = calendar?.breaks[2] || null
-        let breakTime4 = calendar?.breaks[4] || null
+        let breakTime = calendar?.breaks ? calendar?.breaks[0] : null
+        let breakTime1 = calendar?.breaks ? calendar?.breaks[1] : null
+        let breakTime2 = calendar?.breaks ? calendar?.breaks[2] : null
+        let breakTime3 = calendar?.breaks ? calendar?.breaks[3] : null
+        let breakTime4 = calendar?.breaks ? calendar?.breaks[4] : null
 
         if(calendar?.exceptDays) {
             Object.keys(calendar?.exceptDays).forEach(date => {
