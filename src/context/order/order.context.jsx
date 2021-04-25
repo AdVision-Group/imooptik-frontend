@@ -112,8 +112,6 @@ const OrderProvider = ({ children }) => {
         }
     }
 
-    console.log(cart)
-
     const addLensesDiscount = (idx, type, value) => {
         if (value === "") {
             const newCart = cart.map((item, index) => {

@@ -1,4 +1,39 @@
 
+export const getPercentageDiscount = (fullPrice, percent) => {
+    const num = fullPrice / 100
+    const finalValue = num * percent
+    return ((fullPrice - finalValue) / 100).toFixed(2)
+}
+
+const updatePrice = (price, amount, isFlat) => {
+    if (amount == undefined) {
+        return price
+    }
+
+    if (isFlat) {
+        const formatedAmount = Number(amount.replace(",", ".")) * 100
+        return price - formatedAmount > 0 ? parseFloat((price - formatedAmount).toFixed(0)) : 0
+    }
+    const percDis = parseFloat((price * ((100 - amount) / 100)).toFixed(0))
+    return percDis > 0 ? percDis : 0
+}
+
+export const getTotalDiscountedPrice = (productPrice, lensesPrice, lensesQuant, discountObj) => {
+
+    let productDiscPrice = productPrice
+    let lensDiscPrice = lensesPrice ? lensesPrice * lensesQuant : 0
+
+    if(!discountObj) return ""
+    productDiscPrice = updatePrice(productDiscPrice, discountObj?.product?.flat, true)
+    productDiscPrice = updatePrice(productDiscPrice, discountObj?.product?.percent, false)
+
+    lensDiscPrice = updatePrice(lensDiscPrice, discountObj?.lenses?.flat, true)
+    lensDiscPrice = updatePrice(lensDiscPrice, discountObj?.lenses?.percent, false)
+
+    return productDiscPrice + lensDiscPrice
+
+}
+
 export const isAvailable = (available) => {
     if (!available) return false
     if (typeof available === "number") {
