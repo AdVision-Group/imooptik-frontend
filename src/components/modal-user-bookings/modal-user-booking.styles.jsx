@@ -83,6 +83,13 @@ export const SubmitButton = styled(CustomButton)`
     font-weight: bolder;
 `
 
+export const BreakButton = styled(CustomButton)`
+    /* display: block;
+    margin: 0 auto; */
+    background-color: var(--primary-color);
+    font-weight: bolder;
+`
+
 export const Navbar = styled(SectionNavbar)`
     ul {
         justify-content: center;
@@ -156,4 +163,11 @@ export const DateContainer = styled.div`
     p {
         align-self: center;
     }
+`
+
+export const Header = styled.div`
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 `

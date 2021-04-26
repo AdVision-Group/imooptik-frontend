@@ -17,6 +17,8 @@ export const BookingContext = createContext({
     reBookUserBooking: () => {}
 })
 
+export const useBookingContext = () => useContext(BookingContext)
+
 const BookingProvider = ({ children }) => {
     const { push } = useHistory()
     const {fetchData} = useFetchContext()
@@ -67,39 +69,68 @@ const BookingProvider = ({ children }) => {
         }
     }
 
-    const updateCalendar = async (calendarToUpdate, calendarId) => {
+    const updateCalendar = async (calendarToUpdate, calendarId, refetch) => {
         setIsLoading(true)
         setShowModal(true)
 
-        const raw = JSON.stringify(calendarToUpdate);
+        // const raw = JSON.stringify(calendarToUpdate);
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+        // const requestOptions = {
+        //     method: 'PATCH',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow'
+        // };
 
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/calendars/${calendarId}`, requestOptions)
-            const data = await response.json()
+            fetchData(`/api/admin/booking/calendars/${calendarId}`, calendarToUpdate, (data) => {
+                console.log(data)
 
+                if(data.error) {
+                    getMessage(data.messageSK)
+                    setIsLoading(false)
+                    return
+                }
 
-            if (data.calendar) {
+                if(data.calendar) {
+                    setIsLoading(false)
+                    getMessage(data.messageSK)
+
+                    if(refetch) {
+                        refetch()
+                        // closeModal()
+                        setShowModal(false)
+
+                        return
+                    }
+
+                    push('/dashboard/rezervacie')
+                    closeModal()
+                }
+
                 setIsLoading(false)
-                closeModal()
-                push('/dashboard/rezervacie')
-                return
-            }
+                getMessage(data.messageSK)
+            }, "PATCH")
+
+            // const response = await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/api/admin/booking/calendars/${calendarId}`, requestOptions)
+            // const data = await response.json()
 
 
-            setIsLoading(false)
-            getMessage(data.messageSK)
+            // if (data.calendar) {
+            //     setIsLoading(false)
+            //     closeModal()
+            //     push('/dashboard/rezervacie')
+            //     return
+            // }
+
+
+            // setIsLoading(false)
+            // getMessage(data.messageSK)
         } catch (err) {
-            console.log(err)
-            getMessage("Niečo sa pokazilo")
-            setIsLoading(false)
+            fetchError(err, getMessage, () => {
+                setIsLoading(false)
+            })
         }
     }
 
@@ -151,7 +182,7 @@ const BookingProvider = ({ children }) => {
                         refetch()
                         setIsLoading(false)
                         getMessage("Úspesne prerezervované")
-                        setShowModal(true)
+                        setShowModal(false)
 
                     }, "POST")
                 }

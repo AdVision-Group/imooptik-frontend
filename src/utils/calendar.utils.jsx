@@ -794,6 +794,28 @@ export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
     return obj
 }
 
+export const getExceptDaysObj = (exceptDaysArr, exceptHoursArr )=> {
+    let obj = {}
+    const formatedArr = exceptDaysArr.map(value => value.split('-').reverse().join('/'))
+    // const from = fromTime.replace(":", "/")
+    // const to = toTime.replace(":", "/")
+    // const from = fromTime
+    // const to = toTime
+
+
+    // console.log("FORMAT TIME")
+    // console.log(from)
+    // console.log(to)
+
+    formatedArr.forEach((day, idx) => {
+        obj = {
+            ...obj,
+            [day]: `${exceptHoursArr[idx].split('-')[0].replace(":", "/")}-${exceptHoursArr[idx].split('-')[1].replace(":", "/")}`
+        }
+    })
+    return obj
+}
+
 export const formatBreaksArr = (breaksArr, fromTime, toTime )=> {
     let obj = {}
     // const formatedArr = breaksArr.map(value => value.split('-').reverse().join('/'))
@@ -850,4 +872,16 @@ export const formatCalendarEndTime = (calendar, day) => {
     if (dayIndex === 0) dayIndex = 7
     if (calendar.endTimes[dayIndex - 1] === "X") return
     return calendar.endTimes[dayIndex - 1].replace("/", ":")
+}
+
+export const formatBreakHour = (startTime) => {
+    const splittedTime = startTime.split(":")
+
+    if(Number(splittedTime[1]) === 45) {
+        const increasedHour = Number(splittedTime[0]) + 1
+
+        return `${increasedHour < 10 ? `0${increasedHour}` : increasedHour}:00`
+    }
+
+    return `${splittedTime[0]}:${Number(splittedTime[1]) + 15}`
 }

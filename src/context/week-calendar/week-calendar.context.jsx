@@ -74,12 +74,37 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
                     if(splitedHolidayStartTime[0] < splitedTime[0] && splitedHolidayEndTime[0] > splitedTime[0]) {
                         return ({ empty: true })
                     }
-                    if(splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] <= splitedTime[1]) {
+                    if(splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1] && splitedHolidayStartTime[0] !== splitedHolidayEndTime[0]) {
                         return ({ empty: true })
                     }
-                    if(splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] >= splitedTime[1]) {
+                    if(splitedHolidayStartTime[0] === splitedHolidayEndTime[0] && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] < splitedTime[1] && splitedHolidayEndTime[1] > splitedTime[1]) {
+                        return ({
+                            id: idx,
+                            time: time,
+                            userBookings: checkBookings(calendar, idx, dayNumber, month, year)
+                        })
+                    }
+                    if(splitedHolidayStartTime[0] !== splitedHolidayEndTime[0] && splitedHolidayStartTime[0] < splitedHolidayEndTime[0] && splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] <= splitedTime[1]) {
+
                         return ({ empty: true })
                     }
+                    if(splitedHolidayStartTime[0] !== splitedHolidayEndTime[0] && splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] >= splitedTime[1]) {
+                        // console.log(`START TIME`)
+                        // console.log(`${splitedHolidayStartTime[0]}:${splitedHolidayStartTime[1]}`)
+                        // console.log(`END TIME`)
+                        // console.log(`${splitedHolidayEndTime[0]}:${splitedHolidayEndTime[1]}`)
+                        // console.log(`ACTUAL TIME`)
+                        // console.log(`${splitedTime[0]}:${splitedTime[1]}`)
+                        return ({ empty: true })
+                    }
+                    if(splitedHolidayEndTime[0] === splitedTime[0] && splitedHolidayEndTime[1] === splitedTime[1]) {
+                        return ({ empty: true })
+                    }
+                    if(splitedHolidayStartTime[0] === splitedTime[0] && splitedHolidayStartTime[1] === splitedTime[1]) {
+                        return ({ empty: true })
+                    }
+
+
     
                     return ({
                         id: idx,

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
+import {useBookingContext} from '../../context/booking/booking.context'
+
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
 
@@ -9,7 +11,11 @@ import { useFetchByQuery } from '../../hooks/useFetch'
 import {
     formatDate,
     formatCalendarStartTime,
-    formatCalendarEndTime
+    formatCalendarEndTime,
+    formatExceptDays,
+    formatExceptHours,
+    getExceptDaysObj,
+    formatBreakHour
 } from '../../utils/calendar.utils'
 
 import {
@@ -24,10 +30,13 @@ import {
     TableCol,
     SearchTab,
     CustomSelect,
-    DateContainer
+    DateContainer,
+    Header,
+    BreakButton
 } from './modal-user-booking.styles'
 
 const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCalendar, createUserBooking }) => {
+    const {updateCalendar} = useBookingContext()
 
     const [query, setQuery] = useState(null)
     const [activeTab, setActiveTab] = useState(0)
@@ -110,6 +119,39 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
         // close()
     }
 
+    const handleBreakSubmit = () => {
+        const exceptDays = formatExceptDays(calendar.exceptDays || {})
+        const exceptHours = formatExceptHours(calendar.exceptDays || {})
+
+        console.log(exceptDays)
+        console.log(exceptHours)
+
+        const newExceptDays = [
+            ...exceptDays,
+            bookingDate.date
+        ]
+
+        const formatedHour = `${bookingDate?.hour < 10 ? `0${bookingDate?.hour}` : bookingDate?.hour}:${bookingDate?.min === 0 ? `0${bookingDate?.min}` : bookingDate?.min}`
+
+
+        const newExceptHours = [
+            ...exceptHours,
+            `${formatedHour}-${formatBreakHour(formatedHour)}`
+        ]
+
+        console.log(newExceptDays)
+        console.log(newExceptHours)
+
+        
+        const calendarToUpdate = {
+            exceptDays: getExceptDaysObj(newExceptDays, newExceptHours)
+        }
+
+        console.log(calendarToUpdate)
+
+        updateCalendar(calendarToUpdate, calendar._id, refetchCalendar)
+    }
+
     useEffect(() => {
         if (day) {
             const { time, dayNumber, month, year } = day
@@ -136,7 +178,11 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
         <ModalContainer>
             <CloseButton onClick={close} />
             <Modal>
-                <h2>Objednať zákazníka</h2>
+                <Header>
+                    <h2>Objednať zákazníka</h2>
+                    <BreakButton onClick={handleBreakSubmit}>Prestavka</BreakButton>
+                </Header>
+
 
                 <Navbar
                     items={optionTabs}
@@ -212,9 +258,9 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
                                         onChange={handleChangeDate}
                                     >
                                         <option value={0}>00</option>
-                                        {calendar?.interval === 15 && <option value={45}>45</option>}
-                                        {(calendar?.interval === 30 || calendar?.interval === 15) && <option value={30}>30</option>}
                                         {calendar?.interval === 15 && <option value={15}>15</option>}
+                                        {(calendar?.interval === 30 || calendar?.interval === 15) && <option value={30}>30</option>}
+                                        {calendar?.interval === 15 && <option value={45}>45</option>}
                                     </CustomSelect>
                                 </div>
                             </DateContainer>
