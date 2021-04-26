@@ -69,7 +69,7 @@ const BookingProvider = ({ children }) => {
         }
     }
 
-    const updateCalendar = async (calendarToUpdate, calendarId, refetch) => {
+    const updateCalendar = async (calendarToUpdate, calendarId, refetch, callback = () => {}) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -101,7 +101,7 @@ const BookingProvider = ({ children }) => {
                         refetch()
                         // closeModal()
                         setShowModal(false)
-
+                        callback()
                         return
                     }
 
@@ -159,7 +159,7 @@ const BookingProvider = ({ children }) => {
         }
     }
 
-    const reBookUserBooking = async (bookingToRebook, oldBookingId, refetch = () => {}) => {
+    const reBookUserBooking = async (bookingToRebook, oldBookingId, refetch = () => {}, callback = () => {}) => {
         setIsLoading(true)
         setShowModal(true)
 
@@ -179,11 +179,11 @@ const BookingProvider = ({ children }) => {
                     fetchData(`/api/booking/userBookings/${oldBookingId}/cancel`, null, (deletedBookingData) => {
                         // console.log(deletedBookingData)
 
-                        refetch()
+                        // refetch()
                         setIsLoading(false)
                         getMessage("Úspesne prerezervované")
                         setShowModal(false)
-
+                        callback()
                     }, "POST")
                 }
                 setIsLoading(false)

@@ -123,8 +123,8 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
         const exceptDays = formatExceptDays(calendar.exceptDays || {})
         const exceptHours = formatExceptHours(calendar.exceptDays || {})
 
-        console.log(exceptDays)
-        console.log(exceptHours)
+        // console.log(exceptDays)
+        // console.log(exceptHours)
 
         const newExceptDays = [
             ...exceptDays,
@@ -139,17 +139,19 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             `${formatedHour}-${formatBreakHour(formatedHour)}`
         ]
 
-        console.log(newExceptDays)
-        console.log(newExceptHours)
+        // console.log(newExceptDays)
+        // console.log(newExceptHours)
 
         
         const calendarToUpdate = {
             exceptDays: getExceptDaysObj(newExceptDays, newExceptHours)
         }
 
-        console.log(calendarToUpdate)
+        // console.log(calendarToUpdate)
 
-        updateCalendar(calendarToUpdate, calendar._id, refetchCalendar)
+        updateCalendar(calendarToUpdate, calendar._id, refetchCalendar, () => {
+            close()
+        })
     }
 
     useEffect(() => {

@@ -68,7 +68,7 @@ const UserbookingDetailsModal = ({ reBookUserBooking, close, userBooking, calend
     }
 
     const handleRebookSubmit = () => {
-        console.log(booking)
+        // console.log(booking)
         const rebook = {
             ...(booking.name) && { name: booking.name},
             ...(booking.email) && { email: booking.email},
@@ -79,9 +79,12 @@ const UserbookingDetailsModal = ({ reBookUserBooking, close, userBooking, calend
             dueTime: formatDate(rebookObj),
         }
 
-        console.log(rebook)
+        // console.log(rebook)
 
-        reBookUserBooking(rebook, booking._id, refetchCalendar)
+        reBookUserBooking(rebook, booking._id, refetchCalendar, () => {
+            refetchCalendar()
+            close()
+        })
 
     }
 
