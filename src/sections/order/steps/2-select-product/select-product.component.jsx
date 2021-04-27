@@ -40,7 +40,7 @@ const SelectProductComponent = ({ back, next, showErrorMessage }) => {
 
     const [productItems, setProductItems] = useState([])
     const [query, setQuery] = useState({
-        limit: 10,
+        limit: 20,
         skip: 0,
     })
     const { response, isLoading, refetch } = useFetchByQuery("api/admin/products/filter", query)
