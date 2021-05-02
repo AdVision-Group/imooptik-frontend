@@ -735,18 +735,33 @@ export const formatCalendarObj = (calendarObj, fromTime, toTime, breakFromTime, 
     if (obj.__v !== undefined) delete obj["__v"]
     if (obj._id) delete obj["_id"]
     if (obj.dateCreated) delete obj["dateCreated"]
-    if (obj.exceptDays) {
+    if (obj.except) {
         obj = {
             ...obj,
-            exceptDays: formatExceptDaysToObj(obj.exceptDays, fromTime, toTime)
+            except: formatExceptDaysToObj(obj.except, fromTime, toTime)
+        }
+    }
+    if (obj.lunches) {
+        obj = {
+            ...obj,
+            lunches: formatExceptDaysToObj(obj.lunches, obj.lunchFromTime, obj.lunchToTime)
         }
     }
     if (obj.breaks) {
         obj = {
             ...obj,
-            breaks: formatBreaksArr(obj.breaks, breakFromTime, breakToTime)
+            breaks: formatExceptDaysToObj(obj.breaks, obj.breakFromTime, obj.breakToTime)
         }
     }
+    // if (obj.breaks) {
+    //     obj = {
+    //         ...obj,
+    //         breaks: formatBreaksArr(obj.breaks, breakFromTime, breakToTime)
+    //     }
+    // }
+    // if (obj.breaks) delete obj["breaks"]
+    if (obj.lunchFromTime) delete obj["lunchFromTime"]
+    if (obj.lunchToTime) delete obj["lunchToTime"]
     if (obj.breakFromTime) delete obj["breakFromTime"]
     if (obj.breakToTime) delete obj["breakToTime"]
     if (obj.fromTime) delete obj["fromTime"]
@@ -756,13 +771,15 @@ export const formatCalendarObj = (calendarObj, fromTime, toTime, breakFromTime, 
 }
 
 export const formatExceptDays = (exceptDaysObj) => {
+    console.log(exceptDaysObj)
+
     const arr = Object.keys(exceptDaysObj)
     const formatedArr = arr.map(value => value.split('/').reverse().join('-'))
     return formatedArr
 }
 export const formatExceptHours = (exceptDaysObj) => {
     const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
-    const formatedArr = arr.map(value => value.replaceAll('/', ":"))
+    const formatedArr = arr.map(value => value[0].replaceAll('/', ":"))
     return formatedArr
 }
 
@@ -788,14 +805,16 @@ export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
     formatedArr.forEach((day, idx) => {
         obj = {
             ...obj,
-            [day]: `${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`
+            [day]: [`${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`],
         }
     })
     return obj
 }
 
-export const getExceptDaysObj = (exceptDaysArr, exceptHoursArr )=> {
-    let obj = {}
+export const getExceptDaysObj = (exceptDaysArr, exceptHoursArr, calendar, property)=> {
+    let obj = {
+        ...calendar[property]
+    }
     const formatedArr = exceptDaysArr.map(value => value.split('-').reverse().join('/'))
     // const from = fromTime.replace(":", "/")
     // const to = toTime.replace(":", "/")
@@ -810,7 +829,7 @@ export const getExceptDaysObj = (exceptDaysArr, exceptHoursArr )=> {
     formatedArr.forEach((day, idx) => {
         obj = {
             ...obj,
-            [day]: `${exceptHoursArr[idx].split('-')[0].replace(":", "/")}-${exceptHoursArr[idx].split('-')[1].replace(":", "/")}`
+            [day]: [`${exceptHoursArr[idx].split('-')[0].replace(":", "/")}-${exceptHoursArr[idx].split('-')[1].replace(":", "/")}`]
         }
     })
     return obj
@@ -884,4 +903,19 @@ export const formatBreakHour = (startTime) => {
     }
 
     return `${splittedTime[0]}:${Number(splittedTime[1]) + 15}`
+}
+export const formatLuncheskHour = (startTime) => {
+    const splittedTime = startTime.split(":")
+
+    if(Number(splittedTime[1]) === 30) {
+        const increasedHour = Number(splittedTime[0]) + 1
+        return `${increasedHour < 10 ? `0${increasedHour}` : increasedHour}:00`
+    }
+
+    if(Number(splittedTime[1]) === 45) {
+        const increasedHour = Number(splittedTime[0]) + 1
+        return `${increasedHour < 10 ? `0${increasedHour}` : increasedHour}:15`
+    }
+
+    return `${splittedTime[0]}:${Number(splittedTime[1]) + 30}`
 }

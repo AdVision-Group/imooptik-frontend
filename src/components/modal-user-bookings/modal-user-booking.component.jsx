@@ -15,7 +15,8 @@ import {
     formatExceptDays,
     formatExceptHours,
     getExceptDaysObj,
-    formatBreakHour
+    formatBreakHour,
+    formatLuncheskHour
 } from '../../utils/calendar.utils'
 
 import {
@@ -119,7 +120,7 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
         // close()
     }
 
-    const handleBreakSubmit = () => {
+    const handleBreakSubmit = (property) => {
         const exceptDays = formatExceptDays(calendar.exceptDays || {})
         const exceptHours = formatExceptHours(calendar.exceptDays || {})
 
@@ -136,7 +137,7 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
 
         const newExceptHours = [
             ...exceptHours,
-            `${formatedHour}-${formatBreakHour(formatedHour)}`
+            `${formatedHour}-${property === 'breaks' ? formatBreakHour(formatedHour) : formatLuncheskHour(formatedHour)}`
         ]
 
         // console.log(newExceptDays)
@@ -144,7 +145,7 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
 
         
         const calendarToUpdate = {
-            exceptDays: getExceptDaysObj(newExceptDays, newExceptHours)
+            [property]: getExceptDaysObj(newExceptDays, newExceptHours, calendar, property)
         }
 
         // console.log(calendarToUpdate)
@@ -182,7 +183,8 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             <Modal>
                 <Header>
                     <h2>Objednať zákazníka</h2>
-                    <BreakButton onClick={handleBreakSubmit}>Prestavka</BreakButton>
+                    <BreakButton onClick={() => handleBreakSubmit("lunches")}>Obed</BreakButton>
+                    <BreakButton onClick={() => handleBreakSubmit("breaks")}>Prestavka</BreakButton>
                 </Header>
 
 
