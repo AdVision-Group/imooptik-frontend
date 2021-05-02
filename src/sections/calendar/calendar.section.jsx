@@ -139,7 +139,7 @@ const CalendarSection = () => {
     const removeTimeBlock = (name, from, to, idx, time, toTime, index, value) => {
         // console.log(value)
 
-        console.log(calendar[from][index].length)
+        // console.log(calendar[from][index].length)
         let newArr = []
 
         if(calendar[from][index].length === 1) {
@@ -282,7 +282,7 @@ const CalendarSection = () => {
 
                 
                 // console.log("exceptDaysArr")
-                console.log(exceptHours)
+                // console.log(exceptHours)
 
                 setCalendar(prevValue => ({
                     ...prevValue,
@@ -344,7 +344,7 @@ const CalendarSection = () => {
         }
     }, [isFetching])
 
-    console.log(calendar)
+    // console.log(calendar)
 
     useEffect(() => {
         return () => {
