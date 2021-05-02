@@ -779,7 +779,13 @@ export const formatExceptDays = (exceptDaysObj) => {
 }
 export const formatExceptHours = (exceptDaysObj) => {
     const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
-    const formatedArr = arr.map(value => value[0].replaceAll('/', ":"))
+    console.log("FORMATED ARRR")
+    console.log(arr)
+    
+    const formatedArr = arr.map(value => value.map(v => v.replaceAll('/', ":")))
+
+    console.log(formatedArr)
+
     return formatedArr
 }
 
@@ -798,14 +804,26 @@ export const formatExceptDaysToObj = (exceptDaysArr, fromTime, toTime )=> {
     const to = toTime
 
 
-    // console.log("FORMAT TIME")
-    // console.log(from)
-    // console.log(to)
+    console.log("FORMAT TIME")
+    console.log(from)
+    console.log(to)
 
     formatedArr.forEach((day, idx) => {
+        if(!!obj[day]) {
+            obj = {
+                ...obj,
+                [day]: [...obj[day], ...from[idx].map((time, index) => (
+                    `${time.replace(":", "/")}-${to[idx][index].replace(":", "/")}`
+                ))]
+            }
+            return obj
+        }
+
         obj = {
             ...obj,
-            [day]: [`${from[idx].replace(":", "/")}-${to[idx].replace(":", "/")}`],
+            [day]: from[idx].map((time, index) => (
+                `${time.replace(":", "/")}-${to[idx][index].replace(":", "/")}`
+            )),
         }
     })
     return obj
@@ -827,6 +845,14 @@ export const getExceptDaysObj = (exceptDaysArr, exceptHoursArr, calendar, proper
     // console.log(to)
 
     formatedArr.forEach((day, idx) => {
+        if(!!obj[day]) {
+            obj = {
+                ...obj,
+                [day]: [...obj[day],  `${exceptHoursArr[idx].split('-')[0].replace(":", "/")}-${exceptHoursArr[idx].split('-')[1].replace(":", "/")}`]
+            }
+            return obj
+        }
+
         obj = {
             ...obj,
             [day]: [`${exceptHoursArr[idx].split('-')[0].replace(":", "/")}-${exceptHoursArr[idx].split('-')[1].replace(":", "/")}`]

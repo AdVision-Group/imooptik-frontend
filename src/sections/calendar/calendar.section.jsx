@@ -111,14 +111,14 @@ const CalendarSection = () => {
         }))
     }
 
-    const handleTimeChange = (value, name, idx) => {
+    const handleTimeChange = (value, name, idx, index) => {
         // console.log(value)
         // console.log(name)
         // console.log(idx)
 
         let arr = calendar[name]
 
-        arr[idx] = value
+        arr[idx][index] = value
 
         setCalendar(prevValue => ({
             ...prevValue,
@@ -136,20 +136,63 @@ const CalendarSection = () => {
         }))
     }
 
-    const removeBreakTime = (value) => {
+    const removeTimeBlock = (name, from, to, idx, time, toTime, index, value) => {
         // console.log(value)
-        const newArr = calendar.breaks.filter(v => v !== value)
 
-        setCalendar(prevValue => ({
-            ...prevValue,
-            breaks: newArr
-        }))
+        console.log(calendar[from][index].length)
+        let newArr = []
+
+        if(calendar[from][index].length === 1) {
+            newArr = calendar[name].filter((_, i) => i !== index && _ !== value)
+            
+            // let newFromArr = calendar[from].splice(index, 1)
+            // let newToArr = calendar[to].splice(index, 1)
+
+            // console.log(newFromArr)
+            // console.log(newToArr)
+
+            let fromArr = calendar[from]
+            let toArr = calendar[to]
+            fromArr.splice(index, 1)
+            toArr.splice(index, 1)
+    
+            // fromArr[index] = [...newFromArr]
+            // toArr[index] = [...newToArr]
+
+            setCalendar(prevValue => ({
+                ...prevValue,
+                ...(newArr.length > 0) && {[name]: newArr},
+                [from]: fromArr,
+                [to]: toArr
+            }))
+            return
+
+        } else {
+            let newFromArr = calendar[from][index].filter((_, i) => i !== idx && _ !== time)
+            let newToArr = calendar[to][index].filter((_, i) => i !== idx && _ !== toTime)
+            let fromArr = calendar[from]
+            let toArr = calendar[to]
+    
+            fromArr[index] = [...newFromArr]
+            toArr[index] = [...newToArr]
+            setCalendar(prevValue => ({
+                ...prevValue,
+                ...(newArr.length > 0) && {[name]: newArr},
+                [from]: fromArr,
+                [to]: toArr
+            }))
+        }
+        // let newFromArr = calendar[from].map(v => v.filter((_, i) => i !== idx && _ !== time))
+
+
     }
 
-    const handleAddNewDay = (name) => {
+    const handleAddNewDay = (name, from, to) => {
         setCalendar(prevValue => ({
             ...prevValue,
-            [name]: prevValue[name] ? [...prevValue[name], ""] : [""]
+            [name]: prevValue[name] ? [...prevValue[name], ["00:00"]] : [["00:00"]],
+            [from]: prevValue[from] ? [...prevValue[from], ["00:00"]] : [["00:00"]],
+            [to]: prevValue[to] ? [...prevValue[to], ["00:00"]] : [["00:00"]]
         }))
     }
 
@@ -188,21 +231,27 @@ const CalendarSection = () => {
             updateCalendar(calendarToUpdate, calendar._id)
         } else {
             let calendarToCreate = {}
-            if (calendar.exceptDays && calendar.breaks) {
+            if (calendar.exceptDays && calendar.breaks && calendar.lunches) {
                 calendarToCreate = {
                     ...calendar,
                     exceptDays: formatExceptDaysToObj(calendar.exceptDays, calendar.fromTime, calendar.toTime),
-                    breaks: formatBreaksArr(calendar.breaks, calendar.breakFromTime, calendar.breakToTime)
+                    breaks: formatBreaksArr(calendar.breaks, calendar.breakFromTime, calendar.breakToTime),
+                    lunches: formatBreaksArr(calendar.lunches, calendar.lunchFromTime, calendar.lunchToTime)
                 }
             } else if (calendar.exceptDays) {
                 calendarToCreate = {
                     ...calendar,
-                    exceptDays: formatExceptDaysToObj(calendar.exceptDays, calendar.fromTime, calendar.toTime),
+                    except: formatExceptDaysToObj(calendar.exceptDays, calendar.fromTime, calendar.toTime),
                 }
             } else if (calendar.breaks) {
                 calendarToCreate = {
                     ...calendar,
                     breaks: formatBreaksArr(calendar.breaks, calendar.breakFromTime, calendar.breakToTime)
+                }
+            } else if (calendar.lunches) {
+                calendarToCreate = {
+                    ...calendar,
+                    lunches: formatBreaksArr(calendar.lunches, calendar.lunchFromTime, calendar.lunchToTime)
                 }
             } else {
                 calendarToCreate = { ...calendar }
@@ -216,13 +265,6 @@ const CalendarSection = () => {
         if (isFetching) return
         if (response.calendar) {
             setIsUpdating(true)
-
-            console.log(response.calendar)
-
-            let exceptDaysArr = null
-            let lunches = null
-            let breaks = null
-            let exceptDaysArraaa = null
 
             setCalendar({
                 ...response.calendar,
@@ -238,14 +280,15 @@ const CalendarSection = () => {
                 const exceptDates = formatExceptDays(response.calendar.except)
                 const exceptHours = formatExceptHours(response.calendar.except)
 
+                
                 // console.log("exceptDaysArr")
-                // console.log(exceptDaysArraaa)
+                console.log(exceptHours)
 
                 setCalendar(prevValue => ({
                     ...prevValue,
                     except: exceptDates,
-                    fromTime: exceptHours.map(time => time.split("-")[0]),
-                    toTime: exceptHours.map(time => time.split("-")[1]),
+                    fromTime: exceptHours.map(v => v.map(time => time.split("-")[0])),
+                    toTime: exceptHours.map(v => v.map(time => time.split("-")[1])),
                 }))
                 // closeModal()
                 // return 
@@ -254,14 +297,11 @@ const CalendarSection = () => {
                 const lunchesDates = formatExceptDays(response.calendar.lunches)
                 const lunchesHours = formatExceptHours(response.calendar.lunches)
 
-                // console.log("exceptDaysArr")
-                // console.log(exceptDaysArraaa)
-
                 setCalendar(prevValue => ({
                     ...prevValue,
                     lunches: lunchesDates,
-                    lunchFromTime: lunchesHours.map(time => time.split("-")[0]),
-                    lunchToTime: lunchesHours.map(time => time.split("-")[1]),
+                    lunchFromTime: lunchesHours.map(v => v.map(time => time.split("-")[0])),
+                    lunchToTime: lunchesHours.map(v => v.map(time => time.split("-")[1])),
                 }))
                 // closeModal()
                 // return 
@@ -276,8 +316,8 @@ const CalendarSection = () => {
                 setCalendar(prevValue => ({
                     ...prevValue,
                     breaks: breaksDates,
-                    breakFromTime: breaksHours.map(time => time.split("-")[0]),
-                    breakToTime: breaksHours.map(time => time.split("-")[1]),
+                    breakFromTime: breaksHours.map(v => v.map(time => time.split("-")[0])),
+                    breakToTime: breaksHours.map(v => v.map(time => time.split("-")[1])),
                 }))
                 // closeModal()
                 // return 
@@ -299,10 +339,12 @@ const CalendarSection = () => {
             //     // return 
             // }
 
-            console.log(response.calendar)
+            // console.log(response.calendar)
             closeModal()
         }
     }, [isFetching])
+
+    console.log(calendar)
 
     useEffect(() => {
         return () => {
@@ -358,10 +400,11 @@ const CalendarSection = () => {
                                 />
                             </div>
                         </Container>}
+
                         <Container>
                             <h3>Dovolenky</h3>
                             {calendar?.except && calendar?.except?.map((value, idx) => (
-                                <HolidayInputContainer key={idx}>
+                                <HolidayInputContainer key={idx} style={{marginBottom: "2rem"}}>
                                     <CustomInput
                                         type="date"
                                         // label='Dátum'
@@ -369,28 +412,37 @@ const CalendarSection = () => {
                                         value={value || ""}
                                         handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
                                     />
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "fromTime", idx)}
-                                            value={calendar?.fromTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "toTime", idx)}
-                                            value={calendar?.toTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
+                                    <div>
+                                        {calendar.fromTime && calendar.fromTime[idx]?.map((time, index) => (
+                                            <div key={idx} style={{display: "flex"}}>
+                                                <CustomTimePicker>
+                                                    <p>Od:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "fromTime", idx, index)}
+                                                        value={time ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <CustomTimePicker>
+                                                    <p>Do:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "toTime", idx, index)}
+                                                        value={calendar?.toTime[idx][index] ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <button onClick={() => removeTimeBlock("except", "fromTime", "toTime", index, time, calendar?.toTime[idx][index], idx, value)}>X</button>
+                                            </div>
+                                        ))}
+                                    </div>
                                     {/* <CustomInput
                                         type="time"
                                         // label='Dátum'
@@ -398,15 +450,14 @@ const CalendarSection = () => {
                                         value={time}
                                         handleChange={(e) => console.log(e.target.value)}
                                     /> */}
-                                    <button onClick={() => removeExceptDay(value)}>X</button>
                                 </HolidayInputContainer >
                             ))}
-                            <AddDayButton onClick={() => handleAddNewDay("except")}>+</AddDayButton>
+                            <AddDayButton onClick={() => handleAddNewDay("except", "fromTime", "toTime")}>+</AddDayButton>
                         </Container>
                         <Container>
                             <h3>Obedy</h3>
                             {calendar?.lunches && calendar?.lunches?.map((value, idx) => (
-                                <HolidayInputContainer key={idx}>
+                                <HolidayInputContainer key={idx} style={{marginBottom: "2rem"}}>
                                     <CustomInput
                                         type="date"
                                         // label='Dátum'
@@ -414,28 +465,39 @@ const CalendarSection = () => {
                                         value={value || ""}
                                         handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
                                     />
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "lunchFromTime", idx)}
-                                            value={calendar?.lunchFromTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "lunchToTime", idx)}
-                                            value={calendar?.lunchToTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
+                                    <div>
+                                        {console.log("calendar.lunchFromTime")}
+                                        {console.log(calendar.lunchFromTime[idx])}
+                                        {calendar.lunchFromTime && calendar.lunchFromTime[idx]?.map((time, index) => (
+                                            <div key={idx} style={{display: "flex"}}>
+                                                <CustomTimePicker>
+                                                    <p>Od:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "lunchFromTime", idx, index)}
+                                                        value={time ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <CustomTimePicker>
+                                                    <p>Do:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "lunchToTime", idx, index)}
+                                                        value={calendar?.lunchToTime[idx][index] ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <button onClick={() => removeTimeBlock("lunches", "lunchFromTime", "lunchToTime", index, time, calendar?.lunchToTime[idx][index], idx, value)}>X</button>
+                                            </div>
+                                        ))}
+                                    </div>
                                     {/* <CustomInput
                                         type="time"
                                         // label='Dátum'
@@ -443,15 +505,14 @@ const CalendarSection = () => {
                                         value={time}
                                         handleChange={(e) => console.log(e.target.value)}
                                     /> */}
-                                    <button onClick={() => removeExceptDay(value)}>X</button>
                                 </HolidayInputContainer >
                             ))}
-                            <AddDayButton onClick={() => handleAddNewDay("lunches")}>+</AddDayButton>
+                            <AddDayButton onClick={() => handleAddNewDay("lunches", "lunchFromTime", "lunchToTime")}>+</AddDayButton>
                         </Container>
                         <Container>
                             <h3>Prestávky</h3>
                             {calendar?.breaks && calendar?.breaks?.map((value, idx) => (
-                                <HolidayInputContainer key={idx}>
+                                <HolidayInputContainer key={idx} style={{marginBottom: "2rem"}}>
                                     <CustomInput
                                         type="date"
                                         // label='Dátum'
@@ -459,28 +520,37 @@ const CalendarSection = () => {
                                         value={value || ""}
                                         handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
                                     />
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "breakFromTime", idx)}
-                                            value={calendar?.breakFromTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
-                                    <CustomTimePicker>
-                                        <TimePicker
-                                            onChange={(e) => handleTimeChange(e, "breakToTime", idx)}
-                                            value={calendar?.breakToTime[idx] ?? "00:00"}
-                                            // format={"hh:mm"}
-                                            // minTime={"00:00"}
-                                            // maxTime={"23:59"}
-                                            locale="sv-sv"
-                                            disableClock={true}
-                                        />
-                                    </CustomTimePicker>
+                                    <div>
+                                        {calendar.breakFromTime && calendar.breakFromTime[idx]?.map((time, index) => (
+                                            <div key={idx} style={{display: "flex"}}>
+                                                <CustomTimePicker>
+                                                    <p>Od:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "breakFromTime", idx, index)}
+                                                        value={time ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <CustomTimePicker>
+                                                    <p>Do:</p>
+                                                    <TimePicker
+                                                        onChange={(e) => handleTimeChange(e, "breakToTime", idx, index)}
+                                                        value={calendar?.breakToTime[idx][index] ?? "00:00"}
+                                                        // format={"hh:mm"}
+                                                        // minTime={"00:00"}
+                                                        // maxTime={"23:59"}
+                                                        locale="sv-sv"
+                                                        disableClock={true}
+                                                    />
+                                                </CustomTimePicker>
+                                                <button onClick={() => removeTimeBlock("breaks", "breakFromTime", "breakToTime", index, time, calendar?.breakToTime[idx][index], idx, value)}>X</button>
+                                            </div>
+                                        ))}
+                                    </div>
                                     {/* <CustomInput
                                         type="time"
                                         // label='Dátum'
@@ -488,10 +558,9 @@ const CalendarSection = () => {
                                         value={time}
                                         handleChange={(e) => console.log(e.target.value)}
                                     /> */}
-                                    <button onClick={() => removeExceptDay(value)}>X</button>
                                 </HolidayInputContainer >
                             ))}
-                            <AddDayButton onClick={() => handleAddNewDay("breaks")}>+</AddDayButton>
+                            <AddDayButton onClick={() => handleAddNewDay("breaks", "breakFromTime", "breakToTime")}>+</AddDayButton>
                         </Container>
                         {/* <Container>
                             <h3>Prestávky</h3>
