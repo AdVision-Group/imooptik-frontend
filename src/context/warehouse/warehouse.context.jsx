@@ -22,6 +22,7 @@ import {
 } from '../../utils/warehouse.utils'
 
 export const WarehouseContext = createContext({
+    searchQuery: null,
     eanCode: null,
     product: {},
     lenses: {},
@@ -63,6 +64,7 @@ export const WarehouseContext = createContext({
     handleGlassesSizeChange: () => { },
     deactivateMany: () => { },
     getFilteredLenses: () => {},
+    handleSearchQueryChange: () => {}
 })
 
 const WarehouseProvider = ({ children }) => {
@@ -70,6 +72,8 @@ const WarehouseProvider = ({ children }) => {
     const { push } = useHistory()
     const { token, isAdmin, currentUser, stats } = useContext(AuthContext)
     const { closeModal, setIsLoading, setShowModal, getMessage } = useContext(LoadingModalContext)
+
+    const [searchQuery, setSearchQuery] = useState(null)
 
     const [totalProducts, setTotalProducts] = useState(0)
     const [totalLenses, setTotalLenses] = useState(0)
@@ -87,6 +91,10 @@ const WarehouseProvider = ({ children }) => {
 
     const [productCategoryTypeTabs] = useState(categoryTabs)
     const [activeCategoryTypeTab, setActiveCategoryTypeTab] = useState(0)
+
+    const handleSearchQueryChange = (string) => {
+        setSearchQuery(string)
+    }
 
     const handleGlassesParameterChange = e => {
         const { name, value } = e.target
@@ -955,6 +963,7 @@ const WarehouseProvider = ({ children }) => {
     return (
         <WarehouseContext.Provider
             value={{
+                searchQuery,
                 eanCode,
                 product,
                 lenses,
@@ -995,7 +1004,8 @@ const WarehouseProvider = ({ children }) => {
                 handleGlassesParameterSpecsChange,
                 handleGlassesSizeChange,
                 deactivateMany,
-                getFilteredLenses
+                getFilteredLenses,
+                handleSearchQueryChange
             }}
         >
             {children}

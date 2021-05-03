@@ -28,10 +28,9 @@ import {
 const EshopSection = () => {
     const { push } = useHistory()
     const { closeModal, showModal, isLoading, message } = useContext(LoadingModalContext)
-    const [searchQuery, setSearchQuery] = useState('')
     const [productItems, setProductItems] = useState([])
     const [queryFilter, setQueryFilter] = useState({
-        limit: 10,
+        limit: 100,
         skip: 0,
         sortBy: {
             date: -1
@@ -72,7 +71,18 @@ const EshopSection = () => {
         deactivateMany,
         getFilteredLenses,
         getLenses,
+        searchQuery: savedSearchQuery,
+        handleSearchQueryChange
     } = useContext(WarehouseContext)
+
+    const [searchQuery, setSearchQuery] = useState(savedSearchQuery ? savedSearchQuery : '')
+
+    const handleSearchQuery = (e) => {
+        const {value} = e.target 
+
+        handleSearchQueryChange(value)
+        setSearchQuery(value)
+    }
 
     const handleDeactivateMany = (productIDs, boolean) => {
         const dataObj = {
@@ -91,7 +101,7 @@ const EshopSection = () => {
 
     const resetFilter = () => {
         getProductsByQuery({
-            limit: 10,
+            limit: 100,
             skip: 0,
             sortBy: {
                 date: -1
@@ -129,7 +139,7 @@ const EshopSection = () => {
     useEffect(() => {
         if (!products) {
             getProductsByQuery({
-                limit: 10,
+                limit: 100,
                 sortBy: {
                     date: -1
                 }
@@ -144,7 +154,7 @@ const EshopSection = () => {
         if (!searchQuery && products) {
             if (activeCategoryTypeTab === 0) {
                 getProductsByQuery({
-                    limit: 10,
+                    limit: 100,
                     sortBy: {
                         date: -1
                     }
@@ -162,14 +172,14 @@ const EshopSection = () => {
 
 
     const getNextPage = () => {
-        if (productItems.length < 10) return
+        if (productItems.length < 100) return
         getProductsByQuery({
             ...queryFilter,
-            skip: queryFilter.skip + 10
+            skip: queryFilter.skip + 100
         })
         setQueryFilter({
             ...queryFilter,
-            skip: queryFilter.skip + 10
+            skip: queryFilter.skip + 100
         })
     }
 
@@ -177,11 +187,11 @@ const EshopSection = () => {
         if (queryFilter.skip === 0) return
         getProductsByQuery({
             ...queryFilter,
-            skip: queryFilter.skip - 10
+            skip: queryFilter.skip - 100
         })
         setQueryFilter({
             ...queryFilter,
-            skip: queryFilter.skip - 10
+            skip: queryFilter.skip - 100
         })
     }
 
@@ -194,7 +204,7 @@ const EshopSection = () => {
                 title="Sklad"
                 searchQuery={searchQuery}
                 handleSearch={handleSearch}
-                handleChange={e => setSearchQuery(e.target.value)}
+                handleChange={e => handleSearchQuery(e)}
                 handleAddButton={() => push('sklad/novy-produkt')}
 
             />
