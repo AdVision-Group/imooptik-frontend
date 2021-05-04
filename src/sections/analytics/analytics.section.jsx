@@ -392,6 +392,10 @@ const reportTypes = [
         name: "Zákazky",
         value: "orders",
     },
+    {
+        name: "Predané produkty",
+        value: "soldProducts",
+    },
 ]
 
 const retailTypes = [

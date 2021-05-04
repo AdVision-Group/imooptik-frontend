@@ -728,7 +728,7 @@ export const checkIfHasAppoinment = (hourIndex, bookingsArr) => {
     return result
 }
 
-export const formatCalendarObj = (calendarObj, fromTime, toTime, breakFromTime, breakToTime) => {
+export const formatCalendarObj = (calendarObj, fromTime, toTime) => {
     let obj = { ...calendarObj }
     if (obj.bookings) delete obj["bookings"]
     if (obj.booked !== undefined) delete obj["booked"]
@@ -766,6 +766,7 @@ export const formatCalendarObj = (calendarObj, fromTime, toTime, breakFromTime, 
     if (obj.breakToTime) delete obj["breakToTime"]
     if (obj.fromTime) delete obj["fromTime"]
     if (obj.toTime) delete obj["toTime"]
+    // if (obj.toTime) delete obj["toTime"]
 
     return obj
 }

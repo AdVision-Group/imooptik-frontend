@@ -33,6 +33,20 @@ const WeekCalendarProvider = ({ children, calendar, month, year }) => {
         let lunches = null
         let holidays = null
 
+        // console.log(`Day number ${dayNumber}`)
+        // console.log(`Day dayIdx ${dayIdx}`)
+        // console.log(`Day number ${dayNumber}`)
+        let isDisabled = false
+
+        if(calendar?.disabledDays) {
+            //return if disabled Day equal the dayblock
+            calendar.disabledDays.forEach(day => {
+                if(day === dayIdx + 1 ) return isDisabled = true
+            })
+        }
+
+        if(isDisabled) return
+
         if(calendar?.except) {
             Object.keys(calendar?.except).forEach(date => {
                 const splitedDate = date.split("/") 

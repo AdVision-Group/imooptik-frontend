@@ -42,8 +42,9 @@ import {
     AddDayButton,
     DeleteCalendarButton,
     HolidayInputContainer,
-    CustomTimePicker
-
+    CustomTimePicker,
+    CustomSelect,
+    DisabledDayContainer
 } from './calendar.styles'
 
 const CalendarSection = () => {
@@ -65,7 +66,8 @@ const CalendarSection = () => {
         breakFromTime: ["00:00"],
         breakToTime: ["00:00"],
         lunchFromTime: ["00:00"],
-        lunchToTime: ["00:00"]
+        lunchToTime: ["00:00"],
+        disabledDays: []
     })
     const [isUpdating, setIsUpdating] = useState(false)
 
@@ -136,6 +138,15 @@ const CalendarSection = () => {
         }))
     }
 
+    const removeDisbledDay = (name, idx) => {
+        const arr = calendar[name].filter((_, index) => index !== idx)
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: arr
+        }))
+    }
+
     const removeTimeBlock = (name, from, to, idx, time, toTime, index, value) => {
         // console.log(value)
 
@@ -193,6 +204,25 @@ const CalendarSection = () => {
             [name]: prevValue[name] ? [...prevValue[name], ["00:00"]] : [["00:00"]],
             [from]: prevValue[from] ? [...prevValue[from], ["00:00"]] : [["00:00"]],
             [to]: prevValue[to] ? [...prevValue[to], ["00:00"]] : [["00:00"]]
+        }))
+    }
+
+    const handleAddNewDisabledDay = (name) => {
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: prevValue[name] ? [...prevValue[name], 1] : [1],
+        }))
+    }
+
+    const handleDisableDayChange = (e, idx) => {
+        const {name, value} = e.target
+        let arr = calendar[name]
+
+        arr[idx] = value
+
+        setCalendar(prevValue => ({
+            ...prevValue,
+            [name]: arr
         }))
     }
 
@@ -273,7 +303,8 @@ const CalendarSection = () => {
                 breakFromTime: [],
                 breakToTime: [],
                 lunchFromTime: [],
-                lunchToTime: []
+                lunchToTime: [],
+                disabledDays: []
             })
 
             if (response.calendar.except) {
@@ -402,6 +433,22 @@ const CalendarSection = () => {
                         </Container>}
 
                         <Container>
+                            <h3>Dni kedy sa nevyšetruje</h3>
+                            {calendar?.disabledDays && calendar?.disabledDays?.map((value, idx) => (
+                                <DisabledDayContainer key={idx}>
+                                    <CustomSelect name='disabledDays' value={value} onChange={(e) => handleDisableDayChange(e, idx)}>
+                                        {days.map(({name, value: v}, idx) => {
+                                            return (
+                                                <option key={idx} value={v}>{name}</option>
+                                            )
+                                        })}
+                                    </CustomSelect>
+                                    <button onClick={() => removeDisbledDay("disabledDays", idx)}>X</button>
+                                </DisabledDayContainer>
+                            ))}
+                            <AddDayButton onClick={() => handleAddNewDisabledDay("disabledDays")}>+</AddDayButton>
+                        </Container>
+                        <Container>
                             <h3>Dovolenky</h3>
                             {calendar?.except && calendar?.except?.map((value, idx) => (
                                 <HolidayInputContainer key={idx} style={{marginBottom: "2rem"}}>
@@ -466,8 +513,6 @@ const CalendarSection = () => {
                                         handleChange={(e) => handleCalendarExceptDaysChange(e, idx)}
                                     />
                                     <div>
-                                        {console.log("calendar.lunchFromTime")}
-                                        {console.log(calendar.lunchFromTime[idx])}
                                         {calendar.lunchFromTime && calendar.lunchFromTime[idx]?.map((time, index) => (
                                             <div key={idx} style={{display: "flex"}}>
                                                 <CustomTimePicker>
@@ -697,3 +742,64 @@ const CalendarSection = () => {
 }
 
 export default CalendarSection
+
+const days = [
+    {
+        name: "Pondelok",
+        value: 1
+    },
+    {
+        name: "Utorok",
+        value: 2
+    },
+    {
+        name: "Streda",
+        value: 3
+    },
+    {
+        name: "Štvrtok",
+        value: 4
+    },
+    {
+        name: "Piatok",
+        value: 5
+    },
+    {
+        name: "Sobota",
+        value: 6
+    },
+    {
+        name: "Nedeľa",
+        value: 0
+    },
+]
+// const days = [
+//     {
+//         name: "Pondelok",
+//         value: 0
+//     },
+//     {
+//         name: "Utorok",
+//         value: 1
+//     },
+//     {
+//         name: "Streda",
+//         value: 2
+//     },
+//     {
+//         name: "Štvrtok",
+//         value: 3
+//     },
+//     {
+//         name: "Piatok",
+//         value: 4
+//     },
+//     {
+//         name: "Sobota",
+//         value: 5
+//     },
+//     {
+//         name: "Nedeľa",
+//         value: 6
+//     },
+// ]

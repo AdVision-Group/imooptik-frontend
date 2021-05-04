@@ -147,3 +147,29 @@ export const CustomTimePicker = styled.div`
 
     input {}
 `
+
+export const CustomSelect = styled.select`
+    margin-top: 1.5rem;
+    min-width: 16.5rem;
+    width: 100%;
+    background-color: var(--input-background-color);
+    color: var(--input-color);
+    border: none;
+    padding: .5rem .5rem .5rem 1rem;
+    font-size: inherit;
+    font-family: inherit;
+    display: block;
+
+        margin-bottom: 2rem;
+`
+
+export const DisabledDayContainer = styled.div`
+    display: grid;
+    grid-template-columns: auto 5rem;
+    align-items: center;
+
+    button {
+        cursor: pointer;
+        color: var(--primary-color);
+    }
+`
