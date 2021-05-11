@@ -188,6 +188,7 @@ const CalendarSection = () => {
             return
 
         } else {
+            newArr = calendar[name].filter((_, i) => i !== index && _ !== value)
             let newFromArr = calendar[from][index].filter((_, i) => i !== idx && _ !== time)
             let newToArr = calendar[to][index].filter((_, i) => i !== idx && _ !== toTime)
             let fromArr = calendar[from]
@@ -195,9 +196,24 @@ const CalendarSection = () => {
     
             fromArr[index] = [...newFromArr]
             toArr[index] = [...newToArr]
+
+            console.log(fromArr[index].length)
+
+            if(fromArr[index].length <= 0) {
+                fromArr[index] = []
+                toArr[index] = []
+
+                return setCalendar(prevValue => ({
+                    ...prevValue,
+                    [name]: newArr,
+                    [from]: fromArr,
+                    [to]: toArr
+                }))
+            }
+
             setCalendar(prevValue => ({
                 ...prevValue,
-                ...(newArr.length > 0) && {[name]: newArr},
+                // ...(newArr.length > 0) && {[name]: newArr},
                 [from]: fromArr,
                 [to]: toArr
             }))
