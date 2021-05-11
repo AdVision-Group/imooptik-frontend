@@ -767,13 +767,15 @@ export const formatCalendarObj = (calendarObj, fromTime, toTime) => {
     if (obj.fromTime) delete obj["fromTime"]
     if (obj.toTime) delete obj["toTime"]
     if (obj.disabledDays) delete obj["disabledDays"]
+    // if (obj.disabledDays?.length <= 0) delete obj["disabledDays"]
+
     // if (obj.toTime) delete obj["toTime"]
 
     return obj
 }
 
 export const formatExceptDays = (exceptDaysObj) => {
-    // console.log(exceptDaysObj)
+    console.log(exceptDaysObj)
 
     const arr = Object.keys(exceptDaysObj)
     const formatedArr = arr.map(value => value.split('/').reverse().join('-'))
@@ -781,12 +783,12 @@ export const formatExceptDays = (exceptDaysObj) => {
 }
 export const formatExceptHours = (exceptDaysObj) => {
     const arr = Object.keys(exceptDaysObj).map(val => exceptDaysObj[val])
-    // console.log("FORMATED ARRR")
-    // console.log(arr)
+    console.log("FORMATED ARRR")
+    console.log(arr)
     
     const formatedArr = arr.map(value => value.map(v => v.replaceAll('/', ":")))
 
-    // console.log(formatedArr)
+    console.log(formatedArr)
 
     return formatedArr
 }

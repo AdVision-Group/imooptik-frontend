@@ -149,11 +149,18 @@ const CalendarSection = () => {
         }))
     }
 
-    const removeTimeBlock = (name, from, to, idx, time, toTime, index, value) => {
-        console.log(value)
-
-        console.log(calendar[from][index].length)
+    const removeTimeBlock = (name, from, to, idx, time, toTime, index, value, length) => {
+        console.log(length)
         let newArr = []
+ 
+        if(length === 1) {
+            setCalendar(prevValue => ({
+                ...prevValue,
+                [name]: [],
+                [from]: [],
+                [to]: []
+            }))
+        }
 
         if(calendar[from][index].length === 1) {
             newArr = calendar[name].filter((_, i) => i !== index && _ !== value)
@@ -431,7 +438,7 @@ const CalendarSection = () => {
                             </div>
                         </Container>}
 
-                        <Container>
+                        {/* <Container>
                             <h3>Dni kedy sa nevyšetruje</h3>
                             {calendar?.disabledDays && calendar?.disabledDays?.map((value, idx) => (
                                 <DisabledDayContainer key={idx}>
@@ -446,7 +453,7 @@ const CalendarSection = () => {
                                 </DisabledDayContainer>
                             ))}
                             <AddDayButton onClick={() => handleAddNewDisabledDay("disabledDays")}>+</AddDayButton>
-                        </Container>
+                        </Container> */}
                         <Container>
                             <h3>Dovolenky</h3>
                             {calendar?.except && calendar?.except?.map((value, idx) => (
@@ -485,7 +492,7 @@ const CalendarSection = () => {
                                                         disableClock={true}
                                                     />
                                                 </CustomTimePicker>
-                                                <button onClick={() => removeTimeBlock("except", "fromTime", "toTime", index, time, calendar?.toTime[idx][index], idx, value)}>X</button>
+                                                <button onClick={() => removeTimeBlock("except", "fromTime", "toTime", index, time, calendar?.toTime[idx][index], idx, value, calendar?.except.length)}>X</button>
                                             </div>
                                         ))}
                                     </div>
@@ -538,7 +545,7 @@ const CalendarSection = () => {
                                                         disableClock={true}
                                                     />
                                                 </CustomTimePicker>
-                                                <button onClick={() => removeTimeBlock("lunches", "lunchFromTime", "lunchToTime", index, time, calendar?.lunchToTime[idx][index], idx, value)}>X</button>
+                                                <button onClick={() => removeTimeBlock("lunches", "lunchFromTime", "lunchToTime", index, time, calendar?.lunchToTime[idx][index], idx, value, calendar?.lunches.length)}>X</button>
                                             </div>
                                         ))}
                                     </div>
@@ -591,7 +598,7 @@ const CalendarSection = () => {
                                                         disableClock={true}
                                                     />
                                                 </CustomTimePicker>
-                                                <button onClick={() => removeTimeBlock("breaks", "breakFromTime", "breakToTime", index, time, calendar?.breakToTime[idx][index], idx, value)}>X</button>
+                                                <button onClick={() => removeTimeBlock("breaks", "breakFromTime", "breakToTime", index, time, calendar?.breakToTime[idx][index], idx, value, calendar?.breaks.length)}>X</button>
                                             </div>
                                         ))}
                                     </div>
