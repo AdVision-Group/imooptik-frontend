@@ -116,7 +116,7 @@ const CalendarSection = () => {
     const handleTimeChange = (value, name, idx, index) => {
         // console.log(value)
         // console.log(name)
-        // console.log(idx)
+        // console.log(idx) 
 
         let arr = calendar[name]
 
@@ -128,18 +128,20 @@ const CalendarSection = () => {
         }))
     }
 
-    const removeExceptDay = (value) => {
-        // console.log(value)
-        const newArr = calendar.exceptDays.filter(v => v !== value)
+    // const removeExceptDay = (value) => {
+    //     // console.log(value)
+    //     const newArr = calendar.exceptDays.filter(v => v !== value)
 
-        setCalendar(prevValue => ({
-            ...prevValue,
-            exceptDays: newArr
-        }))
-    }
+    //     setCalendar(prevValue => ({
+    //         ...prevValue,
+    //         exceptDays: newArr
+    //     }))
+    // }
 
     const removeDisbledDay = (name, idx) => {
         const arr = calendar[name].filter((_, index) => index !== idx)
+
+        console.log(arr)
 
         setCalendar(prevValue => ({
             ...prevValue,
@@ -148,9 +150,9 @@ const CalendarSection = () => {
     }
 
     const removeTimeBlock = (name, from, to, idx, time, toTime, index, value) => {
-        // console.log(value)
+        console.log(value)
 
-        // console.log(calendar[from][index].length)
+        console.log(calendar[from][index].length)
         let newArr = []
 
         if(calendar[from][index].length === 1) {
@@ -261,31 +263,28 @@ const CalendarSection = () => {
             updateCalendar(calendarToUpdate, calendar._id)
         } else {
             let calendarToCreate = {}
-            if (calendar.exceptDays && calendar.breaks && calendar.lunches) {
-                calendarToCreate = {
-                    ...calendar,
-                    exceptDays: formatExceptDaysToObj(calendar.exceptDays, calendar.fromTime, calendar.toTime),
-                    breaks: formatBreaksArr(calendar.breaks, calendar.breakFromTime, calendar.breakToTime),
-                    lunches: formatBreaksArr(calendar.lunches, calendar.lunchFromTime, calendar.lunchToTime)
-                }
-            } else if (calendar.exceptDays) {
+            if (calendar.exceptDays) {
                 calendarToCreate = {
                     ...calendar,
                     except: formatExceptDaysToObj(calendar.exceptDays, calendar.fromTime, calendar.toTime),
                 }
-            } else if (calendar.breaks) {
+            }
+            
+            if (calendar.breaks) {
                 calendarToCreate = {
                     ...calendar,
                     breaks: formatBreaksArr(calendar.breaks, calendar.breakFromTime, calendar.breakToTime)
                 }
-            } else if (calendar.lunches) {
+            }
+            
+            if (calendar.lunches) {
                 calendarToCreate = {
                     ...calendar,
                     lunches: formatBreaksArr(calendar.lunches, calendar.lunchFromTime, calendar.lunchToTime)
                 }
-            } else {
-                calendarToCreate = { ...calendar }
             }
+
+            calendarToCreate = { ...calendar }
 
             createCalendar(calendarToCreate)
         }
