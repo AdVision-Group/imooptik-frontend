@@ -52,8 +52,8 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
-            paymentType: value,
-            ...(hasCoupon) && { couponValue: formatPrice(couponValue) }
+            paymentType: value === 'coupon' ? "cash" : value,
+            ...(value === 'coupon') && { couponValue: formatPrice(couponValue) }
         })
 
         const requestOptions = {
@@ -136,14 +136,15 @@ const FinishDepositedOrderModal = ({ close, id, refetch, order }) => {
                     <option value={''}>Neuvedené</option>
                     <option value={'card'}>Karta</option>
                     <option value={'cash'}>Hotovosť</option>
+                    <option value={'coupon'}>Kupon</option>
                 </CustomSelect>
 
-                <DiscountCheckboxContainer>
+                {/* <DiscountCheckboxContainer>
                     <input id="hasCoupon" name='hasCoupon' type='checkbox' value={hasCoupon} onChange={() => toggleCoupon(hasCoupon)} />
                     <label htmlFor='hasCoupon'>Pridať kupón</label>
-                </DiscountCheckboxContainer>
+                </DiscountCheckboxContainer> */}
 
-                {hasCoupon && (
+                {value === 'coupon' && (
                     <CouponValueContainer>
                         <CustomInput
                             label="Hodnota kupónu"
