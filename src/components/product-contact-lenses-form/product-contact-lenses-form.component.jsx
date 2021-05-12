@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
@@ -19,7 +19,8 @@ import {
     CopyButton,
     DeleteButton,
     NewImageContainer,
-    NewImagesContainer
+    NewImagesContainer,
+    BrandedCheckbox
 } from './product-contact-lenses-form.styles'
 
 const ProductContactLensesForm = ({
@@ -39,6 +40,36 @@ const ProductContactLensesForm = ({
     productObj,
     handleGetProductData
 }) => {
+    const [isOutlet, setIsOutlet] = useState(false)
+
+    const handleIsOutletClick = (isOutletBool) => {
+        if (isOutletBool) {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: false
+                }
+            })
+            setIsOutlet(false)
+        } else {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: true
+                }
+            })
+
+            setIsOutlet(true)
+
+        }
+    }
+
+
+    useEffect(() => {
+        if (product.outlet) setIsOutlet(true)
+    }, [isOutlet])
+
+
     return (
         <ContactLensesFormContainer>
             <ContactLensesContainer>
@@ -72,6 +103,26 @@ const ProductContactLensesForm = ({
                         <option key={idx} value={brand} />
                     ))}
                 </datalist>
+
+                <div>
+                    <BrandedCheckbox
+                        label={"Outlet"}
+                        isActive={isOutlet}
+                        handleClick={() => handleIsOutletClick(isOutlet)}
+                    />
+
+                    {isOutlet && (
+                        <React.Fragment>
+                            <CustomInput
+                                label="zľava v %"
+                                type='text'
+                                name='outletPercentage'
+                                value={product?.outletPercentage?.toString() || "70"}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </React.Fragment>
+                    )}
+                </div>
                 {/* 
                 <CustomInput
                     label="Kategória"

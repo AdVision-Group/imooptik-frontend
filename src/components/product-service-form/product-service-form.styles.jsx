@@ -1,4 +1,9 @@
 import styled from 'styled-components'
+import CustomCheckbox from '../custom-checkbox/custom-checkbox.component'
+
+export const BrandedCheckbox = styled(CustomCheckbox)`
+    margin-top: 2rem;
+`
 
 export const ServiceFormContainer = styled.div`
     display: grid;

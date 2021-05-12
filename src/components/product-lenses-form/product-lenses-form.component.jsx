@@ -44,6 +44,35 @@ const ProductLensesForm = ({
         }, idx)
     }
 
+    // const [isOutlet, setIsOutlet] = useState(false)
+
+    // const handleIsOutletClick = (isOutletBool) => {
+    //     if (isOutletBool) {
+    //         handleChange({
+    //             target: {
+    //                 name: "outlet",
+    //                 value: false
+    //             }
+    //         })
+    //         setIsOutlet(false)
+    //     } else {
+    //         handleChange({
+    //             target: {
+    //                 name: "outlet",
+    //                 value: true
+    //             }
+    //         })
+
+    //         setIsOutlet(true)
+
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     if (product.outlet) setIsOutlet(true)
+    // }, [isOutlet])
+
+
     // console.log(lenses)
 
     return (
@@ -80,6 +109,27 @@ const ProductLensesForm = ({
                         <option key={idx} value={brand} />
                     ))}
                 </datalist>
+
+                {/* <div>
+                    <BrandedCheckbox
+                        label={"Outlet"}
+                        isActive={isOutlet}
+                        handleClick={() => handleIsOutletClick(isOutlet)}
+                    />
+
+                    {isOutlet && (
+                        <React.Fragment>
+                            <CustomInput
+                                label="zľava v %"
+                                type='text'
+                                name='outletPercentage'
+                                value={product?.outletPercentage?.toString() || "70"}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </React.Fragment>
+                    )}
+                </div> */}
+
 
                 {/* <CustomTextarea
                     label="Popis*"

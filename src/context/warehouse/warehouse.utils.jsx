@@ -11,7 +11,9 @@ export const initProductObj = {
     image: "",
     eshop: true,
     link: '',
-    category: ''
+    category: '',
+    outlet: false,
+    outletPercentage: 70
 }
 
 export const initGlassesObj = {

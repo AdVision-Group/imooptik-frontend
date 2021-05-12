@@ -42,9 +42,9 @@ const ProductGlassesForm = ({
     productObj
 }) => {
     const [isBranded, setIsBranded] = useState(true)
-
     const [allBrands, setAllBrands] = useState([])
-
+    
+    
     const handleIsBrandedClick = (isBrandedBool) => {
         if (isBrandedBool) {
             handleChange({
@@ -66,6 +66,35 @@ const ProductGlassesForm = ({
 
         }
     }
+
+    const [isOutlet, setIsOutlet] = useState(false)
+
+    const handleIsOutletClick = (isOutletBool) => {
+        if (isOutletBool) {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: false
+                }
+            })
+            setIsOutlet(false)
+        } else {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: true
+                }
+            })
+
+            setIsOutlet(true)
+
+        }
+    }
+
+
+    useEffect(() => {
+        if (product.outlet) setIsOutlet(true)
+    }, [isOutlet])
 
     useEffect(() => {
         if (product.brand === "Neznačkové") setIsBranded(false)
@@ -109,6 +138,7 @@ const ProductGlassesForm = ({
                     handleClick={() => handleIsBrandedClick(isBranded)}
                 />
 
+
                 {isBranded && (
                     <React.Fragment>
                         <CustomInput
@@ -126,6 +156,27 @@ const ProductGlassesForm = ({
                         </datalist>
                     </React.Fragment>
                 )}
+
+                <div>
+                    <BrandedCheckbox
+                        label={"Outlet"}
+                        isActive={isOutlet}
+                        handleClick={() => handleIsOutletClick(isOutlet)}
+                    />
+
+                    {isOutlet && (
+                        <React.Fragment>
+                            <CustomInput
+                                label="zľava v %"
+                                type='text'
+                                name='outletPercentage'
+                                value={product?.outletPercentage?.toString() || "70"}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </React.Fragment>
+                    )}
+                </div>
+
 
                 {/* <CustomInput
                     label="Kategória"

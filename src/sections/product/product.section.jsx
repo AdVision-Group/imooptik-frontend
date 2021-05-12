@@ -75,7 +75,10 @@ const ProductSection = () => {
     } = useContext(WarehouseContext)
 
     const [hasChanged, setHasChanged] = useState(false)
-    const [productObj, setProductObj] = useState({})
+    const [productObj, setProductObj] = useState({
+        outlet: false,
+        outletPercentage: 70
+    })
 
 
     const { response, isLoading: isLoadingFilters, refetch } = useFetch(`api/store/products/${productObj?.type}/filters`, !productObj?.type, "GET")

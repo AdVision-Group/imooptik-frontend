@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import CustomInput from '../custom-input/custom-input.component'
 import CustomTextarea from '../custom-textarea/custom-textarea.component'
@@ -8,7 +8,8 @@ import {
     ServiceFormContainer,
     ServiceContainer,
     ImageContainer,
-    ProductImage
+    ProductImage,
+    BrandedCheckbox
 } from './product-service-form.styles'
 
 const ProductServiceForm = ({
@@ -18,6 +19,36 @@ const ProductServiceForm = ({
     selectedImage,
     setImageModal,
 }) => {
+    const [isOutlet, setIsOutlet] = useState(false)
+
+    const handleIsOutletClick = (isOutletBool) => {
+        if (isOutletBool) {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: false
+                }
+            })
+            setIsOutlet(false)
+        } else {
+            handleChange({
+                target: {
+                    name: "outlet",
+                    value: true
+                }
+            })
+
+            setIsOutlet(true)
+
+        }
+    }
+
+
+    useEffect(() => {
+        if (product.outlet) setIsOutlet(true)
+    }, [isOutlet])
+
+
     return (
         <ServiceFormContainer>
             <ServiceContainer>
@@ -38,6 +69,26 @@ const ProductServiceForm = ({
                     handleChange={(e) => handleChange(e)}
                 />
 
+                <div>
+                    <BrandedCheckbox
+                        label={"Outlet"}
+                        isActive={isOutlet}
+                        handleClick={() => handleIsOutletClick(isOutlet)}
+                    />
+
+                    {isOutlet && (
+                        <React.Fragment>
+                            <CustomInput
+                                label="zľava v %"
+                                type='text'
+                                name='outletPercentage'
+                                value={product?.outletPercentage?.toString() || "70"}
+                                handleChange={(e) => handleChange(e)}
+                            />
+                        </React.Fragment>
+                    )}
+                </div>
+
                 <CustomInput
                     label="Cena*"
                     type='text'
@@ -55,6 +106,8 @@ const ProductServiceForm = ({
                     handleChange={(e) => handleChange(e)}
                     required
                 />
+
+                
 
                 {/* <ImageContainer>
                     <ProductImage onClick={() => setImageModal(true)} hasImage={selectedImage}>
