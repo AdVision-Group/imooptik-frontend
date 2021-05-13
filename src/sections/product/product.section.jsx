@@ -520,6 +520,8 @@ const ProductSection = () => {
                 setProductObj(prevValue => ({
                     ...prevValue,
                     type: data.product.type,
+                    outlet: data.product.outlet,
+                    outletPercentage: data.product.outletPercentage
                 }))
             })
             setIsUpdating(true)

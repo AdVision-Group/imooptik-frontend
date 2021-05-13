@@ -60,7 +60,7 @@ const ProductOverview = ({
             </ProductContent>
             <PriceContainer>
                 <Price>{(price / 100).toFixed(2)}€</Price>
-                {outlet && <Price>Outlet: {(((price / 100) * (100 - outletPercentage || 70)) / 100).toFixed(2)}€</Price>}
+                {outlet && <Price>Outlet: {(((price / 100) * (100 - outletPercentage || 0)) / 100).toFixed(2)}€</Price>}
                 <StockInfo>{type === 6 ? "Služba" : formatAvailable(available, activePremisesTab)}</StockInfo>
             </PriceContainer>
 
