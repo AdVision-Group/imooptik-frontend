@@ -105,7 +105,7 @@ const ProductAccessoriesForm = ({
                                 label="zľava v %"
                                 type='text'
                                 name='outletPercentage'
-                                value={product?.outletPercentage?.toString() || "70"}
+                                value={product?.outletPercentage?.toString() || ""}
                                 handleChange={(e) => handleChange(e)}
                             />
                         </React.Fragment>
