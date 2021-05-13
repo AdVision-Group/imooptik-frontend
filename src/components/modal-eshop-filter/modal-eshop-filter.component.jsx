@@ -155,6 +155,16 @@ const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
                                 }
                             })}
                         />
+                        <CustomCheckbox
+                            label="Outlet"
+                            isActive={filter?.filters?.outlet}
+                            handleClick={() => handleChangeFilters({
+                                target: {
+                                    name: 'outlet',
+                                    value: filter?.filters?.outlet ? !filter?.filters?.outlet : true
+                                }
+                            })}
+                        />
                     </div>
                     <h3>Filtovat podla:</h3>
                     <div>

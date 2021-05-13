@@ -27,7 +27,7 @@ const ProductOverview = ({
     deselectProduct,
     selectedProducts,
 }) => {
-    const { name, available, eanCode, price, image, type } = product
+    const { name, available, eanCode, price, image, type, outlet, outletPercentage } = product
     const [isSelected, setIsSelected] = useState(false)
 
     const handleSelect = (productId, isSelect) => {
@@ -60,6 +60,7 @@ const ProductOverview = ({
             </ProductContent>
             <PriceContainer>
                 <Price>{(price / 100).toFixed(2)}€</Price>
+                {outlet && <Price>Outlet: {(((price / 100) * (100 - outletPercentage)) / 100).toFixed(2)}€</Price>}
                 <StockInfo>{type === 6 ? "Služba" : formatAvailable(available, activePremisesTab)}</StockInfo>
             </PriceContainer>
 
