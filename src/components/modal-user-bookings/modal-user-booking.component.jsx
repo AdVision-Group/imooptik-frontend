@@ -160,9 +160,13 @@ const UserBookingModal = ({ refetchWeekCalendar, close, day, calendar, refetchCa
             const { time, dayNumber, month, year } = day
             setStartTime(formatCalendarStartTime(calendar, day))
             setEndTime(formatCalendarEndTime(calendar, day))
+
+            console.log(day.isPrevDay)
             // const formatedDate = formatDate(`${dayNumber}-${month}-${year}`, time)
+            const d = day.isPrevDay ? `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${day?.prevDayNumber < 10 ? `0${day?.prevDayNumber}` : day?.prevDayNumber}` : `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${dayNumber < 10 ? `0${dayNumber}` : dayNumber}`
+
             setBookingDate({
-                date: `${year}-${month < 9 ? `0${month + 1}` : (month + 1)}-${dayNumber < 10 ? `0${dayNumber}` : dayNumber}`,
+                date: d,
                 hour: Number(time?.split("/")[0]),
                 min: Number(time?.split("/")[1])
             })

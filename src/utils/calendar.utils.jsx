@@ -631,16 +631,19 @@ export const getMonday = (d) => {
     return new Date(d.setDate(diff));
 }
 
-export const getPreviousMonthDays = (firstDayIndex) => {
+export const getPreviousMonthDays = (firstDayIndex, lastDay) => {
     let arr = [];
+    let y = 0;
     for (let x = firstDayIndex; x > 0; x--) {
         arr.push({
-            dayNumber: x,
-            isDisable: true,
+            dayNumber: firstDayIndex,
+            // isDisable: true,
+            prevDayNumber: lastDay - y,
             isPrevDay: true,
         })
+        y = y + 1   
     }
-    return arr
+    return arr.reverse()
 }
 
 export const getNextMonthDays = (nextDays) => {

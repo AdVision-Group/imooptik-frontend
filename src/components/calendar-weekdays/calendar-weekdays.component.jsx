@@ -43,6 +43,7 @@ const WeekDays = ({
     const { createUserBooking, reBookUserBooking } = useContext(BookingContext)
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const lastDay = new Date(year, month + 1, 0).getDate()
+    const lastPrevMonthDay = new Date(year, month, 0).getDate()
     const firstDayIndex = new Date(year, month, 0).getDay();
     const lastDayIndex = new Date(year, month + 1, 0).getDay()
     const prevLastDay = new Date(year, month, 0).getDate()
@@ -68,10 +69,13 @@ const WeekDays = ({
         if (isLoading) return
 
         if (response.calendar) {
-            const prevMonthDays = getPreviousMonthDays(firstDayIndex)
+            const prevMonthDays = getPreviousMonthDays(firstDayIndex, lastPrevMonthDay)
             const monthDays = getCurrentMonthDays(lastDay)
             const nextMonthDays = getNextMonthDays(nextDays)
             const monthDaysWithBookings = getBooking(monthDays, response.calendar, month, year)
+
+            // console.log(response.calendar)
+            // console.log(prevMonthDays)
 
             setCalendarDays([
                 ...prevMonthDays,
@@ -99,12 +103,12 @@ const WeekDays = ({
             <Container>
                 <TableHead>
                     <HeaderBlock>{" "}</HeaderBlock>
-                    {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay }, idx) => (
+                    {calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map(({ dayNumber, isDisable, isPrevDay, isNextDay, prevDayNumber }, idx) => (
                         <HeaderBlock isDisabled={isDisable} key={idx}>
                             {isPrevDay ? (
                                 <React.Fragment>
-                                    <p>{dayNames[new Date(year, month - 1, prevLastDay - (dayNumber)).getDay()]}</p>
-                                    <p>{prevLastDay - (dayNumber - 1)}</p>
+                                    <p>{dayNames[new Date(year, month, prevDayNumber).getDay()]}</p>
+                                    <p>{prevDayNumber }</p>
                                 </React.Fragment>
                             ) : isNextDay ? (
                                 <React.Fragment>
@@ -150,8 +154,10 @@ const WeekDays = ({
                                                 open={() => handleOpenDetailsModal(interval)}
                                             />}
                                             <EmptyContainer onClick={dayData.isDisable ? () => { } : () => handleOpenUserBookingModal({
-                                                ...dayData, time: interval.time, year,
-                                                month,
+                                                ...dayData, 
+                                                time: interval.time, 
+                                                year,
+                                                month: dayData.isPrevDay ? month - 1 : month ,
                                             })} />
                                         </HourBlockContainer>
                                     )

@@ -78,11 +78,17 @@ const BookingSection = () => {
     }
 
     const getPrevWeek = () => {
+        Date.prototype.getWeekOfMonth = function() {
+            var firstWeekday = new Date(this.getFullYear(), this.getMonth(), 1).getDay();
+            var offsetDate = this.getDate() + firstWeekday - 1;
+            return Math.floor(offsetDate / 7);
+        }
+
         if (calendarWeekIndex - 1 < 0) {
             if (selectedMonth === 0) {
                 setSelectedYear(prevValue => prevValue - 1)
                 setSelectedMonth(11)
-                setCalendarWeekIndex(Math.ceil(new Date(selectedYear, selectedMonth, 0).getDate() / 7) - 1)
+                setCalendarWeekIndex(new Date(selectedYear, selectedMonth, 0).getWeekOfMonth() - 1)
 
             } else {
                 setSelectedMonth(prevValue => prevValue - 1)
