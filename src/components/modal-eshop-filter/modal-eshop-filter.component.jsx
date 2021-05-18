@@ -18,7 +18,9 @@ import {
 } from './modal-eshop-filter.styles'
 
 const EshopFilterModal = ({ close, applyFilter, resetFilter }) => {
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useState({
+        limit: 100
+    })
 
     const { response, isLoading, refetch } = useFetch(`api/store/products/${filter?.filters?.type}/filters`, !filter?.filters?.type, "GET")
     const [filters, setFilters] = useState(null)

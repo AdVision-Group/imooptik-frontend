@@ -91,16 +91,23 @@ export const RegistryContainer = styled.div`
         }
     }
 
-    p {
-        font-size: 4rem;
-    }
-
     :nth-of-type(1) {
         h3 {
             margin-bottom: 1.8rem;
         }
     }
 `
+
+export const RegistryCash = styled.p`
+    font-size: 4rem;
+
+`
+
+export const TakeOutCash = styled.p`
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+`
+
 export const PaymentsContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);

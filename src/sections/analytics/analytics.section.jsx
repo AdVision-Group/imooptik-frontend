@@ -31,7 +31,9 @@ import {
     PaymentsContainer,
     UpdateRegistryButton,
     RegistryContainer,
-    HeaderContainer
+    HeaderContainer,
+    RegistryCash,
+    TakeOutCash
 } from './analytics.styles'
 
 const AnalyticsSection = () => {
@@ -162,6 +164,8 @@ const AnalyticsSection = () => {
         }
     }, [stats, activePremiseIndex])
 
+    console.log(stats)
+
     useEffect(() => {
         return () => {
             setActivePremiseIndex(0)
@@ -238,9 +242,14 @@ const AnalyticsSection = () => {
                         {activeIndex === 2 && <RegistryContainer>
                             <h3>Stav pokladne</h3>
                             {activeTabStats?.cashRegistry ? (
-                                <p>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</p>
+                                <RegistryCash>{(activeTabStats?.cashRegistry / 100).toFixed(2)}€</RegistryCash>
                             ) : (
-                                <p>0€</p>
+                                <RegistryCash>0€</RegistryCash>
+                            )}
+                            {activeTabStats?.takenOut ? (
+                                <TakeOutCash>Vybrané: {(activeTabStats?.takenOut / 100).toFixed(2)}€</TakeOutCash>
+                            ) : (
+                                <TakeOutCash>Vybrané: 0€</TakeOutCash>
                             )}
                             <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "deposit")}>Vložiť</UpdateRegistryButton>
                             <UpdateRegistryButton onClick={() => handleIsUpdateRegistryVisible(true, activePremiseIndex, "withdraw")}>Vybrať</UpdateRegistryButton>
