@@ -72,13 +72,14 @@ const WeekDays = ({
             const prevMonthDays = getPreviousMonthDays(firstDayIndex, lastPrevMonthDay)
             const monthDays = getCurrentMonthDays(lastDay)
             const nextMonthDays = getNextMonthDays(nextDays)
+            const prevMonthDaysWithBookings = getBooking(prevMonthDays, response.calendar, month - 1, year)
             const monthDaysWithBookings = getBooking(monthDays, response.calendar, month, year)
 
             // console.log(response.calendar)
             // console.log(prevMonthDays)
 
             setCalendarDays([
-                ...prevMonthDays,
+                ...prevMonthDaysWithBookings,
                 ...monthDaysWithBookings,
                 ...nextMonthDays
             ])
@@ -107,7 +108,7 @@ const WeekDays = ({
                         <HeaderBlock isDisabled={isDisable} key={idx}>
                             {isPrevDay ? (
                                 <React.Fragment>
-                                    <p>{dayNames[new Date(year, month, prevDayNumber).getDay()]}</p>
+                                    <p>{dayNames[new Date(year, month - 1, prevDayNumber - 1).getDay()]}</p>
                                     <p>{prevDayNumber }</p>
                                 </React.Fragment>
                             ) : isNextDay ? (
@@ -137,7 +138,12 @@ const WeekDays = ({
                         ))}
                     </HourBlock>
                     {calendarDays.length > 0 && calendarDays.slice(weekIndex * 7, (weekIndex * 7) + 7).map((dayData, idx) => {
-                        const day = getDayData(dayData?.dayNumber, idx, response.calendar)
+
+                        const day = getDayData(dayData?.dayNumber, idx, response.calendar, dayData.isPrevDay, dayData.prevDayNumber)
+
+                        // console.log(dayData)
+                        // console.log(day)
+
                         return (
                             < HourBlock key={idx} >
                                 { day && day.map((interval, idx) => {

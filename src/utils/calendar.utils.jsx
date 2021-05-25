@@ -690,20 +690,26 @@ export const getBooking = (days, calendar, month, year) => {
     })
 
     const daysWithBookingsArr = days.map(day => {
-        let dayObj = {}
+        let dayObj = {
+            ...day
+        }
+
+        let dayNumber  = day?.isPrevDay ? day?.prevDayNumber : day?.dayNumber
 
         bookingDates.forEach(date => {
             const splitedDate = date.split('/')
-            if (Number(splitedDate[0]) === day.dayNumber) {
+            if (Number(splitedDate[0]) ===  dayNumber) {
                 return dayObj = {
-                    dayNumber: day.dayNumber,
+                    ...dayObj,
+                    dayNumber: dayNumber,
                     bookings: calendar.booked[date],
                     bookingDate: bookingDates.find(bookDate => bookDate === date)
                 }
             } else {
                 if (dayObj.bookings) return
                 return dayObj = {
-                    dayNumber: day.dayNumber,
+                    ...dayObj,
+                    dayNumber: dayNumber,
                 }
             }
         })
@@ -711,7 +717,8 @@ export const getBooking = (days, calendar, month, year) => {
         if (dayObj.bookings) return dayObj
 
         return {
-            dayNumber: day.dayNumber,
+            ...dayObj,
+            dayNumber: dayNumber,
         }
 
     });

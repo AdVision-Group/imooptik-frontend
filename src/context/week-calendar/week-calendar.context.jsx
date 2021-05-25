@@ -17,17 +17,22 @@ export const WeekCalendarContext = createContext({
     // fillDayData: () => { }
 })
 
-const WeekCalendarProvider = ({ children, calendar, month, year }) => {
+const WeekCalendarProvider = ({ children, calendar, monthIndex, year }) => {
     const { response, isLoading, refetch } = useFetchById('api/booking/calendars', calendar, !calendar)
     const { closeModal, setIsLoading, setShowModal, getMessage } = useContext(LoadingModalContext)
     const { token } = useContext(AuthContext)
     const [numberOfHours, setNumberOfHours] = useState(0)
     const [timeline, setTimeline] = useState(null)
 
-    const getDayData = (dayNumber, dayIdx, calendar) => {
+    const getDayData = (dayN, dayIdx, calendar, isPrevDay, prevDayNumber) => {
         if (!calendar) return
         const numberedStartTimes = calendar.startTimes.filter(number => number !== "X").map(time => (Number(time.split("/")[0])))
         const startTime = Math.min(...numberedStartTimes)
+
+        let dayNumber = isPrevDay ? prevDayNumber : dayN
+        let month = isPrevDay ? monthIndex - 1 : monthIndex
+
+        // console.log(monthIndex)
 
         let breaks = null
         let lunches = null

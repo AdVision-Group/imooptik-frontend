@@ -336,7 +336,7 @@ const BookingSection = () => {
                             ) : (
                                     <WeekCalendarProvider
                                         calendar={selectedCalendar}
-                                        month={selectedMonth}
+                                        monthIndex={selectedMonth}
                                         year={selectedYear}
                                         weekIndex={calendarWeekIndex}
                                         handleCalendarBlockClick={handleCalendarBlockClick}
