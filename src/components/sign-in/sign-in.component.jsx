@@ -1,10 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {useHistory} from 'react-router-dom'
 import { AuthContext } from '../../context/auth/auth.context'
-import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
 import CustomInput from '../custom-input/custom-input.component'
-import PopUp from '../popup/pop-up.component'
 
 import { FormContainer, SubmitButton, ForgotPasswordButton } from './sign-in.styles'
 
@@ -14,6 +12,7 @@ const SignIn = ({ showForgotPwsForm }) => {
     const [password, setPassword] = useState('')
 
     const {
+        isAuthenticated,
         logIn,
         getToken,
         
@@ -23,13 +22,18 @@ const SignIn = ({ showForgotPwsForm }) => {
         e.preventDefault()
 
         logIn(email, password, () => {
-            history.push('/dashboard')
+            history.push('/dashboard/rezervacie')
         })
 
         setEmail('')
         setPassword('')
     }
 
+    useEffect(() => {
+        if(!isAuthenticated) return
+
+        history.push("/dashboard/rezervacie")
+    }, [isAuthenticated])
 
     return (
         <React.Fragment>

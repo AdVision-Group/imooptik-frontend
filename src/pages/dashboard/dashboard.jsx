@@ -95,9 +95,9 @@ const Dashboard = () => {
         },
     ]
 
-    const { isAuthenticated } = useContext(AuthContext)
+    const { isAuthorized } = useContext(AuthContext)
 
-    if (!isAuthenticated) return (
+    if (!isAuthorized) return (
         <Suspense fallback={<Popup loading={true} />}>
             <NoPermisionSection />
         </Suspense>
