@@ -1,5 +1,28 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+export const theme = {
+    primary: "#ebac01",
+    backgroundPrimary: "#f5f5f5",
+    backgroundSecondary: "#fff",
+    fontPrimary: "#000000",
+    fontSecondary: "#000000",
+    white: "#fff",
+    red: "#ED4C67",
+    black: "#000",
+    green: "#009432",
+    gray: "rgba(0,0,0,0.6)",
+    ctaButtonColor: "#fff",
+    ctaButtonBackground: "#BFD600",
+
+  
+    "dashboard-sm": "40.063em",
+    "dashboard-m": "64.063em",
+    "blog-sm": "40.063em",
+    "blog-m": "64.063em",
+    "new-blog-sm": "40.063em",
+    "new-blog-m": "64.063em",
+  }
+
 export const DefaultThemeColors = createGlobalStyle`
     :root {
         --primary-color: #ebac01;

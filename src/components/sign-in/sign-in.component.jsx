@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import {useHistory} from 'react-router-dom'
 import { AuthContext } from '../../context/auth/auth.context'
 import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
 
@@ -8,23 +9,22 @@ import PopUp from '../popup/pop-up.component'
 import { FormContainer, SubmitButton, ForgotPasswordButton } from './sign-in.styles'
 
 const SignIn = ({ showForgotPwsForm }) => {
+    const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const {
         logIn,
+        getToken,
+        
     } = useContext(AuthContext)
-
-    const {
-        isLoading,
-        closeModal,
-        message,
-        showModal
-    } = useContext(LoadingModalContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        logIn(email, password)
+
+        logIn(email, password, () => {
+            history.push('/dashboard')
+        })
 
         setEmail('')
         setPassword('')
@@ -33,7 +33,6 @@ const SignIn = ({ showForgotPwsForm }) => {
 
     return (
         <React.Fragment>
-            {showModal && <PopUp loading={isLoading} title={message} close={closeModal} />}
             <FormContainer onSubmit={handleSubmit}>
                 <h2>Prihlásiť sa</h2>
 

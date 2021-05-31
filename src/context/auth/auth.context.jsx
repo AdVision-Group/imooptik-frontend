@@ -1,9 +1,18 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
+import {useHistory} from 'react-router-dom'
 import { LoadingModalContext } from '../loading-modal/loading-modal.contenxt'
 import { getUser, createNewUser, resetPassword, setNewPassword, fetchUser } from './auth.queries'
 
 export const AuthContext = createContext({
+    userID: null,
+    token: null,
     currentUser: null,
+    isAuthenticated: false,
+    isAdmin: false,
+    isEditor: false,
+    getToken: () => { },
+    logout: () => { },
+
     isAdmin: false,
     isOptometrist: false,
     token: null,
@@ -18,15 +27,31 @@ export const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }) => {
-    const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
+    const [token, setToken] = useState(localStorage.getItem("accessToken") || null)
     const [currentUser, setCurrentUser] = useState(null)
-    const [token, setToken] = useState(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN) || null)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [userID, setUserID] = useState(localStorage.getItem("userId") || null)
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("accessToken") ? true : false)
+
+    const [isAdmin, setIsAdmin] = useState(localStorage.getItem("admin") > 1 ? true : false )
     const [isOptometrist, setIsOptometrist] = useState(false)
-    const [stats, setStats] = useState(null)
+
+    const getUserID = (id) => {
+        setUserID(id)
+        localStorage.setItem("userId", id)
+    }
+
+    const getToken = (token) => {
+        setToken(token)
+        // setUserID(user.sub)
+        // localStorage.setItem("userId", user.sub)
+        localStorage.setItem("accessToken", token)
+        setIsAuthenticated(true)
+        // client.resetStore()
+    }
 
     const checkIfOptometrist = user => {
         if (user.optometrist) {
+            localStorage.setItem("optimetrist", user.optometrist)
             setIsOptometrist(true)
         } else {
             setIsOptometrist(false)
@@ -36,12 +61,33 @@ const AuthProvider = ({ children }) => {
     const checkIfAdmin = (user) => {
         if (user.admin > 1) {
             setIsAdmin(true)
+            localStorage.setItem("admin", user.optometrist)
+
         } else {
             setIsAdmin(false)
         }
     }
 
-    const logIn = async (email, password) => {
+
+    const logout = (callback = () => {}) => {
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("userId")
+        setCurrentUser(null)
+        setIsAuthenticated(false)
+        setUserID(null)
+        callback()
+        // client.resetStore()
+    }
+
+    const { setShowModal, setIsLoading, getMessage, closeModal } = useContext(LoadingModalContext)
+    // const [currentUser, setCurrentUser] = useState(null)
+    // const [token, setToken] = useState(localStorage.getItem(process.env.REACT_APP_ADMIN_TOKEN) || null)
+    // const [isAdmin, setIsAdmin] = useState(false)
+    // const [isOptometrist, setIsOptometrist] = useState(false)
+    const [stats, setStats] = useState(null)
+
+
+    const logIn = async (email, password, callback = () => {}) => {
         setShowModal(true)
         setIsLoading(true)
 
@@ -70,8 +116,10 @@ const AuthProvider = ({ children }) => {
                 setToken(user.authToken)
                 localStorage.setItem(process.env.REACT_APP_ADMIN_TOKEN, user.authToken)
                 checkIfAdmin(user.user)
-
+                getUserID(user.user._id)
+                getToken(user.authToken)
                 closeModal()
+                callback(user)
             }
         } catch (err) {
             console.log(err)
@@ -238,11 +286,18 @@ const AuthProvider = ({ children }) => {
         }
     }, [token])
 
+    console.log(token)
+
     return (
         <AuthContext.Provider
             value={{
                 token,
+                userID,
                 currentUser,
+                isAuthenticated,
+                getToken,
+                logout,
+
                 isAdmin,
                 isOptometrist,
                 stats,
