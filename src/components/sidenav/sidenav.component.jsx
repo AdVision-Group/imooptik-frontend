@@ -17,7 +17,7 @@ import {
 } from './sidenav.styles'
 
 const Sidenav = ({ routes, match }) => {
-    const { logOut, currentUser } = useContext(AuthContext)
+    const { logOut, currentUser, logout } = useContext(AuthContext)
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -59,7 +59,7 @@ const Sidenav = ({ routes, match }) => {
                             </li>
                         </Link>
                     ))}
-                    <li onClick={logOut}>
+                    <li onClick={() => logout(() => {})}>
                         <NavLinksButton>
                             <IconContainer>
                                 <AiOutlineLogout />

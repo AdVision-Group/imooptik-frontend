@@ -8,14 +8,13 @@ export const AuthContext = createContext({
     token: null,
     currentUser: null,
     isAuthenticated: false,
+    isAuthorized: false,
     isAdmin: false,
     isEditor: false,
+    isOptometrist: false,
     getToken: () => { },
     logout: () => { },
 
-    isAdmin: false,
-    isOptometrist: false,
-    token: null,
     stats: null,
     logIn: () => { },
     logOut: () => { },
@@ -31,6 +30,7 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [userID, setUserID] = useState(localStorage.getItem("userId") || null)
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("accessToken") ? true : false)
+    const [isAuthorized, setIsAuthorized] = useState(false)
 
     const [isAdmin, setIsAdmin] = useState(localStorage.getItem("admin") > 1 ? true : false )
     const [isOptometrist, setIsOptometrist] = useState(false)
@@ -59,6 +59,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const checkIfAdmin = (user) => {
+        if(user.admin === 0) return setIsAuthorized(false)
         if (user.admin > 1) {
             setIsAdmin(true)
             localStorage.setItem("admin", user.optometrist)
@@ -66,16 +67,16 @@ const AuthProvider = ({ children }) => {
         } else {
             setIsAdmin(false)
         }
+        setIsAuthorized(true)
     }
 
 
-    const logout = (callback = () => {}) => {
+    const logout = () => {
         localStorage.removeItem("accessToken")
         localStorage.removeItem("userId")
         setCurrentUser(null)
         setIsAuthenticated(false)
         setUserID(null)
-        callback()
         // client.resetStore()
     }
 
@@ -295,6 +296,7 @@ const AuthProvider = ({ children }) => {
                 userID,
                 currentUser,
                 isAuthenticated,
+                isAuthorized,
                 getToken,
                 logout,
 
