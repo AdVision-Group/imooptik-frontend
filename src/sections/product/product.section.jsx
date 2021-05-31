@@ -76,6 +76,7 @@ const ProductSection = () => {
 
     const [hasChanged, setHasChanged] = useState(false)
     const [productObj, setProductObj] = useState({
+        // subbrand: "",
         outlet: false,
         outletPercentage: 70
     })

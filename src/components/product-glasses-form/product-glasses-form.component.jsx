@@ -157,6 +157,24 @@ const ProductGlassesForm = ({
                     </React.Fragment>
                 )}
 
+                {!isBranded && (
+                    <React.Fragment>
+                        <CustomInput
+                            label="Značka"
+                            type='text'
+                            name='subbrand'
+                            value={product.subbrand ?? ""}
+                            handleChange={(e) => handleChange(e)}
+                            list="brands"
+                        />
+                        <datalist id="brands">
+                            {allBrands.map((brand, idx) => (
+                                <option key={idx} value={brand} />
+                            ))}
+                        </datalist>
+                    </React.Fragment>
+                )}
+
                 <div>
                     <BrandedCheckbox
                         label={"Outlet"}
