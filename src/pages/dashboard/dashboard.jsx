@@ -95,9 +95,9 @@ const Dashboard = () => {
         },
     ]
 
-    const { currentUser } = useContext(AuthContext)
+    const { isAuthenticated } = useContext(AuthContext)
 
-    if (currentUser.admin === 0) return (
+    if (!isAuthenticated) return (
         <Suspense fallback={<Popup loading={true} />}>
             <NoPermisionSection />
         </Suspense>
@@ -106,15 +106,12 @@ const Dashboard = () => {
     return (
         <DashboardContainer>
             <SideNav routes={routes} match={match} />
+            <WarehouseProvider>
             <main>
                 <Suspense fallback={<Popup loading={true} />}>
                     <ImageProvider>
                         <Switch>
-                            <Route path={`${match.path}/obchod`} render={() => (
-                                <WarehouseProvider>
-                                    <EshopSection />
-                                </WarehouseProvider>
-                            )} />
+                            <Route exact path={`${match.path}/obchod`} component={EshopSection} />
 
                             <Route path={`${match.path}/sklad/:id`} render={() => (
                                 <WarehouseProvider>
@@ -204,10 +201,12 @@ const Dashboard = () => {
                         </Switch>
                         {/* {currentUser.admin === 0 ? <Redirect to={`${match.path}/objednavky`} /> : <Redirect to={`${match.path}/obchod`} />} */}
                         {/* <Redirect to={`${match.path}/zakaznici`} /> */}
-                        <Redirect to={`${match.path}/rezervacie`} />
+                        {/* <Redirect to={`${match.path}/rezervacie`} /> */}
                     </ImageProvider>
                 </Suspense>
             </main>
+            </WarehouseProvider>
+
         </DashboardContainer>
     )
 }
