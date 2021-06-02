@@ -127,7 +127,7 @@ const OrderSection = () => {
 
     useEffect(() => {
         if (cart) {
-            console.log(cart)
+            // console.log(cart)
             setPriceTotal(cart.reduce((accumalatedQuantity, item) => accumalatedQuantity + (getTotalDiscountedPrice(item?.product?.price || 0, item?.lens?.price || 0, item?.productQuant || 0, item?.lensesQuant || 0, item?.discount) / 100), 0))
         }
     }, [cart])
