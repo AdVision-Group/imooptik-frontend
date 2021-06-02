@@ -56,6 +56,8 @@ export const TableCol = styled.div`
 
 `
 
+
+
 export const SummaryTableHead = styled.div`
     display: grid;
     align-content: center;

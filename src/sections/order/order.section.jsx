@@ -25,7 +25,9 @@ import {
     SummaryTableRow,
     SummaryTableTitle,
     TableCol,
-    TotalContainer
+    TotalContainer,
+    // TotalContainer,
+
 } from './order.styles'
 
 const OrderSection = () => {
@@ -121,6 +123,15 @@ const OrderSection = () => {
         }
     }, [])
 
+    const [priceTotal, setPriceTotal] = useState(0)
+
+    useEffect(() => {
+        if (cart) {
+            console.log(cart)
+            setPriceTotal(cart.reduce((accumalatedQuantity, item) => accumalatedQuantity + (getTotalDiscountedPrice(item?.product?.price || 0, item?.lens?.price || 0, item?.productQuant || 0, item?.lensesQuant || 0, item?.discount) / 100), 0))
+        }
+    }, [cart])
+
     return (
 
         <section>
@@ -174,7 +185,7 @@ const OrderSection = () => {
                     ))}
 
                     <TotalContainer>
-                        {/* <p>Spolu: {(priceTotal / 100).toFixed(2)}€</p> */}
+                        <p>Spolu: {priceTotal.toFixed(2)}€</p>
                     </TotalContainer>
                 </ProductsOverviewContainer>}
 

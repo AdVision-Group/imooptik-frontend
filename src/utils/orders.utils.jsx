@@ -23,7 +23,7 @@ export const getTotalDiscountedPrice = (productPrice, lensesPrice, productQuant,
     let productDiscPrice = productPrice ? productPrice * productQuant : 0
     let lensDiscPrice = lensesPrice ? lensesPrice * lensesQuant : 0
 
-    if(!discountObj) return ""
+    if(!discountObj) return productPrice || lensesPrice
     productDiscPrice = updatePrice(productDiscPrice, discountObj?.product?.flat, true)
     productDiscPrice = updatePrice(productDiscPrice, discountObj?.product?.percent, false)
 
