@@ -11,7 +11,12 @@ const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-
 const DashboardPage = lazy(() => import('./pages/dashboard/dashboard'))
 
 const App = () => {
-  const [currentTheme, setCurrentTheme] = useState('light')
+  const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme") || "light")
+
+  const toggleCurrentTheme = (theme) => {
+    localStorage.setItem("theme", theme)
+    setCurrentTheme(theme)
+  }
 
   return (
     <React.Fragment>
@@ -27,7 +32,7 @@ const App = () => {
             </Switch>
           </HashRouter>
         </Suspense>
-        <SwitchButton onClick={() => setCurrentTheme(prevValue => prevValue === "dark" ? "light" : "dark")}><CgDarkMode /></SwitchButton>
+        <SwitchButton onClick={() => toggleCurrentTheme(currentTheme === "dark" ? "light" : "dark")}><CgDarkMode /></SwitchButton>
       </ThemeProvider>
 
     </React.Fragment>
