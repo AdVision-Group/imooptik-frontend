@@ -307,7 +307,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                     label={''}
                                     value={examObj.refrakcia.nosi_od}
                                     // type="date"
-                                    type="month"
+                                    type="text"
                                     name="refrakcia.nosi_od"
                                     handleChange={handleChange}
                                 />
@@ -819,7 +819,7 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                     label={''}
                                     value={examObj.anamneza.nosi_od}
                                     // type="date"
-                                    type="month"
+                                    type="text"
                                     name="anamneza.nosi_od"
                                     handleChange={handleChange}
                                 />
