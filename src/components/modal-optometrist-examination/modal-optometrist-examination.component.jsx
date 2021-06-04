@@ -254,8 +254,10 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                     cyl: ["1001", "1001"],
                     ax: ["1001", "1001"],
                     add: ["1001", "1001"],
-                    vis: ["1001", "1001"]
+                    vis: ["1001", "1001"],
+                    vbino: "1001"
                 },
+                nosi: "",
                 subj: "",
                 obj: ""
             },
@@ -1542,6 +1544,20 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
 
                 {examObj.type === 3 && (
                     <Container>
+                        <TwoColContainer style={{marginBottom: "1rem"}}>
+                            <div>
+                                <h5>Nosi:</h5>
+                                <CustomInput
+                                    label={''}
+                                    value={examObj.kontrola.nosi}
+                                    // type="date"
+                                    type="text"
+                                    name="kontrola.nosi"
+                                    handleChange={handleChange}
+                                />
+                            </div>
+                        </TwoColContainer>
+
                         <h4>Kontrola</h4>
 
                         {/* <h4>Typ Kontaktných šošoviek</h4> */}
@@ -1714,6 +1730,27 @@ const OptometristExaminationModal = ({ close, refetch, userId, examinationToUpda
                                         />
                                     </Col>
                                 ))}
+                            </TableCol>
+                            <TableCol>
+                                <Col>V.BINO</Col>
+                                <Col>
+                                    <input
+                                        name={`kontrola.tabulka.vbino`}
+                                        type='text'
+                                        value={checkParameterValue(examObj.kontrola.tabulka?.vbino)}
+                                        // onChange={e => setVlastne_okuliare(prevValue => ({
+                                        //     ...prevValue,
+                                        //     [e.target.name]: e.target.value
+                                        // }))}
+                                        onChange={handleChange}
+
+                                    // onBlur={(e) => formatParameters(e, vlastne_okuliare?.vbino, vlastne_okuliare, setVlastne_okuliare)}
+                                    // onBlur={(e) => setVlastne_okuliare(prevValue => ({
+                                    //     ...prevValue,
+                                    //     [e.target.name]: Number(e.target.value)
+                                    // }))}
+                                    />
+                                </Col>
                             </TableCol>
                         </ExamTable>
 

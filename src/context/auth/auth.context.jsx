@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
         if(user.admin === 0) return setIsAuthorized(false)
         if (user.admin > 1) {
             setIsAdmin(true)
-            localStorage.setItem("admin", user.optometrist)
+            localStorage.setItem("admin", user.admin)
 
         } else {
             setIsAdmin(false)

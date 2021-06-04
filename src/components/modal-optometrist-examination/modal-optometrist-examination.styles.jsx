@@ -156,7 +156,7 @@ export const ContactLensesTypeTable = styled.div`
 
 export const ExamTable = styled.div`
     display: grid;
-    grid-template-columns: 4rem repeat(5, 1fr);
+    grid-template-columns: 4rem repeat(6, 1fr);
 `
 
 export const TableTitleCol = styled.div`
