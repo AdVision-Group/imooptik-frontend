@@ -33,8 +33,17 @@ import {
 } from "./order.styles"
 
 const OrderSection = () => {
-	const { step, order, cart, setOrder, addUser, resetOrder, changeStep } =
-		useContext(OrderContext)
+	const {
+		step,
+		order,
+		cart,
+		setOrder,
+		addUser,
+		resetOrder,
+		changeStep,
+		// saveOrder,
+		// getSavedOrder,
+	} = useContext(OrderContext)
 
 	const { userId, orderId } = useParams()
 

@@ -1,264 +1,268 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../context/auth/auth.context'
-import { UserContext } from '../../context/user/user.context'
-import { LoadingModalContext } from '../../context/loading-modal/loading-modal.contenxt'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../../context/auth/auth.context"
+import { UserContext } from "../../context/user/user.context"
+import { LoadingModalContext } from "../../context/loading-modal/loading-modal.contenxt"
+import { useParams } from "react-router-dom"
 
-import ScrollContainer from '../../components/scroll-container/scroll-container.component'
-import UserForm from '../../components/user-form/user-form.component'
-import NewUserForm from '../../components/new-user-form/new-user-form.component'
+import ScrollContainer from "../../components/scroll-container/scroll-container.component"
+import UserForm from "../../components/user-form/user-form.component"
+import NewUserForm from "../../components/new-user-form/new-user-form.component"
 
-import Popup from '../../components/popup/pop-up.component'
+import Popup from "../../components/popup/pop-up.component"
 
-import {
-    FixedContainer
-} from '../../global.styles'
+import { FixedContainer } from "../../global.styles"
 
 import {
-    Header,
-    DeleteProfileButton,
-    // Name,
-    SaveButton,
-} from './customer-profile.styles'
+	Header,
+	DeleteProfileButton,
+	// Name,
+	SaveButton,
+} from "./customer-profile.styles"
 
 const CustomerProfile = () => {
-    const { id } = useParams()
-    const { isAdmin, isOptometrist } = useContext(AuthContext)
-    const {
-        closeModal,
-        isLoading,
-        message,
-        showModal,
-        setShowModal,
-        getMessage,
-    } = useContext(LoadingModalContext)
+	const { id } = useParams()
+	const { isAdmin, isOptometrist } = useContext(AuthContext)
+	const {
+		closeModal,
+		isLoading,
+		message,
+		showModal,
+		setShowModal,
+		getMessage,
+	} = useContext(LoadingModalContext)
 
-    const {
-        isUpdating,
-        user,
-        getUser,
-        handleChange,
-        handleParameterChange,
-        handleCompanyChange,
-        updateUser,
-        resetUser,
-        formToShow,
-        switchFormButtons,
-        toggleUserForm,
-        createUser,
-        deleteUser
-    } = useContext(UserContext)
+	const {
+		isUpdating,
+		user,
+		getUser,
+		handleChange,
+		handleParameterChange,
+		handleCompanyChange,
+		updateUser,
+		resetUser,
+		formToShow,
+		switchFormButtons,
+		toggleUserForm,
+		createUser,
+		deleteUser,
+	} = useContext(UserContext)
 
-    const [userObj, setUserObj] = useState({})
-    // const [hasChanges, setHasChanges] = useState(false)
+	const [userObj, setUserObj] = useState({})
+	// const [hasChanges, setHasChanges] = useState(false)
 
-    const handleUserChange = (e) => {
-        // setHasChanges(true)
-        const { name, value } = e.target
+	const handleUserChange = (e) => {
+		// setHasChanges(true)
+		const { name, value } = e.target
 
-        handleChange(e)
+		handleChange(e)
 
+		if (value === "") {
+			delete userObj[name]
+			// delete userObj.company[]
+			return
+		}
 
-        if (value === '') {
-            delete userObj[name]
-            // delete userObj.company[]
-            return
-        }
+		setUserObj({
+			...userObj,
+			[name]: value,
+		})
+	}
 
-        setUserObj({
-            ...userObj,
-            [name]: value
-        })
-    }
+	const handleLensesParameterChange = (e, idx) => {
+		// setHasChanges(true)
 
-    const handleLensesParameterChange = (e, idx) => {
-        // setHasChanges(true)
+		const { name, value } = e.target
+		let arr = user.lenses[name]
+		arr[idx] = value
 
-        const { name, value } = e.target
-        let arr = user.lenses[name]
-        arr[idx] = value
+		handleParameterChange(e, idx)
+		setUserObj({
+			...userObj,
+			lenses: {
+				...user.lenses,
+				[name]: arr,
+			},
+		})
+	}
 
+	const handleCompanyAddressChange = (e) => {
+		// setHasChanges(true)
 
-        handleParameterChange(e, idx)
-        setUserObj({
-            ...userObj,
-            lenses: {
-                ...user.lenses,
-                [name]: arr
-            }
-        })
-    }
+		const { name, value } = e.target
+		handleCompanyChange(e)
 
+		if (value === "") {
+			delete userObj.company[name]
+			if (Object.keys(userObj.company).length === 0) {
+				delete userObj["company"]
+			}
+			// delete userObj.company[]
+			return
+		}
 
-    const handleCompanyAddressChange = (e) => {
-        // setHasChanges(true)
+		setUserObj({
+			...userObj,
+			company: {
+				...userObj.company,
+				[name]: value,
+			},
+		})
+	}
 
-        const { name, value } = e.target
-        handleCompanyChange(e)
+	// console.log(userObj)
 
-        if (value === '') {
-            delete userObj.company[name]
-            if (Object.keys(userObj.company).length === 0) {
-                delete userObj["company"]
-            }
-            // delete userObj.company[]
-            return
-        }
+	const handleSubmit = (e, path) => {
+		e.preventDefault()
+		// setHasChanges(false)
 
-        setUserObj({
-            ...userObj,
-            company: {
-                ...userObj.company,
-                [name]: value
-            }
-        })
-    }
+		if (id === "novy-zakaznik") {
+			if (userObj.fName || userObj.lName) {
+				delete userObj["fName"]
+				delete userObj["lName"]
+			}
 
-    // console.log(userObj)
+			if (formToShow === 1) {
+				const newUserObj = {
+					...userObj,
+					admin: userObj.admin || 1,
+				}
+				createUser(newUserObj, path)
+				return
+			}
 
-    const handleSubmit = (e, path) => {
-        e.preventDefault()
-        // setHasChanges(false)
+			if (!userObj?.phone) {
+				setShowModal(true)
+				getMessage("Tel. číslo je povinné")
+				return
+			}
 
-        if (id === 'novy-zakaznik') {
-            if (userObj.fName || userObj.lName) {
-                delete userObj["fName"]
-                delete userObj["lName"]
-            }
+			createUser(userObj, path)
+		} else {
+			if (userObj.fName || userObj.lName) {
+				delete userObj["fName"]
+				delete userObj["lName"]
+			} else if (!userObj.fName || !userObj.lName) {
+				delete userObj["name"]
+			}
 
-            if (formToShow === 1) {
-                const newUserObj = {
-                    ...userObj,
-                    admin: userObj.admin || 1
-                }
-                createUser(newUserObj, path)
-                return
-            }
+			if (userObj.company) {
+				const newUserObj = {
+					...userObj,
+					company: {
+						...user.company,
+						...userObj.company,
+					},
+				}
+				updateUser(newUserObj, user._id)
+				return
+			}
+			updateUser(userObj, user._id)
+		}
+	}
 
-            if(!userObj?.phone) {
-                setShowModal(true)
-                getMessage("Tel. číslo je povinné")
-                return
-            }
+	useEffect(() => {
+		setUserObj({
+			...userObj,
+			name: user.fName + " " + user.lName,
+		})
+	}, [userObj.fName, userObj.lName])
 
-            createUser(userObj, path)
-        } else {
-            if (userObj.fName || userObj.lName) {
-                delete userObj["fName"]
-                delete userObj["lName"]
-            } else if (!userObj.fName || !userObj.lName) {
-                delete userObj["name"]
-            }
+	useEffect(() => {
+		if (id !== "novy-zakaznik") {
+			getUser(id)
+		}
+	}, [id])
 
-            if (userObj.company) {
-                const newUserObj = {
-                    ...userObj,
-                    company: {
-                        ...user.company,
-                        ...userObj.company
-                    }
-                }
-                updateUser(newUserObj, user._id)
-                return
-            }
-            updateUser(userObj, user._id)
-        }
-    }
+	//unmount
+	useEffect(() => {
+		return () => {
+			resetUser()
+			handleChange({
+				target: {
+					name: "lenses",
+					value: {
+						cylinder: [1001, 1001, 1001, 1001],
+						cylinderAxes: [1001, 1001, 1001, 1001],
+						diopters: [1001, 1001, 1001, 1001],
+						distance: [1001, 1001, 1001, 1001],
+						addition: [1001, 1001, 1001, 1001],
+						basis: [1001, 1001, 1001, 1001],
+						prism: [1001, 1001, 1001, 1001],
+						vys: [1001, 1001, 1001, 1001],
+					},
+				},
+			})
+		}
+	}, [])
 
-    useEffect(() => {
-        setUserObj({
-            ...userObj,
-            name: user.fName + " " + user.lName
-        })
-    }, [userObj.fName, userObj.lName])
-
-    useEffect(() => {
-        if (id !== 'novy-zakaznik') {
-            getUser(id)
-        }
-    }, [id])
-
-    //unmount
-    useEffect(() => {
-        return () => {
-            resetUser()
-            handleChange({
-                target: {
-                    name: 'lenses',
-                    value: {
-                        cylinder: [1001, 1001, 1001, 1001],
-                        cylinderAxes: [1001, 1001, 1001, 1001],
-                        diopters: [1001, 1001, 1001, 1001],
-                        distance: [1001, 1001, 1001, 1001],
-                        addition: [1001, 1001, 1001, 1001],
-                        basis: [1001, 1001, 1001, 1001],
-                        prism: [1001, 1001, 1001, 1001],
-                        vys: [1001, 1001, 1001, 1001],
-                    },
-                }
-            })
-        }
-    }, [])
-
-    return (
-        <section>
-            {showModal && <Popup loading={isLoading} title={message} close={closeModal} />}
-            {/* <Prompt
+	return (
+		<section>
+			{showModal && (
+				<Popup loading={isLoading} title={message} close={closeModal} />
+			)}
+			{/* <Prompt
                 when={hasChanges}
                 message={"Chcete opustiť tuto stránku?"}
             /> */}
-            <form>
-                <Header>
-                    <FixedContainer>
-                        <h1>Profil</h1>
-                        <div>
-                            {isUpdating && <DeleteProfileButton onClick={() => deleteUser(user._id)} type='button'>Vymazať</DeleteProfileButton>}
-                            {!isUpdating && <SaveButton onClick={(e) => handleSubmit(e, 'profile')}>Vytvoriť a prejsť na profil</SaveButton>}
-                            {!isUpdating && !(formToShow === 1) && <SaveButton onClick={(e) => handleSubmit(e, 'order')}>Vytvoriť a prejsť na objednávku</SaveButton>}
-                            <SaveButton onClick={(e) => handleSubmit(e, 'customers')}>
-                                {isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
-                            </SaveButton>
-                        </div>
+			<form>
+				<Header>
+					<FixedContainer>
+						<h1>Profil</h1>
+						<div>
+							{isUpdating && (
+								<DeleteProfileButton
+									onClick={() => deleteUser(user._id)}
+									type="button"
+								>
+									Vymazať
+								</DeleteProfileButton>
+							)}
+							{!isUpdating && (
+								<SaveButton onClick={(e) => handleSubmit(e, "profile")}>
+									Vytvoriť a prejsť na profil
+								</SaveButton>
+							)}
+							{!isUpdating && !(formToShow === 1) && (
+								<SaveButton onClick={(e) => handleSubmit(e, "order")}>
+									Vytvoriť a prejsť na objednávku
+								</SaveButton>
+							)}
+							<SaveButton onClick={(e) => handleSubmit(e, "customers")}>
+								{isUpdating ? "Uložiť zmeny" : "Vytvoriť"}
+							</SaveButton>
+						</div>
+					</FixedContainer>
+				</Header>
 
-                    </FixedContainer>
-                </Header>
-
-                <ScrollContainer>
-                    {
-                        isUpdating ? (
-                            <UserForm
-                                user={user}
-                                isAdmin={isAdmin}
-                                isUpdating={isUpdating}
-                                isOptometrist={isOptometrist}
-                                handleChange={handleUserChange}
-                                handleParameterChange={handleLensesParameterChange}
-                                handleCompanyChange={handleCompanyAddressChange}
-                                isCustomer={user.admin === 0 ? true : false}
-
-                            />
-                        ) : (
-                            <NewUserForm
-                                isAdmin={isAdmin}
-                                handleParameterChange={handleLensesParameterChange}
-                                formToShow={formToShow}
-                                switchFormButtons={switchFormButtons}
-                                toggleUserForm={toggleUserForm}
-                                user={user}
-                                handleChange={handleUserChange}
-                                handleCompanyChange={handleCompanyAddressChange}
-                                resetUser={resetUser}
-
-                            />
-                        )
-                    }
-
-
-                </ScrollContainer>
-
-            </form>
-        </section>
-    )
+				<ScrollContainer>
+					{isUpdating ? (
+						<UserForm
+							user={user}
+							isAdmin={isAdmin}
+							isUpdating={isUpdating}
+							isOptometrist={isOptometrist}
+							handleChange={handleUserChange}
+							handleParameterChange={handleLensesParameterChange}
+							handleCompanyChange={handleCompanyAddressChange}
+							isCustomer={user.admin === 0 ? true : false}
+						/>
+					) : (
+						<NewUserForm
+							isAdmin={isAdmin}
+							handleParameterChange={handleLensesParameterChange}
+							formToShow={formToShow}
+							switchFormButtons={switchFormButtons}
+							toggleUserForm={toggleUserForm}
+							user={user}
+							handleChange={handleUserChange}
+							handleCompanyChange={handleCompanyAddressChange}
+							resetUser={resetUser}
+						/>
+					)}
+				</ScrollContainer>
+			</form>
+		</section>
+	)
 }
 
 export default CustomerProfile
