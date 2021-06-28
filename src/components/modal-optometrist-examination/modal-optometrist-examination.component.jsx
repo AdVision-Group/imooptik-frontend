@@ -126,6 +126,8 @@ const OptometristExaminationModal = ({
 				refetch()
 				close()
 			})
+
+			localStorage.removeItem(userId)
 		}
 	}
 
