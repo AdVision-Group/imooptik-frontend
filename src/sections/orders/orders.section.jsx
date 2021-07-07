@@ -198,6 +198,8 @@ const OrdersSection = () => {
 		}
 	}, [])
 
+	console.log(orders)
+
 	return (
 		<section>
 			{showModal && (
@@ -253,6 +255,7 @@ const OrdersSection = () => {
 						<TableCol>Prevádzka</TableCol>
 						<TableCol>Meno</TableCol>
 						<TableCol>Tel. číslo</TableCol>
+						<TableCol>Spôsob doručenia</TableCol>
 						<TableCol>Status</TableCol>
 						<TableCol>Možnosti</TableCol>
 					</TableHead>

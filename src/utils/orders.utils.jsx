@@ -87,3 +87,10 @@ export const translateStatus = (status) => {
 	if (status === "half-paid") return "Zálohované"
 	if (status === "cancelled") return "Zrušené"
 }
+
+export const translateDeliveryType = (status) => {
+	if (status === "pickup") return "Osobný odber"
+	if (status === "courier") return "Kurier"
+	if (status === "mail") return "Pošta"
+	return status
+}
