@@ -22,16 +22,10 @@ const Sidenav = ({ routes, match }) => {
 
 	const [isOpen, setIsOpen] = useState(false)
 
-	// const [activeLink, setActiveLink] = useState(0)
-	const [activeLink, setActiveLink] = useState(4)
-
-	const handleClick = (path, idx) => {
-		console.log(path)
-		console.log(location)
+	const handleClick = (path) => {
 		if (isOpen) {
 			setIsOpen(false)
 		}
-		setActiveLink(idx)
 		// push(path)
 	}
 
@@ -53,7 +47,7 @@ const Sidenav = ({ routes, match }) => {
 						<Link
 							key={idx}
 							to={match.url + route.path}
-							onClick={() => handleClick(match.url + route.path, idx)}
+							onClick={() => handleClick(match.url + route.path)}
 						>
 							<li>
 								<NavLinksButton>
